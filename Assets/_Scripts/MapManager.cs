@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,11 +19,19 @@ public class MapManager : MonoBehaviour
     private float _xOffset = 0;
     private float _yOffset = 0;
     private int[,] _solidGrid;
+    private GameObject _lastBlocSelected; 
 
 
     private const char FLOOR = '0';
     private const char WALL = '1';
-    
+
+    public static MapManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         string map = Application.dataPath + "/Map-DontTouch/Map.txt";
@@ -62,44 +71,6 @@ public class MapManager : MonoBehaviour
                         _solidGrid[j, _xSizeMap - 1 - i] = 1;
                         break;
 
-                    // case _startPlayer:
-                    //     GameObject go3 = Instantiate(_environment[0], _map.transform);
-                    //     go3.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     MapSpawnAnim(go3);
-                    //
-                    //     GameObject player = Instantiate(_dynamicObjects[0], _map.transform);
-                    //     _player = player;
-                    //     player.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     MapSpawnAnim(player);
-                    //     _playerPos = new Vector2Int(j, _xSizeMap - 1 - i);
-                    //     print(_playerPos);
-                    //     break;
-                    //
-                    // case _blueBox:
-                    //     GameObject go4 = Instantiate(_environment[0], _map.transform);
-                    //     go4.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     MapSpawnAnim(go4);
-                    //
-                    //     GameObject blueBox = Instantiate(_dynamicObjects[1], _map.transform);
-                    //     blueBox.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     _boxColor.Add(blueBox);
-                    //     _boxColorPos.Add(new Vector2Int(j, _xSizeMap - 1 - i));
-                    //     MapSpawnAnim(blueBox);
-                    //     _boxGrid[j, _xSizeMap - 1 - i] = blueBox;
-                    //     _dynamicGrid[j, _xSizeMap - 1 - i] = 2;
-                    //     break;
-                    //
-                    // case _blueBoxEnd:
-                    //     GameObject go5 = Instantiate(_environment[0], _map.transform);
-                    //     go5.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     MapSpawnAnim(go5);
-                    //
-                    //     GameObject blueBoxEnd = Instantiate(_environment[2], _map.transform);
-                    //     blueBoxEnd.transform.position = new Vector2(j * _distance - _xOffset, _xSizeMap - 1 - i * _distance - _yOffset);
-                    //     _boxColorEndPos.Add(new Vector2Int(j, _xSizeMap - 1 - i));
-                    //     MapSpawnAnim(blueBoxEnd);
-                    //     _solidGrid[j, _xSizeMap - 1 - i] = 2;
-                    //     break;
                 }
             }
         }
@@ -111,5 +82,12 @@ public class MapManager : MonoBehaviour
     {
         _which.transform.DOScale(Vector3.zero, 0f);
         _which.transform.DOScale(Vector3.one, .5f);
+    }
+
+    public void DeselectedOldBloc(GameObject which)
+    {
+        if(_lastBlocSelected != null)
+            _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
+        _lastBlocSelected = which;
     }
 }
