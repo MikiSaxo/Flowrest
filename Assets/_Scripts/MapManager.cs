@@ -12,6 +12,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject[] _environment = null;
     [SerializeField] private float _distance = 0;
+    [SerializeField] private GameObject _triggerAroundSelected = null;
 
     private string[] _mapInfo;
     private int _xSize = 0;
@@ -21,11 +22,12 @@ public class MapManager : MonoBehaviour
     private int[,] _solidGrid;
     private GameObject _lastBlocSelected;
     private Vector2 _lastCoordsSelected;
-    private bool _hasSwap;
+    private int _howManyGroundSelected = 0;
 
 
-    private const char FLOOR = '0';
-    private const char WALL = '1';
+    private const char GROUND1 = '0';
+    private const char GROUND2 = '1';
+    private const char GROUND3 = '2';
 
     public static MapManager Instance;
 
@@ -36,7 +38,7 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        string map = Application.dataPath + "/Map-DontTouch/Map.txt";
+        string map = Application.dataPath + "/Map-DontMove/Map.txt";
         _mapInfo = File.ReadAllLines(map);
         _xSize = _mapInfo[0].Length;
         _ySize = _mapInfo.Length;
@@ -46,6 +48,7 @@ public class MapManager : MonoBehaviour
         _xOffset = _distance * _xSize * .5f - (_distance * .5f);
         _yOffset = _distance * _ySize - (_distance * .5f);
         InitializeLevel(_xSize, _ySize);
+        ResetLastSelected();
     }
 
     private void InitializeLevel(int _xSizeMap, int _ySizeMap)
@@ -59,7 +62,7 @@ public class MapManager : MonoBehaviour
 
                 switch (_whichEnvironment)
                 {
-                    case FLOOR:
+                    case GROUND1:
                         GameObject go = Instantiate(_environment[0], _map.transform);
                         go.transform.position = new Vector3(j * _distance - _xOffset, 0,
                             _xSizeMap - 1 - i * _distance - _yOffset);
@@ -68,13 +71,21 @@ public class MapManager : MonoBehaviour
                         go.GetComponent<GroundManager>().ChangeCoords(new Vector2(j, _xSizeMap - 1 - i));
                         break;
 
-                    case WALL:
+                    case GROUND2:
                         GameObject go2 = Instantiate(_environment[1], _map.transform);
                         go2.transform.position = new Vector3(j * _distance - _xOffset, 0,
                             _xSizeMap - 1 - i * _distance - _yOffset);
                         MapSpawnAnim(go2);
                         _solidGrid[j, _xSizeMap - 1 - i] = 1;
                         go2.GetComponent<GroundManager>().ChangeCoords(new Vector2(j, _xSizeMap - 1 - i));
+                        break;
+                    case GROUND3:
+                        GameObject go3 = Instantiate(_environment[2], _map.transform);
+                        go3.transform.position = new Vector3(j * _distance - _xOffset, 0,
+                            _xSizeMap - 1 - i * _distance - _yOffset);
+                        MapSpawnAnim(go3);
+                        // _solidGrid[j, _xSizeMap - 1 - i] = 2;
+                        // go3.GetComponent<GroundManager>().ChangeCoords(new Vector2(j, _xSizeMap - 1 - i));
                         break;
                 }
             }
@@ -89,40 +100,54 @@ public class MapManager : MonoBehaviour
         which.transform.DOScale(Vector3.one, .5f);
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void LookIfNextTo(GameObject which, Vector2 coords)
     {
+        _howManyGroundSelected++;
+
         var getXCoord = Mathf.Abs(coords.x - _lastCoordsSelected.x);
         var getYCoord = Mathf.Abs(coords.y - _lastCoordsSelected.y);
-        if (getXCoord == 1 && getYCoord != 1 || getXCoord != 1 && getYCoord == 1)
+        if (getXCoord == 1 && getYCoord == 0 || getXCoord == 0 && getYCoord == 1)
         {
             print("swap");
-            _hasSwap = true;
-            var GetLastBlocPos = _lastBlocSelected.transform.position;
+
+            var getLastBlocPos = _lastBlocSelected.transform.position;
+            var getLastCoord = _lastCoordsSelected;
+
             _lastBlocSelected.transform.position = which.transform.position;
-            which.transform.position = GetLastBlocPos;
-        }
+            _lastBlocSelected.GetComponent<GroundManager>().GroundCoords =
+                which.GetComponent<GroundManager>().GroundCoords;
+            _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
 
-        DeSelectedOld(which);
-        print(which);
-        DeSelectedOld(_lastBlocSelected);
-        print(_lastBlocSelected);
+            which.transform.position = getLastBlocPos;
+            which.GetComponent<GroundManager>().GroundCoords = getLastCoord;
+            which.GetComponent<GroundManager>().OnLeaved(true);
 
-        if (_hasSwap)
-        {
-            _lastBlocSelected = null;
-            _lastCoordsSelected = Vector2.zero;
-            _hasSwap = false;
+            ResetLastSelected();
+            _howManyGroundSelected = 0;
         }
         else
         {
+            if (_howManyGroundSelected >= 2)
+            {
+                if (_lastBlocSelected != null)
+                    _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
+                ResetLastSelected();
+            }
+
             _lastBlocSelected = which;
             _lastCoordsSelected = coords;
+            _triggerAroundSelected.transform.position = _lastBlocSelected.transform.position;
         }
     }
 
-    private void DeSelectedOld(GameObject which)
+    private void ResetLastSelected()
     {
-        if (_lastBlocSelected != null)
-            _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
+        _lastBlocSelected = null;
+        _lastCoordsSelected = Vector2.one * 500;
+        _triggerAroundSelected.transform.position = new Vector3(0, -100, 0); 
+
+        if(_howManyGroundSelected > 0)
+            _howManyGroundSelected--;
     }
 }

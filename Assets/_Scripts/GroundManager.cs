@@ -3,42 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GroundManager : MonoBehaviour
 {
     private float _startYPos;
     private bool _isEntered;
     private bool _isSelected;
-    private Vector2 _coords = Vector2.zero;
+    private bool _isArounded;
+    public Vector2 GroundCoords = Vector2.zero;
+    private Material _mat;
+    [SerializeField] Material[] _groundMats;
+    [SerializeField] private GameObject _indicator;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        OnEntered();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        OnLeaved(false);
-    }
 
     private void Start()
     {
         _startYPos = transform.position.y;
+        _mat = gameObject.GetComponent<MeshRenderer>().material;
+        OnLeaved(true);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponentInParent<FollowMouse>())
+            OnEntered();
+        if (other.gameObject.GetComponent<TriggerAroundSelected>())
+            OnArounded(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponentInParent<FollowMouse>())
+            OnLeaved(false);
+        if (other.gameObject.GetComponent<TriggerAroundSelected>())
+            OnArounded(false);
     }
 
     public void ChangeCoords(Vector2 newCoords)
     {
-        _coords = newCoords;
-        // print(_coords);
+        GroundCoords = newCoords;
     }
 
-    private void OnSelected()
+    public void OnSelected()
     {
         if (!_isSelected)
         {
             _isSelected = true;
             // transform.DOMoveY(transform.position.y + .5f, .2f);
-            MapManager.Instance.LookIfNextTo(gameObject, _coords);
+            _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
+            MapManager.Instance.LookIfNextTo(gameObject, GroundCoords);
             // print("OnSelected");
         }
     }
@@ -48,6 +62,7 @@ public class GroundManager : MonoBehaviour
         if (_isSelected)
             return;
         // transform.DOMoveY(transform.position.y + .2f, .2f);
+        _indicator.GetComponent<MeshRenderer>().material = _groundMats[0];
         _isEntered = true;
     }
 
@@ -55,13 +70,26 @@ public class GroundManager : MonoBehaviour
     {
         if (hasForced)
             _isSelected = false;
-        
+
         if (_isSelected)
             return;
-        
+
+        if (_isArounded)
+            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
+        else
+            _indicator.GetComponent<MeshRenderer>().material = _mat;
         // transform.DOMoveY(_startYPos, 0.5f);
         _isEntered = false;
         _isSelected = false;
+    }
+
+    private void OnArounded(bool which)
+    {
+        _isArounded = which;
+        if (_isArounded && !_isEntered && !_isSelected)
+            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
+        else if(!_isArounded && !_isEntered && !_isSelected)
+            _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
 
     private void Update()
