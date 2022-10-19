@@ -25,7 +25,7 @@ public class MapManager : MonoBehaviour
     
     private void Start()
     {
-        string map = Application.dataPath + "/Map.txt";
+        string map = Application.dataPath + "/Map-DontTouch/Map.txt";
         _mapInfo = File.ReadAllLines(map);
         _xSize = _mapInfo[0].Length;
         _ySize = _mapInfo.Length;
