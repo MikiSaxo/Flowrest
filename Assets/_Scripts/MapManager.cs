@@ -19,7 +19,9 @@ public class MapManager : MonoBehaviour
     private float _xOffset = 0;
     private float _yOffset = 0;
     private int[,] _solidGrid;
-    private GameObject _lastBlocSelected; 
+    private GameObject _lastBlocSelected;
+    private Vector2 _lastCoordsSelected;
+    private bool _hasSwap;
 
 
     private const char FLOOR = '0';
@@ -59,35 +61,68 @@ public class MapManager : MonoBehaviour
                 {
                     case FLOOR:
                         GameObject go = Instantiate(_environment[0], _map.transform);
-                        go.transform.position = new Vector3(j * _distance - _xOffset, 0, _xSizeMap - 1 - i * _distance - _yOffset);
+                        go.transform.position = new Vector3(j * _distance - _xOffset, 0,
+                            _xSizeMap - 1 - i * _distance - _yOffset);
                         MapSpawnAnim(go);
                         _solidGrid[j, _xSizeMap - 1 - i] = 0;
+                        go.GetComponent<GroundManager>().ChangeCoords(new Vector2(j, _xSizeMap - 1 - i));
                         break;
 
                     case WALL:
                         GameObject go2 = Instantiate(_environment[1], _map.transform);
-                        go2.transform.position = new Vector3(j * _distance - _xOffset, 0, _xSizeMap - 1 - i * _distance - _yOffset);
+                        go2.transform.position = new Vector3(j * _distance - _xOffset, 0,
+                            _xSizeMap - 1 - i * _distance - _yOffset);
                         MapSpawnAnim(go2);
                         _solidGrid[j, _xSizeMap - 1 - i] = 1;
+                        go2.GetComponent<GroundManager>().ChangeCoords(new Vector2(j, _xSizeMap - 1 - i));
                         break;
-
                 }
             }
         }
-        
-        _map.transform.Rotate(new Vector3(0,45,0));
+
+        _map.transform.Rotate(new Vector3(0, 45, 0));
     }
 
-    private void MapSpawnAnim(GameObject _which)
+    private void MapSpawnAnim(GameObject which)
     {
-        _which.transform.DOScale(Vector3.zero, 0f);
-        _which.transform.DOScale(Vector3.one, .5f);
+        which.transform.DOScale(Vector3.zero, 0f);
+        which.transform.DOScale(Vector3.one, .5f);
     }
 
-    public void DeselectedOldBloc(GameObject which)
+    public void LookIfNextTo(GameObject which, Vector2 coords)
     {
-        if(_lastBlocSelected != null)
+        var getXCoord = Mathf.Abs(coords.x - _lastCoordsSelected.x);
+        var getYCoord = Mathf.Abs(coords.y - _lastCoordsSelected.y);
+        if (getXCoord == 1 && getYCoord != 1 || getXCoord != 1 && getYCoord == 1)
+        {
+            print("swap");
+            _hasSwap = true;
+            var GetLastBlocPos = _lastBlocSelected.transform.position;
+            _lastBlocSelected.transform.position = which.transform.position;
+            which.transform.position = GetLastBlocPos;
+        }
+
+        DeSelectedOld(which);
+        print(which);
+        DeSelectedOld(_lastBlocSelected);
+        print(_lastBlocSelected);
+
+        if (_hasSwap)
+        {
+            _lastBlocSelected = null;
+            _lastCoordsSelected = Vector2.zero;
+            _hasSwap = false;
+        }
+        else
+        {
+            _lastBlocSelected = which;
+            _lastCoordsSelected = coords;
+        }
+    }
+
+    private void DeSelectedOld(GameObject which)
+    {
+        if (_lastBlocSelected != null)
             _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
-        _lastBlocSelected = which;
     }
 }

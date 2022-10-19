@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class GroundManager : MonoBehaviour
 {
-    private Vector3 _startPos;
+    private float _startYPos;
     private bool _isEntered;
     private bool _isSelected;
+    private Vector2 _coords = Vector2.zero;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,7 +23,13 @@ public class GroundManager : MonoBehaviour
 
     private void Start()
     {
-        _startPos = transform.position;
+        _startYPos = transform.position.y;
+    }
+
+    public void ChangeCoords(Vector2 newCoords)
+    {
+        _coords = newCoords;
+        // print(_coords);
     }
 
     private void OnSelected()
@@ -30,8 +37,8 @@ public class GroundManager : MonoBehaviour
         if (!_isSelected)
         {
             _isSelected = true;
-            transform.DOMoveY(transform.position.y + .5f, .2f);
-            MapManager.Instance.DeselectedOldBloc(gameObject);
+            // transform.DOMoveY(transform.position.y + .5f, .2f);
+            MapManager.Instance.LookIfNextTo(gameObject, _coords);
             // print("OnSelected");
         }
     }
@@ -40,7 +47,7 @@ public class GroundManager : MonoBehaviour
     {
         if (_isSelected)
             return;
-        transform.DOMoveY(transform.position.y + .2f, .2f);
+        // transform.DOMoveY(transform.position.y + .2f, .2f);
         _isEntered = true;
     }
 
@@ -48,9 +55,11 @@ public class GroundManager : MonoBehaviour
     {
         if (hasForced)
             _isSelected = false;
+        
         if (_isSelected)
             return;
-        transform.DOMove(_startPos, .5f);
+        
+        // transform.DOMoveY(_startYPos, 0.5f);
         _isEntered = false;
         _isSelected = false;
     }
