@@ -6,6 +6,7 @@ using System.IO;
 using DG.Tweening;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class MapManager : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class MapManager : MonoBehaviour
     private Vector2 _mapOffset;
     private GameObject _lastBlocSelected;
     private Vector2Int _lastCoordsSelected;
-    private int _howManyGroundSelected = 0;
     private GameObject[,] _mapGrid;
     private int[,] _tempGrid;
 
@@ -104,56 +104,6 @@ public class MapManager : MonoBehaviour
         which.transform.DOScale(Vector3.one, .5f);
     }
 
-    // public void LookIfNextTo(GameObject which, Vector2 coords)
-    // {
-    //     _howManyGroundSelected++;
-    //
-    //     var getXCoord = Mathf.Abs(coords.x - _lastCoordsSelected.x);
-    //     var getYCoord = Mathf.Abs(coords.y - _lastCoordsSelected.y);
-    //     if (getXCoord == 1 && getYCoord == 0 || getXCoord == 0 && getYCoord == 1)
-    //     {
-    //         print("swap");
-    //
-    //         var getLastBlocPos = _lastBlocSelected.transform.position;
-    //         var getLastCoord = _lastCoordsSelected;
-    //
-    //         _lastBlocSelected.transform.position = which.transform.position;
-    //         _lastBlocSelected.GetComponent<GroundManager>().GroundCoords =
-    //             which.GetComponent<GroundManager>().GroundCoords;
-    //         _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
-    //
-    //         which.transform.position = getLastBlocPos;
-    //         which.GetComponent<GroundManager>().GroundCoords = getLastCoord;
-    //         which.GetComponent<GroundManager>().OnLeaved(true);
-    //
-    //         ResetLastSelected();
-    //         _howManyGroundSelected = 0;
-    //     }
-    //     else
-    //     {
-    //         if (_howManyGroundSelected >= 2)
-    //         {
-    //             if (_lastBlocSelected != null)
-    //                 _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
-    //             ResetLastSelected();
-    //         }
-    //
-    //         _lastBlocSelected = which;
-    //         _lastCoordsSelected = coords;
-    //     }
-    // }
-
-    private void ResetTempGrid()
-    {
-        for (int x = 0; x < _mapSize.x; x++)
-        {
-            for (int y = 0; y < _mapSize.y; y++)
-            {
-                _tempGrid[x, y] = 0;
-            }
-        }
-    }
-
     public void CheckIfSelected(GameObject which, Vector2Int newCoords)
     {
         //if was check around -> go swap
@@ -174,33 +124,28 @@ public class MapManager : MonoBehaviour
         //reset selection's color of the two Grounds
         _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
         which.GetComponent<GroundManager>().ResetMat();
-        which.GetComponent<GroundManager>().OnLeaved(true);
         //reset selection
         ResetTempGrid();
         ResetLastSelected();
-        _howManyGroundSelected = 0;
     }
 
     private void CheckAround(GameObject which, Vector2Int coords)
     {
+        ResetLastSelected();
+        ResetTempGrid();
         _lastBlocSelected = which;
         _lastCoordsSelected = coords;
         foreach (var dir in _directions)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
             //check if inside of array
-            if (newPos.x < 0 || newPos.x >= _mapSize.x ||
-                newPos.y < 0 || newPos.y >= _mapSize.y)
-                continue;
+            if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) continue;
             //check if something exist
-            if (_mapGrid[newPos.x, newPos.y] == null)
-                continue;
+            if (_mapGrid[newPos.x, newPos.y] == null) continue;
             //check if has GroundManager
-            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>())
-                continue;
+            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
             //check if ground CanBeMoved
-            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved)
-                continue;
+            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
             //it's okay
             _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnArounded();
             _tempGrid[newPos.x, newPos.y] = 1;
@@ -210,6 +155,9 @@ public class MapManager : MonoBehaviour
 
     private void ResetLastSelected()
     {
+        if(_lastBlocSelected != null)
+            _lastBlocSelected.GetComponent<GroundManager>().ResetMat();
+            
         _lastBlocSelected = null;
         _lastCoordsSelected = Vector2Int.one * 500;
 
@@ -218,8 +166,15 @@ public class MapManager : MonoBehaviour
             ground.GetComponent<GroundManager>().ResetMat();
         }
         _groundArounded.Clear();
-        
-        if (_howManyGroundSelected > 0)
-            _howManyGroundSelected--;
+    }
+    private void ResetTempGrid()
+    {
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                _tempGrid[x, y] = 0;
+            }
+        }
     }
 }

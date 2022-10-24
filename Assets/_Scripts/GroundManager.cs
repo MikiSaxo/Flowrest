@@ -45,49 +45,10 @@ public class GroundManager : MonoBehaviour
 
     private void OnEntered()
     {
-        if (_isSelected)
-            return;
+        if (_isSelected) return;
 
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[0];
         _isEntered = true;
-    }
-
-    public void OnLeaved(bool hasForced)
-    {
-        if (hasForced)
-            _isSelected = false;
-
-        if (_isSelected)
-            return;
-
-        if (_isArounded)
-            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
-        else
-            _indicator.GetComponent<MeshRenderer>().material = _mat;
-
-        _isEntered = false;
-        _isSelected = false;
-    }
-
-    // ReSharper disable Unity.PerformanceAnalysis
-    public void OnSelected()
-    {
-        if (!_isSelected)
-        {
-            _isSelected = true;
-            _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
-            MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
-            // print("OnSelected");
-        }
-    }
-
-    public void OnArounded()
-    {
-        _isArounded = true;
-        if (_isArounded && !_isEntered && !_isSelected)
-            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
-        // else if(!_isArounded && !_isEntered && !_isSelected)
-        // _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
 
     public void ResetMat()
@@ -97,6 +58,37 @@ public class GroundManager : MonoBehaviour
         _isSelected = false;
         _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
+    public void OnLeaved(bool hasForced)
+    {
+        if (hasForced) _isSelected = false;
+
+        if (_isSelected) return;
+
+        _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[1] : _mat;
+
+        _isEntered = false;
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void OnSelected()
+    {
+        if (_isSelected) return;
+        
+        _isSelected = true;
+        _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
+        MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
+        // print("OnSelected");
+    }
+
+    public void OnArounded()
+    {
+        print("arounded");
+
+        _isArounded = true;
+        if (_isArounded && !_isEntered && !_isSelected)
+            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
+    }
+
 
     private void Update()
     {
