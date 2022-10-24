@@ -115,14 +115,16 @@ public class MapManager : MonoBehaviour
 
     private void Swap(GameObject which, Vector2Int newCoords)
     {
+        //update map
+        _mapGrid[newCoords.x, newCoords.y] = _lastBlocSelected;
+        _mapGrid[_lastCoordsSelected.x, _lastCoordsSelected.y] = which;
         //change position
         (_lastBlocSelected.transform.position, which.transform.position) = (which.transform.position, _lastBlocSelected.transform.position);
         //change coords inside of GroundManager
         _lastBlocSelected.GetComponent<GroundManager>().GroundCoords = newCoords;
         which.GetComponent<GroundManager>().GroundCoords = _lastCoordsSelected;
-        
         //reset selection's color of the two Grounds
-        _lastBlocSelected.GetComponent<GroundManager>().OnLeaved(true);
+        _lastBlocSelected.GetComponent<GroundManager>().ResetMat();
         which.GetComponent<GroundManager>().ResetMat();
         //reset selection
         ResetTempGrid();
@@ -146,6 +148,8 @@ public class MapManager : MonoBehaviour
             if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
             //check if ground CanBeMoved
             if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
+            //check if not actually selected -> Security
+            if (_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
             //it's okay
             _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnArounded();
             _tempGrid[newPos.x, newPos.y] = 1;

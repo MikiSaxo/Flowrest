@@ -14,7 +14,7 @@ public class GroundManager : MonoBehaviour
 
     private float _startYPos;
     private bool _isEntered;
-    private bool _isSelected;
+    public bool IsSelected;
     private bool _isArounded;
     private Material _mat;
 
@@ -45,7 +45,7 @@ public class GroundManager : MonoBehaviour
 
     private void OnEntered()
     {
-        if (_isSelected) return;
+        if (IsSelected) return;
 
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[0];
         _isEntered = true;
@@ -55,14 +55,14 @@ public class GroundManager : MonoBehaviour
     {
         _isArounded = false;
         _isEntered = false;
-        _isSelected = false;
+        IsSelected = false;
         _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
     public void OnLeaved(bool hasForced)
     {
-        if (hasForced) _isSelected = false;
+        if (hasForced) IsSelected = false;
 
-        if (_isSelected) return;
+        if (IsSelected) return;
 
         _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[1] : _mat;
 
@@ -72,9 +72,9 @@ public class GroundManager : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void OnSelected()
     {
-        if (_isSelected) return;
+        if (IsSelected) return;
         
-        _isSelected = true;
+        IsSelected = true;
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
         MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
         // print("OnSelected");
@@ -82,10 +82,8 @@ public class GroundManager : MonoBehaviour
 
     public void OnArounded()
     {
-        print("arounded");
-
         _isArounded = true;
-        if (_isArounded && !_isEntered && !_isSelected)
+        if (_isArounded && !_isEntered && !IsSelected)
             _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
     }
 
