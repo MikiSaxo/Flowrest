@@ -172,6 +172,7 @@ public class MapManager : MonoBehaviour
     }
 
     private const int BIG_COORDS = 5000;
+    // ReSharper disable Unity.PerformanceAnalysis
     private void ResetLastSelected()
     {
         //Reset mat
@@ -197,6 +198,15 @@ public class MapManager : MonoBehaviour
             {
                 _tempGrid[x, y] = 0;
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ResetLastSelected();
+            ResetTempGrid();
         }
     }
 }

@@ -20,7 +20,8 @@ public class GroundManager : MonoBehaviour
 
     private void Start()
     {
-        _mat = _indicator.GetComponent<MeshRenderer>().material;
+        // _mat = _indicator.GetComponent<MeshRenderer>().material;
+        _mat = _groundMats[0];
         ResetMat();
     }
 
@@ -48,7 +49,7 @@ public class GroundManager : MonoBehaviour
         //Prevent to change the mat if its actually selected
         if (IsSelected) return;
         //Change mat and _isEntered
-        _indicator.GetComponent<MeshRenderer>().material = _groundMats[0];
+        _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
         _isEntered = true;
     }
 
@@ -59,12 +60,13 @@ public class GroundManager : MonoBehaviour
         IsSelected = false;
         _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
+
     private void OnLeaved()
     {
         //Prevent to change the mat if its actually selected
         if (IsSelected) return;
         //Put the aroundedMat if it was arounded else base mat
-        _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[1] : _mat;
+        _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[2] : _mat;
         //Reset _isEntered
         _isEntered = false;
     }
@@ -76,7 +78,7 @@ public class GroundManager : MonoBehaviour
         if (IsSelected) return;
         //Change the mat and call CheckIfSelected in the MapManager to swap or not        
         IsSelected = true;
-        _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
+        _indicator.GetComponent<MeshRenderer>().material = _groundMats[3];
         MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
     }
 
@@ -85,7 +87,7 @@ public class GroundManager : MonoBehaviour
         _isArounded = true;
         //Security if not already entered or selected
         if (_isArounded && !_isEntered && !IsSelected)
-            _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
+            _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
     }
 
 
