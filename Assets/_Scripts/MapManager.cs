@@ -6,13 +6,18 @@ using System.IO;
 using DG.Tweening;
 using Unity.VisualScripting;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine.UIElements;
+using UnityEngine.AI;
 
 public class MapManager : MonoBehaviour
 {
+    
+    [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject[] _environment = null;
     [SerializeField] private float _distance = 0;
+    [SerializeField] private bool _isMouseWhoControl = false;
 
     private string[] _mapInfo;
     private Vector2Int _mapSize;
@@ -28,6 +33,7 @@ public class MapManager : MonoBehaviour
 
     private const char GROUND_WHITE = '0';
     private const char GROUND_GREY = '1';
+    private const char GROUND_NAV = 'N';
     private const char GROUND_HARD = 'H';
 
     public static MapManager Instance;
@@ -79,6 +85,9 @@ public class MapManager : MonoBehaviour
                             sizeMap.x - 1 - i * _distance - _mapOffset.y); 
                         //Change coords of the ground
                         go.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i)); 
+                        //temp mouse control or not
+                        go.GetComponent<GroundManager>().ChangeMouseWhoControl(_isMouseWhoControl);
+                        //NavigationBaker.Instance.surfaces.Add(go.GetComponent<NavMeshSurface>());
                         //Update _mapGrid
                         _mapGrid[j, sizeMap.x - 1 - i] = go; 
                         //Spawn anim
@@ -90,15 +99,28 @@ public class MapManager : MonoBehaviour
                         go1.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
                             sizeMap.x - 1 - i * _distance - _mapOffset.y);
                         go1.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
-                        
+                        go1.GetComponent<GroundManager>().ChangeMouseWhoControl(_isMouseWhoControl);
+                        //NavigationBaker.Instance.surfaces.Add(go1.GetComponent<NavMeshSurface>());
+
                         _mapGrid[j, sizeMap.x - 1 - i] = go1;
                         MapSpawnAnim(go1);
+                        break;
+                    case GROUND_NAV:
+                        GameObject go3 = Instantiate(_environment[3], _map.transform);
+                        go3.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
+                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        go3.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+                        go3.GetComponent<GroundManager>().ChangeMouseWhoControl(_isMouseWhoControl);
+                        NavigationBaker.Instance.surfaces.Add(go3.GetComponent<NavMeshSurface>());
+
+                        _mapGrid[j, sizeMap.x - 1 - i] = go3;
+                        MapSpawnAnim(go3);
                         break;
                     case GROUND_HARD:
                         GameObject go2 = Instantiate(_environment[2], _map.transform);
                         go2.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
                             sizeMap.x - 1 - i * _distance - _mapOffset.y);
-                        
+
                         _mapGrid[j, sizeMap.x - 1 - i] = go2;
                         MapSpawnAnim(go2);
                         break;
@@ -107,6 +129,8 @@ public class MapManager : MonoBehaviour
         }
         //Rotate the map for the isometric view / need to do it after the creation or change the InitializeLevel
         _map.transform.Rotate(new Vector3(0, 45, 0));
+        NavigationBaker.Instance.BuildNavSurface();
+        _player.SetActive(true);
     }
 
     private void MapSpawnAnim(GameObject which)

@@ -12,17 +12,23 @@ public class GroundManager : MonoBehaviour
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
 
-    private bool _isEntered;
     [HideInInspector] public bool IsSelected; //It's public for a security test
+    private bool _isEntered;
     private bool _isArounded;
+    private bool _isMouseWhoControl = false;
     private Material _mat;
-
-
+    
+    
     private void Start()
     {
         // _mat = _indicator.GetComponent<MeshRenderer>().material;
         _mat = _groundMats[0];
         ResetMat();
+    }
+
+    public void ChangeMouseWhoControl(bool which)
+    {
+        _isMouseWhoControl = which;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,7 +53,7 @@ public class GroundManager : MonoBehaviour
     private void OnEntered()
     {
         //Prevent to change the mat if its actually selected
-        if (IsSelected) return;
+        if (IsSelected || _isMouseWhoControl) return;
         //Change mat and _isEntered
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
         _isEntered = true;
