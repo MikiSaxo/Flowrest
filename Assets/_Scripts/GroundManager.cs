@@ -12,35 +12,36 @@ public class GroundManager : MonoBehaviour
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
 
-    [HideInInspector] public bool IsSelected; //It's public for a security test
+    [HideInInspector] public bool IsSelected; // It's public for a security test -> Must be changed in the future
     private bool _isEntered;
+
     private bool _isArounded;
-    private bool _isMouseWhoControl = false;
+
+    // private bool _isEditMode = false;
     private Material _mat;
-    
-    
+
+
     private void Start()
     {
-        // _mat = _indicator.GetComponent<MeshRenderer>().material;
         _mat = _groundMats[0];
         ResetMat();
     }
 
-    public void ChangeMouseWhoControl(bool which)
-    {
-        _isMouseWhoControl = which;
-    }
+    // public void ChangeMouseWhoControl(bool which)
+    // {
+    //     _isEditMode = which;
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
-        //detect if the trigger has entered
+        // Detect if the trigger has entered
         if (other.gameObject.GetComponentInParent<FollowMouse>())
             OnEntered();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //detect if the trigger has quit
+        // Detect if the trigger has quit
         if (other.gameObject.GetComponentInParent<FollowMouse>())
             OnLeaved();
     }
@@ -48,13 +49,13 @@ public class GroundManager : MonoBehaviour
     public void ChangeCoords(Vector2Int newCoords)
     {
         GroundCoords = newCoords;
-    } //Change the coords of the ground
+    } // Change the coords of the ground
 
     private void OnEntered()
     {
-        //Prevent to change the mat if its actually selected
-        if (IsSelected || _isMouseWhoControl) return;
-        //Change mat and _isEntered
+        // Prevent to change the mat if its actually selected
+        if (IsSelected || !MapManager.IsEditMode || !CanBeMoved) return;
+        // Change mat and _isEntered
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
         _isEntered = true;
     }
@@ -69,20 +70,20 @@ public class GroundManager : MonoBehaviour
 
     private void OnLeaved()
     {
-        //Prevent to change the mat if its actually selected
+        // Prevent to change the mat if its actually selected
         if (IsSelected) return;
-        //Put the aroundedMat if it was arounded else base mat
+        // Put the aroundedMat if it was arounded else base mat
         _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[2] : _mat;
-        //Reset _isEntered
+        // Reset _isEntered
         _isEntered = false;
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
     private void OnSelected()
     {
-        //Don't need to recall this function if its actually selected
+        // Don't need to recall this function if its actually selected
         if (IsSelected) return;
-        //Change the mat and call CheckIfSelected in the MapManager to swap or not        
+        // Change the mat and call CheckIfSelected in the MapManager to swap or not        
         IsSelected = true;
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[3];
         MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
@@ -91,7 +92,7 @@ public class GroundManager : MonoBehaviour
     public void OnArounded()
     {
         _isArounded = true;
-        //Security if not already entered or selected
+        // Security if not already entered or selected
         if (_isArounded && !_isEntered && !IsSelected)
             _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
     }
@@ -100,8 +101,6 @@ public class GroundManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && _isEntered)
-        {
             OnSelected();
-        }
     }
 }
