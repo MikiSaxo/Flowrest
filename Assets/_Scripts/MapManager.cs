@@ -14,14 +14,13 @@ using TMPro;
 public class MapManager : MonoBehaviour
 {
     public static bool IsEditMode = false;
-    [Header("Setup")]
-    [SerializeField] private GameObject _player;
+    [Header("Setup")] [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject[] _environment = null;
     [SerializeField] private float _distance = 0;
     [SerializeField] private TextMeshProUGUI _isEditModeText = null;
-    [Header("UI")]
-    [SerializeField] private string _exploModeString;
+    [Range(1, 4)] [SerializeField] private int _distanceGroundAroundPlayer;
+    [Header("UI")] [SerializeField] private string _exploModeString;
     [SerializeField] private string _editModeString;
 
     private string[] _mapInfo;
@@ -35,8 +34,11 @@ public class MapManager : MonoBehaviour
 
     private List<GameObject> _groundArounded = new List<GameObject>();
 
-    private Vector2Int[] _directions = new Vector2Int[]
+    private Vector2Int[] _directionsOne = new Vector2Int[]
         { new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
+
+    private Vector2Int[] _directionsTwo = new Vector2Int[]
+        { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
 
     private const char GROUND_WHITE = '0';
     private const char GROUND_GREY = '1';
@@ -64,7 +66,7 @@ public class MapManager : MonoBehaviour
         _tempGrid = new int[_mapSize.x, _mapSize.y];
         // Init the offset
         _mapOffset.x = _distance * _mapSize.x * .5f - (_distance * .5f);
-        _mapOffset.y = _distance * _mapSize.y - (_distance * .5f);
+        _mapOffset.y = _distance * _mapSize.y; // - (_distance * .5f);
         // Start init
         InitializeLevel(_mapSize);
         // Reset the lastSelected and tempGrid
@@ -166,8 +168,7 @@ public class MapManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            ResetLastSelected();
-            ResetTempGrid();
+            ChangeMode();
         }
     }
 
@@ -177,7 +178,7 @@ public class MapManager : MonoBehaviour
         if (_tempGrid[newCoords.x, newCoords.y] == 1)
             Swap(which, newCoords);
         else
-            CheckAround(which, newCoords);
+            CheckAroundGroundSelected(which, newCoords);
     }
 
     private void Swap(GameObject which, Vector2Int newCoords)
@@ -199,7 +200,7 @@ public class MapManager : MonoBehaviour
         ResetLastSelected();
     }
 
-    private void CheckAround(GameObject which, Vector2Int coords)
+    private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
     {
         // Reset to start from scratch
         ResetLastSelected();
@@ -207,7 +208,7 @@ public class MapManager : MonoBehaviour
         // Update lastSelected if need to call Swap() after
         _lastBlocSelected = which;
         _lastCoordsSelected = coords;
-        foreach (var dir in _directions)
+        foreach (var dir in _directionsOne)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
             // Check if inside of array
@@ -221,7 +222,7 @@ public class MapManager : MonoBehaviour
             // Check if not actually selected -> Security
             if (_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
             // It's good
-            _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnArounded();
+            _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedSelected();
             _tempGrid[newPos.x, newPos.y] = 1;
             _groundArounded.Add(_mapGrid[newPos.x, newPos.y]);
         }
@@ -264,5 +265,39 @@ public class MapManager : MonoBehaviour
     {
         IsEditMode = !IsEditMode;
         _isEditModeText.text = IsEditMode ? _exploModeString : _editModeString;
+        ResetLastSelected();
+        ResetTempGrid();
+        if (IsEditMode) CheckAroundPlayer();
+    }
+
+    private void CheckAroundPlayer()
+    {
+        print("CheckAroundPlayer");
+        var position = _player.transform.position;
+        Vector2Int coords = new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.z));
+        print("coords : " + coords );
+        switch (_distanceGroundAroundPlayer)
+        {
+            case 1:
+                foreach (var dir in _directionsOne)
+                {
+                    Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+                    print(newPos);
+                    print(_mapSize);
+                    if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) continue;
+                    print("case 1");
+                    // Check if something exist
+                    if (_mapGrid[newPos.x, newPos.y] == null) continue;
+                    // Check if has GroundManager
+                    if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
+                    // Check if ground CanBeMoved
+                    if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
+                    _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedPlayer();
+                }
+
+                break;
+            case 2:
+                break;
+        }
     }
 }

@@ -17,7 +17,6 @@ public class GroundManager : MonoBehaviour
 
     private bool _isArounded;
 
-    // private bool _isEditMode = false;
     private Material _mat;
 
 
@@ -27,10 +26,6 @@ public class GroundManager : MonoBehaviour
         ResetMat();
     }
 
-    // public void ChangeMouseWhoControl(bool which)
-    // {
-    //     _isEditMode = which;
-    // }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -89,7 +84,7 @@ public class GroundManager : MonoBehaviour
         MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
     }
 
-    public void OnArounded()
+    public void OnAroundedSelected()
     {
         _isArounded = true;
         // Security if not already entered or selected
@@ -97,10 +92,20 @@ public class GroundManager : MonoBehaviour
             _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
     }
 
+    public void OnAroundedPlayer()
+    {
+        print("OnAroundedPlayer");
+        GetComponent<MeshRenderer>().material = _groundMats[2];
+    }
+
 
     private void Update()
     {
+        // Select Ground
         if (Input.GetMouseButtonDown(0) && _isEntered)
             OnSelected();
+        // See if can't be in Update 
+        if (_isEntered && !MapManager.IsEditMode)
+            ResetMat();
     }
 }
