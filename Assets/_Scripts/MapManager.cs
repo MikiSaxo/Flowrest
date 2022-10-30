@@ -20,11 +20,14 @@ public class MapManager : MonoBehaviour
     //[SerializeField] private float _distance = 0;
     [SerializeField] private TextMeshProUGUI _isEditModeText = null;
     [Range(1, 4)] [SerializeField] private int _distanceGroundAroundPlayer;
+
     [Header("UI")] [SerializeField] private string _exploModeString;
     [SerializeField] private string _editModeString;
 
     private string[] _mapInfo;
+
     private Vector2Int _mapSize;
+
     //private Vector2 _mapOffset;
     private GameObject _lastBlocSelected;
     private Vector2Int _lastCoordsSelected;
@@ -34,9 +37,10 @@ public class MapManager : MonoBehaviour
     private Vector2 _coordsSpawnPoint = Vector2.zero;
 
     private List<GameObject> _groundArounded = new List<GameObject>();
+    private List<GameObject> _groundAroundedPlayer = new List<GameObject>();
 
     private Vector2Int[] _directionsOne = new Vector2Int[]
-        { new(0, 0),new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
+        { new(0, 0), new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
 
     private Vector2Int[] _directionsTwo = new Vector2Int[]
         { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
@@ -160,7 +164,8 @@ public class MapManager : MonoBehaviour
         //Active the player
         _player.SetActive(true);
         // Change the coords of the Player
-        _player.GetComponent<PlayerMovement>().ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
+        _player.GetComponent<PlayerMovement>()
+            .ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
     }
 
     private void MapSpawnAnim(GameObject which)
@@ -204,6 +209,8 @@ public class MapManager : MonoBehaviour
         // Reset selection
         ResetTempGrid();
         ResetLastSelected();
+        ResetLastSelectedPlayer();
+        CheckAroundPlayer();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -211,6 +218,8 @@ public class MapManager : MonoBehaviour
         // Reset to start from scratch
         ResetLastSelected();
         ResetTempGrid();
+        ResetLastSelectedPlayer();
+        CheckAroundPlayer();
         // Update lastSelected if need to call Swap() after
         _lastBlocSelected = which;
         _lastCoordsSelected = coords;
@@ -236,7 +245,67 @@ public class MapManager : MonoBehaviour
 
     private const int IMPOSSIBLE_GROUND_COORDS = 5000;
 
-    // ReSharper disable Unity.PerformanceAnalysis
+    public void ChangeMode() // Called By EditMode Button
+    {
+        IsEditMode = !IsEditMode;
+        _isEditModeText.text = IsEditMode ? _exploModeString : _editModeString;
+        ResetLastSelected();
+        ResetTempGrid();
+        ResetLastSelectedPlayer();
+        if (IsEditMode) CheckAroundPlayer();
+    }
+
+    private void CheckAroundPlayer()
+    {
+        print("CheckAroundPlayer");
+        var position = _player.transform.localPosition;
+        Vector2Int coords = new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.z));
+        switch (_distanceGroundAroundPlayer)
+        {
+            case 1:
+                foreach (var dir in _directionsOne)
+                {
+                    Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+                    CheckIfGoodAroundedPlayer(newPos);
+                }
+
+                break;
+            case 2:
+                foreach (var dir in _directionsTwo)
+                {
+                    Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+                    CheckIfGoodAroundedPlayer(newPos);
+                }
+
+                for (int x = -1; x <= 1; x++)
+                {
+                    for (int y = -1; y <= 1; y++)
+                    {
+                        Vector2Int newPos = new Vector2Int(coords.x + x, coords.y + y);
+                        CheckIfGoodAroundedPlayer(newPos);
+                    }
+                }
+
+                break;
+        }
+    }
+
+    private void CheckIfGoodAroundedPlayer(Vector2Int newPos)
+    {
+        // Check if inside of array
+        if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) return;
+        // Check if something exist
+        var map = _mapGrid[newPos.x, newPos.y];
+        if (map == null) return;
+        // Check if has GroundManager
+        if (!map.GetComponent<GroundManager>()) return;
+        // Check if ground CanBeMoved
+        if (!map.GetComponent<GroundManager>().CanBeMoved) return;
+        // Make it arounded
+        map.GetComponent<GroundManager>().OnAroundedPlayer();
+        _groundAroundedPlayer.Add(_mapGrid[newPos.x, newPos.y]);
+    }
+
     private void ResetLastSelected()
     {
         // Reset mat
@@ -267,42 +336,14 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void ChangeMode() // Called By EditMode Button
+    private void ResetLastSelectedPlayer()
     {
-        IsEditMode = !IsEditMode;
-        _isEditModeText.text = IsEditMode ? _exploModeString : _editModeString;
-        ResetLastSelected();
-        ResetTempGrid();
-        if (IsEditMode) CheckAroundPlayer();
-    }
-
-    private void CheckAroundPlayer()
-    {
-        print("CheckAroundPlayer");
-        var position = _player.transform.localPosition;
-        Vector2Int coords = new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.z));
-        switch (_distanceGroundAroundPlayer)
+        // Reset mat of all ground selected before
+        foreach (var ground in _groundAroundedPlayer)
         {
-            case 1:
-                foreach (var dir in _directionsOne)
-                {
-                    Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
-                    // Check if inside of array
-                    if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) continue;
-                    // Check if something exist
-                    var map = _mapGrid[newPos.x, newPos.y];
-                    if (map == null) continue;
-                    // Check if has GroundManager
-                    if (!map.GetComponent<GroundManager>()) continue;
-                    // Check if ground CanBeMoved
-                    if (!map.GetComponent<GroundManager>().CanBeMoved) continue;
-                    // Make it arounded
-                    map.GetComponent<GroundManager>().OnAroundedPlayer();
-                }
-
-                break;
-            case 2:
-                break;
+            ground.GetComponent<GroundManager>().ResetBaseMat();
         }
+        // Clear the _groundArounded List
+        _groundAroundedPlayer.Clear();
     }
 }

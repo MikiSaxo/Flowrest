@@ -12,10 +12,11 @@ public class GroundManager : MonoBehaviour
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
 
-    [HideInInspector] public bool IsSelected; // It's public for a security test -> Must be changed in the future
+    public bool IsSelected; // It's public for a security test -> Must be changed in the future
     private bool _isEntered;
-
     private bool _isArounded;
+    private bool _isAroundedPlayer;
+
 
     private Material _mat;
 
@@ -49,7 +50,7 @@ public class GroundManager : MonoBehaviour
     private void OnEntered()
     {
         // Prevent to change the mat if its actually selected
-        if (IsSelected || !MapManager.IsEditMode || !CanBeMoved) return;
+        if (IsSelected || !MapManager.IsEditMode || !CanBeMoved || !_isAroundedPlayer && !_isArounded) return;
         // Change mat and _isEntered
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
         _isEntered = true;
@@ -61,6 +62,11 @@ public class GroundManager : MonoBehaviour
         _isEntered = false;
         IsSelected = false;
         _indicator.GetComponent<MeshRenderer>().material = _mat;
+    }
+
+    public void ResetBaseMat()
+    {
+        GetComponent<MeshRenderer>().material = _mat;
     }
 
     private void OnLeaved()
@@ -94,10 +100,9 @@ public class GroundManager : MonoBehaviour
 
     public void OnAroundedPlayer()
     {
-        print("OnAroundedPlayer");
-        GetComponent<MeshRenderer>().material = _groundMats[2];
+        _isAroundedPlayer = true;
+        GetComponent<MeshRenderer>().material = _groundMats[4];
     }
-
 
     private void Update()
     {

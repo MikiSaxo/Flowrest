@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private string _groundTag = "Ground";
     private NavMeshAgent _nav;
     private Rigidbody _rb;
+    private bool _hasStopped = false;
 
     private void Start()
     {
@@ -36,6 +37,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
                 HandleMovement();
+            if (_hasStopped)
+                _hasStopped = false;
+        }
+        else
+        {
+            if (!_hasStopped)
+            {
+                _nav.destination = transform.position;
+                _hasStopped = true;
+            }
         }
     }
 
