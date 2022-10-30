@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour
 {
     public Camera Cam;
-    
+
     private RaycastHit _hit;
     private string _groundTag = "Ground";
     private NavMeshAgent _nav;

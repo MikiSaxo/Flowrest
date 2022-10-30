@@ -17,7 +17,7 @@ public class MapManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject[] _environment = null;
-    [SerializeField] private float _distance = 0;
+    //[SerializeField] private float _distance = 0;
     [SerializeField] private TextMeshProUGUI _isEditModeText = null;
     [Range(1, 4)] [SerializeField] private int _distanceGroundAroundPlayer;
     [Header("UI")] [SerializeField] private string _exploModeString;
@@ -25,17 +25,18 @@ public class MapManager : MonoBehaviour
 
     private string[] _mapInfo;
     private Vector2Int _mapSize;
-    private Vector2 _mapOffset;
+    //private Vector2 _mapOffset;
     private GameObject _lastBlocSelected;
     private Vector2Int _lastCoordsSelected;
     private GameObject[,] _mapGrid;
     private int[,] _tempGrid;
+    private GameObject _spawnPoint = null;
     private Vector2 _coordsSpawnPoint = Vector2.zero;
 
     private List<GameObject> _groundArounded = new List<GameObject>();
 
     private Vector2Int[] _directionsOne = new Vector2Int[]
-        { new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
+        { new(0, 0),new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
 
     private Vector2Int[] _directionsTwo = new Vector2Int[]
         { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
@@ -65,8 +66,8 @@ public class MapManager : MonoBehaviour
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
         _tempGrid = new int[_mapSize.x, _mapSize.y];
         // Init the offset
-        _mapOffset.x = _distance * _mapSize.x * .5f - (_distance * .5f);
-        _mapOffset.y = _distance * _mapSize.y; // - (_distance * .5f);
+        //_mapOffset.x = _distance * _mapSize.x * .5f - (_distance * .5f);
+        //_mapOffset.y = _distance * _mapSize.y; // - (_distance * .5f);
         // Start init
         InitializeLevel(_mapSize);
         // Reset the lastSelected and tempGrid
@@ -93,8 +94,8 @@ public class MapManager : MonoBehaviour
                         // Instantiate the good ground into the map parent
                         GameObject go = Instantiate(_environment[0], _map.transform);
                         // Tp ground to its position
-                        go.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
-                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        go.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
                         // Change coords of the ground
                         go.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
                         // Update _mapGrid
@@ -105,8 +106,8 @@ public class MapManager : MonoBehaviour
 
                     case GROUND_GREY:
                         GameObject go1 = Instantiate(_environment[1], _map.transform);
-                        go1.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
-                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        go1.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
                         go1.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
                         _mapGrid[j, sizeMap.x - 1 - i] = go1;
@@ -115,30 +116,32 @@ public class MapManager : MonoBehaviour
                     case GROUND_NAV:
                         GameObject go3 = Instantiate(_environment[3], _map.transform);
                         var position = go3.transform.position;
-                        position = new Vector3(j * _distance - _mapOffset.x, 0,
-                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
                         go3.transform.position = position;
                         go3.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
                         // Only this block create a NavMesh
                         NavigationBaker.Instance.surfaces.Add(go3.GetComponent<NavMeshSurface>());
-                        // Init the spawn point coords
-                        _coordsSpawnPoint = new Vector2(position.x, position.z);
+                        // // Init the spawn point coords
+                        // _coordsSpawnPoint = new Vector2(position.x, position.z);
+                        // print("_coordsSpawnPoint" + _coordsSpawnPoint);
+                        _spawnPoint = go3;
 
                         _mapGrid[j, sizeMap.x - 1 - i] = go3;
                         MapSpawnAnim(go3);
                         break;
                     case GROUND_HARD:
                         GameObject go2 = Instantiate(_environment[2], _map.transform);
-                        go2.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
-                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        go2.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
 
                         _mapGrid[j, sizeMap.x - 1 - i] = go2;
                         MapSpawnAnim(go2);
                         break;
                     case GROUND_CANT_BE_MOVE:
                         GameObject go4 = Instantiate(_environment[4], _map.transform);
-                        go4.transform.position = new Vector3(j * _distance - _mapOffset.x, 0,
-                            sizeMap.x - 1 - i * _distance - _mapOffset.y);
+                        go4.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
                         go4.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
                         _mapGrid[j, sizeMap.x - 1 - i] = go4;
@@ -150,11 +153,14 @@ public class MapManager : MonoBehaviour
 
         // Rotate the map for the isometric view / need to do it after the creation or change the InitializeLevel
         _map.transform.Rotate(new Vector3(0, 45, 0));
+        //Update spawn point coords
+        _coordsSpawnPoint = new Vector2(_spawnPoint.transform.position.x, _spawnPoint.transform.position.z);
         // Build the NavMesh
         NavigationBaker.Instance.BuildNavSurface();
+        //Active the player
         _player.SetActive(true);
         // Change the coords of the Player
-        _player.GetComponent<PlayerMovement>().ChangeCoords(new Vector3(_coordsSpawnPoint.x, 0, _coordsSpawnPoint.y));
+        _player.GetComponent<PlayerMovement>().ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
     }
 
     private void MapSpawnAnim(GameObject which)
@@ -273,26 +279,25 @@ public class MapManager : MonoBehaviour
     private void CheckAroundPlayer()
     {
         print("CheckAroundPlayer");
-        var position = _player.transform.position;
+        var position = _player.transform.localPosition;
         Vector2Int coords = new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.z));
-        print("coords : " + coords );
         switch (_distanceGroundAroundPlayer)
         {
             case 1:
                 foreach (var dir in _directionsOne)
                 {
                     Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
-                    print(newPos);
-                    print(_mapSize);
+                    // Check if inside of array
                     if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) continue;
-                    print("case 1");
                     // Check if something exist
-                    if (_mapGrid[newPos.x, newPos.y] == null) continue;
+                    var map = _mapGrid[newPos.x, newPos.y];
+                    if (map == null) continue;
                     // Check if has GroundManager
-                    if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
+                    if (!map.GetComponent<GroundManager>()) continue;
                     // Check if ground CanBeMoved
-                    if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
-                    _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedPlayer();
+                    if (!map.GetComponent<GroundManager>().CanBeMoved) continue;
+                    // Make it arounded
+                    map.GetComponent<GroundManager>().OnAroundedPlayer();
                 }
 
                 break;
