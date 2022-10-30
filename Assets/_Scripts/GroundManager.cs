@@ -87,7 +87,7 @@ public class GroundManager : MonoBehaviour
         // Change the mat and call CheckIfSelected in the MapManager to swap or not        
         IsSelected = true;
         _indicator.GetComponent<MeshRenderer>().material = _groundMats[3];
-        MapManager.Instance.CheckIfSelected(gameObject, GroundCoords);
+        MapManager.Instance.CheckIfGroundSelected(gameObject, GroundCoords);
     }
 
     public void OnAroundedSelected()

@@ -25,14 +25,12 @@ public class MapManager : MonoBehaviour
     [SerializeField] private string _editModeString;
 
     private string[] _mapInfo;
-
     private Vector2Int _mapSize;
-
     //private Vector2 _mapOffset;
-    private GameObject _lastBlocSelected;
-    private Vector2Int _lastCoordsSelected;
+    private GameObject _lastGroundSelected;
+    private Vector2Int _lastGroundCoordsSelected;
     private GameObject[,] _mapGrid;
-    private int[,] _tempGrid;
+    private int[,] _tempGroundSelectedGrid;
     private GameObject _spawnPoint = null;
     private Vector2 _coordsSpawnPoint = Vector2.zero;
 
@@ -68,7 +66,7 @@ public class MapManager : MonoBehaviour
         _mapSize.y = _mapInfo.Length;
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
-        _tempGrid = new int[_mapSize.x, _mapSize.y];
+        _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         // Init the offset
         //_mapOffset.x = _distance * _mapSize.x * .5f - (_distance * .5f);
         //_mapOffset.y = _distance * _mapSize.y; // - (_distance * .5f);
@@ -183,28 +181,28 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void CheckIfSelected(GameObject which, Vector2Int newCoords)
+    public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
     {
         // If was checkAround -> go swap
-        if (_tempGrid[newCoords.x, newCoords.y] == 1)
-            Swap(which, newCoords);
+        if (_tempGroundSelectedGrid[newCoords.x, newCoords.y] == 1)
+            GroundSwap(which, newCoords);
         else
             CheckAroundGroundSelected(which, newCoords);
     }
 
-    private void Swap(GameObject which, Vector2Int newCoords)
+    private void GroundSwap(GameObject which, Vector2Int newCoords)
     {
         // Update map
-        _mapGrid[newCoords.x, newCoords.y] = _lastBlocSelected;
-        _mapGrid[_lastCoordsSelected.x, _lastCoordsSelected.y] = which;
+        _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
+        _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
         // Change position
-        (_lastBlocSelected.transform.position, which.transform.position) =
-            (which.transform.position, _lastBlocSelected.transform.position);
+        (_lastGroundSelected.transform.position, which.transform.position) =
+            (which.transform.position, _lastGroundSelected.transform.position);
         // Change coords inside of GroundManager
-        _lastBlocSelected.GetComponent<GroundManager>().GroundCoords = newCoords;
-        which.GetComponent<GroundManager>().GroundCoords = _lastCoordsSelected;
+        _lastGroundSelected.GetComponent<GroundManager>().GroundCoords = newCoords;
+        which.GetComponent<GroundManager>().GroundCoords = _lastGroundCoordsSelected;
         // Reset selection's color of the two Grounds
-        _lastBlocSelected.GetComponent<GroundManager>().ResetMat();
+        _lastGroundSelected.GetComponent<GroundManager>().ResetMat();
         which.GetComponent<GroundManager>().ResetMat();
         // Reset selection
         ResetTempGrid();
@@ -221,8 +219,8 @@ public class MapManager : MonoBehaviour
         ResetLastSelectedPlayer();
         CheckAroundPlayer();
         // Update lastSelected if need to call Swap() after
-        _lastBlocSelected = which;
-        _lastCoordsSelected = coords;
+        _lastGroundSelected = which;
+        _lastGroundCoordsSelected = coords;
         foreach (var dir in _directionsOne)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
@@ -238,7 +236,9 @@ public class MapManager : MonoBehaviour
             if (_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
             // It's good
             _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedSelected();
-            _tempGrid[newPos.x, newPos.y] = 1;
+            // Update temp grid
+            _tempGroundSelectedGrid[newPos.x, newPos.y] = 1;
+            // Add to the_groundArounded list to reset mat after
             _groundArounded.Add(_mapGrid[newPos.x, newPos.y]);
         }
     }
@@ -247,19 +247,25 @@ public class MapManager : MonoBehaviour
 
     public void ChangeMode() // Called By EditMode Button
     {
+        // Change the mode
         IsEditMode = !IsEditMode;
+        // Change the EditMode button text
         _isEditModeText.text = IsEditMode ? _exploModeString : _editModeString;
+        // Make a reset of everything
         ResetLastSelected();
         ResetTempGrid();
         ResetLastSelectedPlayer();
+        // If EditMode create a detection zone
         if (IsEditMode) CheckAroundPlayer();
     }
 
     private void CheckAroundPlayer()
     {
-        print("CheckAroundPlayer");
+        // Get the LOCAL pos of the player
         var position = _player.transform.localPosition;
+        // Get the int of player's coords
         Vector2Int coords = new Vector2Int((int)Mathf.Round(position.x), (int)Mathf.Round(position.z));
+        // Create a different zone according to the _distanceGroundAroundPlayer  
         switch (_distanceGroundAroundPlayer)
         {
             case 1:
@@ -303,17 +309,18 @@ public class MapManager : MonoBehaviour
         if (!map.GetComponent<GroundManager>().CanBeMoved) return;
         // Make it arounded
         map.GetComponent<GroundManager>().OnAroundedPlayer();
+        // Add to the_groundAroundedPlayer list to reset mat after
         _groundAroundedPlayer.Add(_mapGrid[newPos.x, newPos.y]);
     }
 
     private void ResetLastSelected()
     {
         // Reset mat
-        if (_lastBlocSelected != null)
-            _lastBlocSelected.GetComponent<GroundManager>().ResetMat();
+        if (_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<GroundManager>().ResetMat();
         // Reset lastSelected and put big big coords to avoid problem with x = 0 or y =0
-        _lastBlocSelected = null;
-        _lastCoordsSelected = Vector2Int.one * IMPOSSIBLE_GROUND_COORDS;
+        _lastGroundSelected = null;
+        _lastGroundCoordsSelected = Vector2Int.one * IMPOSSIBLE_GROUND_COORDS;
         // Reset mat of all ground selected before
         foreach (var ground in _groundArounded)
         {
@@ -331,7 +338,7 @@ public class MapManager : MonoBehaviour
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                _tempGrid[x, y] = 0;
+                _tempGroundSelectedGrid[x, y] = 0;
             }
         }
     }
@@ -343,7 +350,7 @@ public class MapManager : MonoBehaviour
         {
             ground.GetComponent<GroundManager>().ResetBaseMat();
         }
-        // Clear the _groundArounded List
+        // Clear the _groundAroundedPlayer List
         _groundAroundedPlayer.Clear();
     }
 }

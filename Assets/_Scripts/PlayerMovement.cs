@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void ChangeCoords(Vector3 coords)
     {
+        // Get the NavMeshAgent component
         _nav = GetComponent<NavMeshAgent>();
+        // Update the coords for the spawn point
         _nav.Move(coords);
     }
 
@@ -42,8 +44,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (!_hasStopped)
+            if (!_hasStopped) // Avoid to call it every tic
             {
+                // Get the last pos of the player and stop it
                 _nav.destination = transform.position;
                 _hasStopped = true;
             }
@@ -52,12 +55,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
+        // Get a Raycast of the mouse's pos in the screen 
         Ray ray = Cam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
+        // Check if touch something
         if (Physics.Raycast(ray, out _hit, Mathf.Infinity))
         {
+            // Check if collider with the _groundTag 
             if (_hit.collider.CompareTag(_groundTag))
             {
+                // Update the nav destination
                 _nav.SetDestination(_hit.point);
             }
         }
