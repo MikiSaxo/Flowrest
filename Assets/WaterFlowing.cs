@@ -7,7 +7,6 @@ public class WaterFlowing : MonoBehaviour
 {
     [SerializeField] private GameObject _mesh = null;
     [SerializeField] private Material[] _waterMats;
-    [SerializeField] private GameObject _indicator = null;
 
     public bool IsWater = false;
     public bool IsTreated = false;
@@ -19,14 +18,17 @@ public class WaterFlowing : MonoBehaviour
 
     public void DesactivateWater()
     {
+        // Change the mat
         ChangeMat(_mesh, 0);
         IsWater = false;
     }
 
     public void ActivateWater()
     {
+        // Change the mat
         ChangeMat(_mesh, 1);
         IsWater = true;
+        // Avoid stack overflow for the recursive
         IsTreated = true;
     }
     

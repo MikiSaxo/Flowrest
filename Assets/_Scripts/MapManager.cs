@@ -185,11 +185,13 @@ public class MapManager : MonoBehaviour
         // Change the coords of the Player
         _player.GetComponent<PlayerMovement>()
             .ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
+        // Update map to clean the start
         StartCoroutine(InitMap2());
     }
 
     IEnumerator InitMap2()
     {
+        // Waiting to find a better system because it didn't work if it's launched just after the InitializeLevel
         yield return new WaitForSeconds(.1f);
         CheckWaterSource?.Invoke();
         ChangeModeEvent?.Invoke();
@@ -237,7 +239,9 @@ public class MapManager : MonoBehaviour
         ResetTempGrid();
         ResetLastSelected();
         ResetLastSelectedPlayer();
+        // Reboot the detection zone 
         CheckAroundPlayer();
+        // Call the event to test all the water
         CheckWaterSource?.Invoke();
     }
 
@@ -287,6 +291,7 @@ public class MapManager : MonoBehaviour
         ResetLastSelectedPlayer();
         // If EditMode create a detection zone
         if (IsEditMode) CheckAroundPlayer();
+        // Call the event to activate or not the indicators
         ChangeModeEvent?.Invoke();
     }
 

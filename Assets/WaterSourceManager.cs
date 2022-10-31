@@ -11,7 +11,7 @@ public class WaterSourceManager : MonoBehaviour
     private Vector2Int _coords;
     private List<GameObject> _watered = new List<GameObject>();
 
-    private Vector2Int[] _directions = new Vector2Int[]
+    private readonly Vector2Int[] _directions = new Vector2Int[]
         { new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
 
     private void Start()
@@ -19,15 +19,18 @@ public class WaterSourceManager : MonoBehaviour
         MapManager.Instance.CheckWaterSource += LaunchWaterCanFlow;
     }
     
-    public void ChangeCoords(Vector2Int newCoords) // Change the coords of the ground
+    public void ChangeCoords(Vector2Int newCoords) // Change the coords of the water in the InitLvl
     {
         _coords = newCoords;
     }
 
     private void LaunchWaterCanFlow()
     {
+        // Reset all the water
         ResetAllWater();
+        // Start the recursive
         CheckIfWaterCanFlow(MapManager.Instance.MapGrid, _coords);
+        // Reboot the water for a future test
         StartCoroutine(ResetWaterTreated());
     }
 
@@ -45,24 +48,32 @@ public class WaterSourceManager : MonoBehaviour
             // Check if has been already treated
             if (mapGrid[newPos.x, newPos.y].GetComponent<WaterFlowing>().IsTreated) continue;
             
+            // It's good so, activate the water 
             mapGrid[newPos.x, newPos.y].GetComponent<WaterFlowing>().ActivateWater();
+            // Restart the recursive
             CheckIfWaterCanFlow(mapGrid, newPos);
+            // Add it to the list to reboot it for a future test
             _watered.Add(mapGrid[newPos.x, newPos.y]);
         }
     }
 
     IEnumerator ResetWaterTreated()
     {
+        //---Must change---
+        // Wait a little time to be sure the recursive is over
         yield return new WaitForSeconds(.1f);
+        // Call the event for all the water blocs
         ResetTreatedWater?.Invoke();
     }
 
     private void ResetAllWater()
     {
+        // Transform the water to no water
         foreach (var water in _watered)
         {
             water.GetComponent<WaterFlowing>().DesactivateWater();
         }
+        // Clear the list for a future test
         _watered.Clear();
     }
 
