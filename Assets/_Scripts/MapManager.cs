@@ -53,6 +53,7 @@ public class MapManager : MonoBehaviour
     private const char WATER_SOURCE = 'S';
 
     public event Action CheckWaterSource;
+    public event Action ChangeModeEvent;
         
     public static MapManager Instance;
 
@@ -155,7 +156,7 @@ public class MapManager : MonoBehaviour
                         GameObject go5 = Instantiate(_environment[6], _map.transform);
                         go5.transform.position = new Vector3(j, 0,
                             sizeMap.x - 1 - i);
-                        go5.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+                        go5.GetComponent<WaterSourceManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
                         MapGrid[j, sizeMap.x - 1 - i] = go5;
                         MapSpawnAnim(go5);
@@ -184,7 +185,14 @@ public class MapManager : MonoBehaviour
         // Change the coords of the Player
         _player.GetComponent<PlayerMovement>()
             .ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
+        StartCoroutine(InitMap2());
+    }
+
+    IEnumerator InitMap2()
+    {
+        yield return new WaitForSeconds(.1f);
         CheckWaterSource?.Invoke();
+        ChangeModeEvent?.Invoke();
     }
 
     private void MapSpawnAnim(GameObject which)
@@ -279,6 +287,7 @@ public class MapManager : MonoBehaviour
         ResetLastSelectedPlayer();
         // If EditMode create a detection zone
         if (IsEditMode) CheckAroundPlayer();
+        ChangeModeEvent?.Invoke();
     }
 
     private void CheckAroundPlayer()

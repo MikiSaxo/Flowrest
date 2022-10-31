@@ -11,21 +11,19 @@ public class GroundManager : MonoBehaviour
     public Vector2Int GroundCoords = Vector2Int.zero;
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
-    [SerializeField] private GameObject _mesh;
+    [SerializeField] private GameObject _indicatorPlayerArounded;
 
     public bool IsSelected; // It's public for a security test -> Must be changed in the future
     private bool _isEntered;
     private bool _isArounded;
     private bool _isAroundedPlayer;
 
-
-    private Material _mat;
-
-
     private void Start()
     {
-        _mat = _groundMats[0];
+        MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
         ResetMat();
+        if(CanBeMoved)
+            ResetBaseMat();
     }
 
 
@@ -43,11 +41,10 @@ public class GroundManager : MonoBehaviour
             OnLeaved();
     }
 
-    public void ChangeCoords(Vector2Int newCoords)
+    public void ChangeCoords(Vector2Int newCoords) // Change the coords of the ground
     {
         GroundCoords = newCoords;
-    } // Change the coords of the ground
-
+    } 
     private void OnEntered()
     {
         // Prevent to change the mat if its actually selected
@@ -62,28 +59,30 @@ public class GroundManager : MonoBehaviour
         _isArounded = false;
         _isEntered = false;
         IsSelected = false;
-        if (GetComponent<WaterFlowing>())
-        {
-            if (GetComponent<WaterFlowing>().IsWater)
-                GetComponent<WaterFlowing>().ActivateWater();
-            else
-                GetComponent<WaterFlowing>().DesactivateWater();
-        }
-        else
-            _indicator.GetComponent<MeshRenderer>().material = _mat;
+        //if (GetComponent<WaterFlowing>())
+        //{
+            //if (GetComponent<WaterFlowing>().IsWater)
+            //    GetComponent<WaterFlowing>().ActivateWater();
+            //else
+             //   GetComponent<WaterFlowing>().DesactivateWater();
+        //}
+       // else
+            ChangeMat(_indicator, 0);
+
     }
 
     public void ResetBaseMat()
     {
-        if (GetComponent<WaterFlowing>())
-        {
-            if (GetComponent<WaterFlowing>().IsWater)
-                GetComponent<WaterFlowing>().ActivateWater();
-            else
-                GetComponent<WaterFlowing>().DesactivateWater();
-        }
-        else
-            _mesh.GetComponent<MeshRenderer>().material = _mat;
+        // if (GetComponent<WaterFlowing>())
+        // {
+        //     if (GetComponent<WaterFlowing>().IsWater)
+        //         GetComponent<WaterFlowing>().ActivateWater();
+        //     else
+        //         GetComponent<WaterFlowing>().DesactivateWater();
+        // }
+        // else
+        //     _indicatorPlayerArounded.GetComponent<MeshRenderer>().material = _mat;
+        _indicatorPlayerArounded.SetActive(false);
     }
 
     private void OnLeaved()
@@ -120,7 +119,8 @@ public class GroundManager : MonoBehaviour
     public void OnAroundedPlayer()
     {
         _isAroundedPlayer = true;
-        ChangeMat(_mesh, 4);
+        // ChangeMat(_indicatorPlayerArounded, 4);
+        _indicatorPlayerArounded.SetActive(true);
     }
 
     private void Update()
@@ -133,8 +133,18 @@ public class GroundManager : MonoBehaviour
             ResetMat();
     }
 
-    public void ChangeMat(GameObject which, int mat)
+    private void ChangeMat(GameObject which, int mat)
     {
         which.GetComponent<MeshRenderer>().material = _groundMats[mat];
+    }
+
+    private void OnActivateIndicator()
+    {
+        _indicator.SetActive(MapManager.IsEditMode);
+    }
+
+    private void OnDisable()
+    {
+        MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
     }
 }
