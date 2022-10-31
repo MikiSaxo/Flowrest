@@ -14,6 +14,8 @@ using TMPro;
 public class MapManager : MonoBehaviour
 {
     public static bool IsEditMode = false;
+    public GameObject[,] MapGrid;
+    
     [Header("Setup")] [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject[] _environment = null;
@@ -29,7 +31,6 @@ public class MapManager : MonoBehaviour
     //private Vector2 _mapOffset;
     private GameObject _lastGroundSelected;
     private Vector2Int _lastGroundCoordsSelected;
-    private GameObject[,] _mapGrid;
     private int[,] _tempGroundSelectedGrid;
     private GameObject _spawnPoint = null;
     private Vector2 _coordsSpawnPoint = Vector2.zero;
@@ -48,7 +49,11 @@ public class MapManager : MonoBehaviour
     private const char GROUND_NAV = 'N';
     private const char GROUND_HARD = 'H';
     private const char GROUND_CANT_BE_MOVE = 'C';
+    private const char WATER_FLOWING = 'W';
+    private const char WATER_SOURCE = 'S';
 
+    public event Action CheckWaterSource;
+        
     public static MapManager Instance;
 
     private void Awake()
@@ -65,7 +70,7 @@ public class MapManager : MonoBehaviour
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
         // Init the grids
-        _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
+        MapGrid = new GameObject[_mapSize.x, _mapSize.y];
         _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         // Init the offset
         //_mapOffset.x = _distance * _mapSize.x * .5f - (_distance * .5f);
@@ -101,7 +106,7 @@ public class MapManager : MonoBehaviour
                         // Change coords of the ground
                         go.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
                         // Update _mapGrid
-                        _mapGrid[j, sizeMap.x - 1 - i] = go;
+                        MapGrid[j, sizeMap.x - 1 - i] = go;
                         // Spawn anim
                         MapSpawnAnim(go);
                         break;
@@ -112,8 +117,17 @@ public class MapManager : MonoBehaviour
                             sizeMap.x - 1 - i);
                         go1.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
-                        _mapGrid[j, sizeMap.x - 1 - i] = go1;
+                        MapGrid[j, sizeMap.x - 1 - i] = go1;
                         MapSpawnAnim(go1);
+                        break;
+                    case WATER_FLOWING:
+                        GameObject go6 = Instantiate(_environment[5], _map.transform);
+                        go6.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
+                        go6.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+
+                        MapGrid[j, sizeMap.x - 1 - i] = go6;
+                        MapSpawnAnim(go6);
                         break;
                     case GROUND_NAV:
                         GameObject go3 = Instantiate(_environment[3], _map.transform);
@@ -124,12 +138,9 @@ public class MapManager : MonoBehaviour
                         go3.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
                         // Only this block create a NavMesh
                         NavigationBaker.Instance.surfaces.Add(go3.GetComponent<NavMeshSurface>());
-                        // // Init the spawn point coords
-                        // _coordsSpawnPoint = new Vector2(position.x, position.z);
-                        // print("_coordsSpawnPoint" + _coordsSpawnPoint);
                         _spawnPoint = go3;
 
-                        _mapGrid[j, sizeMap.x - 1 - i] = go3;
+                        MapGrid[j, sizeMap.x - 1 - i] = go3;
                         MapSpawnAnim(go3);
                         break;
                     case GROUND_HARD:
@@ -137,8 +148,17 @@ public class MapManager : MonoBehaviour
                         go2.transform.position = new Vector3(j, 0,
                             sizeMap.x - 1 - i);
 
-                        _mapGrid[j, sizeMap.x - 1 - i] = go2;
+                        MapGrid[j, sizeMap.x - 1 - i] = go2;
                         MapSpawnAnim(go2);
+                        break;
+                    case WATER_SOURCE:
+                        GameObject go5 = Instantiate(_environment[6], _map.transform);
+                        go5.transform.position = new Vector3(j, 0,
+                            sizeMap.x - 1 - i);
+                        go5.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+
+                        MapGrid[j, sizeMap.x - 1 - i] = go5;
+                        MapSpawnAnim(go5);
                         break;
                     case GROUND_CANT_BE_MOVE:
                         GameObject go4 = Instantiate(_environment[4], _map.transform);
@@ -146,7 +166,7 @@ public class MapManager : MonoBehaviour
                             sizeMap.x - 1 - i);
                         go4.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
-                        _mapGrid[j, sizeMap.x - 1 - i] = go4;
+                        MapGrid[j, sizeMap.x - 1 - i] = go4;
                         MapSpawnAnim(go4);
                         break;
                 }
@@ -164,6 +184,7 @@ public class MapManager : MonoBehaviour
         // Change the coords of the Player
         _player.GetComponent<PlayerMovement>()
             .ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
+        CheckWaterSource?.Invoke();
     }
 
     private void MapSpawnAnim(GameObject which)
@@ -193,8 +214,8 @@ public class MapManager : MonoBehaviour
     private void GroundSwap(GameObject which, Vector2Int newCoords)
     {
         // Update map
-        _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
-        _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
+        MapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
+        MapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
         // Change position
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
@@ -209,6 +230,7 @@ public class MapManager : MonoBehaviour
         ResetLastSelected();
         ResetLastSelectedPlayer();
         CheckAroundPlayer();
+        CheckWaterSource?.Invoke();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -227,19 +249,19 @@ public class MapManager : MonoBehaviour
             // Check if inside of array
             if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) continue;
             // Check if something exist
-            if (_mapGrid[newPos.x, newPos.y] == null) continue;
+            if (MapGrid[newPos.x, newPos.y] == null) continue;
             // Check if has GroundManager
-            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
+            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
             // Check if ground CanBeMoved
-            if (!_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
+            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
             // Check if not actually selected -> Security
-            if (_mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
+            if (MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
             // It's good
-            _mapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedSelected();
+            MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedSelected();
             // Update temp grid
             _tempGroundSelectedGrid[newPos.x, newPos.y] = 1;
             // Add to the_groundArounded list to reset mat after
-            _groundArounded.Add(_mapGrid[newPos.x, newPos.y]);
+            _groundArounded.Add(MapGrid[newPos.x, newPos.y]);
         }
     }
 
@@ -301,7 +323,7 @@ public class MapManager : MonoBehaviour
         // Check if inside of array
         if (newPos.x < 0 || newPos.x >= _mapSize.x || newPos.y < 0 || newPos.y >= _mapSize.y) return;
         // Check if something exist
-        var map = _mapGrid[newPos.x, newPos.y];
+        var map = MapGrid[newPos.x, newPos.y];
         if (map == null) return;
         // Check if has GroundManager
         if (!map.GetComponent<GroundManager>()) return;
@@ -310,7 +332,7 @@ public class MapManager : MonoBehaviour
         // Make it arounded
         map.GetComponent<GroundManager>().OnAroundedPlayer();
         // Add to the_groundAroundedPlayer list to reset mat after
-        _groundAroundedPlayer.Add(_mapGrid[newPos.x, newPos.y]);
+        _groundAroundedPlayer.Add(MapGrid[newPos.x, newPos.y]);
     }
 
     private void ResetLastSelected()

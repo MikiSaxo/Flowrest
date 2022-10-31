@@ -11,6 +11,7 @@ public class GroundManager : MonoBehaviour
     public Vector2Int GroundCoords = Vector2Int.zero;
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
+    [SerializeField] private GameObject _mesh;
 
     public bool IsSelected; // It's public for a security test -> Must be changed in the future
     private bool _isEntered;
@@ -52,7 +53,7 @@ public class GroundManager : MonoBehaviour
         // Prevent to change the mat if its actually selected
         if (IsSelected || !MapManager.IsEditMode || !CanBeMoved || !_isAroundedPlayer && !_isArounded) return;
         // Change mat and _isEntered
-        _indicator.GetComponent<MeshRenderer>().material = _groundMats[1];
+        ChangeMat(_indicator, 1);
         _isEntered = true;
     }
 
@@ -61,12 +62,28 @@ public class GroundManager : MonoBehaviour
         _isArounded = false;
         _isEntered = false;
         IsSelected = false;
-        _indicator.GetComponent<MeshRenderer>().material = _mat;
+        if (GetComponent<WaterFlowing>())
+        {
+            if (GetComponent<WaterFlowing>().IsWater)
+                GetComponent<WaterFlowing>().ActivateWater();
+            else
+                GetComponent<WaterFlowing>().DesactivateWater();
+        }
+        else
+            _indicator.GetComponent<MeshRenderer>().material = _mat;
     }
 
     public void ResetBaseMat()
     {
-        GetComponent<MeshRenderer>().material = _mat;
+        if (GetComponent<WaterFlowing>())
+        {
+            if (GetComponent<WaterFlowing>().IsWater)
+                GetComponent<WaterFlowing>().ActivateWater();
+            else
+                GetComponent<WaterFlowing>().DesactivateWater();
+        }
+        else
+            _mesh.GetComponent<MeshRenderer>().material = _mat;
     }
 
     private void OnLeaved()
@@ -74,7 +91,9 @@ public class GroundManager : MonoBehaviour
         // Prevent to change the mat if its actually selected
         if (IsSelected) return;
         // Put the aroundedMat if it was arounded else base mat
-        _indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[2] : _mat;
+        //_indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[2] : _mat;
+        ChangeMat(_indicator, _isArounded ? 2 : 0);
+
         // Reset _isEntered
         _isEntered = false;
     }
@@ -86,7 +105,7 @@ public class GroundManager : MonoBehaviour
         if (IsSelected) return;
         // Change the mat and call CheckIfSelected in the MapManager to swap or not        
         IsSelected = true;
-        _indicator.GetComponent<MeshRenderer>().material = _groundMats[3];
+        ChangeMat(_indicator, 3);
         MapManager.Instance.CheckIfGroundSelected(gameObject, GroundCoords);
     }
 
@@ -95,13 +114,13 @@ public class GroundManager : MonoBehaviour
         _isArounded = true;
         // Security if not already entered or selected
         if (_isArounded && !_isEntered && !IsSelected)
-            _indicator.GetComponent<MeshRenderer>().material = _groundMats[2];
+            ChangeMat(_indicator, 2);
     }
 
     public void OnAroundedPlayer()
     {
         _isAroundedPlayer = true;
-        GetComponent<MeshRenderer>().material = _groundMats[4];
+        ChangeMat(_mesh, 4);
     }
 
     private void Update()
@@ -112,5 +131,10 @@ public class GroundManager : MonoBehaviour
         // See if can't be in Update 
         if (_isEntered && !MapManager.IsEditMode)
             ResetMat();
+    }
+
+    public void ChangeMat(GameObject which, int mat)
+    {
+        which.GetComponent<MeshRenderer>().material = _groundMats[mat];
     }
 }
