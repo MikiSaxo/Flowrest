@@ -51,6 +51,23 @@ public class MapManager : MonoBehaviour
     private const char GROUND_CANT_BE_MOVE = 'C';
     private const char WATER_FLOWING = 'W';
     private const char WATER_SOURCE = 'S';
+    
+    private const char DIR_EO = '-';
+    private const char DIR_NS = 'I';
+    
+    private const char DIR_SE = 'Γ';
+    private const char DIR_NE = 'L';
+    private const char DIR_NO = '⅃';
+    private const char DIR_SO = 'ꓶ';
+    
+    private const char DIR_NSO = 'b';
+    private const char DIR_NEO = '⊥';
+    private const char DIR_NSE = 'd';
+    private const char DIR_SEO = 'T';
+    
+    private const char DIR_NSEO = '+';
+    
+    
 
     public event Action CheckWaterSource;
     public event Action ChangeModeEvent;
