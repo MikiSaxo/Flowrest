@@ -59,6 +59,7 @@ public class GroundManager : MonoBehaviour
         _isArounded = false;
         _isEntered = false;
         IsSelected = false;
+        _isAroundedPlayer = false;
         //if (GetComponent<WaterFlowing>())
         //{
             //if (GetComponent<WaterFlowing>().IsWater)
@@ -73,6 +74,7 @@ public class GroundManager : MonoBehaviour
 
     public void ResetBaseMat()
     {
+        _isAroundedPlayer = false;
         // if (GetComponent<WaterFlowing>())
         // {
         //     if (GetComponent<WaterFlowing>().IsWater)
