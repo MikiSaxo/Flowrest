@@ -11,9 +11,16 @@ public class WaterFlowing : MonoBehaviour
     public bool IsWater = false;
     public bool IsTreated = false;
 
+    public GameObject[] _waterDirectionsNSWE;
+    public WaterData waterData;
     private void Start()
     {
         WaterSourceManager.ResetTreatedWater += ResetTreated;
+        for (int i = 0; i < _waterDirectionsNSWE.Length; i++)
+        {
+            _waterDirectionsNSWE[i].SetActive(waterData.DirectionsNSWE[i]);
+            print(waterData.DirectionsNSWE[i]);
+        }
     }
 
     public void DesactivateWater()

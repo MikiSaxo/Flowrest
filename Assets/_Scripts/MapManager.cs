@@ -15,10 +15,12 @@ public class MapManager : MonoBehaviour
 {
     public static bool IsEditMode = false;
     public GameObject[,] MapGrid;
-    
+
     [Header("Setup")] [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _map = null;
+
     [SerializeField] private GameObject[] _environment = null;
+
     //[SerializeField] private float _distance = 0;
     [SerializeField] private TextMeshProUGUI _isEditModeText = null;
     [Range(1, 4)] [SerializeField] private int _distanceGroundAroundPlayer;
@@ -27,7 +29,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] private string _editModeString;
 
     private string[] _mapInfo;
+
     private Vector2Int _mapSize;
+
     //private Vector2 _mapOffset;
     private GameObject _lastGroundSelected;
     private Vector2Int _lastGroundCoordsSelected;
@@ -51,27 +55,27 @@ public class MapManager : MonoBehaviour
     private const char GROUND_CANT_BE_MOVE = 'C';
     private const char WATER_FLOWING = 'W';
     private const char WATER_SOURCE = 'S';
-    
-    private const char DIR_EO = '-';
-    private const char DIR_NS = 'I';
-    
-    private const char DIR_SE = 'Γ';
-    private const char DIR_NE = 'L';
-    private const char DIR_NO = '⅃';
-    private const char DIR_SO = 'ꓶ';
-    
-    private const char DIR_NSO = 'b';
-    private const char DIR_NEO = '⊥';
-    private const char DIR_NSE = 'd';
-    private const char DIR_SEO = 'T';
-    
-    private const char DIR_NSEO = '+';
-    
-    
 
+    private const char DIR_NS = 'I';
+    private const char DIR_WE = '-';
+
+    private const char DIR_NW = '⅃';
+    private const char DIR_NE = 'L';
+    private const char DIR_SW = '<';//ꓶ
+    private const char DIR_SE = 'Γ';
+
+    private const char DIR_NSW = 'b';
+    private const char DIR_NSE = 'd';
+    private const char DIR_NWE = '⊥';
+    private const char DIR_SWE = 'T';
+
+    private const char DIR_NSWE = '+';
+    //I-L⅃<Γbd⊥T+
+
+    public WaterData[] waterData;
     public event Action CheckWaterSource;
     public event Action ChangeModeEvent;
-        
+
     public static MapManager Instance;
 
     private void Awake()
@@ -118,81 +122,101 @@ public class MapManager : MonoBehaviour
                     case GROUND_WHITE:
                         // Instantiate the good ground into the map parent
                         GameObject go = Instantiate(_environment[0], _map.transform);
-                        // Tp ground to its position
-                        go.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-                        // Change coords of the ground
-                        go.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
-                        // Update _mapGrid
-                        MapGrid[j, sizeMap.x - 1 - i] = go;
-                        // Spawn anim
-                        MapSpawnAnim(go);
+                        InitObj(go, i, j, true);
                         break;
 
                     case GROUND_GREY:
                         GameObject go1 = Instantiate(_environment[1], _map.transform);
-                        go1.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-                        go1.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
-
-                        MapGrid[j, sizeMap.x - 1 - i] = go1;
-                        MapSpawnAnim(go1);
+                        InitObj(go1, i, j, true);
                         break;
-                    case WATER_FLOWING:
-                        GameObject go6 = Instantiate(_environment[5], _map.transform);
-                        go6.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-                        go6.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
 
-                        MapGrid[j, sizeMap.x - 1 - i] = go6;
-                        MapSpawnAnim(go6);
-                        break;
                     case GROUND_NAV:
                         GameObject go3 = Instantiate(_environment[3], _map.transform);
-                        var position = go3.transform.position;
-                        position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-                        go3.transform.position = position;
-                        go3.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+                        InitObj(go3, i, j, true);
                         // Only this block create a NavMesh
                         NavigationBaker.Instance.surfaces.Add(go3.GetComponent<NavMeshSurface>());
                         _spawnPoint = go3;
-
-                        MapGrid[j, sizeMap.x - 1 - i] = go3;
-                        MapSpawnAnim(go3);
                         break;
+
                     case GROUND_HARD:
                         GameObject go2 = Instantiate(_environment[2], _map.transform);
-                        go2.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-
-                        MapGrid[j, sizeMap.x - 1 - i] = go2;
-                        MapSpawnAnim(go2);
+                        InitObj(go2, i, j, false);
                         break;
                     case WATER_SOURCE:
                         GameObject go5 = Instantiate(_environment[6], _map.transform);
-                        go5.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
+                        InitObj(go5, i, j, false);
                         go5.GetComponent<WaterSourceManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
-
-                        MapGrid[j, sizeMap.x - 1 - i] = go5;
-                        MapSpawnAnim(go5);
                         break;
+
                     case GROUND_CANT_BE_MOVE:
                         GameObject go4 = Instantiate(_environment[4], _map.transform);
-                        go4.transform.position = new Vector3(j, 0,
-                            sizeMap.x - 1 - i);
-                        go4.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+                        InitObj(go4, i, j, true);
+                        break;
 
-                        MapGrid[j, sizeMap.x - 1 - i] = go4;
-                        MapSpawnAnim(go4);
+                    case WATER_FLOWING:
+                        GameObject go6 = Instantiate(_environment[5], _map.transform);
+                        InitObj(go6, i, j, true);
+                        break;
+                    case DIR_NS:
+                        GameObject ns = Instantiate(_environment[5], _map.transform);
+                        InitObj(ns, i, j, true);
+                        InitWater(ns, DIR_NS);
+                        break;
+                    case DIR_WE:
+                        GameObject we = Instantiate(_environment[5], _map.transform);
+                        InitObj(we, i, j, true);
+                        InitWater(we, DIR_WE);
+                        break;
+                    case DIR_NW:
+                        GameObject nw = Instantiate(_environment[5], _map.transform);
+                        InitObj(nw, i, j, true);
+                        InitWater(nw, DIR_NW);
+                        break;
+                    case DIR_NE:
+                        GameObject ne = Instantiate(_environment[5], _map.transform);
+                        InitObj(ne, i, j, true);
+                        InitWater(ne, DIR_NE);
+                        break;
+                    case DIR_SW:
+                        GameObject sw = Instantiate(_environment[5], _map.transform);
+                        InitObj(sw, i, j, true);
+                        InitWater(sw, DIR_SW);
+                        break;
+                    case DIR_SE:
+                        GameObject se = Instantiate(_environment[5], _map.transform);
+                        InitObj(se, i, j, true);
+                        InitWater(se, DIR_SE);
+                        break;
+                    case DIR_NSW:
+                        GameObject nsw = Instantiate(_environment[5], _map.transform);
+                        InitObj(nsw, i, j, true);
+                        InitWater(nsw, DIR_NSW);
+                        break;
+                    case DIR_NSE:
+                        GameObject nse = Instantiate(_environment[5], _map.transform);
+                        InitObj(nse, i, j, true);
+                        InitWater(nse, DIR_NSE);
+                        break;
+                    case DIR_NWE:
+                        GameObject nwe = Instantiate(_environment[5], _map.transform);
+                        InitObj(nwe, i, j, true);
+                        InitWater(nwe, DIR_NWE);
+                        break;
+                    case DIR_SWE:
+                        GameObject swe = Instantiate(_environment[5], _map.transform);
+                        InitObj(swe, i, j, true);
+                        InitWater(swe, DIR_SWE);
+                        break;
+                    case DIR_NSWE:
+                        GameObject nswe = Instantiate(_environment[5], _map.transform);
+                        InitObj(nswe, i, j, true);
+                        InitWater(nswe, DIR_NSWE);
                         break;
                 }
             }
         }
-
         // Rotate the map for the isometric view / need to do it after the creation or change the InitializeLevel
-        _map.transform.Rotate(new Vector3(0, 45, 0));
+        //_map.transform.Rotate(new Vector3(0, 45, 0));
         //Update spawn point coords
         _coordsSpawnPoint = new Vector2(_spawnPoint.transform.position.x, _spawnPoint.transform.position.z);
         // Build the NavMesh
@@ -201,9 +225,35 @@ public class MapManager : MonoBehaviour
         _player.SetActive(true);
         // Change the coords of the Player
         _player.GetComponent<PlayerMovement>()
-            .ChangeCoords(new Vector3(_coordsSpawnPoint.x - .9f, 0, _coordsSpawnPoint.y - .2f));
+            .ChangeCoords(new Vector3(_coordsSpawnPoint.x, 0, _coordsSpawnPoint.y));
         // Update map to clean the start
         StartCoroutine(InitMap2());
+    }
+
+    private void InitObj(GameObject which, int i, int j, bool hasGroundManager)
+    {
+        // Tp ground to its position
+        which.transform.position = new Vector3(j, 0, _mapSize.x - 1 - i);
+        // Change coords of the ground
+        if (hasGroundManager)
+            which.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, _mapSize.x - 1 - i));
+        // Update _mapGrid
+        MapGrid[j, _mapSize.x - 1 - i] = which;
+        // Spawn anim
+        MapSpawnAnim(which);
+    }
+
+    private void InitWater(GameObject which, char letter)
+    {
+        for (int i = 0; i < waterData.Length; i++)
+        {
+            if (waterData[i].WaterName == letter)
+            {
+                which.GetComponent<WaterFlowing>().waterData = waterData[i];
+                break;
+            }
+            Debug.LogWarning("Didn't find the good waterData");
+        }
     }
 
     IEnumerator InitMap2()
@@ -403,6 +453,7 @@ public class MapManager : MonoBehaviour
         {
             ground.GetComponent<GroundManager>().ResetBaseMat();
         }
+
         // Clear the _groundAroundedPlayer List
         _groundAroundedPlayer.Clear();
     }
