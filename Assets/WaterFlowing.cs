@@ -16,10 +16,10 @@ public class WaterFlowing : MonoBehaviour
     private void Start()
     {
         WaterSourceManager.ResetTreatedWater += ResetTreated;
+        //Activate and desactivate the directions 
         for (int i = 0; i < _waterDirectionsNSWE.Length; i++)
         {
             _waterDirectionsNSWE[i].SetActive(waterData.DirectionsNSWE[i]);
-            print(waterData.DirectionsNSWE[i]);
         }
     }
 
