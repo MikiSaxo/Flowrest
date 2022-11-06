@@ -56,30 +56,17 @@ public class WaterSourceManager : MonoBehaviour
 
             // Check if they have a common direction
             //if(nswe[0] != north && nswe[1] != south && nswe[2] != west && nswe[3] != east) continue;
-            bool block = false;
-            if (dir == _directions[0] && nswe[0] != south)
-            {
-                block = true;
+            if (dir == _directions[0] && (!nswe[1] || !north))
                 continue;
-            }
 
-            if (dir == _directions[1] && nswe[1] != north && !block)
-            {
-                block = true;
+            if (dir == _directions[1] && (!nswe[0] || !south))
                 continue;
-            }
 
-            if (dir == _directions[2] && nswe[2] != east && !block)
-            {
-                block = true;
+            if (dir == _directions[2] && (!nswe[3] || !west))
                 continue;
-            }
 
-            if (dir == _directions[3] && nswe[3] != west && !block)
-            {
-                block = true;
+            if (dir == _directions[3] && (!nswe[2] || !east))
                 continue;
-            }
 
             //print("north : " + nswe[0]);
             // print("west : " + nswe[2]);
