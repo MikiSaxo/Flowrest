@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GroundManager : MonoBehaviour
@@ -20,7 +21,8 @@ public class GroundManager : MonoBehaviour
 
     private void Start()
     {
-        MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
+            MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
         ResetMat();
         if(CanBeMoved)
             ResetBaseMat();
@@ -147,6 +149,7 @@ public class GroundManager : MonoBehaviour
 
     private void OnDisable()
     {
-        MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
+            MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
     }
 }

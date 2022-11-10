@@ -29,7 +29,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] private string _editModeString;
 
     private string[] _mapInfo;
-
     private Vector2Int _mapSize;
 
     //private Vector2 _mapOffset;
