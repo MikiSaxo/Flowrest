@@ -7,7 +7,8 @@ public class CameraPan : MonoBehaviour
 {
     private Camera _cam;
     private Vector3 _dragOrigin;
-
+    private bool _canZoom;
+    
     [SerializeField] private float zoomStep, minCamSize, maxCamSize;
 
     private void Start()
@@ -18,15 +19,16 @@ public class CameraPan : MonoBehaviour
     private void Update()
     {
         PanCamera();
-        Zoom();
+        if(_canZoom)
+            Zoom();
     }
 
     private void PanCamera()
     {
         // Get the startPos of the mouse
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(2))
             _dragOrigin = _cam.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(2))
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - _cam.ScreenToWorldPoint(Input.mousePosition);
@@ -48,5 +50,10 @@ public class CameraPan : MonoBehaviour
         float newSize = _cam.orthographicSize + zoomStep * whichZoom;
         // Change zoom and Block it if too much
         _cam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
-    } 
+    }
+
+    public void HasEnterredScrollBar(bool which)
+    {
+        _canZoom = !which;
+    }
 }

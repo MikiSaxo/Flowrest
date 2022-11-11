@@ -71,4 +71,9 @@ public class EditorManager : MonoBehaviour
         _mapSize.y += which;
         UpdateMap();
     }
+
+    public void ChooseGround(GameObject which)
+    {
+        print(which);
+    }
 }
