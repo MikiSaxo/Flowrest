@@ -13,7 +13,11 @@ using TMPro;
 
 public class MapManager : MonoBehaviour
 {
-    public static bool IsEditMode = false;
+    public WaterData[] waterData;
+    public event Action CheckWaterSource;
+    public event Action ChangeModeEvent;
+
+    public bool IsEditMode = false;
     public GameObject[,] MapGrid;
 
     [Header("Setup")] [SerializeField] private GameObject _player;
@@ -60,7 +64,7 @@ public class MapManager : MonoBehaviour
 
     private const char DIR_NW = '⅃';
     private const char DIR_NE = 'L';
-    private const char DIR_SW = '>';//ꓶ
+    private const char DIR_SW = '>'; //ꓶ
     private const char DIR_SE = 'Γ';
 
     private const char DIR_NSW = 'b';
@@ -70,10 +74,6 @@ public class MapManager : MonoBehaviour
 
     private const char DIR_NSWE = '+';
     //I-L⅃<Γbd⊥T+
-
-    public WaterData[] waterData;
-    public event Action CheckWaterSource;
-    public event Action ChangeModeEvent;
 
     public static MapManager Instance;
 
@@ -119,7 +119,7 @@ public class MapManager : MonoBehaviour
                 switch (whichEnvironment)
                 {
                     //Init GROUND
-                    
+
                     case GROUND_WHITE:
                         // Instantiate the good ground into the map parent
                         GameObject go = Instantiate(_environment[0], _map.transform);
@@ -155,72 +155,72 @@ public class MapManager : MonoBehaviour
                         break;
 
                     //Init WATER
-                    
+
                     // case WATER_FLOWING:
                     //     GameObject go6 = Instantiate(_environment[5], _map.transform);
                     //     InitObj(go6, i, j, true);
                     //     break;
-                    
+
                     case DIR_NS:
                         GameObject ns = Instantiate(_environment[5], _map.transform);
                         InitObj(ns, i, j, true);
                         InitWater(ns, DIR_NS);
                         break;
-                    
+
                     case DIR_WE:
                         GameObject we = Instantiate(_environment[5], _map.transform);
                         InitObj(we, i, j, true);
                         InitWater(we, DIR_WE);
                         break;
-                    
+
                     case DIR_NW:
                         GameObject nw = Instantiate(_environment[5], _map.transform);
                         InitObj(nw, i, j, true);
                         InitWater(nw, DIR_NW);
                         break;
-                    
+
                     case DIR_NE:
                         GameObject ne = Instantiate(_environment[5], _map.transform);
                         InitObj(ne, i, j, true);
                         InitWater(ne, DIR_NE);
                         break;
-                    
+
                     case DIR_SW:
                         GameObject sw = Instantiate(_environment[5], _map.transform);
                         InitObj(sw, i, j, true);
                         InitWater(sw, DIR_SW);
                         break;
-                    
+
                     case DIR_SE:
                         GameObject se = Instantiate(_environment[5], _map.transform);
                         InitObj(se, i, j, true);
                         InitWater(se, DIR_SE);
                         break;
-                    
+
                     case DIR_NSW:
                         GameObject nsw = Instantiate(_environment[5], _map.transform);
                         InitObj(nsw, i, j, true);
                         InitWater(nsw, DIR_NSW);
                         break;
-                    
+
                     case DIR_NSE:
                         GameObject nse = Instantiate(_environment[5], _map.transform);
                         InitObj(nse, i, j, true);
                         InitWater(nse, DIR_NSE);
                         break;
-                    
+
                     case DIR_NWE:
                         GameObject nwe = Instantiate(_environment[5], _map.transform);
                         InitObj(nwe, i, j, true);
                         InitWater(nwe, DIR_NWE);
                         break;
-                    
+
                     case DIR_SWE:
                         GameObject swe = Instantiate(_environment[5], _map.transform);
                         InitObj(swe, i, j, true);
                         InitWater(swe, DIR_SWE);
                         break;
-                    
+
                     case DIR_NSWE:
                         GameObject nswe = Instantiate(_environment[5], _map.transform);
                         InitObj(nswe, i, j, true);
@@ -229,6 +229,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+
         // Rotate the map for the isometric view / need to do it after the creation or change the InitializeLevel
         //_map.transform.Rotate(new Vector3(0, 45, 0));
         //Update spawn point coords

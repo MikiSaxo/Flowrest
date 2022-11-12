@@ -23,8 +23,10 @@ public class GroundManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
             MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
+        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+            EditorManager.Instance.ChangeModeEvent += OnActivateIndicator;
         ResetMat();
-        if(CanBeMoved)
+        if (CanBeMoved)
             ResetBaseMat();
     }
 
@@ -46,11 +48,12 @@ public class GroundManager : MonoBehaviour
     public void ChangeCoords(Vector2Int newCoords) // Change the coords of the ground
     {
         GroundCoords = newCoords;
-    } 
+    }
+
     private void OnEntered()
     {
         // Prevent to change the mat if its actually selected
-        if (IsSelected || !MapManager.IsEditMode || !CanBeMoved || !_isAroundedPlayer && !_isArounded) return;
+        if (IsSelected || !MapManager.Instance.IsEditMode || !CanBeMoved || !_isAroundedPlayer && !_isArounded) return;
         // Change mat and _isEntered
         ChangeMat(_indicator, 1);
         _isEntered = true;
@@ -62,30 +65,13 @@ public class GroundManager : MonoBehaviour
         _isEntered = false;
         IsSelected = false;
         _isAroundedPlayer = false;
-        //if (GetComponent<WaterFlowing>())
-        //{
-            //if (GetComponent<WaterFlowing>().IsWater)
-            //    GetComponent<WaterFlowing>().ActivateWater();
-            //else
-             //   GetComponent<WaterFlowing>().DesactivateWater();
-        //}
-       // else
-            ChangeMat(_indicator, 0);
 
+        ChangeMat(_indicator, 0);
     }
 
     public void ResetBaseMat()
     {
         _isAroundedPlayer = false;
-        // if (GetComponent<WaterFlowing>())
-        // {
-        //     if (GetComponent<WaterFlowing>().IsWater)
-        //         GetComponent<WaterFlowing>().ActivateWater();
-        //     else
-        //         GetComponent<WaterFlowing>().DesactivateWater();
-        // }
-        // else
-        //     _indicatorPlayerArounded.GetComponent<MeshRenderer>().material = _mat;
         _indicatorPlayerArounded.SetActive(false);
     }
 
@@ -94,7 +80,6 @@ public class GroundManager : MonoBehaviour
         // Prevent to change the mat if its actually selected
         if (IsSelected) return;
         // Put the aroundedMat if it was arounded else base mat
-        //_indicator.GetComponent<MeshRenderer>().material = _isArounded ? _groundMats[2] : _mat;
         ChangeMat(_indicator, _isArounded ? 2 : 0);
 
         // Reset _isEntered
@@ -133,7 +118,7 @@ public class GroundManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _isEntered)
             OnSelected();
         // See if can't be in Update 
-        if (_isEntered && !MapManager.IsEditMode)
+        if (_isEntered && !MapManager.Instance.IsEditMode)
             ResetMat();
     }
 
@@ -144,12 +129,17 @@ public class GroundManager : MonoBehaviour
 
     private void OnActivateIndicator()
     {
-        _indicator.SetActive(MapManager.IsEditMode);
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
+            _indicator.SetActive(MapManager.Instance.IsEditMode);
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+            _indicator.SetActive(EditorManager.Instance.IsEditMode);
     }
 
     private void OnDisable()
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
             MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+            EditorManager.Instance.ChangeModeEvent -= OnActivateIndicator;
     }
 }

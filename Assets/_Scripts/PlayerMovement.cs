@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        if (!MapManager.IsEditMode)
+        if (!MapManager.Instance.IsEditMode)
         {
             if (Input.GetMouseButton(0))
                 HandleMovement();
