@@ -316,8 +316,8 @@ GameObject:
   - component: {fileID: 749122555723810160}
   - component: {fileID: 749122555723810161}
   - component: {fileID: 749122555723810166}
-  - component: {fileID: 749122555723810167}
   - component: {fileID: 8049070787188821611}
+  - component: {fileID: 8280165968179414845}
   m_Layer: 5
   m_Name: WaterFlowingButton
   m_TagString: Untagged
@@ -454,24 +454,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &749122555723810167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749122555723810165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33ed5ed90a7c27545a9a4bd4141ee0ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _whichDirections: 01010101
-  _directions:
-  - {fileID: 749122555156746428}
-  - {fileID: 749122555211322554}
-  - {fileID: 749122555066380123}
-  - {fileID: 749122554865952292}
 --- !u!114 &8049070787188821611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -485,6 +467,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedIcon: {fileID: 4389828400966826462}
+--- !u!114 &8280165968179414845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749122555723810165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a375070035cf94ba739af92c90a583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whichDir: 01010101
+  _dir:
+  - {fileID: 749122555156746428}
+  - {fileID: 749122555211322554}
+  - {fileID: 749122555066380123}
+  - {fileID: 749122554865952292}
 --- !u!1 &1523317446917710149
 GameObject:
   m_ObjectHideFlags: 0
