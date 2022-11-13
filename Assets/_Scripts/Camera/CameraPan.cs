@@ -14,6 +14,7 @@ public class CameraPan : MonoBehaviour
     private void Start()
     {
         _cam = GetComponent<Camera>();
+        _canZoom = true;
     }
 
     private void Update()

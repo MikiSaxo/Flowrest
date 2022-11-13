@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1641407778129236049
 Transform:
   m_ObjectHideFlags: 0
@@ -259,11 +259,12 @@ GameObject:
   m_Component:
   - component: {fileID: 256559516163636947}
   - component: {fileID: 4670595885820115879}
-  - component: {fileID: 3431304790886468033}
   - component: {fileID: 4803144052230586784}
-  - component: {fileID: 4479613874682720392}
-  - component: {fileID: 7762693518744312445}
   - component: {fileID: -882638321983572530}
+  - component: {fileID: 619345877656445740}
+  - component: {fileID: 4479613874682720392}
+  - component: {fileID: 5238763158670564207}
+  - component: {fileID: 722444767394925383}
   m_Layer: 6
   m_Name: GroundNav
   m_TagString: Ground
@@ -297,48 +298,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6952714745084723905}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3431304790886468033
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6952714745084723905}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 4d7f86488d6afba498c55b0443f8955b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &4803144052230586784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -352,77 +311,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 0.95, z: 0.95}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4479613874682720392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6952714745084723905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae1ccaf50c8fedf4c90fb4e5db57c6e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CanBeMoved: 1
-  GroundCoords: {x: 0, y: 0}
-  _groundMats:
-  - {fileID: 2100000, guid: 4c493020757c05247938c730121fe65e, type: 2}
-  - {fileID: 2100000, guid: 01e556863adef3a409edfa71a2c94717, type: 2}
-  - {fileID: 2100000, guid: 4c25d0a02cd97014d8036b4ac34b4397, type: 2}
-  - {fileID: 2100000, guid: a4af07164d8ea124e8a0f506175fa8b2, type: 2}
-  _indicator: {fileID: 725936318054831091}
-  _indicatorPlayerArounded: {fileID: 689718191852626036}
-  IsSelected: 0
---- !u!114 &7762693518744312445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6952714745084723905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4479613874682720392}
-          m_TargetAssemblyTypeName: GroundManager, Assembly-CSharp
-          m_MethodName: OnEntered
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4479613874682720392}
-          m_TargetAssemblyTypeName: GroundManager, Assembly-CSharp
-          m_MethodName: OnSelected
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &-882638321983572530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,3 +341,68 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &619345877656445740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952714745084723905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50fbea1dcfe958740bec734b214a4938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4479613874682720392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952714745084723905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1ccaf50c8fedf4c90fb4e5db57c6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanBeMoved: 1
+  GroundCoords: {x: 0, y: 0}
+  _groundMats:
+  - {fileID: 2100000, guid: 4c493020757c05247938c730121fe65e, type: 2}
+  - {fileID: 2100000, guid: 01e556863adef3a409edfa71a2c94717, type: 2}
+  - {fileID: 2100000, guid: 4c25d0a02cd97014d8036b4ac34b4397, type: 2}
+  - {fileID: 2100000, guid: a4af07164d8ea124e8a0f506175fa8b2, type: 2}
+  _indicator: {fileID: 725936318054831091}
+  _indicatorPlayerArounded: {fileID: 689718191852626036}
+  IsSelected: 0
+--- !u!114 &5238763158670564207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952714745084723905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc184c26b9497d44ad0e350eb851a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroundCoords: {x: 0, y: 0}
+  _groundMats:
+  - {fileID: 2100000, guid: 4c493020757c05247938c730121fe65e, type: 2}
+  - {fileID: 2100000, guid: 01e556863adef3a409edfa71a2c94717, type: 2}
+  - {fileID: 2100000, guid: 4c25d0a02cd97014d8036b4ac34b4397, type: 2}
+  - {fileID: 2100000, guid: a4af07164d8ea124e8a0f506175fa8b2, type: 2}
+  _indicator: {fileID: 725936318054831091}
+--- !u!114 &722444767394925383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952714745084723905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa72fe99fefc9d04781e8546ca2ff9f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

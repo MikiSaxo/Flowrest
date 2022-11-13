@@ -22,6 +22,9 @@ public class EditorManager : MonoBehaviour
 
     private GameObject[,] _mapGrid;
     private List<GameObject> _tempGrid = new List<GameObject>();
+    private GameObject _lastGroundSelected;
+    private GameObject _lastUIGroundSelected;
+    private GameObject _lastButtonSelected;
 
     public static EditorManager Instance;
 
@@ -119,8 +122,55 @@ public class EditorManager : MonoBehaviour
         UpdateSizeMap();
     }
 
-    public void ChooseGround(GameObject which)
+    public void ChooseUIGround(GameObject which)
     {
-        print(which);
+        _lastUIGroundSelected = which;
+        ChangeGround();
+    }
+
+    public void ChangeActivatedButton(GameObject button)
+    {
+        if(_lastButtonSelected != null)
+            _lastButtonSelected.GetComponent<GroundUIButton>().NeedActivateSelectedIcon(false);
+
+        _lastButtonSelected = button;
+        
+        _lastButtonSelected.GetComponent<GroundUIButton>().NeedActivateSelectedIcon(true);
+    }
+
+    public void ChangeLastGroundSelected(GameObject which)
+    {
+        if (_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<GroundMainManager>().ResetMat();
+        
+        _lastGroundSelected = which;
+        ChangeGround();
+    }
+
+    private void ChangeGround()
+    {
+        if (_lastUIGroundSelected == null || _lastGroundSelected == null) return;
+
+        print("I get a swap");
+        
+        if(_lastUIGroundSelected.GetComponent<GroundWhite>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<GroundGrey>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<GroundRed>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<GroundHard>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<GroundNav>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<WaterSourceManager>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        else if(_lastUIGroundSelected.GetComponent<WaterFlowing>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+        
+        
+        _lastGroundSelected.GetComponent<GroundMainManager>().ResetMat();
+        _lastGroundSelected.GetComponent<GroundMainManager>().IsSelected = false;
+        _lastGroundSelected = null;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 
 public class WaterSourceManager : MonoBehaviour
 {
@@ -103,6 +104,14 @@ public class WaterSourceManager : MonoBehaviour
 
         // Clear the list for a future test
         _watered.Clear();
+    }
+    
+    public void EditorTransformTo(GameObject which)
+    {
+        GameObject go = Instantiate(which, transform.position, Quaternion.identity);
+        go.transform.parent = EditorLevelParent.Instance.gameObject.transform;
+        print("demo");
+        Destroy(gameObject);
     }
 
     private void OnDisable()

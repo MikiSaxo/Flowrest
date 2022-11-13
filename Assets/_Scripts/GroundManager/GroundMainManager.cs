@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-public class GroundManager : MonoBehaviour
+public class GroundMainManager : MonoBehaviour
 {
     public bool CanBeMoved = false;
     public Vector2Int GroundCoords = Vector2Int.zero;
@@ -19,12 +19,14 @@ public class GroundManager : MonoBehaviour
     private bool _isArounded;
     private bool _isAroundedPlayer;
 
+    private const int MainScene = 0;
+    private const int EditorScene = 1;
+
     private void Start()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
-            MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
-        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
-            EditorManager.Instance.ChangeModeEvent += OnActivateIndicator;
+        MapManager.Instance.ChangeModeEvent += OnActivateIndicator;
+        
+        OnActivateIndicator();
         ResetMat();
         if (CanBeMoved)
             ResetBaseMat();
@@ -52,11 +54,35 @@ public class GroundManager : MonoBehaviour
 
     private void OnEntered()
     {
+        // This line is called even if the script isn't enable -> let's try later if still useful
+        if(!GetComponent<GroundMainManager>().enabled)
+            return;
         // Prevent to change the mat if its actually selected
         if (IsSelected || !MapManager.Instance.IsEditMode || !CanBeMoved || !_isAroundedPlayer && !_isArounded) return;
         // Change mat and _isEntered
         ChangeMat(_indicator, 1);
         _isEntered = true;
+    }
+
+    private void OnLeaved()
+    {
+        // Prevent to change the mat if its actually selected
+        if (IsSelected) return;
+        // Put the aroundedMat if it was arounded else base mat
+        ChangeMat(_indicator, _isArounded ? 2 : 0);
+        // Reset _isEntered
+        _isEntered = false;
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void OnSelected()
+    {
+        // Don't need to recall this function if its actually selected
+        if (IsSelected) return;
+        // Change the mat and call CheckIfSelected in the MapManager to swap or not        
+        IsSelected = true;
+        ChangeMat(_indicator, 3);
+        MapManager.Instance.CheckIfGroundSelected(gameObject, GroundCoords);
     }
 
     public void ResetMat()
@@ -73,28 +99,6 @@ public class GroundManager : MonoBehaviour
     {
         _isAroundedPlayer = false;
         _indicatorPlayerArounded.SetActive(false);
-    }
-
-    private void OnLeaved()
-    {
-        // Prevent to change the mat if its actually selected
-        if (IsSelected) return;
-        // Put the aroundedMat if it was arounded else base mat
-        ChangeMat(_indicator, _isArounded ? 2 : 0);
-
-        // Reset _isEntered
-        _isEntered = false;
-    }
-
-    // ReSharper disable Unity.PerformanceAnalysis
-    private void OnSelected()
-    {
-        // Don't need to recall this function if its actually selected
-        if (IsSelected) return;
-        // Change the mat and call CheckIfSelected in the MapManager to swap or not        
-        IsSelected = true;
-        ChangeMat(_indicator, 3);
-        MapManager.Instance.CheckIfGroundSelected(gameObject, GroundCoords);
     }
 
     public void OnAroundedSelected()
@@ -129,17 +133,11 @@ public class GroundManager : MonoBehaviour
 
     private void OnActivateIndicator()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
-            _indicator.SetActive(MapManager.Instance.IsEditMode);
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
-            _indicator.SetActive(EditorManager.Instance.IsEditMode);
+        _indicator.SetActive(MapManager.Instance.IsEditMode);
     }
 
     private void OnDisable()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(0))
-            MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
-            EditorManager.Instance.ChangeModeEvent -= OnActivateIndicator;
+        MapManager.Instance.ChangeModeEvent -= OnActivateIndicator;
     }
 }

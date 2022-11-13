@@ -251,7 +251,7 @@ public class MapManager : MonoBehaviour
         which.transform.position = new Vector3(j, 0, _mapSize.x - 1 - i);
         // Change coords of the ground
         if (hasGroundManager)
-            which.GetComponent<GroundManager>().ChangeCoords(new Vector2Int(j, _mapSize.x - 1 - i));
+            which.GetComponent<GroundMainManager>().ChangeCoords(new Vector2Int(j, _mapSize.x - 1 - i));
         // Update _mapGrid
         MapGrid[j, _mapSize.x - 1 - i] = which;
         // Spawn anim
@@ -313,11 +313,11 @@ public class MapManager : MonoBehaviour
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
         // Change coords inside of GroundManager
-        _lastGroundSelected.GetComponent<GroundManager>().GroundCoords = newCoords;
-        which.GetComponent<GroundManager>().GroundCoords = _lastGroundCoordsSelected;
+        _lastGroundSelected.GetComponent<GroundMainManager>().GroundCoords = newCoords;
+        which.GetComponent<GroundMainManager>().GroundCoords = _lastGroundCoordsSelected;
         // Reset selection's color of the two Grounds
-        _lastGroundSelected.GetComponent<GroundManager>().ResetMat();
-        which.GetComponent<GroundManager>().ResetMat();
+        _lastGroundSelected.GetComponent<GroundMainManager>().ResetMat();
+        which.GetComponent<GroundMainManager>().ResetMat();
         // Reset selection
         ResetTempGrid();
         ResetLastSelected();
@@ -346,13 +346,13 @@ public class MapManager : MonoBehaviour
             // Check if something exist
             if (MapGrid[newPos.x, newPos.y] == null) continue;
             // Check if has GroundManager
-            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>()) continue;
+            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundMainManager>()) continue;
             // Check if ground CanBeMoved
-            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().CanBeMoved) continue;
+            if (!MapGrid[newPos.x, newPos.y].GetComponent<GroundMainManager>().CanBeMoved) continue;
             // Check if not actually selected -> Security
-            if (MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().IsSelected) continue;
+            if (MapGrid[newPos.x, newPos.y].GetComponent<GroundMainManager>().IsSelected) continue;
             // It's good
-            MapGrid[newPos.x, newPos.y].GetComponent<GroundManager>().OnAroundedSelected();
+            MapGrid[newPos.x, newPos.y].GetComponent<GroundMainManager>().OnAroundedSelected();
             // Update temp grid
             _tempGroundSelectedGrid[newPos.x, newPos.y] = 1;
             // Add to the_groundArounded list to reset mat after
@@ -423,11 +423,11 @@ public class MapManager : MonoBehaviour
         var map = MapGrid[newPos.x, newPos.y];
         if (map == null) return;
         // Check if has GroundManager
-        if (!map.GetComponent<GroundManager>()) return;
+        if (!map.GetComponent<GroundMainManager>()) return;
         // Check if ground CanBeMoved
-        if (!map.GetComponent<GroundManager>().CanBeMoved) return;
+        if (!map.GetComponent<GroundMainManager>().CanBeMoved) return;
         // Make it arounded
-        map.GetComponent<GroundManager>().OnAroundedPlayer();
+        map.GetComponent<GroundMainManager>().OnAroundedPlayer();
         // Add to the_groundAroundedPlayer list to reset mat after
         _groundAroundedPlayer.Add(MapGrid[newPos.x, newPos.y]);
     }
@@ -436,14 +436,14 @@ public class MapManager : MonoBehaviour
     {
         // Reset mat
         if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<GroundManager>().ResetMat();
+            _lastGroundSelected.GetComponent<GroundMainManager>().ResetMat();
         // Reset lastSelected and put big big coords to avoid problem with x = 0 or y =0
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = Vector2Int.one * IMPOSSIBLE_GROUND_COORDS;
         // Reset mat of all ground selected before
         foreach (var ground in _groundArounded)
         {
-            ground.GetComponent<GroundManager>().ResetMat();
+            ground.GetComponent<GroundMainManager>().ResetMat();
         }
 
         // Clear the _groundArounded List
@@ -467,7 +467,7 @@ public class MapManager : MonoBehaviour
         // Reset mat of all ground selected before
         foreach (var ground in _groundAroundedPlayer)
         {
-            ground.GetComponent<GroundManager>().ResetBaseMat();
+            ground.GetComponent<GroundMainManager>().ResetBaseMat();
         }
 
         // Clear the _groundAroundedPlayer List
