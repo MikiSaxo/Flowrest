@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 4479613874682720392}
   - component: {fileID: 6797184880415934403}
   - component: {fileID: 5045041525210565523}
+  - component: {fileID: -4017980565504793108}
   m_Layer: 6
   m_Name: W_Dir
   m_TagString: Ground
@@ -589,6 +590,23 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4c25d0a02cd97014d8036b4ac34b4397, type: 2}
   - {fileID: 2100000, guid: a4af07164d8ea124e8a0f506175fa8b2, type: 2}
   _indicator: {fileID: 3068298759894683022}
+--- !u!114 &-4017980565504793108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952714745084723905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634c6fa262dd4f94f8861e35eb6948da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waterDirectionsNSWE:
+  - {fileID: 2465813935676937521}
+  - {fileID: 4032576102565936306}
+  - {fileID: 7782523049884322361}
+  - {fileID: 503643304650355149}
 --- !u!1 &7782523049884322361
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +751,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3964c11c2e20c974c9530ac0e2fb77d3, type: 2}
+  - {fileID: 2100000, guid: b31e72cb74a52574c830d22ddb000ceb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -25,6 +25,7 @@ public class EditorManager : MonoBehaviour
     private GameObject _lastGroundSelected;
     private GameObject _lastUIGroundSelected;
     private GameObject _lastButtonSelected;
+    private bool[] _emptyWaterData;
 
     public static EditorManager Instance;
 
@@ -154,19 +155,19 @@ public class EditorManager : MonoBehaviour
         print("I get a swap");
         
         if(_lastUIGroundSelected.GetComponent<GroundWhite>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
         else if(_lastUIGroundSelected.GetComponent<GroundGrey>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
         else if(_lastUIGroundSelected.GetComponent<GroundRed>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
         else if(_lastUIGroundSelected.GetComponent<GroundHard>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
         else if(_lastUIGroundSelected.GetComponent<GroundNav>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
         else if(_lastUIGroundSelected.GetComponent<WaterSourceManager>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
-        else if(_lastUIGroundSelected.GetComponent<WaterFlowing>())
-            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected);
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _emptyWaterData);
+        else if (_lastUIGroundSelected.GetComponent<WaterFlowing>())
+            _lastGroundSelected.GetComponent<GroundEditorManager>().EditorTransformTo(_lastUIGroundSelected, _lastButtonSelected.GetComponent<EditorUIWaterButtonDir>().WhichDir);
         
         
         _lastGroundSelected.GetComponent<GroundMainManager>().ResetMat();

@@ -96,11 +96,14 @@ public class GroundEditorManager : MonoBehaviour
        _indicator.SetActive(EditorManager.Instance.IsEditMode);
     }
 
-    public void EditorTransformTo(GameObject which)
+    public void EditorTransformTo(GameObject which, bool[] waterData)
     {
         GameObject go = Instantiate(which, transform.position, Quaternion.identity);
         go.transform.parent = EditorLevelParent.Instance.gameObject.transform;
-        print("demo");
+        
+        if(go.GetComponent<WaterEditorManager>())
+            go.GetComponent<WaterEditorManager>().ChangeWaterDir(waterData);
+        
         Destroy(gameObject);
     }
 

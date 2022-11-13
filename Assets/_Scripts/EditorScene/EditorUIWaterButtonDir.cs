@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EditorUIWaterButtonDir : MonoBehaviour
 {
-    [SerializeField] private bool[] _whichDir;
+    public bool[] WhichDir;
     [SerializeField] private GameObject[] _dir;
     
     private void Start()
     {
-        for (int i = 0; i < _whichDir.Length; i++)
+        for (int i = 0; i < WhichDir.Length; i++)
         {
-            _dir[i].SetActive(_whichDir[i]);
+            _dir[i].SetActive(WhichDir[i]);
         }
     }
 }

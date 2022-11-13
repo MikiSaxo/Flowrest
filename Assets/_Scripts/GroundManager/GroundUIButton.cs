@@ -7,7 +7,6 @@ public class GroundUIButton : MonoBehaviour
 {
     [SerializeField] private GameObject _selectedIcon;
 
-
     private void Start()
     {
         NeedActivateSelectedIcon(false);

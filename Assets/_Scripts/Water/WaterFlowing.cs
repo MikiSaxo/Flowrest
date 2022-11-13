@@ -21,6 +21,7 @@ public class WaterFlowing : MonoBehaviour
         {
             _waterDirectionsNSWE[i].SetActive(waterData.DirectionsNSWE[i]);
         }
+        DesactivateWater();
     }
 
     public void DesactivateWater()
