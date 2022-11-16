@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 
 public class GroundEditorManager : MonoBehaviour
 {
+    public char _symbol;
     public Vector2Int GroundCoords = Vector2Int.zero;
     [SerializeField] private Material[] _groundMats;
     [SerializeField] private GameObject _indicator;
@@ -104,8 +105,11 @@ public class GroundEditorManager : MonoBehaviour
         if(go.GetComponent<WaterEditorManager>())
             go.GetComponent<WaterEditorManager>().ChangeWaterDir(waterData);
         
+        EditorManager.Instance.UpdateGridSwap(go, GroundCoords, go.GetComponent<GroundEditorManager>()._symbol);
+        
         Destroy(gameObject);
     }
+
 
     private void OnDisable()
     {

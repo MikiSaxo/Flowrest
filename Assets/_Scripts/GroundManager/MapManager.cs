@@ -62,7 +62,7 @@ public class MapManager : MonoBehaviour
     private const char DIR_NS = 'I';
     private const char DIR_WE = '-';
 
-    private const char DIR_NW = '⅃';
+    private const char DIR_NW = '/'; //⅃
     private const char DIR_NE = 'L';
     private const char DIR_SW = '>'; //ꓶ
     private const char DIR_SE = 'Γ';
@@ -85,7 +85,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // Get the text map
-        string map = Application.dataPath + "/Map-DontMove/Map.txt";
+        string map = Application.dataPath + "/Map-Init/Map.txt";
         _mapInfo = File.ReadAllLines(map);
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
@@ -143,11 +143,6 @@ public class MapManager : MonoBehaviour
                         GameObject go2 = Instantiate(_environment[2], _map.transform);
                         InitObj(go2, i, j, false);
                         break;
-                    case WATER_SOURCE:
-                        GameObject go5 = Instantiate(_environment[6], _map.transform);
-                        InitObj(go5, i, j, false);
-                        go5.GetComponent<WaterSourceManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
-                        break;
 
                     case GROUND_CANT_BE_MOVE:
                         GameObject go4 = Instantiate(_environment[4], _map.transform);
@@ -155,11 +150,11 @@ public class MapManager : MonoBehaviour
                         break;
 
                     //Init WATER
-
-                    // case WATER_FLOWING:
-                    //     GameObject go6 = Instantiate(_environment[5], _map.transform);
-                    //     InitObj(go6, i, j, true);
-                    //     break;
+                    case WATER_SOURCE:
+                        GameObject go5 = Instantiate(_environment[6], _map.transform);
+                        InitObj(go5, i, j, false);
+                        go5.GetComponent<WaterSourceManager>().ChangeCoords(new Vector2Int(j, sizeMap.x - 1 - i));
+                        break;
 
                     case DIR_NS:
                         GameObject ns = Instantiate(_environment[5], _map.transform);
@@ -268,7 +263,6 @@ public class MapManager : MonoBehaviour
                 which.GetComponent<WaterFlowing>().waterData = waterData[i];
                 break;
             }
-            // Debug.LogWarning("Didn't find the good waterData : " + letter);
         }
     }
 

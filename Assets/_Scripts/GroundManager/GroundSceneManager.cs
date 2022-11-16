@@ -16,7 +16,7 @@ public class GroundSceneManager : MonoBehaviour
                 if(GetComponent<WaterFlowing>()) GetComponent<WaterFlowing>().enabled = true;
                 if(GetComponent<WaterEditorManager>()) GetComponent<WaterEditorManager>().enabled = false;
                 GetComponent<GroundEditorManager>().enabled = false;
-                print("tempscene");
+                // print("tempscene");
                 break;
             case "LevelEditor":
                 if(GetComponent<WaterSourceManager>()) GetComponent<WaterSourceManager>().enabled = false;
@@ -24,7 +24,7 @@ public class GroundSceneManager : MonoBehaviour
                 if(GetComponent<WaterFlowing>()) GetComponent<WaterFlowing>().enabled = false;
                 if(GetComponent<WaterEditorManager>()) GetComponent<WaterEditorManager>().enabled = true;
                 GetComponent<GroundEditorManager>().enabled = true;
-                print("editorscene");
+                // print("editorscene");
                 break;
         }
     }
