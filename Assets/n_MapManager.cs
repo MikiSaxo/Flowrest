@@ -20,7 +20,7 @@ public class n_MapManager : MonoBehaviour
     [SerializeField] private GameObject[] _environment = null;
 
     private string[] _mapInfo;
-    private Vector2Int _mapSize;
+    public Vector2Int _mapSize;
 
     // private GameObject _lastGroundSelected;
     // private Vector2Int _lastGroundCoordsSelected;
@@ -79,13 +79,16 @@ public class n_MapManager : MonoBehaviour
                     case PLAINS:
                         GameObject plains = Instantiate(_environment[0], _map.transform);
                         InitObj(plains, x, y, 0);
+                        plains.GetComponent<GroundStateManager>().ChangeValuesStart(50, 20);
                         break;
                     case DESERT:
                         GameObject desert = Instantiate(_environment[0], _map.transform);
                         InitObj(desert, x, y, 1);
+                        desert.GetComponent<GroundStateManager>().ChangeValuesStart(0, 35);
                         break;
                     case WATER:
                         GameObject water = Instantiate(_environment[0], _map.transform);
+                        water.GetComponent<GroundStateManager>().ChangeValuesStart(100, 20);
                         InitObj(water, x, y, 2);
                         break;
                 }
@@ -99,7 +102,8 @@ public class n_MapManager : MonoBehaviour
         which.transform.position = new Vector3(x, 0, y);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeMaterials(materialNb);
-        // which.GetComponent<GroundMainManager>().ChangeCoords(new Vector2Int(j, _mapSize.x - 1 - i));
+        
+        which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         // Update _mapGrid
         MapGrid[x, y] = which;
     }
