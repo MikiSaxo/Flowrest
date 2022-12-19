@@ -9,7 +9,8 @@ public class CameraPan : MonoBehaviour
     private Vector3 _dragOrigin;
     private bool _canZoom;
     
-    [SerializeField] private float zoomStep, minCamSize, maxCamSize;
+    [SerializeField] private float _zoomStep;
+    [SerializeField] private Vector2Int _camSizeEnds;
 
     private void Start()
     {
@@ -48,9 +49,9 @@ public class CameraPan : MonoBehaviour
         // Get the good scroll 
         whichZoom = (Input.mouseScrollDelta.y < 0) ? whichZoom = 1 : whichZoom = -1;
 
-        float newSize = _cam.orthographicSize + zoomStep * whichZoom;
+        float newSize = _cam.orthographicSize + _zoomStep * whichZoom;
         // Change zoom and Block it if too much
-        _cam.orthographicSize = Mathf.Clamp(newSize, minCamSize, maxCamSize);
+        _cam.orthographicSize = Mathf.Clamp(newSize, _camSizeEnds.x, _camSizeEnds.y);
     }
 
     public void HasEnterredScrollBar(bool which)
