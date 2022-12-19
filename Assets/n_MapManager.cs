@@ -80,33 +80,29 @@ public class n_MapManager : MonoBehaviour
                 {
                     case PLAINS:
                         GameObject plains = Instantiate(_environment[0], _map.transform);
-                        InitObj(plains, x, y, 0);
-                        plains.GetComponent<GroundStateManager>().ChangeValues(50, 20);
-                        plains.GetComponent<GroundStateManager>().SwitchState(new GroundPlainsState());
+                        InitObj(plains, x, y);
+                        plains.GetComponent<GroundStateManager>().InitState(new GroundPlainsState());
                         break;
                     case DESERT:
                         GameObject desert = Instantiate(_environment[0], _map.transform);
-                        InitObj(desert, x, y, 1);
-                        desert.GetComponent<GroundStateManager>().ChangeValues(0, 35);
-                        desert.GetComponent<GroundStateManager>().SwitchState(new GroundDesertState());
+                        InitObj(desert, x, y);
+                        desert.GetComponent<GroundStateManager>().InitState(new GroundDesertState());
                         break;
                     case WATER:
                         GameObject water = Instantiate(_environment[0], _map.transform);
-                        water.GetComponent<GroundStateManager>().ChangeValues(100, 10);
-                        water.GetComponent<GroundStateManager>().SwitchState(new GroundWaterState());
-                        InitObj(water, x, y, 2);
+                        water.GetComponent<GroundStateManager>().InitState(new GroundWaterState());
+                        InitObj(water, x, y);
                         break;
                 }
             }
         }
     }
 
-    private void InitObj(GameObject which, int x, int y, int materialNb)
+    private void InitObj(GameObject which, int x, int y)
     {
         // Tp ground to its position
         which.transform.position = new Vector3(x, 0, y);
         // Change coords of the ground
-        which.GetComponent<GroundStateManager>().ChangeMaterials(materialNb);
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         // Update _mapGrid
         MapGrid[x, y] = which;

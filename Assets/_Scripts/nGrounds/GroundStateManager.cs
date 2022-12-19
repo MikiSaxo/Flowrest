@@ -16,6 +16,8 @@ public class GroundStateManager : MonoBehaviour
     public float Temperature;
     [Range(0, 100)] public float Humidity;
 
+    private float _test;
+
     private Vector2Int _coords;
     private float _temperatureAround;
     private float _humidityAround;
@@ -23,7 +25,14 @@ public class GroundStateManager : MonoBehaviour
 
     private void Start()
     {
+        n_MapManager.Instance.UpdateGround += CheckIfNeedUpdate;
         GetValuesAround();
+    }
+
+    public void InitState(GroundBaseState state)
+    {
+        state.InitState(this);
+        SwitchState(state);
     }
 
     private IEnumerator WaitToChange()
@@ -83,6 +92,20 @@ public class GroundStateManager : MonoBehaviour
         }
         StartCoroutine(WaitToChange());
     }
-    
-    
+
+    private void CheckIfNeedUpdate()
+    {
+        print("hello check");
+        if(Temperature >= 30 && Humidity <= 10)
+            SwitchState(new GroundDesertState());
+        if(Temperature is >= 0 and < 30 && Humidity is < 80 and > 10)
+            SwitchState(new GroundPlainsState());
+        if(Temperature >= 0 && Humidity >= 80)
+            SwitchState(new GroundWaterState());
+    }
+
+    private void OnDisable()
+    {
+        n_MapManager.Instance.UpdateGround -= CheckIfNeedUpdate;
+    }
 }
