@@ -7,7 +7,6 @@ public class GroundWaterState : GroundBaseState
     public override void EnterState(GroundStateManager ground)
     {
         Debug.Log("Water");
-
     }
     
     public override void UpdateState(GroundStateManager ground)

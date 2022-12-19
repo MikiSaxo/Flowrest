@@ -23,9 +23,13 @@ public class GroundStateManager : MonoBehaviour
 
     private void Start()
     {
-        currentState = PlainsState;
-        currentState.EnterState(this);
         GetValuesAround();
+    }
+
+    private IEnumerator WaitToChange()
+    {
+        yield return new WaitForSeconds(.01f);
+        ChangeValues(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround);
     }
 
     public void ChangeMaterials(int materialNb)
@@ -33,15 +37,8 @@ public class GroundStateManager : MonoBehaviour
         _groundMaterial.material = _materials[materialNb];
     }
 
-    public void ChangeValuesStart(float humidity, float temperature)
+    public void ChangeValues(float humidity, float temperature)
     {
-        Humidity = humidity;
-        Temperature = temperature;
-    }
-
-    IEnumerator ChangeValuesTiming(float humidity, float temperature)
-    {
-        yield return new WaitForSeconds(.01f);
         Humidity = humidity;
         Temperature = temperature;
     }
@@ -83,7 +80,9 @@ public class GroundStateManager : MonoBehaviour
                     .Humidity;
                 _countBlocAround++;
             }
-        }        
-        StartCoroutine(ChangeValuesTiming(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround));
+        }
+        StartCoroutine(WaitToChange());
     }
+    
+    
 }

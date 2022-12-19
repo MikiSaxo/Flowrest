@@ -7,7 +7,6 @@ public class GroundDesertState : GroundBaseState
     public override void EnterState(GroundStateManager ground)
     {
         Debug.Log("Desert");
-
     }
     
     public override void UpdateState(GroundStateManager ground)
