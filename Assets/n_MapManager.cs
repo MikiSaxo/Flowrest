@@ -101,7 +101,7 @@ public class n_MapManager : MonoBehaviour
     private void InitObj(GameObject which, int x, int y)
     {
         // Tp ground to its position
-        which.transform.position = new Vector3(x, 0, y);
+        which.transform.position = new Vector3(x*10, 0, y*10);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         // Update _mapGrid

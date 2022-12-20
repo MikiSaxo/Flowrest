@@ -10,17 +10,14 @@ public class GroundStateManager : MonoBehaviour
     public GroundDesertState DesertState = new GroundDesertState();
     public GroundWaterState WaterState = new GroundWaterState();
 
-    [SerializeField] private MeshRenderer _groundMaterial;
-    [SerializeField] private Material[] _materials;
-    [SerializeField] private GameObject _meshParent;
-    [SerializeField] private GameObject[] _meshes;
-    private GameObject _meshCurrent;
-
     public float Temperature;
     [Range(0, 100)] public float Humidity;
 
-    private float _test;
+    
+    [SerializeField] private GameObject _meshParent;
+    [SerializeField] private GameObject[] _meshes;
 
+    private GameObject _meshCurrent;
     private Vector2Int _coords;
     private float _temperatureAround;
     private float _humidityAround;
@@ -42,11 +39,6 @@ public class GroundStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.01f);
         ChangeValues(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround);
-    }
-
-    public void ChangeMaterials(int materialNb)
-    {
-        _groundMaterial.material = _materials[materialNb];
     }
 
     public void ChangeMesh(int meshNb)
