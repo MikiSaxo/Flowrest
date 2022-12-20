@@ -15,14 +15,15 @@ public class n_MapManager : MonoBehaviour
 {
     public event Action UpdateGround;
 
+    public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
+    public int LastNbButtonSelected;
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
 
     [SerializeField] private GameObject[] _environment = null;
 
     private string[] _mapInfo;
-    public Vector2Int _mapSize;
 
     // private GameObject _lastGroundSelected;
     // private Vector2Int _lastGroundCoordsSelected;
@@ -37,12 +38,13 @@ public class n_MapManager : MonoBehaviour
     // private Vector2Int[] _directionsTwo = new Vector2Int[]
     // { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
 
-    private const char PLAINS = 'P';
+    private const char PLAIN = 'P';
     private const char DESERT = 'D';
     private const char WATER = 'W';
 
 
     public static n_MapManager Instance;
+    private GameObject _lastButtonSelected;
 
     private void Awake()
     {
@@ -78,32 +80,30 @@ public class n_MapManager : MonoBehaviour
 
                 switch (whichEnvironment)
                 {
-                    case PLAINS:
+                    case PLAIN:
                         GameObject plains = Instantiate(_environment[0], _map.transform);
-                        InitObj(plains, x, y);
-                        plains.GetComponent<GroundStateManager>().InitState(new GroundPlainState());
+                        InitObj(plains, x, y, 0);
                         break;
                     case DESERT:
                         GameObject desert = Instantiate(_environment[0], _map.transform);
-                        InitObj(desert, x, y);
-                        desert.GetComponent<GroundStateManager>().InitState(new GroundDesertState());
+                        InitObj(desert, x, y, 1);
                         break;
                     case WATER:
                         GameObject water = Instantiate(_environment[0], _map.transform);
-                        water.GetComponent<GroundStateManager>().InitState(new GroundWaterState());
-                        InitObj(water, x, y);
+                        InitObj(water, x, y, 2);
                         break;
                 }
             }
         }
     }
 
-    private void InitObj(GameObject which, int x, int y)
+    private void InitObj(GameObject which, int x, int y, int stateNb)
     {
         // Tp ground to its position
-        which.transform.position = new Vector3(x*10, 0, y*10);
+        which.transform.position = new Vector3(x * 10, 0, y * 10);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
+        which.GetComponent<GroundStateManager>().InitState(stateNb);
         // Update _mapGrid
         MapGrid[x, y] = which;
     }
@@ -111,5 +111,17 @@ public class n_MapManager : MonoBehaviour
     public void UpdateMap()
     {
         UpdateGround?.Invoke();
+    }
+
+    public void ChangeActivatedButton(GameObject button)
+    {
+        if (_lastButtonSelected != null)
+            _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
+
+        _lastButtonSelected = button;
+
+        _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
+
+        LastNbButtonSelected = _lastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
     }
 }

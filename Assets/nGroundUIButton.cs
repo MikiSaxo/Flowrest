@@ -15,7 +15,7 @@ enum States
 public class nGroundUIButton : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] private States _states;
+    [SerializeField] private States _stateButton;
     [SerializeField] private TextMeshProUGUI _textButton;
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
@@ -25,13 +25,18 @@ public class nGroundUIButton : MonoBehaviour
 
     private void Start()
     {
-        _colorButton.color = _colors[(int)_states];
-        _textButton.text = _texts[(int)_states];
+        _colorButton.color = _colors[(int)_stateButton];
+        _textButton.text = _texts[(int)_stateButton];
         NeedActivateSelectedIcon(false);
     }
 
     public void NeedActivateSelectedIcon(bool which)
     {
         _selectedIcon.SetActive(which);
+    }
+
+    public int GetStateButton()
+    {
+        return (int)_stateButton;
     }
 }

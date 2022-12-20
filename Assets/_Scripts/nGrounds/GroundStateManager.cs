@@ -7,8 +7,9 @@ public class GroundStateManager : MonoBehaviour
 {
     public GroundBaseState currentState;
     public GroundPlainState plainState = new GroundPlainState();
-    public GroundDesertState DesertState = new GroundDesertState();
-    public GroundWaterState WaterState = new GroundWaterState();
+    public GroundDesertState desertState = new GroundDesertState();
+    public GroundWaterState waterState = new GroundWaterState();
+    private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
 
     public float Temperature;
     [Range(0, 100)] public float Humidity;
@@ -23,22 +24,37 @@ public class GroundStateManager : MonoBehaviour
     private float _humidityAround;
     private float _countBlocAround;
 
-    private void Start()
+
+    private void Awake()
     {
-        n_MapManager.Instance.UpdateGround += CheckIfNeedUpdate;
-        GetValuesAround();
+        _allState.Add(plainState);
+        _allState.Add(desertState);
+        _allState.Add(waterState);
     }
 
-    public void InitState(GroundBaseState state)
+    private void Start()
     {
-        state.InitState(this);
-        SwitchState(state);
+        n_MapManager.Instance.UpdateGround += GetValuesAround;
+    }
+
+    public void InitState(int stateNb)
+    {
+        _allState[stateNb].InitState(this);
+        ChangeState(stateNb);
+    }
+    
+    public void ChangeState(int whichState)
+    {
+        // SwitchState(_allState[whichState]);
+        currentState = _allState[whichState];
+        currentState.EnterState(this);
     }
 
     private IEnumerator WaitToChange()
     {
         yield return new WaitForSeconds(.01f);
         ChangeValues(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround);
+        CheckIfNeedUpdate();
     }
 
     public void ChangeMesh(int meshNb)
@@ -57,12 +73,6 @@ public class GroundStateManager : MonoBehaviour
     public void ChangeCoords(Vector2Int coords)
     {
         _coords = coords;
-    }
-
-    public void SwitchState(GroundBaseState state)
-    {
-        currentState = state;
-        state.EnterState(this);
     }
 
     private void GetValuesAround()
@@ -97,19 +107,22 @@ public class GroundStateManager : MonoBehaviour
 
     private void CheckIfNeedUpdate()
     {
-        print("hello check");
-        if(Temperature >= 30 && Humidity <= 10)
-            SwitchState(new GroundDesertState());
-        if(Temperature is >= 0 and < 30 && Humidity is < 80 and > 10)
-            SwitchState(new GroundPlainState());
-        if(Temperature >= 0 && Humidity >= 80)
-            SwitchState(new GroundWaterState());
-        
-        GetValuesAround();
+        switch (Temperature)
+        {
+            case >= 0 and < 30 when Humidity is < 80 and > 10:
+                ChangeState(0);
+                break;
+            case >= 30 when Humidity <= 10:
+                ChangeState(1);
+                break;
+            case >= 0 when Humidity >= 80:
+                ChangeState(2);
+                break;
+        }
     }
 
     private void OnDisable()
     {
-        n_MapManager.Instance.UpdateGround -= CheckIfNeedUpdate;
+        n_MapManager.Instance.UpdateGround -= GetValuesAround;
     }
 }

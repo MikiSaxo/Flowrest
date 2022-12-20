@@ -10,8 +10,7 @@ public class GroundPlainState : GroundBaseState
     }
     public override void EnterState(GroundStateManager ground)
     {
-        Debug.Log("Plains");
-        // ground.ChangeMaterials(0);
+        Debug.Log("Plain");
         ground.ChangeMesh(0);
     }
     

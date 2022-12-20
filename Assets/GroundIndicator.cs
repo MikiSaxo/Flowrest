@@ -7,6 +7,7 @@ public class GroundIndicator : MonoBehaviour
 {
     [SerializeField] private GameObject _parent;
     [SerializeField] private MeshRenderer _indicator;
+    private bool _isSelected;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,5 +23,12 @@ public class GroundIndicator : MonoBehaviour
         {
             _indicator.enabled = false;
         }
+    }
+
+    private void Update()
+    {
+        if (!_indicator.enabled || !Input.GetMouseButtonDown(0)) return;
+
+        gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastNbButtonSelected);
     }
 }

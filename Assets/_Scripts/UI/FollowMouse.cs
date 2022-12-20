@@ -12,7 +12,7 @@ public class FollowMouse : MonoBehaviour
         if (_plane.Raycast(ray, out var distance))
         {
             _worldPosition = ray.GetPoint(distance);
-            transform.position = _worldPosition;
+            transform.position = _worldPosition;// + new Vector3(0,3,0);
         }
     }
 }
