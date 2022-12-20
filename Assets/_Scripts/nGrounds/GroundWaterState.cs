@@ -12,7 +12,8 @@ public class GroundWaterState : GroundBaseState
     public override void EnterState(GroundStateManager ground)
     {
         Debug.Log("Water");
-        ground.ChangeMaterials(2);
+        // ground.ChangeMaterials(2);
+        ground.ChangeMesh(2);
     }
     
     public override void UpdateState(GroundStateManager ground)

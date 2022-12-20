@@ -11,7 +11,10 @@ public class GroundStateManager : MonoBehaviour
     public GroundWaterState WaterState = new GroundWaterState();
 
     [SerializeField] private MeshRenderer _groundMaterial;
-    [SerializeField] protected Material[] _materials;
+    [SerializeField] private Material[] _materials;
+    [SerializeField] private GameObject _meshParent;
+    [SerializeField] private GameObject[] _meshes;
+    private GameObject _meshCurrent;
 
     public float Temperature;
     [Range(0, 100)] public float Humidity;
@@ -44,6 +47,13 @@ public class GroundStateManager : MonoBehaviour
     public void ChangeMaterials(int materialNb)
     {
         _groundMaterial.material = _materials[materialNb];
+    }
+
+    public void ChangeMesh(int meshNb)
+    {
+        Destroy(_meshCurrent);
+        GameObject go = Instantiate(_meshes[meshNb], _meshParent.transform);
+        _meshCurrent = go;
     }
 
     public void ChangeValues(float humidity, float temperature)
@@ -102,6 +112,8 @@ public class GroundStateManager : MonoBehaviour
             SwitchState(new GroundPlainsState());
         if(Temperature >= 0 && Humidity >= 80)
             SwitchState(new GroundWaterState());
+        
+        GetValuesAround();
     }
 
     private void OnDisable()

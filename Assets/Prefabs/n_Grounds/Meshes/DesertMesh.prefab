@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614459207405979692}
-  - component: {fileID: 7614459207405979693}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: DesertMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,30 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7614459207405979693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614459207405979688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84a1cdca8f14f4c41a9c40e0285a036b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundMaterial: {fileID: 8060803911659229809}
-  _materials:
-  - {fileID: 2100000, guid: 44296127855659342a858bac5d8e1ac1, type: 2}
-  - {fileID: 2100000, guid: ba76381d5cda1f24ebbf8f4864f1b627, type: 2}
-  - {fileID: 2100000, guid: 4fa26edb5c040e14bbf7be714e2f4f1a, type: 2}
-  _meshParent: {fileID: 7994009417085831957}
-  _meshes:
-  - {fileID: 7614459207405979688, guid: e13e89a916c6a4543bdcf00ae38136e9, type: 3}
-  - {fileID: 7614459207405979688, guid: bab366c316d9293489035c781cc6da30, type: 3}
-  - {fileID: 7614459207405979688, guid: 022ef84a5ccf3274b97aec7569e7141b, type: 3}
-  Temperature: 0
-  Humidity: 0
 --- !u!1 &7994009417085831957
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +45,7 @@ GameObject:
   - component: {fileID: 8060803911659229809}
   - component: {fileID: 2310876562058867987}
   m_Layer: 0
-  m_Name: MeshParent
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +94,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ba76381d5cda1f24ebbf8f4864f1b627, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

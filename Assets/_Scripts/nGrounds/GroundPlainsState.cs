@@ -11,7 +11,8 @@ public class GroundPlainsState : GroundBaseState
     public override void EnterState(GroundStateManager ground)
     {
         Debug.Log("Plains");
-        ground.ChangeMaterials(0);
+        // ground.ChangeMaterials(0);
+        ground.ChangeMesh(0);
     }
     
     public override void UpdateState(GroundStateManager ground)
