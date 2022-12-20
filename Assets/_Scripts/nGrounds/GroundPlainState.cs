@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundPlainsState : GroundBaseState
+public class GroundPlainState : GroundBaseState
 {
     public override void InitState(GroundStateManager ground)
     {

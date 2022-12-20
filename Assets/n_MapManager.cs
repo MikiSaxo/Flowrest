@@ -81,7 +81,7 @@ public class n_MapManager : MonoBehaviour
                     case PLAINS:
                         GameObject plains = Instantiate(_environment[0], _map.transform);
                         InitObj(plains, x, y);
-                        plains.GetComponent<GroundStateManager>().InitState(new GroundPlainsState());
+                        plains.GetComponent<GroundStateManager>().InitState(new GroundPlainState());
                         break;
                     case DESERT:
                         GameObject desert = Instantiate(_environment[0], _map.transform);

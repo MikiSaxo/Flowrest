@@ -6,7 +6,7 @@ using UnityEngine;
 public class GroundStateManager : MonoBehaviour
 {
     public GroundBaseState currentState;
-    public GroundPlainsState PlainsState = new GroundPlainsState();
+    public GroundPlainState plainState = new GroundPlainState();
     public GroundDesertState DesertState = new GroundDesertState();
     public GroundWaterState WaterState = new GroundWaterState();
 
@@ -101,7 +101,7 @@ public class GroundStateManager : MonoBehaviour
         if(Temperature >= 30 && Humidity <= 10)
             SwitchState(new GroundDesertState());
         if(Temperature is >= 0 and < 30 && Humidity is < 80 and > 10)
-            SwitchState(new GroundPlainsState());
+            SwitchState(new GroundPlainState());
         if(Temperature >= 0 && Humidity >= 80)
             SwitchState(new GroundWaterState());
         
