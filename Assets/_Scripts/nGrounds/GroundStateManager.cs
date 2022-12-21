@@ -17,6 +17,7 @@ public class GroundStateManager : MonoBehaviour
     
     [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject[] _meshes;
+    [SerializeField] private GameObject _indicator;
 
     private GameObject _meshCurrent;
     private Vector2Int _coords;
@@ -119,6 +120,16 @@ public class GroundStateManager : MonoBehaviour
                 ChangeState(2);
                 break;
         }
+    }
+
+    public void OnSelected()
+    {
+        n_MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
+    } 
+
+    public void ResetMatIndicator()
+    {
+        _indicator.GetComponent<GroundIndicator>().ResetMat();
     }
 
     private void OnDisable()

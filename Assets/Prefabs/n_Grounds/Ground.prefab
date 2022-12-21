@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parent: {fileID: 7614459207405979688}
-  _indicator: {fileID: 8189506602370706067}
+  _mesh: {fileID: 8189506602370706067}
+  _mats:
+  - {fileID: 2100000, guid: 4a5bda53ccc48da498b356ae7b3d5bea, type: 2}
+  - {fileID: 2100000, guid: 75e269eb2102707409a549d2db76bcf8, type: 2}
 --- !u!65 &2372103015217847740
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165,6 +168,7 @@ MonoBehaviour:
   - {fileID: 7614459207405979688, guid: e13e89a916c6a4543bdcf00ae38136e9, type: 3}
   - {fileID: 7614459207405979688, guid: bab366c316d9293489035c781cc6da30, type: 3}
   - {fileID: 7614459207405979688, guid: 022ef84a5ccf3274b97aec7569e7141b, type: 3}
+  _indicator: {fileID: 2202029719449191839}
 --- !u!1 &7994009417085831957
 GameObject:
   m_ObjectHideFlags: 0

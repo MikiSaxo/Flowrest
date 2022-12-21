@@ -45,6 +45,9 @@ public class n_MapManager : MonoBehaviour
 
     public static n_MapManager Instance;
     private GameObject _lastButtonSelected;
+    private GameObject _lastGroundSelected;
+    private int[,] _tempGroundSelectedGrid;
+    private Vector2Int _lastGroundCoordsSelected;
 
     private void Awake()
     {
@@ -61,6 +64,7 @@ public class n_MapManager : MonoBehaviour
         _mapSize.y = _mapInfo.Length;
         // Init the grids
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
+        _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         // _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         InitializeLevel(_mapSize);
         // ResetLastSelected();
@@ -103,9 +107,18 @@ public class n_MapManager : MonoBehaviour
         which.transform.position = new Vector3(x * 10, 0, y * 10);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
+        //Init state of ground
         which.GetComponent<GroundStateManager>().InitState(stateNb);
         // Update _mapGrid
         MapGrid[x, y] = which;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ResetButtonSelected();
+        }
     }
 
     public void UpdateMap()
@@ -120,8 +133,64 @@ public class n_MapManager : MonoBehaviour
 
         _lastButtonSelected = button;
 
-        _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
+        if (_lastButtonSelected != null)
+        {
+            _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
+            LastNbButtonSelected = _lastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
+        }
+        else
+        {
+            LastNbButtonSelected = -1;
+        }
+    }
 
-        LastNbButtonSelected = _lastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
+    public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
+    {
+        if (LastNbButtonSelected >= 0) return;
+        
+        // If was checkAround -> go swap
+        if (_lastGroundSelected != null)
+            GroundSwap(which, newCoords);
+        else
+            CheckAroundGroundSelected(which, newCoords);
+    }
+
+    private void GroundSwap(GameObject which, Vector2Int newCoords)
+    {
+        // Update map
+        MapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
+        MapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
+        // Change position
+        (_lastGroundSelected.transform.position, which.transform.position) =
+            (which.transform.position, _lastGroundSelected.transform.position);
+        // Change coords inside of GroundManager
+        _lastGroundSelected.GetComponent<GroundStateManager>().ChangeCoords(newCoords);
+        which.GetComponent<GroundStateManager>().ChangeCoords(_lastGroundCoordsSelected);
+        // Reset selection's color of the two Grounds
+        _lastGroundSelected.GetComponent<GroundStateManager>().ResetMatIndicator();
+        which.GetComponent<GroundStateManager>().ResetMatIndicator();
+
+        //ResetLastSelected
+        ResetGroundSelected();
+    }
+
+    private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
+    {
+        // Reset to start from scratch
+        ResetGroundSelected();
+        // Update lastSelected if need to call Swap() after
+        _lastGroundSelected = which;
+        _lastGroundCoordsSelected = coords;
+    }
+
+    private void ResetButtonSelected()
+    {
+        ChangeActivatedButton(null);
+    }
+
+    public void ResetGroundSelected()
+    {
+        _lastGroundSelected = null;
+        _lastGroundCoordsSelected = new Vector2Int(-1, -1);
     }
 }
