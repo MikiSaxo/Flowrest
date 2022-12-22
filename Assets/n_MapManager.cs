@@ -137,9 +137,12 @@ public class n_MapManager : MonoBehaviour
         {
             LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
             LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
+            FollowMouseDND.Instance.CanMove = true;
         }
         else
+        {
             LastNbButtonSelected = -1;
+        }
     }
 
     public bool CanPoseBloc()
@@ -149,13 +152,13 @@ public class n_MapManager : MonoBehaviour
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<nGroundUIButton>().ChangeNumberLeft(1);
+        LastButtonSelected.GetComponent<nGroundUIButton>().ChangeNumberLeft(-1);
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
     {
         if (LastButtonSelected != null) return;
-        
+
         // If was checkAround -> go swap
         if (_lastGroundSelected != null)
             GroundSwap(which, newCoords);
@@ -191,7 +194,7 @@ public class n_MapManager : MonoBehaviour
         _lastGroundCoordsSelected = coords;
     }
 
-    private void ResetButtonSelected()
+    public void ResetButtonSelected()
     {
         ChangeActivatedButton(null);
     }

@@ -36,13 +36,27 @@ public class GroundIndicator : MonoBehaviour
             n_MapManager.Instance.ResetGroundSelected();
         }
         
+        
+        
+        if (_mesh.enabled && n_MapManager.Instance.LastButtonSelected != null && Input.GetMouseButtonUp(0))
+        {
+            print("hello");
+            if (!n_MapManager.Instance.CanPoseBloc()) return;
+            
+            if(gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc == n_MapManager.Instance.LastNbButtonSelected) return;
+            
+            gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastNbButtonSelected);
+            n_MapManager.Instance.DecreaseNumberButton();
+        } 
+
+        
         if (!_mesh.enabled || !Input.GetMouseButtonDown(0)) return;
 
         if (n_MapManager.Instance.LastButtonSelected != null)
         {
             if (!n_MapManager.Instance.CanPoseBloc()) return;
             
-            if(gameObject.GetComponentInParent<GroundStateManager>().IDofBloc == n_MapManager.Instance.LastNbButtonSelected) return;
+            if(gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc == n_MapManager.Instance.LastNbButtonSelected) return;
             
             gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastNbButtonSelected);
             n_MapManager.Instance.DecreaseNumberButton();

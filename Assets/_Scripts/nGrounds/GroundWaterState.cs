@@ -14,7 +14,7 @@ public class GroundWaterState : GroundBaseState
         Debug.Log("Water");
         // ground.ChangeMaterials(2);
         ground.ChangeMesh(2);
-        ground.IDofBloc = 2;
+        ground.IdOfBloc = 2;
     }   
         
 

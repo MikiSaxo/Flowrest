@@ -6,7 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-enum States
+public enum States
 {
     Plain = 0,
     Desert = 1,
@@ -16,22 +16,24 @@ enum States
 public class nGroundUIButton : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] private States _stateButton;
+    public States _stateButton;
     [SerializeField] private TextMeshProUGUI _textButton;
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
-    [SerializeField] private int _numberGroundLeft;
-    [Header("Possibilities")]
-    [SerializeField] private string[] _texts;
-    [SerializeField] private Color[] _colors;
+    private int _numberGroundLeft;
 
     private void Start()
     {
-        _colorButton.color = _colors[(int)_stateButton];
-        _textButton.text = _texts[(int)_stateButton];
-        ChangeNumberLeft(0);
         NeedActivateSelectedIcon(false);
+    }
+
+    public void Setup(string text, Color color, int nbLeft, States stat)
+    {
+        _colorButton.color = color;
+        _textButton.text = text;
+        ChangeNumberLeft(nbLeft);
+        _stateButton = stat;
     }
 
     public void NeedActivateSelectedIcon(bool which)
@@ -51,7 +53,7 @@ public class nGroundUIButton : MonoBehaviour
 
     public void ChangeNumberLeft(int decrease)
     {
-        _numberGroundLeft -= decrease;
+        _numberGroundLeft += decrease;
         _textNumber.text = $"{_numberGroundLeft}";
     }
 }

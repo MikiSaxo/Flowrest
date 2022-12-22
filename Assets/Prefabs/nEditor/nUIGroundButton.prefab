@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 1525715783595064052}
   - component: {fileID: 1525715783595064053}
   - component: {fileID: 5254200288469587314}
+  - component: {fileID: 8763707070626664221}
   m_Layer: 5
   m_Name: nUIGroundButton
   m_TagString: Untagged
@@ -413,14 +414,27 @@ MonoBehaviour:
   _colorButton: {fileID: 349332535679030084}
   _selectedIcon: {fileID: 869980057896760849}
   _textNumber: {fileID: 1353062381636130576}
-  _texts:
-  - Plain
-  - Desert
-  - Water
-  _colors:
-  - {r: 0.0627451, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0.7921569, b: 0, a: 1}
-  - {r: 0, g: 0.16078432, b: 1, a: 1}
+--- !u!114 &8763707070626664221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525715783595064055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &6597583094193149348
 GameObject:
   m_ObjectHideFlags: 0

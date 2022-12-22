@@ -13,7 +13,7 @@ public class GroundDesertState : GroundBaseState
         Debug.Log("Desert");
         //ground.ChangeMaterials(1);
         ground.ChangeMesh(1);
-        ground.IDofBloc = 1;
+        ground.IdOfBloc = 1;
     }
     
     public override void UpdateState(GroundStateManager ground)
