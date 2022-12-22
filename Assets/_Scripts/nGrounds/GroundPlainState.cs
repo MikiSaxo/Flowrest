@@ -12,6 +12,7 @@ public class GroundPlainState : GroundBaseState
     {
         Debug.Log("Plain");
         ground.ChangeMesh(0);
+        ground.IDofBloc = 0;
     }
     
     public override void UpdateState(GroundStateManager ground)

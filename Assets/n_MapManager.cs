@@ -44,7 +44,7 @@ public class n_MapManager : MonoBehaviour
 
 
     public static n_MapManager Instance;
-    private GameObject _lastButtonSelected;
+    public GameObject LastButtonSelected;
     private GameObject _lastGroundSelected;
     private int[,] _tempGroundSelectedGrid;
     private Vector2Int _lastGroundCoordsSelected;
@@ -128,25 +128,33 @@ public class n_MapManager : MonoBehaviour
 
     public void ChangeActivatedButton(GameObject button)
     {
-        if (_lastButtonSelected != null)
-            _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
+        if (LastButtonSelected != null)
+            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
 
-        _lastButtonSelected = button;
+        LastButtonSelected = button;
 
-        if (_lastButtonSelected != null)
+        if (LastButtonSelected != null)
         {
-            _lastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
-            LastNbButtonSelected = _lastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
+            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
+            LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
         }
         else
-        {
             LastNbButtonSelected = -1;
-        }
+    }
+
+    public bool CanPoseBloc()
+    {
+        return LastButtonSelected.GetComponent<nGroundUIButton>().GetNumberLeft() > 0;
+    }
+
+    public void DecreaseNumberButton()
+    {
+        LastButtonSelected.GetComponent<nGroundUIButton>().ChangeNumberLeft(1);
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
     {
-        if (LastNbButtonSelected >= 0) return;
+        if (LastButtonSelected != null) return;
         
         // If was checkAround -> go swap
         if (_lastGroundSelected != null)

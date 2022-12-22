@@ -9,6 +9,7 @@ public class GroundStateManager : MonoBehaviour
     public GroundPlainState plainState = new GroundPlainState();
     public GroundDesertState desertState = new GroundDesertState();
     public GroundWaterState waterState = new GroundWaterState();
+    public int IDofBloc;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
 
     public float Temperature;
