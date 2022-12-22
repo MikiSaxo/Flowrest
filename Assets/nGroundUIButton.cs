@@ -21,6 +21,7 @@ public class nGroundUIButton : MonoBehaviour
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
+
     private int _numberGroundLeft;
 
     private void Start()

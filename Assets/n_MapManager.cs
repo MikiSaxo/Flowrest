@@ -18,6 +18,7 @@ public class n_MapManager : MonoBehaviour
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
     public int LastNbButtonSelected;
+    public bool IsDragNDrop;
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
 
@@ -129,18 +130,22 @@ public class n_MapManager : MonoBehaviour
     public void ChangeActivatedButton(GameObject button)
     {
         if (LastButtonSelected != null)
+        {
             LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
-
+        }
+        
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
+            IsDragNDrop = false;
             LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
             LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
             FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
+            IsDragNDrop = true;
             LastNbButtonSelected = -1;
         }
     }
