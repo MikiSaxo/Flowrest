@@ -13,42 +13,37 @@ using TMPro;
 
 public class n_MapManager : MonoBehaviour
 {
+    public static n_MapManager Instance;
+    
     public event Action UpdateGround;
 
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
-    public int LastNbButtonSelected;
-    public bool IsDragNDrop;
+    public int LastNbButtonSelected { get; set; }
+    public GameObject LastButtonSelected { get; set; }
+    public bool IsGroundFirstSelected { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
 
-    [SerializeField] private GameObject[] _environment = null;
+    [SerializeField] private GameObject _groundPrefab = null;
 
+    private bool _isDragNDrop;
     private string[] _mapInfo;
-
-    // private GameObject _lastGroundSelected;
-    // private Vector2Int _lastGroundCoordsSelected;
-    // private int[,] _tempGroundSelectedGrid;
-
-    // private List<GameObject> _groundArounded = new List<GameObject>();
-    // private List<GameObject> _groundAroundedPlayer = new List<GameObject>();
+    private Vector2Int _lastGroundCoordsSelected;
+    private GameObject _lastGroundSelected;
 
     // private Vector2Int[] _directionsOne = new Vector2Int[]
     // { new(0, 0), new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
 
     // private Vector2Int[] _directionsTwo = new Vector2Int[]
     // { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
+    
+    // public int _lastNbButtonSelected;
+    // private int[,] _tempGroundSelectedGrid;
 
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
     private const char WATER = 'W';
-
-
-    public static n_MapManager Instance;
-    public GameObject LastButtonSelected;
-    private GameObject _lastGroundSelected;
-    private int[,] _tempGroundSelectedGrid;
-    private Vector2Int _lastGroundCoordsSelected;
 
     private void Awake()
     {
@@ -65,7 +60,7 @@ public class n_MapManager : MonoBehaviour
         _mapSize.y = _mapInfo.Length;
         // Init the grids
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
-        _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
+        //_tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         // _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
         InitializeLevel(_mapSize);
         // ResetLastSelected();
@@ -86,15 +81,15 @@ public class n_MapManager : MonoBehaviour
                 switch (whichEnvironment)
                 {
                     case PLAIN:
-                        GameObject plains = Instantiate(_environment[0], _map.transform);
+                        GameObject plains = Instantiate(_groundPrefab, _map.transform);
                         InitObj(plains, x, y, 0);
                         break;
                     case DESERT:
-                        GameObject desert = Instantiate(_environment[0], _map.transform);
+                        GameObject desert = Instantiate(_groundPrefab, _map.transform);
                         InitObj(desert, x, y, 1);
                         break;
                     case WATER:
-                        GameObject water = Instantiate(_environment[0], _map.transform);
+                        GameObject water = Instantiate(_groundPrefab, _map.transform);
                         InitObj(water, x, y, 2);
                         break;
                 }
@@ -116,7 +111,7 @@ public class n_MapManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)) // Right click to Reset
         {
             ResetButtonSelected();
         }
@@ -127,25 +122,26 @@ public class n_MapManager : MonoBehaviour
         UpdateGround?.Invoke();
     }
 
-    public void ChangeActivatedButton(GameObject button)
+    public void ChangeActivatedButton(GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
     {
-        if (LastButtonSelected != null)
-        {
-            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
-        }
+        if (IsGroundFirstSelected) return;
         
+        if (LastButtonSelected != null) // Deactivate the last one selected 
+            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
+        
+        // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
-            IsDragNDrop = false;
+            _isDragNDrop = false;
             LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
             LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
             FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
-            IsDragNDrop = true;
+            _isDragNDrop = true;
             LastNbButtonSelected = -1;
         }
     }
@@ -185,8 +181,8 @@ public class n_MapManager : MonoBehaviour
         // Reset selection's color of the two Grounds
         _lastGroundSelected.GetComponent<GroundStateManager>().ResetMatIndicator();
         which.GetComponent<GroundStateManager>().ResetMatIndicator();
-
         //ResetLastSelected
+        IsGroundFirstSelected = false;
         ResetGroundSelected();
     }
 
@@ -208,5 +204,10 @@ public class n_MapManager : MonoBehaviour
     {
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
+    }
+
+    public bool GetIsDragNDrop()
+    {
+        return _isDragNDrop;
     }
 }

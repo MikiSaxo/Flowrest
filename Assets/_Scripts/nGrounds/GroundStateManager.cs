@@ -5,21 +5,23 @@ using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
 {
-    public GroundBaseState currentState;
-    public GroundPlainState plainState = new GroundPlainState();
-    public GroundDesertState desertState = new GroundDesertState();
-    public GroundWaterState waterState = new GroundWaterState();
-    public int IdOfBloc;
-    private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
-
+    private GroundBaseState currentState;
+    private GroundPlainState plainState = new GroundPlainState();
+    private GroundDesertState desertState = new GroundDesertState();
+    private GroundWaterState waterState = new GroundWaterState();
+    public int IdOfBloc { get; set; }
+    
+    
+    [Header("Setup")]
+    [SerializeField] private GameObject _meshParent;
+    [SerializeField] private GameObject _indicator;
+    [SerializeField] private GameObject[] _meshes;
+    
+    [Header("Characteristics")]
     public float Temperature;
     [Range(0, 100)] public float Humidity;
 
-    
-    [SerializeField] private GameObject _meshParent;
-    [SerializeField] private GameObject[] _meshes;
-    [SerializeField] private GameObject _indicator;
-
+    private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private GameObject _meshCurrent;
     private Vector2Int _coords;
     private float _temperatureAround;
@@ -44,8 +46,8 @@ public class GroundStateManager : MonoBehaviour
         _allState[stateNb].InitState(this);
         ChangeState(stateNb);
     }
-    
-    public void ChangeState(int whichState)
+
+    private void ChangeState(int whichState)
     {
         currentState = _allState[whichState];
         currentState.EnterState(this);
@@ -76,7 +78,7 @@ public class GroundStateManager : MonoBehaviour
         _coords = coords;
     }
 
-    private void GetValuesAround()
+    private void GetValuesAround() // Get the average temperature and humidity from his 8 neighbors
     {
         _temperatureAround = 0;
         _humidityAround = 0;
@@ -106,7 +108,7 @@ public class GroundStateManager : MonoBehaviour
         StartCoroutine(WaitToChange());
     }
 
-    private void CheckIfNeedUpdate()
+    private void CheckIfNeedUpdate() // "System" to transform bloc's state according to its temperature and humidity
     {
         switch (Temperature)
         {
@@ -122,12 +124,12 @@ public class GroundStateManager : MonoBehaviour
         }
     }
 
-    public void OnSelected()
+    public void OnSelected() // When bloc is Selected by the player
     {
         n_MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
     } 
 
-    public void ResetMatIndicator()
+    public void ResetMatIndicator() // Bridge to the indicator and Map_Manager
     {
         _indicator.GetComponent<GroundIndicator>().ResetMat();
     }

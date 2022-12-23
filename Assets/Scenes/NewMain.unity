@@ -756,11 +756,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapSize: {x: 0, y: 0}
-  LastNbButtonSelected: -1
   _map: {fileID: 29539077}
-  _environment:
-  - {fileID: 7614459207405979688, guid: 43222f3ab385a764797777fcbf48a1e6, type: 3}
-  LastButtonSelected: {fileID: 0}
+  _groundPrefab: {fileID: 7614459207405979688, guid: 43222f3ab385a764797777fcbf48a1e6, type: 3}
 --- !u!4 &536137395
 Transform:
   m_ObjectHideFlags: 0
@@ -945,11 +942,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateFB
+      value: UpdateFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndFB
+      value: EndFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1462,11 +1459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateFB
+      value: UpdateFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndFB
+      value: EndFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1800,11 +1797,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateFB
+      value: UpdateFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndFB
+      value: EndFb
       objectReference: {fileID: 0}
     - target: {fileID: 8763707070626664221, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

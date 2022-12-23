@@ -8,11 +8,15 @@ public class FollowMouse : MonoBehaviour
     Plane _plane = new Plane(Vector3.up, 0);
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (_plane.Raycast(ray, out var distance))
+        if (Camera.main != null)
         {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
+            if (!_plane.Raycast(ray, out var distance)) return;
+            
             _worldPosition = ray.GetPoint(distance);
-            transform.position = _worldPosition;// + new Vector3(0,3,0);
         }
+
+        transform.position = _worldPosition;
     }
 }
