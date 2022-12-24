@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class SetupUIGround : MonoBehaviour
@@ -17,6 +18,9 @@ public class SetupUIGround : MonoBehaviour
     [SerializeField] private int[] _nbLeft;
     [SerializeField] private States[] _groundState;
 
+    [Header("Anims")]
+    [SerializeField] private Vector2 _bounceValues;
+    
     private void Awake()
     {
         Instance = this;
@@ -45,5 +49,20 @@ public class SetupUIGround : MonoBehaviour
 
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();
+    }
+
+    public void BounceButtonAnim(GameObject obj)
+    {
+        AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
+    }
+
+    public void MouseEnterButton(GameObject obj)
+    {
+        obj.transform.DOScale(Vector3.one * 1.1f, _bounceValues.x);
+    }
+
+    public void MouseLeaveButton(GameObject obj)
+    {
+        obj.transform.DOScale(Vector3.one, _bounceValues.y);
     }
 }
