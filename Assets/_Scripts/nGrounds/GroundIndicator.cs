@@ -30,6 +30,7 @@ public class GroundIndicator : MonoBehaviour
     {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
         
+        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _mesh.enabled = true;
             
         if (_isSelected) return;
@@ -39,13 +40,11 @@ public class GroundIndicator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (_isSelected) return;
-        
-        if (other.gameObject.GetComponentInParent<FollowMouse>())
-        {
-            _mesh.enabled = false;
-            MoveYMesh(_startYPos, .1f);
-        }
+        if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
+
+        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
+        _mesh.enabled = false;
+        MoveYMesh(_startYPos, .1f);
     }
 
     private void Update()

@@ -42,6 +42,7 @@ public class SetupUIGround : MonoBehaviour
     public void EndFb() // Use by Ground buttons
     {
         _fBDnd.SetActive(false);
+
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();
     }
