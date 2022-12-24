@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class FollowMouseDND : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class FollowMouseDND : MonoBehaviour
         Instance = this;
     }
 
-    public void Move()
+    private void Move()
     {
         var mousePos = Input.mousePosition;
         gameObject.transform.position = mousePos;
@@ -35,5 +36,18 @@ public class FollowMouseDND : MonoBehaviour
     {
         _iconButton.color = color;
         _text.text = text;
+    }
+
+    public void AnimDeactivateObject()
+    {
+        _iconButton.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear).OnComplete(DeactivateObject);
+        _text.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear);
+    }
+
+    private void DeactivateObject()
+    {
+        _iconButton.transform.DOScale(Vector2.one, 0);
+        _text.transform.DOScale(Vector2.one, 0);
+        gameObject.SetActive(false);
     }
 }

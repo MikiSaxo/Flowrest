@@ -20,7 +20,7 @@ public class GroundStateManager : MonoBehaviour
     [Header("Characteristics")]
     public float Temperature;
     [Range(0, 100)] public float Humidity;
-
+    
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private GameObject _meshCurrent;
     private Vector2Int _coords;

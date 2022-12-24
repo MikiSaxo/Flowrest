@@ -265,6 +265,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1518370988}
+          m_TargetAssemblyTypeName: FollowMouse, Assembly-CSharp
+          m_MethodName: IsOnUI
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -272,6 +284,18 @@ MonoBehaviour:
         - m_Target: {fileID: 812776340}
           m_TargetAssemblyTypeName: CameraPan, Assembly-CSharp
           m_MethodName: HasEnterredScrollBar
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1518370988}
+          m_TargetAssemblyTypeName: FollowMouse, Assembly-CSharp
+          m_MethodName: IsOnUI
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1624,6 +1648,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1518370987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 570002376980673864, guid: e066ad0cffa453349b986e9c85562d40, type: 3}
+  m_PrefabInstance: {fileID: 1874758130}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1518370988 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 570002376980673865, guid: e066ad0cffa453349b986e9c85562d40, type: 3}
+  m_PrefabInstance: {fileID: 1874758130}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518370987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e79e06a34fb654181301245ceb4ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &1518370991
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518370987}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1521820245
 PrefabInstance:
   m_ObjectHideFlags: 0

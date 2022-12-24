@@ -41,7 +41,7 @@ public class SetupUIGround : MonoBehaviour
 
     public void EndFb() // Use by Ground buttons
     {
-        _fBDnd.SetActive(false);
+        _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
 
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();

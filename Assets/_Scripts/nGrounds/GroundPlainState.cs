@@ -13,6 +13,7 @@ public class GroundPlainState : GroundBaseState
         Debug.Log("Plain");
         ground.ChangeMesh(0);
         ground.IdOfBloc = 0;
+        ground.GetComponentInChildren<PlainMesh>().EnterState();
     }
     
     public override void UpdateState(GroundStateManager ground)
