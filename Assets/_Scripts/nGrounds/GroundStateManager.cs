@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class GroundStateManager : MonoBehaviour
     private float _temperatureAround;
     private float _humidityAround;
     private float _countBlocAround;
+    private float _countSameBlocAround;
 
 
     private void Awake()
@@ -39,6 +41,8 @@ public class GroundStateManager : MonoBehaviour
     private void Start()
     {
         n_MapManager.Instance.UpdateGround += GetValuesAround;
+        
+        CheckIfBiome();
     }
 
     public void InitState(int stateNb)
@@ -134,8 +138,39 @@ public class GroundStateManager : MonoBehaviour
         _indicator.GetComponent<GroundIndicator>().ResetMat();
     }
 
+    public GroundBaseState GetActualState()
+    {
+        return currentState;
+    }
+    
+    private void CheckIfBiome()
+    {
+        _countSameBlocAround = 0;
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
+                if (i == 0 && j == 0) continue;
+                // Check if inside of array
+                if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                    newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+                // Check if something exist
+                if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+                // Check if has GroundManager
+                if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+                // Check if same state
+                if(n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc != IdOfBloc) continue;
+                // It's good
+                _countSameBlocAround++;
+            }
+        }
+        print(currentState + " nb : " + _countSameBlocAround);
+    }
+
     private void OnDisable()
     {
         n_MapManager.Instance.UpdateGround -= GetValuesAround;
     }
+    
 }
