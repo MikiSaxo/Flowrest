@@ -65,6 +65,7 @@ public class n_MapManager : MonoBehaviour
         InitializeLevel(_mapSize);
         // ResetLastSelected();
         // ResetTempGrid();
+
     }
 
     private void InitializeLevel(Vector2Int sizeMap) //Map creation
@@ -210,4 +211,6 @@ public class n_MapManager : MonoBehaviour
     {
         return _isDragNDrop;
     }
+
+    
 }
