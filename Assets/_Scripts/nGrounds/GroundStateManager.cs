@@ -57,13 +57,6 @@ public class GroundStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    private IEnumerator WaitToChange()
-    {
-        yield return new WaitForSeconds(.01f);
-        ChangeValues(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround);
-        CheckIfNeedUpdate();
-    }
-
     public void ChangeMesh(int meshNb)
     {
         Destroy(_meshCurrent);
@@ -110,6 +103,16 @@ public class GroundStateManager : MonoBehaviour
             }
         }
         StartCoroutine(WaitToChange());
+    }
+    
+    private IEnumerator WaitToChange()
+    {
+        yield return new WaitForSeconds(.01f);
+        var newHumidity = (_humidityAround / _countBlocAround + Humidity) / 2;
+        var newTemperature = (_temperatureAround / _countBlocAround + Temperature) / 2;
+        print("old humi : " + Humidity + " / old tempe : " +  Temperature + " ----- " + "humi : " + newHumidity + " / tempe : " + newTemperature);
+        ChangeValues(newHumidity, newTemperature);
+        CheckIfNeedUpdate();
     }
 
     private void CheckIfNeedUpdate() // "System" to transform bloc's state according to its temperature and humidity
@@ -165,7 +168,7 @@ public class GroundStateManager : MonoBehaviour
                 _countSameBlocAround++;
             }
         }
-        print(currentState + " nb : " + _countSameBlocAround);
+        // print(currentState + " nb : " + _countSameBlocAround);
     }
 
     private void OnDisable()
