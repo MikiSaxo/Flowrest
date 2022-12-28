@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Unity.Android.Types;
 using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
@@ -11,17 +13,18 @@ public class GroundStateManager : MonoBehaviour
     private GroundDesertState desertState = new GroundDesertState();
     private GroundWaterState waterState = new GroundWaterState();
     public int IdOfBloc { get; set; }
-    
-    
-    [Header("Setup")]
-    [SerializeField] private GameObject _meshParent;
+    public bool IsTreated { get; set; }
+    public bool IsBiome { get; set; }
+
+
+    [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
-    
-    [Header("Characteristics")]
-    public float Temperature;
+    [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField] private int _minNbAroundBiome;
+
+    [Header("Characteristics")] public float Temperature;
     [Range(0, 100)] public float Humidity;
-    
+
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private GameObject _meshCurrent;
     private Vector2Int _coords;
@@ -29,7 +32,11 @@ public class GroundStateManager : MonoBehaviour
     private float _humidityAround;
     private float _countBlocAround;
     private float _countSameBlocAround;
+    private float _countIfEnoughBloc;
 
+    private List<GameObject> _groundInBiome = new List<GameObject>();
+    private readonly Vector2Int[] _directions = new Vector2Int[]
+        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
 
     private void Awake()
     {
@@ -41,8 +48,8 @@ public class GroundStateManager : MonoBehaviour
     private void Start()
     {
         n_MapManager.Instance.UpdateGround += GetValuesAround;
-        
-        CheckIfBiome();
+
+        FirstCheckIfBiome();
     }
 
     public void InitState(int stateNb)
@@ -55,13 +62,6 @@ public class GroundStateManager : MonoBehaviour
     {
         currentState = _allState[whichState];
         currentState.EnterState(this);
-    }
-
-    private IEnumerator WaitToChange()
-    {
-        yield return new WaitForSeconds(.01f);
-        ChangeValues(_humidityAround / _countBlocAround, _temperatureAround / _countBlocAround);
-        CheckIfNeedUpdate();
     }
 
     public void ChangeMesh(int meshNb)
@@ -109,7 +109,18 @@ public class GroundStateManager : MonoBehaviour
                 _countBlocAround++;
             }
         }
+
         StartCoroutine(WaitToChange());
+    }
+
+    private IEnumerator WaitToChange()
+    {
+        yield return new WaitForSeconds(.01f);
+        var newHumidity = (_humidityAround / _countBlocAround + Humidity) / 2;
+        var newTemperature = (_temperatureAround / _countBlocAround + Temperature) / 2;
+        //print("old humi : " + Humidity + " / old tempe : " + Temperature + " ----- " + "humi : " + newHumidity + " / tempe : " + newTemperature);
+        ChangeValues(newHumidity, newTemperature);
+        CheckIfNeedUpdate();
     }
 
     private void CheckIfNeedUpdate() // "System" to transform bloc's state according to its temperature and humidity
@@ -131,7 +142,7 @@ public class GroundStateManager : MonoBehaviour
     public void OnSelected() // When bloc is Selected by the player
     {
         n_MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
-    } 
+    }
 
     public void ResetMatIndicator() // Bridge to the indicator and Map_Manager
     {
@@ -142,8 +153,8 @@ public class GroundStateManager : MonoBehaviour
     {
         return currentState;
     }
-    
-    private void CheckIfBiome()
+
+    private void FirstCheckIfBiome()
     {
         _countSameBlocAround = 0;
         for (int i = -1; i < 2; i++)
@@ -160,17 +171,83 @@ public class GroundStateManager : MonoBehaviour
                 // Check if has GroundManager
                 if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
                 // Check if same state
-                if(n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc != IdOfBloc) continue;
+                if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
+                    IdOfBloc) continue;
                 // It's good
                 _countSameBlocAround++;
             }
         }
-        print(currentState + " nb : " + _countSameBlocAround);
+
+        if (_countSameBlocAround > 7)
+            CheckAllSameBlocConnected(n_MapManager.Instance.MapGrid, _coords);
+    }
+
+    private void CheckAllSameBlocConnected(GameObject[,] mapGrid, Vector2Int coords)
+    {
+        foreach (var dir in _directions)
+        {
+            Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= mapGrid.GetLength(1)) continue;
+            // Check if not null
+            if (mapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundStateManager
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+            // Check if same state
+            if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
+                IdOfBloc) continue;
+            // Check if has been already treated
+            // if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
+            var canContinue = true;
+            foreach (var ground in _groundInBiome)
+            {
+                if (ground != n_MapManager.Instance.MapGrid[newPos.x, newPos.y]) continue;
+                canContinue = false;
+                break;
+            }
+            if(!canContinue)
+                continue;
+            
+            
+            // It's good 
+            _countIfEnoughBloc++;
+            // It's good so, activate the water 
+            mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
+            // Add it to the list to reboot it for a future test
+            _groundInBiome.Add(mapGrid[newPos.x, newPos.y]);
+            // Restart the recursive
+            CheckAllSameBlocConnected(mapGrid, newPos);
+        }
+
+        if (_countIfEnoughBloc > _countSameBlocAround + _minNbAroundBiome)
+            StartCoroutine(TransformToBiome());
+        // print(_coords + " / " + _countIfEnoughBloc);
+    }
+
+    private IEnumerator TransformToBiome()
+    {
+        if (IsBiome) yield break;
+
+        yield return new WaitForSeconds(.01f);
+        print("salam les khyoa : " + _groundInBiome.Count);
+        IsBiome = true;
+        foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
+        {
+            getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(true);
+
+            getScript.GetComponent<GroundStateManager>().IsTreated = false;
+            getScript.GetComponent<GroundStateManager>().IsBiome = true;
+        }
+    }
+
+    public GameObject GetMeshParent()
+    {
+        return _meshParent;
     }
 
     private void OnDisable()
     {
         n_MapManager.Instance.UpdateGround -= GetValuesAround;
     }
-    
 }

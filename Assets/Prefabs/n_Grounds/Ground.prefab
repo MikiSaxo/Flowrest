@@ -162,15 +162,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a1cdca8f14f4c41a9c40e0285a036b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdOfBloc: 0
-  Temperature: 0
-  Humidity: 0
   _meshParent: {fileID: 7994009417085831957}
+  _indicator: {fileID: 2202029719449191839}
   _meshes:
   - {fileID: 7614459207405979688, guid: e13e89a916c6a4543bdcf00ae38136e9, type: 3}
   - {fileID: 7614459207405979688, guid: bab366c316d9293489035c781cc6da30, type: 3}
   - {fileID: 7614459207405979688, guid: 022ef84a5ccf3274b97aec7569e7141b, type: 3}
-  _indicator: {fileID: 2202029719449191839}
+  _minNbAroundBiome: 3
+  Temperature: 0
+  Humidity: 0
 --- !u!1 &7994009417085831957
 GameObject:
   m_ObjectHideFlags: 0

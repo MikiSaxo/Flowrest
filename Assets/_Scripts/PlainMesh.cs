@@ -19,10 +19,10 @@ public class PlainMesh : MonoBehaviour
 
         Sequence mySequence = DOTween.Sequence();
         // Add a movement tween at the beginning
-        mySequence.Append(_trees[0].transform.DOScale(Vector3.one * 1.2f, _timeToSpawn));
+        mySequence.Append(_trees[0].transform.DOScale(Vector3.one, _timeToSpawn));
         // Add a rotation tween as soon as the previous one is finished
-        mySequence.Append(_trees[1].transform.DOScale(Vector3.one * 1.2f, _timeToSpawn));
-        mySequence.Append(_trees[2].transform.DOScale(Vector3.one * 1.2f, _timeToSpawn));
+        mySequence.Append(_trees[1].transform.DOScale(Vector3.one, _timeToSpawn));
+        mySequence.Append(_trees[2].transform.DOScale(Vector3.one, _timeToSpawn));
         // Delay the whole Sequence by 1 second
         // mySequence.PrependInterval(1);
         // Insert a scale tween for the whole duration of the Sequence
