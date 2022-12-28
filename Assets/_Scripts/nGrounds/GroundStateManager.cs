@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Unity.Android.Types;
 using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
@@ -12,11 +14,13 @@ public class GroundStateManager : MonoBehaviour
     private GroundWaterState waterState = new GroundWaterState();
     public int IdOfBloc { get; set; }
     public bool IsTreated { get; set; }
+    public bool IsBiome { get; set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
+    [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField] private int _minNbAroundBiome;
 
     [Header("Characteristics")] public float Temperature;
     [Range(0, 100)] public float Humidity;
@@ -30,7 +34,7 @@ public class GroundStateManager : MonoBehaviour
     private float _countSameBlocAround;
     private float _countIfEnoughBloc;
 
-    private List<GameObject> _inBiome = new List<GameObject>();
+    private List<GameObject> _groundInBiome = new List<GameObject>();
     private readonly Vector2Int[] _directions = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
 
@@ -175,15 +179,11 @@ public class GroundStateManager : MonoBehaviour
         }
 
         if (_countSameBlocAround > 7)
-        {
-            print(currentState + " nb : " + _countSameBlocAround);
             CheckAllSameBlocConnected(n_MapManager.Instance.MapGrid, _coords);
-        }
     }
 
     private void CheckAllSameBlocConnected(GameObject[,] mapGrid, Vector2Int coords)
     {
-        print("hello check all");
         foreach (var dir in _directions)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
@@ -204,13 +204,34 @@ public class GroundStateManager : MonoBehaviour
             // It's good so, activate the water 
             mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
             // Add it to the list to reboot it for a future test
-            _inBiome.Add(mapGrid[newPos.x, newPos.y]);
-            // print("one good");
+            _groundInBiome.Add(mapGrid[newPos.x, newPos.y]);
             // Restart the recursive
             CheckAllSameBlocConnected(mapGrid, newPos);
         }
-        
-        print(_countIfEnoughBloc);
+
+        if (_countIfEnoughBloc > _countSameBlocAround + _minNbAroundBiome)
+            TransformToBiome();
+        // print(_coords + " / " + _countIfEnoughBloc);
+    }
+
+    private void TransformToBiome()
+    {
+        if (IsBiome) return;
+
+        print("salam les khyoa");
+        IsBiome = true;
+        foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
+        {
+            getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(true);
+
+            getScript.GetComponent<GroundStateManager>().IsTreated = false;
+            getScript.GetComponent<GroundStateManager>().IsBiome = true;
+        }
+    }
+
+    public GameObject GetMeshParent()
+    {
+        return _meshParent;
     }
 
     private void OnDisable()
