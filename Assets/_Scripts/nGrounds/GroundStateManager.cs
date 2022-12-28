@@ -49,7 +49,7 @@ public class GroundStateManager : MonoBehaviour
     {
         n_MapManager.Instance.UpdateGround += GetValuesAround;
 
-        CheckIfBiome();
+        FirstCheckIfBiome();
     }
 
     public void InitState(int stateNb)
@@ -154,7 +154,7 @@ public class GroundStateManager : MonoBehaviour
         return currentState;
     }
 
-    private void CheckIfBiome()
+    private void FirstCheckIfBiome()
     {
         _countSameBlocAround = 0;
         for (int i = -1; i < 2; i++)
@@ -198,7 +198,18 @@ public class GroundStateManager : MonoBehaviour
             if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
                 IdOfBloc) continue;
             // Check if has been already treated
-            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
+            // if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
+            var canContinue = true;
+            foreach (var ground in _groundInBiome)
+            {
+                if (ground != n_MapManager.Instance.MapGrid[newPos.x, newPos.y]) continue;
+                canContinue = false;
+                break;
+            }
+            if(!canContinue)
+                continue;
+            
+            
             // It's good 
             _countIfEnoughBloc++;
             // It's good so, activate the water 
@@ -210,15 +221,16 @@ public class GroundStateManager : MonoBehaviour
         }
 
         if (_countIfEnoughBloc > _countSameBlocAround + _minNbAroundBiome)
-            TransformToBiome();
+            StartCoroutine(TransformToBiome());
         // print(_coords + " / " + _countIfEnoughBloc);
     }
 
-    private void TransformToBiome()
+    private IEnumerator TransformToBiome()
     {
-        if (IsBiome) return;
+        if (IsBiome) yield break;
 
-        print("salam les khyoa");
+        yield return new WaitForSeconds(.01f);
+        print("salam les khyoa : " + _groundInBiome.Count);
         IsBiome = true;
         foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
         {
