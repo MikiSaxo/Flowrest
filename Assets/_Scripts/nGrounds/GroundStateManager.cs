@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Unity.Android.Types;
 using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
