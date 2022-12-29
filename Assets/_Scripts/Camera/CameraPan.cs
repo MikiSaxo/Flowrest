@@ -12,7 +12,8 @@ public class CameraPan : MonoBehaviour
     
     [SerializeField] private float _zoomSpeed;
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private Vector2Int _camSizeEnds;
+    [SerializeField] private Vector2Int _minMaxZoom;
+    [SerializeField] private Vector2Int _minMaxRotation;
 
     private void Start()
     {
@@ -40,11 +41,11 @@ public class CameraPan : MonoBehaviour
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
             // Add the dif to the cam pos
             _cam.transform.position += new Vector3(dif.x, 0, dif.y);
-            //print("origin " + dragOrigin + " newPos " + cam.ScreenToWorldPoint(Input.mousePosition) + " = dif " + dif);
         }
     }
     
-    private Vector3 GetWorldPosition(float z){
+    private Vector3 GetWorldPosition(float z)
+    {
         Ray mousePos = _cam.ScreenPointToRay(Input.mousePosition);
         Plane ground = new Plane(_cam.transform.forward, new Vector3(0, 0, z));
         //Plane ground = new Plane(Vector3.forward, new Vector3(0,0,z));
@@ -64,7 +65,7 @@ public class CameraPan : MonoBehaviour
         // Clamp the zoom level to the min and max zoom values
         var pos = transform.position;
         float zoom = pos.magnitude + scroll * _zoomSpeed;
-        zoom = Mathf.Clamp(zoom, _camSizeEnds.x, _camSizeEnds.y);
+        zoom = Mathf.Clamp(zoom, _minMaxZoom.x, _minMaxZoom.y);
 
         // Update the camera's position based on the clamped zoom level
         var posX = pos.x;
@@ -75,8 +76,8 @@ public class CameraPan : MonoBehaviour
         // Rotate the camera based on the mouse X axis input
         float rotation = scroll * _rotationSpeed;
 
-        if (transform.rotation.eulerAngles.x < 25 && scroll < 0 ||
-            transform.rotation.eulerAngles.x > 45 && scroll > 0) return;
+        if (transform.rotation.eulerAngles.x < _minMaxRotation.x && scroll < 0 ||
+            transform.rotation.eulerAngles.x > _minMaxRotation.y && scroll > 0) return;
         
         transform.Rotate(Vector3.right, rotation, Space.World);
 
