@@ -35,9 +35,12 @@ public class SetupUIGround : MonoBehaviour
 
     public void UpdateFb(int whichState) // Use by Ground buttons
     {
+        if (n_MapManager.Instance.IsGroundFirstSelected) return;
+        
         n_MapManager.Instance.ResetButtonSelected();
         n_MapManager.Instance.ResetGroundSelected();
         _fBDnd.SetActive(true);
+        _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[whichState], _texts[whichState]);
         n_MapManager.Instance.LastNbButtonSelected = whichState;
         n_MapManager.Instance.LastButtonSelected = _uiButtons[whichState];
@@ -45,6 +48,8 @@ public class SetupUIGround : MonoBehaviour
 
     public void EndFb() // Use by Ground buttons
     {
+        if (n_MapManager.Instance.IsGroundFirstSelected) return;
+
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
 
         // n_MapManager.Instance.ResetButtonSelected();

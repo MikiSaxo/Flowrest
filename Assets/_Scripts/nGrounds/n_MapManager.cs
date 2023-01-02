@@ -16,6 +16,7 @@ public class n_MapManager : MonoBehaviour
     public static n_MapManager Instance;
     
     public event Action UpdateGround;
+    public event Action CheckBiome;
 
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
@@ -122,6 +123,10 @@ public class n_MapManager : MonoBehaviour
     {
         UpdateGround?.Invoke();
     }
+    public void CheckForBiome()
+    {
+        CheckBiome?.Invoke();
+    }
 
     public void ChangeActivatedButton(GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
     {
@@ -138,7 +143,7 @@ public class n_MapManager : MonoBehaviour
             _isDragNDrop = false;
             LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
             LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
-            FollowMouseDND.Instance.CanMove = true;
+            // FollowMouseDND.Instance.CanMove = true;
         }
         else
         {

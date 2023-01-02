@@ -6,19 +6,22 @@ using UnityEngine;
 
 public class GroundStateManager : MonoBehaviour
 {
+    public int IdOfBloc { get; set; }
+    public bool IsTreated { get; set; }
+    public bool IsBiome { get; set; }
+    
+
     private GroundBaseState currentState;
     private GroundPlainState plainState = new GroundPlainState();
     private GroundDesertState desertState = new GroundDesertState();
     private GroundWaterState waterState = new GroundWaterState();
-    public int IdOfBloc { get; set; }
-    public bool IsTreated { get; set; }
-    public bool IsBiome { get; set; }
-
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
-    [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField] private int _minNbAroundBiome;
+
+    [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField]
+    private int _minNbAroundBiome;
 
     [Header("Characteristics")] public float Temperature;
     [Range(0, 100)] public float Humidity;
@@ -33,6 +36,7 @@ public class GroundStateManager : MonoBehaviour
     private float _countIfEnoughBloc;
 
     private List<GameObject> _groundInBiome = new List<GameObject>();
+
     private readonly Vector2Int[] _directions = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
 
@@ -46,8 +50,9 @@ public class GroundStateManager : MonoBehaviour
     private void Start()
     {
         n_MapManager.Instance.UpdateGround += GetValuesAround;
+        n_MapManager.Instance.CheckBiome += LaunchCheckForBiome;
 
-        FirstCheckIfBiome();
+        // ResetBiome();
     }
 
     public void InitState(int stateNb)
@@ -60,6 +65,19 @@ public class GroundStateManager : MonoBehaviour
     {
         currentState = _allState[whichState];
         currentState.EnterState(this);
+
+        LaunchCheckForBiome();
+    }
+
+    private void LaunchCheckForBiome()
+    {
+        StartCoroutine(WaitToCheckForBiome());
+    }
+
+    IEnumerator WaitToCheckForBiome()
+    {
+        yield return new WaitForSeconds(.01f);
+        ResetBiome();
     }
 
     public void ChangeMesh(int meshNb)
@@ -145,6 +163,8 @@ public class GroundStateManager : MonoBehaviour
     public void ResetMatIndicator() // Bridge to the indicator and Map_Manager
     {
         _indicator.GetComponent<GroundIndicator>().ResetMat();
+        
+        StartCoroutine(WaitToCheckForBiome());
     }
 
     public GroundBaseState GetActualState()
@@ -152,8 +172,24 @@ public class GroundStateManager : MonoBehaviour
         return currentState;
     }
 
+    private void ResetBiome()
+    {
+        // print("reseet biome");
+        IsBiome = false;
+        foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
+        {
+            getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(false);
+
+            getScript.GetComponent<GroundStateManager>().IsBiome = false;
+        }
+        _groundInBiome.Clear();
+
+        FirstCheckIfBiome();
+    }
+
     private void FirstCheckIfBiome()
     {
+        // print("check if biome");
         _countSameBlocAround = 0;
         for (int i = -1; i < 2; i++)
         {
@@ -175,6 +211,7 @@ public class GroundStateManager : MonoBehaviour
                 _countSameBlocAround++;
             }
         }
+        // print("_countSameBlocAround " + _countSameBlocAround);
 
         if (_countSameBlocAround > 7)
             CheckAllSameBlocConnected(n_MapManager.Instance.MapGrid, _coords);
@@ -204,10 +241,11 @@ public class GroundStateManager : MonoBehaviour
                 canContinue = false;
                 break;
             }
-            if(!canContinue)
+
+            if (!canContinue)
                 continue;
-            
-            
+
+
             // It's good 
             _countIfEnoughBloc++;
             // It's good so, activate the water 
@@ -228,7 +266,7 @@ public class GroundStateManager : MonoBehaviour
         if (IsBiome) yield break;
 
         yield return new WaitForSeconds(.01f);
-        print("salam les khyoa : " + _groundInBiome.Count);
+        // print("salam les khyoa : " + _groundInBiome.Count);
         IsBiome = true;
         foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
         {
@@ -247,5 +285,6 @@ public class GroundStateManager : MonoBehaviour
     private void OnDisable()
     {
         n_MapManager.Instance.UpdateGround -= GetValuesAround;
+        n_MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
     }
 }

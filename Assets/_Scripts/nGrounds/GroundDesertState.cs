@@ -11,7 +11,6 @@ public class GroundDesertState : GroundBaseState
     public override void EnterState(GroundStateManager ground)
     {
         Debug.Log("Desert");
-        //ground.ChangeMaterials(1);
         ground.ChangeMesh(1);
         ground.IdOfBloc = 1;
     }

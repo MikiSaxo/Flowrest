@@ -15,6 +15,7 @@ public class GroundIndicator : MonoBehaviour
     private float _hoveredYPos;
     private float _selectedYPos;
     private bool _isSelected;
+    private bool _isEntered;
 
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
@@ -31,7 +32,8 @@ public class GroundIndicator : MonoBehaviour
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
         
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
-        _mesh.enabled = true;
+        // _mesh.enabled = true;
+        _isEntered = true;
             
         if (_isSelected) return;
             
@@ -43,7 +45,8 @@ public class GroundIndicator : MonoBehaviour
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
-        _mesh.enabled = false;
+        // _mesh.enabled = false;
+        _isEntered = false;
         MoveYMesh(_startYPos, .1f);
     }
 
@@ -55,7 +58,7 @@ public class GroundIndicator : MonoBehaviour
             n_MapManager.Instance.ResetGroundSelected();
         }
             
-        if (!_mesh.enabled || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
+        if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
         
 
         if (n_MapManager.Instance.LastButtonSelected == null ) // First case: select bloc for swap
@@ -64,7 +67,7 @@ public class GroundIndicator : MonoBehaviour
             
             _isSelected = true; // Useful to block Trigger enter and exit
             MoveYMesh(_selectedYPos, .3f); // Make animation
-            _mesh.material = _mats[1]; // Change mat of indicator -> must disappear
+            //_mesh.material = _mats[1]; // Change mat of indicator -> must disappear
             n_MapManager.Instance.IsGroundFirstSelected = true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
@@ -75,8 +78,9 @@ public class GroundIndicator : MonoBehaviour
     public void ResetMat()
     {
         _isSelected = false;
-        _mesh.material = _mats[0];
-        _mesh.enabled = false;
+        // _mesh.material = _mats[0];
+        // _mesh.enabled = false;
+        _isEntered = false;
         MoveYMesh(_startYPos, .1f);
         n_MapManager.Instance.IsGroundFirstSelected = false;
     }
@@ -95,6 +99,7 @@ public class GroundIndicator : MonoBehaviour
             
         gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastNbButtonSelected); // Init the new State
         n_MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Ground Button 
+        n_MapManager.Instance.CheckForBiome();
 
         if (!n_MapManager.Instance.GetIsDragNDrop()) return; // Block if was not drag n drop
         
