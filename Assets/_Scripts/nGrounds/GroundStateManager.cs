@@ -283,6 +283,11 @@ public class GroundStateManager : MonoBehaviour
         return _meshParent;
     }
 
+    public void EnabledWaterCubes(bool which)
+    {
+        gameObject.GetComponentInChildren<WaterMesh>().IsEnabled(which);
+    }
+
     private void OnDisable()
     {
         n_MapManager.Instance.UpdateGround -= GetValuesAround;

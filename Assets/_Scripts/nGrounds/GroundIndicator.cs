@@ -34,6 +34,7 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         // _mesh.enabled = true;
         _isEntered = true;
+        CheckhasWaterMesh();
             
         if (_isSelected) return;
             
@@ -47,7 +48,15 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         // _mesh.enabled = false;
         _isEntered = false;
+        CheckhasWaterMesh();
+        
         MoveYMesh(_startYPos, .1f);
+    }
+
+    private void CheckhasWaterMesh()
+    {
+        if (_parent.GetComponent<GroundStateManager>().IdOfBloc == 2)
+            _parent.GetComponent<GroundStateManager>().EnabledWaterCubes(_isEntered);
     }
 
     private void Update()
@@ -81,6 +90,7 @@ public class GroundIndicator : MonoBehaviour
         // _mesh.material = _mats[0];
         // _mesh.enabled = false;
         _isEntered = false;
+        CheckhasWaterMesh();
         MoveYMesh(_startYPos, .1f);
         n_MapManager.Instance.IsGroundFirstSelected = false;
     }
