@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro.EditorUtilities;
 
 public class GroundIndicator : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GroundIndicator : MonoBehaviour
     private float _selectedYPos;
     private bool _isSelected;
     private bool _isEntered;
+    private Vector2Int _coords;
+    private List<GameObject> _tempEntered = new List<GameObject>();
 
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
@@ -27,6 +30,12 @@ public class GroundIndicator : MonoBehaviour
         _selectedYPos = _startYPos + SELECTED_Y_POS;
     }
 
+    public void ForceEntered()
+    {
+        _isEntered = true;
+        MoveYMesh(_hoveredYPos, .3f);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
@@ -34,7 +43,9 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         // _mesh.enabled = true;
         _isEntered = true;
-        CheckhasWaterMesh();
+
+        CheckHasWaterMesh();
+        CheckIfTemperatureSelected();
             
         if (_isSelected) return;
             
@@ -48,22 +59,61 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         // _mesh.enabled = false;
         _isEntered = false;
-        CheckhasWaterMesh();
+
+        CheckHasWaterMesh();
+        ResetTemperatureSelected();
         
         MoveYMesh(_startYPos, .1f);
     }
 
-    private void CheckhasWaterMesh()
+    private void CheckHasWaterMesh()
     {
         if (_parent.GetComponent<GroundStateManager>().IdOfBloc == 2)
             _parent.GetComponent<GroundStateManager>().EnabledWaterCubes(_isEntered);
+    }
+
+    private void CheckIfTemperatureSelected()
+    {
+        _coords = _parent.GetComponent<GroundStateManager>().GetCoords();
+        
+        if (n_MapManager.Instance.TemperatureSelected != 0)
+        {
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
+                    // No need to count the actual
+                    if (i == 0 && j == 0) continue;
+                    // Check if inside of array
+                    if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                        newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+                    // Check if something exist
+                    if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+                    // Check if has GroundManager
+                    if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+                    
+                    n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().ForceEnteredIndicator();
+                    
+                    _tempEntered.Add(n_MapManager.Instance.MapGrid[newPos.x, newPos.y]);
+                }
+            }
+        }
+    }
+
+    private void ResetTemperatureSelected()
+    {
+        foreach (var ground in _tempEntered)
+        {
+            ground.GetComponent<GroundStateManager>().ResetMatIndicator();
+        }
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(1)) // Right click to reset
         {
-            ResetMat();
+            ResetIndicator();
             n_MapManager.Instance.ResetGroundSelected();
         }
             
@@ -81,16 +131,16 @@ public class GroundIndicator : MonoBehaviour
             _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
-            PoseBloc(); // Transform the bloc with new state
+            ChangeBlocOrTemperature(); // Transform the bloc with new state
     }
 
-    public void ResetMat()
+    public void ResetIndicator()
     {
         _isSelected = false;
         // _mesh.material = _mats[0];
         // _mesh.enabled = false;
         _isEntered = false;
-        CheckhasWaterMesh();
+        CheckHasWaterMesh();
         MoveYMesh(_startYPos, .1f);
         n_MapManager.Instance.IsGroundFirstSelected = false;
     }
@@ -101,6 +151,20 @@ public class GroundIndicator : MonoBehaviour
         _meshParent.transform.DOMoveY(height, duration);
     }
 
+    private void ChangeBlocOrTemperature()
+    {
+        if(n_MapManager.Instance.TemperatureSelected == 0)
+            PoseBloc();
+        else
+            ChangeTemperature();
+    }
+    private void ChangeTemperature()
+    {
+        gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
+        gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
+        
+        ResetForNextChange();
+    }
     private void PoseBloc()
     {
         if (!n_MapManager.Instance.CanPoseBloc()) return; // Idk if really helpful but security
@@ -108,7 +172,15 @@ public class GroundIndicator : MonoBehaviour
         if(gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc == n_MapManager.Instance.LastNbButtonSelected) return; // Avoid to update by same ground
             
         gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastNbButtonSelected); // Init the new State
-        n_MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Ground Button 
+        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(); // Init the new State
+      
+        
+        ResetForNextChange();
+    }
+
+    private void ResetForNextChange()
+    {
+        n_MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Button 
         n_MapManager.Instance.CheckForBiome();
 
         if (!n_MapManager.Instance.GetIsDragNDrop()) return; // Block if was not drag n drop

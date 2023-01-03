@@ -34,6 +34,7 @@ public class GroundStateManager : MonoBehaviour
     private float _countBlocAround;
     private float _countSameBlocAround;
     private float _countIfEnoughBloc;
+    private bool _isUpdating;
 
     private List<GameObject> _groundInBiome = new List<GameObject>();
 
@@ -98,8 +99,32 @@ public class GroundStateManager : MonoBehaviour
         _coords = coords;
     }
 
-    private void GetValuesAround() // Get the average temperature and humidity from his 8 neighbors
+    public void UpdateGroundsAround()
     {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
+
+                // Check if inside of array
+                if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                 newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+                // Check if something exist
+                if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+                // Check if has GroundManager
+                if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+                
+                n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetValuesAround();
+            }
+        }
+    }
+
+    public void GetValuesAround() // Get the average temperature and humidity from his 8 neighbors
+    {
+        if(_isUpdating) return;
+        _isUpdating = true;
+        
         _temperatureAround = 0;
         _humidityAround = 0;
         _countBlocAround = 0;
@@ -137,19 +162,23 @@ public class GroundStateManager : MonoBehaviour
         //print("old humi : " + Humidity + " / old tempe : " + Temperature + " ----- " + "humi : " + newHumidity + " / tempe : " + newTemperature);
         ChangeValues(newHumidity, newTemperature);
         CheckIfNeedUpdate();
+        _isUpdating = false;
     }
 
     private void CheckIfNeedUpdate() // "System" to transform bloc's state according to its temperature and humidity
     {
         switch (Temperature)
         {
-            case >= 0 and < 30 when Humidity is < 80 and > 10:
+            // Plain
+            case >= 1 and < 47 when Humidity is < 50 and > 11:
                 ChangeState(0);
                 break;
-            case >= 30 when Humidity <= 10:
+            // Desert
+            case >= 33 when Humidity <= 10:
                 ChangeState(1);
                 break;
-            case >= 0 when Humidity >= 80:
+            // Water
+            case >= 1 and < 47 when Humidity >= 26:
                 ChangeState(2);
                 break;
         }
@@ -162,7 +191,7 @@ public class GroundStateManager : MonoBehaviour
 
     public void ResetMatIndicator() // Bridge to the indicator and Map_Manager
     {
-        _indicator.GetComponent<GroundIndicator>().ResetMat();
+        _indicator.GetComponent<GroundIndicator>().ResetIndicator();
         
         StartCoroutine(WaitToCheckForBiome());
     }
@@ -176,6 +205,7 @@ public class GroundStateManager : MonoBehaviour
     {
         // print("reseet biome");
         IsBiome = false;
+        
         foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
         {
             getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(false);
@@ -197,6 +227,7 @@ public class GroundStateManager : MonoBehaviour
             for (int j = -1; j < 2; j++)
             {
                 Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
+                // No need to count the actual
                 if (i == 0 && j == 0) continue;
                 // Check if inside of array
                 if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
@@ -278,9 +309,23 @@ public class GroundStateManager : MonoBehaviour
         }
     }
 
+    public void ForceEnteredIndicator()
+    {
+        _indicator.GetComponent<GroundIndicator>().ForceEntered();
+    }
+    public void ChangeTemperature(int howMany)
+    {
+        Temperature += howMany;
+    }
+
     public GameObject GetMeshParent()
     {
         return _meshParent;
+    }
+
+    public Vector2Int GetCoords()
+    {
+        return _coords;
     }
 
     public void EnabledWaterCubes(bool which)

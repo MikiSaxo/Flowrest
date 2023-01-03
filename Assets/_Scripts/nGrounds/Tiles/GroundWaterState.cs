@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundPlainState : GroundBaseState
+public class GroundWaterState : GroundBaseState
 {
     public override void InitState(GroundStateManager ground)
     {
-        ground.ChangeValues(50, 20);
+        ground.ChangeValues(100, 20);
     }
+    
     public override void EnterState(GroundStateManager ground)
     {
-        Debug.Log("Plain");
-        ground.ChangeMesh(0);
-        ground.IdOfBloc = 0;
-        ground.GetComponentInChildren<PlainMesh>().EnterState();
-    }
+        Debug.Log("Water");
+        // ground.ChangeMaterials(2);
+        ground.ChangeMesh(2);
+        ground.IdOfBloc = 2;
+    }   
+        
+
     
     public override void UpdateState(GroundStateManager ground)
     {

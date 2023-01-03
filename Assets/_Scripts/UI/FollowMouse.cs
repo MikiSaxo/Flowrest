@@ -23,8 +23,8 @@ public class FollowMouse : MonoBehaviour
 
         transform.position = _worldPosition;
 
-        if (Input.GetMouseButtonUp(0) && !_isOnIndicator && !_isOnUI)
-            n_MapManager.Instance.ResetButtonSelected();
+        // if (Input.GetMouseButtonUp(0) && !_isOnIndicator && !_isOnUI)
+            // n_MapManager.Instance.ResetButtonSelected();
     }
 
     public void IsOnIndicator(bool yesOrNot) // Called in GroundIndicator

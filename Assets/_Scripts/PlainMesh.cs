@@ -16,7 +16,6 @@ public class PlainMesh : MonoBehaviour
             tree.transform.DOScale(Vector3.zero, 0);
             // tree.transform.DOScale(Vector3.one, _timeToSpawn);
         }
-
         Sequence mySequence = DOTween.Sequence();
         // Add a movement tween at the beginning
         mySequence.Append(_trees[0].transform.DOScale(Vector3.one, _timeToSpawn));

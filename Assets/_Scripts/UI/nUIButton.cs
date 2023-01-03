@@ -13,7 +13,7 @@ public enum States
     Water = 2
 }
 
-public class nGroundUIButton : MonoBehaviour
+public class nUIButton : MonoBehaviour
 {
     [Header("Setup")]
     public States _stateButton;
@@ -21,6 +21,8 @@ public class nGroundUIButton : MonoBehaviour
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
+    [SerializeField] private bool _isTemperature;
+    [SerializeField] private int _temperature;
 
     private int _numberGroundLeft;
 
@@ -31,10 +33,15 @@ public class nGroundUIButton : MonoBehaviour
 
     public void Setup(string text, Color color, int nbLeft, States stat)
     {
+        SetupTemperature(text, color, nbLeft);
+        _stateButton = stat;
+    }
+
+    public void SetupTemperature(string text, Color color, int nbLeft)
+    {
         _colorButton.color = color;
         _textButton.text = text;
         ChangeNumberLeft(nbLeft);
-        _stateButton = stat;
     }
 
     public void NeedActivateSelectedIcon(bool which)
@@ -56,5 +63,14 @@ public class nGroundUIButton : MonoBehaviour
     {
         _numberGroundLeft += decrease;
         _textNumber.text = $"{_numberGroundLeft}";
+    }
+
+    public bool GetIsTemperature()
+    {
+        return _isTemperature;
+    }
+    public int GetHisTemperature()
+    {
+        return _temperature;
     }
 }

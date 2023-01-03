@@ -14,7 +14,7 @@ using TMPro;
 public class n_MapManager : MonoBehaviour
 {
     public static n_MapManager Instance;
-    
+
     public event Action UpdateGround;
     public event Action CheckBiome;
 
@@ -22,10 +22,10 @@ public class n_MapManager : MonoBehaviour
     public GameObject[,] MapGrid;
     public int LastNbButtonSelected { get; set; }
     public GameObject LastButtonSelected { get; set; }
+    public int TemperatureSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
-
     [SerializeField] private GameObject _groundPrefab = null;
 
     private bool _isDragNDrop;
@@ -38,7 +38,7 @@ public class n_MapManager : MonoBehaviour
 
     // private Vector2Int[] _directionsTwo = new Vector2Int[]
     // { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
-    
+
     // public int _lastNbButtonSelected;
     // private int[,] _tempGroundSelectedGrid;
 
@@ -66,7 +66,6 @@ public class n_MapManager : MonoBehaviour
         InitializeLevel(_mapSize);
         // ResetLastSelected();
         // ResetTempGrid();
-
     }
 
     private void InitializeLevel(Vector2Int sizeMap) //Map creation
@@ -123,43 +122,52 @@ public class n_MapManager : MonoBehaviour
     {
         UpdateGround?.Invoke();
     }
+
     public void CheckForBiome()
     {
         CheckBiome?.Invoke();
     }
 
-    public void ChangeActivatedButton(GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
+    // Activate or not the UI Button's indicator and update if one was selected or not
+    public void ChangeActivatedButton(GameObject button) 
     {
         if (IsGroundFirstSelected) return;
-        
+
         if (LastButtonSelected != null) // Deactivate the last one selected 
-            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(false);
-        
+            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastButtonSelected.GetComponent<nGroundUIButton>().NeedActivateSelectedIcon(true);
-            LastNbButtonSelected = LastButtonSelected.GetComponent<nGroundUIButton>().GetStateButton();
+            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(true);
+
+            if (!LastButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
+            {
+                LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
+                TemperatureSelected = 0;
+            }
+            else
+                TemperatureSelected = LastButtonSelected.GetComponent<nUIButton>().GetHisTemperature();
             // FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
             _isDragNDrop = true;
             LastNbButtonSelected = -1;
+            TemperatureSelected = 0;
         }
     }
 
     public bool CanPoseBloc()
     {
-        return LastButtonSelected.GetComponent<nGroundUIButton>().GetNumberLeft() > 0;
+        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<nGroundUIButton>().ChangeNumberLeft(-1);
+        LastButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
@@ -187,10 +195,12 @@ public class n_MapManager : MonoBehaviour
         // Reset selection's color of the two Grounds
         _lastGroundSelected.GetComponent<GroundStateManager>().ResetMatIndicator();
         which.GetComponent<GroundStateManager>().ResetMatIndicator();
+        _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
+        which.GetComponent<GroundStateManager>().UpdateGroundsAround();
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();
-        
+
         CheckForBiome();
     }
 
@@ -218,6 +228,4 @@ public class n_MapManager : MonoBehaviour
     {
         return _isDragNDrop;
     }
-
-    
 }

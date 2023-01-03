@@ -8,42 +8,73 @@ public class SetupUIGround : MonoBehaviour
 {
     public static SetupUIGround Instance;
 
-    [Header("Setup")] 
-    [SerializeField] private GameObject[] _uiButtons; 
-    [SerializeField] private GameObject _fBDnd; 
-    
-    [Header("Banners")]
-    [SerializeField] private string[] _texts;
+    [Header("Setup")] [SerializeField] private GameObject[] _UIGround;
+    [SerializeField] private GameObject[] _UITemperature;
+    [SerializeField] private GameObject _fBDnd;
+
+    [Header("Ground")] [SerializeField] private string[] _texts;
     [SerializeField] private Color[] _colors;
     [SerializeField] private int[] _nbLeft;
     [SerializeField] private States[] _groundState;
 
-    [Header("Anims")]
-    [SerializeField] private Vector2 _bounceValues;
-    
+    [Header("Temperature")] [SerializeField]
+    private string[] _textsTemperature;
+
+    [SerializeField] private Color[] _colorsTemperature;
+    [SerializeField] private int[] _nbLeftTemperature;
+
+    [Header("Anims")] [SerializeField] private Vector2 _bounceValues;
+
     private void Awake()
     {
         Instance = this;
     }
+
     private void Start()
     {
-        for (int i = 0; i < _uiButtons.Length; i++)
+        for (int i = 0; i < _UIGround.Length; i++)
         {
-            _uiButtons[i].GetComponent<nGroundUIButton>().Setup(_texts[i], _colors[i], _nbLeft[i], _groundState[i]);
+            _UIGround[i].GetComponent<nUIButton>().Setup(_texts[i], _colors[i], _nbLeft[i], _groundState[i]);
+        }
+
+        for (int j = 0; j < _UITemperature.Length; j++)
+        {
+            _UITemperature[j].GetComponent<nUIButton>()
+                .SetupTemperature(_textsTemperature[j], _colorsTemperature[j], _nbLeftTemperature[j]);
         }
     }
 
-    public void UpdateFb(int whichState) // Use by Ground buttons
+    public void UpdateFbGround(int whichState) // Use by Ground buttons
+    {
+        UpdateFB(whichState, false);
+    }
+
+    public void UpdateFbTemperature(int whichTemperature) // Use by Temperature buttons
+    {
+        UpdateFB(whichTemperature, true);
+    }
+
+    private void UpdateFB(int which, bool isTemp)
     {
         if (n_MapManager.Instance.IsGroundFirstSelected) return;
-        
+
         n_MapManager.Instance.ResetButtonSelected();
         n_MapManager.Instance.ResetGroundSelected();
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
-        _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[whichState], _texts[whichState]);
-        n_MapManager.Instance.LastNbButtonSelected = whichState;
-        n_MapManager.Instance.LastButtonSelected = _uiButtons[whichState];
+
+        if (isTemp)
+        {
+            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colorsTemperature[which], _textsTemperature[which]);
+            n_MapManager.Instance.LastButtonSelected = _UITemperature[which];
+        }
+        else
+        {
+            n_MapManager.Instance.LastButtonSelected = _UIGround[which];
+            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[which], _texts[which]);
+        }
+
+        n_MapManager.Instance.LastNbButtonSelected = which;
     }
 
     public void EndFb() // Use by Ground buttons
