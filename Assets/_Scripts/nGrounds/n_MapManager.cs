@@ -190,6 +190,8 @@ public class n_MapManager : MonoBehaviour
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();
+        
+        CheckForBiome();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)

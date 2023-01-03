@@ -181,16 +181,17 @@ public class GroundStateManager : MonoBehaviour
             getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(false);
 
             getScript.GetComponent<GroundStateManager>().IsBiome = false;
+            getScript.GetComponent<GroundStateManager>().IsTreated = false;
         }
         _groundInBiome.Clear();
+        _countSameBlocAround = 0;
+        _countIfEnoughBloc = 0;
 
         FirstCheckIfBiome();
     }
 
     private void FirstCheckIfBiome()
     {
-        // print("check if biome");
-        _countSameBlocAround = 0;
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -212,7 +213,7 @@ public class GroundStateManager : MonoBehaviour
             }
         }
         // print("_countSameBlocAround " + _countSameBlocAround);
-
+        
         if (_countSameBlocAround > 7)
             CheckAllSameBlocConnected(n_MapManager.Instance.MapGrid, _coords);
     }
@@ -233,7 +234,7 @@ public class GroundStateManager : MonoBehaviour
             if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
                 IdOfBloc) continue;
             // Check if has been already treated
-            // if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
             var canContinue = true;
             foreach (var ground in _groundInBiome)
             {
@@ -245,16 +246,16 @@ public class GroundStateManager : MonoBehaviour
             if (!canContinue)
                 continue;
 
-
             // It's good 
             _countIfEnoughBloc++;
-            // It's good so, activate the water 
+
             mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
             // Add it to the list to reboot it for a future test
             _groundInBiome.Add(mapGrid[newPos.x, newPos.y]);
             // Restart the recursive
             CheckAllSameBlocConnected(mapGrid, newPos);
         }
+        // print("_countIfEnoughBloc " + _countIfEnoughBloc);
 
         if (_countIfEnoughBloc > _countSameBlocAround + _minNbAroundBiome)
             StartCoroutine(TransformToBiome());
@@ -264,7 +265,7 @@ public class GroundStateManager : MonoBehaviour
     private IEnumerator TransformToBiome()
     {
         if (IsBiome) yield break;
-
+        
         yield return new WaitForSeconds(.01f);
         // print("salam les khyoa : " + _groundInBiome.Count);
         IsBiome = true;
