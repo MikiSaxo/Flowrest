@@ -30,7 +30,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 215613294415815246}
-  - {fileID: 2377381148214517328}
   - {fileID: 1629652638737912369}
   - {fileID: 304453998237164458}
   - {fileID: 2647162760349372903}
@@ -87,7 +86,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 215613294415815246}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9036604613905173343
 MeshFilter:
@@ -167,6 +166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4461699487789160700}
   - {fileID: 8246207682568887002}
   - {fileID: 5405163273678759655}
   m_Father: {fileID: 7614459207405979692}
@@ -183,9 +183,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a560cbbd1f26b5e45b3c06a2fe994962, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a560cbbd1f26b5e45b3c06a2fe994962, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a560cbbd1f26b5e45b3c06a2fe994962, type: 3}
       propertyPath: m_LocalScale.x
@@ -261,9 +265,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_03 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_LocalScale.x
@@ -339,9 +347,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_03 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_LocalScale.x
@@ -417,9 +429,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_LocalScale.x
@@ -484,16 +500,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
   m_PrefabInstance: {fileID: 2647162760349240167}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3204573926689157241
+--- !u!1001 &3561762934280910549
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7614459207405979692}
+    m_TransformParent: {fileID: 215613294415815246}
     m_Modifications:
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -501,11 +517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalRotation.w
@@ -513,15 +529,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -537,26 +553,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 902629292104511018, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
       propertyPath: m_Name
-      value: Gray Volume Fog
-      objectReference: {fileID: 0}
-    - target: {fileID: 902629292624102802, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 902629292624102802, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.atime1
-      value: 18504
-      objectReference: {fileID: 0}
-    - target: {fileID: 902629292624102802, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
-      propertyPath: ColorModule.gradient.maxGradient.atime2
-      value: 46453
+      value: Gray Volume Fog (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
---- !u!4 &2377381148214517328 stripped
+--- !u!4 &4461699487789160700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 902629292104511017, guid: e910da4c3d9cfcb4b81f76a409b82b20, type: 3}
-  m_PrefabInstance: {fileID: 3204573926689157241}
+  m_PrefabInstance: {fileID: 3561762934280910549}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5229396390898513919
 PrefabInstance:
@@ -569,9 +573,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_LocalScale.x
@@ -647,9 +655,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_03 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_LocalScale.x
@@ -725,9 +737,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86a54d4ab218ff7439810689af0e25a3, type: 3}
       propertyPath: m_LocalScale.x
@@ -801,7 +817,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e0f20294a4511a14fae3e6e35178e4a1, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e0f20294a4511a14fae3e6e35178e4a1, type: 3}
       propertyPath: m_LocalScale.x
@@ -881,9 +897,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: cloud_03 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2f13f1aeb12852049b51984093fae7e8, type: 3}
       propertyPath: m_LocalScale.x
