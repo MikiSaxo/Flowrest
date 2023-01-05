@@ -105,8 +105,9 @@ public class GroundIndicator : MonoBehaviour
     {
         foreach (var ground in _tempEntered)
         {
-            ground.GetComponent<GroundStateManager>().ResetMatIndicator();
+            ground.GetComponent<GroundStateManager>().ResetIndicator();
         }
+        _tempEntered.Clear();
     }
 
     private void Update()
@@ -182,10 +183,15 @@ public class GroundIndicator : MonoBehaviour
     {
         n_MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Button 
         n_MapManager.Instance.CheckForBiome();
-
-        if (!n_MapManager.Instance.GetIsDragNDrop()) return; // Block if was not drag n drop
+        
+        // Block if was not drag n drop or if the button is empty
+        if(n_MapManager.Instance.CheckIfButtonIsEmpty())
+            n_MapManager.Instance.ResetAllSelection();
+        
+        if (!n_MapManager.Instance.GetIsDragNDrop() && !n_MapManager.Instance.CheckIfButtonIsEmpty()) return;
         
         n_MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
         n_MapManager.Instance.ResetButtonSelected();
+
     }
 }

@@ -60,8 +60,6 @@ public class SetupUIGround : MonoBehaviour
 
         n_MapManager.Instance.ResetButtonSelected();
         n_MapManager.Instance.ResetGroundSelected();
-        _fBDnd.SetActive(true);
-        _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
 
         if (isTemp)
         {
@@ -70,10 +68,18 @@ public class SetupUIGround : MonoBehaviour
         }
         else
         {
-            n_MapManager.Instance.LastButtonSelected = _UIGround[which];
             _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[which], _texts[which]);
+            n_MapManager.Instance.LastButtonSelected = _UIGround[which];
         }
 
+        if (n_MapManager.Instance.LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+        {
+            n_MapManager.Instance.LastButtonSelected = null;
+            return;
+        }
+        
+        _fBDnd.SetActive(true);
+        _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         n_MapManager.Instance.LastNbButtonSelected = which;
     }
 

@@ -52,6 +52,7 @@ public class GroundStateManager : MonoBehaviour
     {
         n_MapManager.Instance.UpdateGround += GetValuesAround;
         n_MapManager.Instance.CheckBiome += LaunchCheckForBiome;
+        n_MapManager.Instance.ResetSelection += ResetIndicator;
 
         // ResetBiome();
     }
@@ -189,17 +190,17 @@ public class GroundStateManager : MonoBehaviour
         n_MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
     }
 
-    public void ResetMatIndicator() // Bridge to the indicator and Map_Manager
+    public GroundBaseState GetActualState()
+    {
+        return currentState;
+    }
+    public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
         
         StartCoroutine(WaitToCheckForBiome());
     }
 
-    public GroundBaseState GetActualState()
-    {
-        return currentState;
-    }
 
     private void ResetBiome()
     {
@@ -219,6 +220,7 @@ public class GroundStateManager : MonoBehaviour
 
         FirstCheckIfBiome();
     }
+    
 
     private void FirstCheckIfBiome()
     {
@@ -337,5 +339,6 @@ public class GroundStateManager : MonoBehaviour
     {
         n_MapManager.Instance.UpdateGround -= GetValuesAround;
         n_MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
+        n_MapManager.Instance.ResetSelection -= ResetIndicator;
     }
 }

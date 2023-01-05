@@ -17,6 +17,7 @@ public class n_MapManager : MonoBehaviour
 
     public event Action UpdateGround;
     public event Action CheckBiome;
+    public event Action ResetSelection;
 
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
@@ -129,11 +130,17 @@ public class n_MapManager : MonoBehaviour
     }
 
     // Activate or not the UI Button's indicator and update if one was selected or not
-    public void ChangeActivatedButton(GameObject button) 
+    public void ChangeActivatedButton(GameObject button)
     {
         if (IsGroundFirstSelected) return;
 
-        if (LastButtonSelected != null) // Deactivate the last one selected 
+        if (button != null) // Prevent to use an actual empty button
+        {
+            if (button.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+                return;
+        }
+
+        if (LastButtonSelected != null) // Deactivate the last one selected
             LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
@@ -160,6 +167,11 @@ public class n_MapManager : MonoBehaviour
         }
     }
 
+    public void ChangeCurrentTemperature(int temperature)
+    {
+        TemperatureSelected = temperature;
+    }
+
     public bool CanPoseBloc()
     {
         return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
@@ -168,6 +180,11 @@ public class n_MapManager : MonoBehaviour
     public void DecreaseNumberButton()
     {
         LastButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
+    }
+
+    public bool CheckIfButtonIsEmpty()
+    {
+        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
@@ -193,8 +210,8 @@ public class n_MapManager : MonoBehaviour
         _lastGroundSelected.GetComponent<GroundStateManager>().ChangeCoords(newCoords);
         which.GetComponent<GroundStateManager>().ChangeCoords(_lastGroundCoordsSelected);
         // Reset selection's color of the two Grounds
-        _lastGroundSelected.GetComponent<GroundStateManager>().ResetMatIndicator();
-        which.GetComponent<GroundStateManager>().ResetMatIndicator();
+        _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
+        which.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
         which.GetComponent<GroundStateManager>().UpdateGroundsAround();
         //ResetLastSelected
@@ -222,6 +239,11 @@ public class n_MapManager : MonoBehaviour
     {
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
+    }
+
+    public void ResetAllSelection()
+    {
+        ResetSelection?.Invoke();
     }
 
     public bool GetIsDragNDrop()
