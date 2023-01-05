@@ -44,6 +44,7 @@ public class GroundIndicator : MonoBehaviour
         // _mesh.enabled = true;
         _isEntered = true;
 
+        ValuesSignForGround.Instance.ChangeValues(_parent.GetComponent<GroundStateManager>().Temperature, _parent.GetComponent<GroundStateManager>().Humidity);
         CheckHasWaterMesh();
         CheckIfTemperatureSelected();
             
@@ -60,6 +61,7 @@ public class GroundIndicator : MonoBehaviour
         // _mesh.enabled = false;
         _isEntered = false;
 
+        ValuesSignForGround.Instance.NoValue();
         CheckHasWaterMesh();
         ResetTemperatureSelected();
         
@@ -163,7 +165,10 @@ public class GroundIndicator : MonoBehaviour
     {
         gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
         gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
-        
+
+        gameObject.GetComponentInParent<GroundFeedbackTemperature>()
+            .LaunchFB(n_MapManager.Instance.TemperatureSelected > 0);
+
         ResetForNextChange();
     }
     private void PoseBloc()

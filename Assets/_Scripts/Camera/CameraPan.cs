@@ -78,7 +78,7 @@ public class CameraPan : MonoBehaviour
 
         if (transform.rotation.eulerAngles.x < _minMaxRotation.x && scroll < 0 ||
             transform.rotation.eulerAngles.x > _minMaxRotation.y && scroll > 0) return;
-        
+
         transform.Rotate(Vector3.right, rotation, Space.World);
 
         //float newSize = _cam.orthographicSize + _zoomStep * whichZoom;
