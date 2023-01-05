@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using TMPro.EditorUtilities;
+using TMPro;
 
 public class GroundIndicator : MonoBehaviour
 {

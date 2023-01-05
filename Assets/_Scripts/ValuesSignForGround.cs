@@ -13,6 +13,8 @@ public class ValuesSignForGround : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _humidity;
     [Header("Values")] [SerializeField] private string[] _currentInfo;
 
+    string hum;
+    string tem;
     private void Awake()
     {
         Instance = this;
@@ -34,11 +36,24 @@ public class ValuesSignForGround : MonoBehaviour
         // Barbare
         string tempe = temperature + "     ";
         tempe = tempe.Substring(0, 4);
-        string humi = humidity + "     ";
+        string humi = humidity + "    ";
         humi = humi.Substring(0, 4);
 
+        hum = string.Empty;
+        tem = string.Empty;
+        for (int i = 0; i < humi.Length; i++)
+        {
+            if (humi[i] != ' ')
+                hum += humi[i];
+        }
+        for (int i = 0; i < tempe.Length; i++)
+        {
+            if (tempe[i] != ' ')
+                tem += tempe[i];
+        }
+
         _current.text = _currentInfo[1];
-        _temperature.text = "Temperature : " + tempe;
-        _humidity.text = "Humidity : " + humi;
+        _temperature.text = $"Temperature : {tem}°";
+        _humidity.text = $"Humidity : {hum}/100";
     }
 }

@@ -4,12 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using DG.Tweening;
-using Unity.VisualScripting;
-using System.Linq;
-using Unity.AI.Navigation;
-using UnityEngine.UIElements;
-using UnityEngine.AI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class n_MapManager : MonoBehaviour
 {
@@ -249,5 +246,10 @@ public class n_MapManager : MonoBehaviour
     public bool GetIsDragNDrop()
     {
         return _isDragNDrop;
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

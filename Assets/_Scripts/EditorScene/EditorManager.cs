@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using System.IO;
-using System.Linq;
-using UnityEditor.Profiling;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class EditorManager : MonoBehaviour
