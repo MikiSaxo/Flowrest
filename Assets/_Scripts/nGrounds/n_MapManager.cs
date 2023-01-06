@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using DG.Tweening;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 
@@ -52,7 +50,7 @@ public class n_MapManager : MonoBehaviour
     private void Start()
     {
         // Get the text map
-        string map = Application.dataPath + "/Map-Init/nMap.txt";
+        string map = Application.streamingAssetsPath + "/Map-Init/nMap.txt";
         _mapInfo = File.ReadAllLines(map);
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
@@ -64,8 +62,8 @@ public class n_MapManager : MonoBehaviour
         InitializeLevel(_mapSize);
         // ResetLastSelected();
         // ResetTempGrid();
-    }
 
+    }
     private void InitializeLevel(Vector2Int sizeMap) //Map creation
     {
         for (int x = 0; x < sizeMap.x; x++)
