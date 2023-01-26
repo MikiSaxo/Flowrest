@@ -6,9 +6,9 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 
-public class n_MapManager : MonoBehaviour
+public class SaveMapManager : MonoBehaviour
 {
-    public static n_MapManager Instance;
+    public static SaveMapManager Instance;
 
     public event Action UpdateGround;
     public event Action CheckBiome;
@@ -23,8 +23,6 @@ public class n_MapManager : MonoBehaviour
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
-    [SerializeField] private float _hexOffset;
-    [SerializeField] private float _distance;
 
     private bool _isDragNDrop;
     private string[] _mapInfo;
@@ -98,11 +96,8 @@ public class n_MapManager : MonoBehaviour
 
     private void InitObj(GameObject which, int x, int y, int stateNb)
     {
-        float hexOffset = 0;
-        if (x % 2 == 1)
-            hexOffset = _hexOffset;
         // Tp ground to its position
-        which.transform.position = new Vector3(x * _distance, 0, (y + hexOffset)* _distance);
+        which.transform.position = new Vector3(x * 10, 0, y * 10);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         //Init state of ground

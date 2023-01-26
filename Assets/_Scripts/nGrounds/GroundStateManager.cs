@@ -28,7 +28,7 @@ public class GroundStateManager : MonoBehaviour
 
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private GameObject _meshCurrent;
-    private Vector2Int _coords;
+    [SerializeField] private Vector2Int _coords;
     private float _temperatureAround;
     private float _humidityAround;
     private float _countBlocAround;
