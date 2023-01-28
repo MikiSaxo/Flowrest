@@ -9,7 +9,7 @@ public class GroundStateManager : MonoBehaviour
     public int IdOfBloc { get; set; }
     public bool IsTreated { get; set; }
     public bool IsBiome { get; set; }
-    
+
 
     private GroundBaseState currentState;
     private GroundPlainState plainState = new GroundPlainState();
@@ -40,8 +40,12 @@ public class GroundStateManager : MonoBehaviour
 
     private readonly Vector2Int[] _crossDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
-    private readonly Vector2Int[] _hexDirections = new Vector2Int[]
+
+    private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
+
+    private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
+        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
     private void Awake()
     {
@@ -104,54 +108,55 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateGroundsAround()
     {
-        for (int i = -1; i < 2; i++)
-        {
-            for (int j = -1; j < 2; j++)
-            {
-                Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
 
-                // Check if inside of array
-                if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                 newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
-                // Check if something exist
-                if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-                // Check if has GroundManager
-                if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-                
-                n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetValuesAround();
-            }
+        foreach (var hexPos in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+            // Check if something exist
+            if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundManager
+            if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+
+            n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetValuesAround();
         }
     }
 
-    public void GetValuesAround() // Get the average temperature and humidity from his 8 neighbors
+    public void GetValuesAround() // Get the average temperature and humidity from his 6* neighbors
     {
-        if(_isUpdating) return;
+        if (_isUpdating) return;
         _isUpdating = true;
-        
+
         _temperatureAround = 0;
         _humidityAround = 0;
         _countBlocAround = 0;
 
-        for (int i = -1; i < 2; i++)
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
+        foreach (var hexPos in hexDirections)
         {
-            for (int j = -1; j < 2; j++)
-            {
-                Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
-                if (i == 0 && j == 0) continue;
-                // Check if inside of array
-                if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                    newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
-                // Check if something exist
-                if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-                // Check if has GroundManager
-                if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-                // It's good
-                _temperatureAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y]
-                    .GetComponent<GroundStateManager>().Temperature;
-                _humidityAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .Humidity;
-                _countBlocAround++;
-            }
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+            // Check if something exist
+            if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundManager
+            if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+            // It's good
+            _temperatureAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y]
+                .GetComponent<GroundStateManager>().Temperature;
+            _humidityAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                .Humidity;
+            _countBlocAround++;
         }
 
         StartCoroutine(WaitToChange());
@@ -196,19 +201,19 @@ public class GroundStateManager : MonoBehaviour
     {
         return currentState;
     }
+
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
-        
+
         StartCoroutine(WaitToCheckForBiome());
     }
-
 
     private void ResetBiome()
     {
         // print("reseet biome");
         IsBiome = false;
-        
+
         foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
         {
             getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(false);
@@ -216,13 +221,13 @@ public class GroundStateManager : MonoBehaviour
             getScript.GetComponent<GroundStateManager>().IsBiome = false;
             getScript.GetComponent<GroundStateManager>().IsTreated = false;
         }
+
         _groundInBiome.Clear();
         _countSameBlocAround = 0;
         _countIfEnoughBloc = 0;
 
         FirstCheckIfBiome();
     }
-    
 
     private void FirstCheckIfBiome()
     {
@@ -248,7 +253,7 @@ public class GroundStateManager : MonoBehaviour
             }
         }
         // print("_countSameBlocAround " + _countSameBlocAround);
-        
+
         if (_countSameBlocAround > 7)
             CheckAllSameBlocConnected(n_MapManager.Instance.MapGrid, _coords);
     }
@@ -300,7 +305,7 @@ public class GroundStateManager : MonoBehaviour
     private IEnumerator TransformToBiome()
     {
         if (IsBiome) yield break;
-        
+
         yield return new WaitForSeconds(.01f);
         // print("salam les khyoa : " + _groundInBiome.Count);
         IsBiome = true;
@@ -317,6 +322,7 @@ public class GroundStateManager : MonoBehaviour
     {
         _indicator.GetComponent<GroundIndicator>().ForceEntered();
     }
+
     public void ChangeTemperature(int howMany)
     {
         Temperature += howMany;
