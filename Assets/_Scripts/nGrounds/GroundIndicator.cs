@@ -19,6 +19,9 @@ public class GroundIndicator : MonoBehaviour
     private bool _isEntered;
     private Vector2Int _coords;
     private List<GameObject> _tempEntered = new List<GameObject>();
+    
+    private readonly Vector2Int[] _hexDirections = new Vector2Int[]
+        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
 
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
@@ -80,26 +83,34 @@ public class GroundIndicator : MonoBehaviour
         
         if (n_MapManager.Instance.TemperatureSelected != 0)
         {
-            for (int i = -1; i < 2; i++)
-            {
-                for (int j = -1; j < 2; j++)
-                {
-                    Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
-                    // No need to count the actual
-                    if (i == 0 && j == 0) continue;
-                    // Check if inside of array
-                    if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                        newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
-                    // Check if something exist
-                    if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-                    // Check if has GroundManager
-                    if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-                    
-                    n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().ForceEnteredIndicator();
-                    
-                    _tempEntered.Add(n_MapManager.Instance.MapGrid[newPos.x, newPos.y]);
-                }
-            }
+            // for (int i = -1; i < 2; i++)
+            // {
+            //     for (int j = -1; j < 2; j++)
+            //     {
+                    foreach (var hexPos in _hexDirections)
+                    {
+
+
+
+                        Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+                        // No need to count the actual
+                        //if (i == 0 && j == 0) continue;
+                        // Check if inside of array
+                        if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                            newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+                        // Check if something exist
+                        if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+                        // Check if has GroundManager
+                        if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+                            continue;
+
+                        n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                            .ForceEnteredIndicator();
+
+                        _tempEntered.Add(n_MapManager.Instance.MapGrid[newPos.x, newPos.y]);
+                    }
+            //     }
+            // }
         }
     }
 

@@ -23,7 +23,6 @@ public class n_MapManager : MonoBehaviour
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
-    [SerializeField] private float _hexOffset;
     [SerializeField] private float _distance;
 
     private bool _isDragNDrop;
@@ -43,6 +42,9 @@ public class n_MapManager : MonoBehaviour
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
     private const char WATER = 'W';
+
+    private const float QUARTER_OFFSET = .75f;
+    private const float HALF_OFFSET = .5f;
 
     private void Awake()
     {
@@ -64,8 +66,8 @@ public class n_MapManager : MonoBehaviour
         InitializeLevel(_mapSize);
         // ResetLastSelected();
         // ResetTempGrid();
-
     }
+
     private void InitializeLevel(Vector2Int sizeMap) //Map creation
     {
         for (int x = 0; x < sizeMap.x; x++)
@@ -100,9 +102,9 @@ public class n_MapManager : MonoBehaviour
     {
         float hexOffset = 0;
         if (x % 2 == 1)
-            hexOffset = _hexOffset;
+            hexOffset = HALF_OFFSET;
         // Tp ground to its position
-        which.transform.position = new Vector3(x * _distance, 0, (y + hexOffset)* _distance);
+        which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         //Init state of ground

@@ -38,8 +38,10 @@ public class GroundStateManager : MonoBehaviour
 
     private List<GameObject> _groundInBiome = new List<GameObject>();
 
-    private readonly Vector2Int[] _directions = new Vector2Int[]
+    private readonly Vector2Int[] _crossDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1) };
+    private readonly Vector2Int[] _hexDirections = new Vector2Int[]
+        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
 
     private void Awake()
     {
@@ -253,7 +255,7 @@ public class GroundStateManager : MonoBehaviour
 
     private void CheckAllSameBlocConnected(GameObject[,] mapGrid, Vector2Int coords)
     {
-        foreach (var dir in _directions)
+        foreach (var dir in _crossDirections)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
             // Check if inside of array
