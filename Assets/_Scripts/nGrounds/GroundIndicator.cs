@@ -50,8 +50,7 @@ public class GroundIndicator : MonoBehaviour
         // _mesh.enabled = true;
         _isEntered = true;
 
-        ValuesSignForGround.Instance.ChangeValues(_parent.GetComponent<GroundStateManager>().Temperature,
-            _parent.GetComponent<GroundStateManager>().Humidity);
+        //ValuesSignForGround.Instance.ChangeValues(_parent.GetComponent<GroundStateManager>().Temperature, _parent.GetComponent<GroundStateManager>().Humidity);
         CheckHasWaterMesh();
         CheckIfTemperatureSelected();
 
@@ -132,17 +131,14 @@ public class GroundIndicator : MonoBehaviour
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
 
 
-        if (n_MapManager.Instance.LastButtonSelected == null) // First case: select bloc for swap
+        if (n_MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
             if (_isSelected) return; // Block if click again on it
 
             _isSelected = true; // Useful to block Trigger enter and exit
             MoveYMesh(_selectedYPos, .3f); // Make animation
-            //_mesh.material = _mats[1]; // Change mat of indicator -> must disappear
-            n_MapManager.Instance.IsGroundFirstSelected =
-                true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
-            _parent.GetComponent<GroundStateManager>()
-                .OnSelected(); // Call its parent to tell which one was selected to MapManager
+            n_MapManager.Instance.IsGroundFirstSelected = true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
+            _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
             ChangeBlocOrTemperature(); // Transform the bloc with new state
@@ -175,8 +171,7 @@ public class GroundIndicator : MonoBehaviour
 
     private void ChangeTemperature()
     {
-        gameObject.GetComponentInParent<GroundStateManager>()
-            .ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
+        //gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
         gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
 
         gameObject.GetComponentInParent<GroundFeedbackTemperature>()
@@ -187,14 +182,15 @@ public class GroundIndicator : MonoBehaviour
 
     private void PoseBloc()
     {
-        if (!n_MapManager.Instance.CanPoseBloc()) return; // Idk if really helpful but security
+        // Idk if really helpful but security
+        if (!n_MapManager.Instance.CanPoseBloc()) return; 
 
-        if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
-            n_MapManager.Instance.LastNbButtonSelected) return; // Avoid to update by same ground
+        // Avoid to update by same ground
+        if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc == (int)n_MapManager.Instance.LastStateButtonSelected) return; 
 
-        gameObject.GetComponentInParent<GroundStateManager>()
-            .InitState(n_MapManager.Instance.LastNbButtonSelected); // Init the new State
-        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(); // Init the new State
+        // Init the new State
+        gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastStateButtonSelected); 
+        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(); 
 
 
         ResetForNextChange();

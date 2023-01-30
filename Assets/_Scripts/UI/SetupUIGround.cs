@@ -15,7 +15,7 @@ public class SetupUIGround : MonoBehaviour
     [Header("Ground")] [SerializeField] private string[] _texts;
     [SerializeField] private Color[] _colors;
     [SerializeField] private int[] _nbLeft;
-    [SerializeField] private States[] _groundState;
+    [SerializeField] private AllStates[] _groundState;
 
     [Header("Temperature")] [SerializeField]
     private string[] _textsTemperature;
@@ -44,17 +44,17 @@ public class SetupUIGround : MonoBehaviour
         }
     }
 
-    public void UpdateFbGround(int whichState) // Use by Ground buttons
+    public void UpdateFbGround(AllStates whichState) // Use by Ground buttons
     {
         UpdateFB(whichState, false);
     }
 
     public void UpdateFbTemperature(int whichTemperature) // Use by Temperature buttons
     {
-        UpdateFB(whichTemperature, true);
+        //UpdateFB(whichTemperature, true);
     }
 
-    private void UpdateFB(int which, bool isTemp)
+    private void UpdateFB(AllStates state, bool isTemp)
     {
         if (n_MapManager.Instance.IsGroundFirstSelected) return;
 
@@ -63,24 +63,24 @@ public class SetupUIGround : MonoBehaviour
 
         if (isTemp)
         {
-            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colorsTemperature[which], _textsTemperature[which]);
-            n_MapManager.Instance.LastButtonSelected = _UITemperature[which];
+            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colorsTemperature[(int)state], _textsTemperature[(int)state]);
+            n_MapManager.Instance.LastObjButtonSelected = _UITemperature[(int)state];
         }
         else
         {
-            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[which], _texts[which]);
-            n_MapManager.Instance.LastButtonSelected = _UIGround[which];
+            _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[(int)state], _texts[(int)state]);
+            n_MapManager.Instance.LastObjButtonSelected = _UIGround[(int)state];
         }
 
-        if (n_MapManager.Instance.LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+        if (n_MapManager.Instance.LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0)
         {
-            n_MapManager.Instance.LastButtonSelected = null;
+            n_MapManager.Instance.LastObjButtonSelected = null;
             return;
         }
         
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
-        n_MapManager.Instance.LastNbButtonSelected = which;
+        n_MapManager.Instance.LastStateButtonSelected = state;
     }
 
     public void EndFb() // Use by Ground buttons
@@ -95,7 +95,7 @@ public class SetupUIGround : MonoBehaviour
 
     public void BounceButtonAnim(GameObject obj)
     {
-        AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
+        //AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
     }
 
     public void MouseEnterButton(GameObject obj)

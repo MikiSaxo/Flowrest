@@ -14,7 +14,7 @@ public enum States
 
 public class nUIButton : MonoBehaviour
 {
-    [Header("Setup")] public States _stateButton;
+    [Header("Setup")] public AllStates _stateButton;
     [SerializeField] private TextMeshProUGUI _textButton;
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
@@ -30,7 +30,7 @@ public class nUIButton : MonoBehaviour
         NeedActivateSelectedIcon(false);
     }
 
-    public void Setup(string text, Color color, int nbLeft, States stat)
+    public void Setup(string text, Color color, int nbLeft, AllStates stat)
     {
         // SetupTemperature(text, color, nbLeft);
         _colorButton.color = color;
@@ -52,9 +52,9 @@ public class nUIButton : MonoBehaviour
         _selectedIcon.SetActive(which);
     }
 
-    public int GetStateButton()
+    public AllStates GetStateButton()
     {
-        return (int)_stateButton;
+        return _stateButton;
     }
 
     public int GetNumberLeft()

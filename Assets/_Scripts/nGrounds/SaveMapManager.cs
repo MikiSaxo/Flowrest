@@ -101,7 +101,7 @@ public class SaveMapManager : MonoBehaviour
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         //Init state of ground
-        which.GetComponent<GroundStateManager>().InitState(stateNb);
+        // which.GetComponent<GroundStateManager>().InitState(stateNb);
         // Update _mapGrid
         MapGrid[x, y] = which;
     }
@@ -147,7 +147,7 @@ public class SaveMapManager : MonoBehaviour
 
             if (!LastButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
             {
-                LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
+                // LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
                 TemperatureSelected = 0;
             }
             else

@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundWaterState : GroundBaseState
+public class GroundTropicalState : GroundBaseState
 {
     public override void InitState(GroundStateManager ground)
     {
-        //ground.ChangeValues(100, 20);
+        // ground.ChangeValues(0, 35);
     }
-    
     public override void EnterState(GroundStateManager ground)
     {
-        // Debug.Log("Water");
-        // ground.ChangeMaterials(2);
-        ground.ChangeMesh(2);
-        ground.IdOfBloc = 2;
+        ground.ChangeMesh(3);
+        ground.IdOfBloc = 3;
     }
+    
     public override void UpdateState(GroundStateManager ground)
     {
         
@@ -26,22 +24,23 @@ public class GroundWaterState : GroundBaseState
         switch (neighboorGround)
         {
             case GroundPlainState:
-                ground.ChangeState(AllStates.Tropical);
+                ground.ChangeState(AllStates.Plain);
                 break;
             case GroundDesertState:
-                ground.ChangeState(AllStates.HotSpring);
+                ground.ChangeState(AllStates.Savane);
                 break;
             case GroundWaterState:
-                Debug.Log("deja de l'eau");
+                ground.ChangeState(AllStates.Water);
                 break;
             case GroundTropicalState:
-                ground.ChangeState(AllStates.Tropical);
+                // ground.ChangeState(3);
+                Debug.Log("Deja un Tropical");
                 break;
             case GroundSavaneState:
                 ground.ChangeState(AllStates.Plain);
                 break;
             case GroundHotSpringState:
-                ground.ChangeState(AllStates.Tropical);
+                ground.ChangeState(AllStates.Water);
                 break;
         }
     }

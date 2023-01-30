@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
@@ -16,8 +17,8 @@ public class n_MapManager : MonoBehaviour
 
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
-    public int LastNbButtonSelected { get; set; }
-    public GameObject LastButtonSelected { get; set; }
+    public AllStates LastStateButtonSelected { get; set; }
+    public GameObject LastObjButtonSelected { get; set; }
     public int TemperatureSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
 
@@ -83,22 +84,22 @@ public class n_MapManager : MonoBehaviour
                 {
                     case PLAIN:
                         GameObject plains = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(plains, x, y, 0);
+                        InitObj(plains, x, y, AllStates.Plain);
                         break;
                     case DESERT:
                         GameObject desert = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(desert, x, y, 1);
+                        InitObj(desert, x, y, AllStates.Desert);
                         break;
                     case WATER:
                         GameObject water = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(water, x, y, 2);
+                        InitObj(water, x, y, AllStates.Water);
                         break;
                 }
             }
         }
     }
 
-    private void InitObj(GameObject which, int x, int y, int stateNb)
+    private void InitObj(GameObject which, int x, int y, AllStates state)
     {
         float hexOffset = 0;
         if (x % 2 == 1)
@@ -108,7 +109,7 @@ public class n_MapManager : MonoBehaviour
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
         //Init state of ground
-        which.GetComponent<GroundStateManager>().InitState(stateNb);
+        which.GetComponent<GroundStateManager>().InitState(state);
         // Update _mapGrid
         MapGrid[x, y] = which;
     }
@@ -116,9 +117,7 @@ public class n_MapManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(1)) // Right click to Reset
-        {
             ResetButtonSelected();
-        }
     }
 
     public void UpdateMap()
@@ -142,29 +141,29 @@ public class n_MapManager : MonoBehaviour
                 return;
         }
 
-        if (LastButtonSelected != null) // Deactivate the last one selected
-            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
+        if (LastObjButtonSelected != null) // Deactivate the last one selected
+            LastObjButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
-        LastButtonSelected = button;
+        LastObjButtonSelected = button;
 
-        if (LastButtonSelected != null)
+        if (LastObjButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(true);
+            LastObjButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(true);
 
-            if (!LastButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
+            if (!LastObjButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
             {
-                LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
+                LastStateButtonSelected = LastObjButtonSelected.GetComponent<nUIButton>().GetStateButton();
                 TemperatureSelected = 0;
             }
             else
-                TemperatureSelected = LastButtonSelected.GetComponent<nUIButton>().GetHisTemperature();
+                TemperatureSelected = LastObjButtonSelected.GetComponent<nUIButton>().GetHisTemperature();
             // FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
             _isDragNDrop = true;
-            LastNbButtonSelected = -1;
+            LastStateButtonSelected = AllStates.None;
             TemperatureSelected = 0;
         }
     }
@@ -176,22 +175,22 @@ public class n_MapManager : MonoBehaviour
 
     public bool CanPoseBloc()
     {
-        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
+        return LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
+        LastObjButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
     {
-        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0;
+        return LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
     {
-        if (LastButtonSelected != null) return;
+        if (LastObjButtonSelected != null) return;
 
         // If was checkAround -> go swap
         if (_lastGroundSelected != null)
