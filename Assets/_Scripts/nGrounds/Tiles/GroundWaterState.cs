@@ -41,7 +41,7 @@ public class GroundWaterState : GroundBaseState
                 ground.ChangeState(AllStates.Plain);
                 break;
             case GroundHotSpringState:
-                ground.ChangeState(AllStates.Tropical);
+                ground.ChangeState(AllStates.HotSpring);
                 break;
         }
     }

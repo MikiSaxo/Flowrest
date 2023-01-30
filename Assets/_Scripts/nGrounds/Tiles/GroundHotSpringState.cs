@@ -30,7 +30,7 @@ public class GroundHotSpringState : GroundBaseState
                 ground.ChangeState(AllStates.Desert);
                 break;
             case GroundWaterState:
-                ground.ChangeState(AllStates.Tropical);
+                ground.ChangeState(AllStates.Water);
                 break;
             case GroundTropicalState:
                 ground.ChangeState(AllStates.Water);

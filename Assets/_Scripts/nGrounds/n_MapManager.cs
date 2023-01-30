@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.IO;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 
 public class n_MapManager : MonoBehaviour
 {
     public static n_MapManager Instance;
-
     public event Action UpdateGround;
     public event Action CheckBiome;
     public event Action ResetSelection;
@@ -25,7 +25,9 @@ public class n_MapManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
+    [SerializeField] private int _nbMaxLevel;
 
+    private int _actualLevel;
     private bool _isDragNDrop;
     private string[] _mapInfo;
     private Vector2Int _lastGroundCoordsSelected;
@@ -40,9 +42,14 @@ public class n_MapManager : MonoBehaviour
     // public int _lastNbButtonSelected;
     // private int[,] _tempGroundSelectedGrid;
 
+    private const char NONE = 'N';
+
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
     private const char WATER = 'W';
+    private const char TROPICAL = 'T';
+    private const char SAVANE = 'S';
+    private const char HOT_SPRING = 'H';
 
     private const float QUARTER_OFFSET = .75f;
     private const float HALF_OFFSET = .5f;
@@ -54,19 +61,22 @@ public class n_MapManager : MonoBehaviour
 
     private void Start()
     {
+        InitializeMap();
+    }
+
+    private void InitializeMap()
+    {
+        var mapName = $"Level{_actualLevel}";
         // Get the text map
-        string map = Application.streamingAssetsPath + "/Map-Init/nMap.txt";
+        string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
         _mapInfo = File.ReadAllLines(map);
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
         // Init the grids
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
-        //_tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
-        // _tempGroundSelectedGrid = new int[_mapSize.x, _mapSize.y];
+
         InitializeLevel(_mapSize);
-        // ResetLastSelected();
-        // ResetTempGrid();
     }
 
     private void InitializeLevel(Vector2Int sizeMap) //Map creation
@@ -94,6 +104,20 @@ public class n_MapManager : MonoBehaviour
                         GameObject water = Instantiate(_groundPrefab, _map.transform);
                         InitObj(water, x, y, AllStates.Water);
                         break;
+                    case TROPICAL:
+                        GameObject tropical = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(tropical, x, y, AllStates.Tropical);
+                        break;
+                    case SAVANE:
+                        GameObject savane = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(savane, x, y, AllStates.Savane);
+                        break;
+                    case HOT_SPRING:
+                        GameObject hotSpring = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(hotSpring, x, y, AllStates.HotSpring);
+                        break;
+                    case NONE:
+                        break;
                 }
             }
         }
@@ -112,6 +136,27 @@ public class n_MapManager : MonoBehaviour
         which.GetComponent<GroundStateManager>().InitState(state);
         // Update _mapGrid
         MapGrid[x, y] = which;
+    }
+
+    public void ResetAllMap()
+    {
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                Destroy(MapGrid[x, y]);
+                MapGrid[x, y] = null;
+            }
+        }
+
+        ChangeLevel();
+    }
+
+    private void ChangeLevel()
+    {
+        if (_actualLevel < _nbMaxLevel-1)
+            _actualLevel++;
+        InitializeMap();
     }
 
     private void Update()
