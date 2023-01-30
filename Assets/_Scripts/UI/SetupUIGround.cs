@@ -44,9 +44,9 @@ public class SetupUIGround : MonoBehaviour
         }
     }
 
-    public void UpdateFbGround(AllStates whichState) // Use by Ground buttons
+    public void UpdateFbGround(int whichState) // Use by Ground buttons
     {
-        UpdateFB(whichState, false);
+        UpdateFB((AllStates)whichState, false);
     }
 
     public void UpdateFbTemperature(int whichTemperature) // Use by Temperature buttons
