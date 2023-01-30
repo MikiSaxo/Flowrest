@@ -23,6 +23,7 @@ public class GroundStateManager : MonoBehaviour
 
     private AllStates _allStatesEnum;
 
+
     private GroundBaseState currentState;
     private GroundPlainState _plainState = new GroundPlainState();
     private GroundDesertState _desertState = new GroundDesertState();
@@ -70,6 +71,7 @@ public class GroundStateManager : MonoBehaviour
         _allState.Add(_tropicalState);
         _allState.Add(_savaneState);
         _allState.Add(_hotSpringState);
+        
     }
 
     private void Start()

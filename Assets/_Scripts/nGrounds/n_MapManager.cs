@@ -43,7 +43,6 @@ public class n_MapManager : MonoBehaviour
     // private int[,] _tempGroundSelectedGrid;
 
     private const char NONE = 'N';
-
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
     private const char WATER = 'W';
@@ -148,7 +147,6 @@ public class n_MapManager : MonoBehaviour
                 MapGrid[x, y] = null;
             }
         }
-
         ChangeLevel();
     }
 
@@ -295,6 +293,11 @@ public class n_MapManager : MonoBehaviour
     public bool GetIsDragNDrop()
     {
         return _isDragNDrop;
+    }
+
+    public int GetActualLevel()
+    {
+        return _actualLevel;
     }
 
     public void RestartScene()
