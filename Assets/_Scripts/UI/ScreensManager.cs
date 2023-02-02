@@ -21,7 +21,7 @@ public class ScreensManager : MonoBehaviour
 
     private void Start()
     {
-        FirstScreenOfLevel();
+        //FirstScreenOfLevel();
     }
 
     public void FirstScreenOfLevel()
