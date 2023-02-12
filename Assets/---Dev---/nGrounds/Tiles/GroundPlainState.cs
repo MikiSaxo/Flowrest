@@ -28,7 +28,7 @@ public class GroundPlainState : GroundBaseState
                 Debug.Log("Deja une plaine");
                 break;
             case GroundDesertState:
-                ground.ChangeState(AllStates.Savane);
+                ground.ChangeState(AllStates.Savanna);
                 break;
             case GroundWaterState:
                 ground.ChangeState(AllStates.Tropical);
@@ -36,10 +36,10 @@ public class GroundPlainState : GroundBaseState
             case GroundTropicalState:
                 ground.ChangeState(AllStates.Tropical);
                 break;
-            case GroundSavaneState:
-                ground.ChangeState(AllStates.Savane);
+            case GroundSavannaState:
+                ground.ChangeState(AllStates.Savanna);
                 break;
-            case GroundHotSpringState:
+            case GroundGeyserState:
                 ground.ChangeState(AllStates.Tropical);
                 break;
         }

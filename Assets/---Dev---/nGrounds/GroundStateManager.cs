@@ -11,8 +11,8 @@ public enum AllStates
     Desert = 1,
     Water = 2,
     Tropical = 3,
-    Savane = 4,
-    HotSpring = 5
+    Savanna = 4,
+    Geyser = 5
 }
 
 public class GroundStateManager : MonoBehaviour
@@ -21,7 +21,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsTreated { get; set; }
     public bool IsBiome { get; set; }
 
-    private AllStates _allStatesEnum;
+    private AllStates _statesEnum;
 
 
     private GroundBaseState currentState;
@@ -29,8 +29,8 @@ public class GroundStateManager : MonoBehaviour
     private GroundDesertState _desertState = new GroundDesertState();
     private GroundWaterState _waterState = new GroundWaterState();
     private GroundTropicalState _tropicalState = new GroundTropicalState();
-    private GroundSavaneState _savaneState = new GroundSavaneState();
-    private GroundHotSpringState _hotSpringState = new GroundHotSpringState();
+    private GroundSavannaState _savannaState = new GroundSavannaState();
+    private GroundGeyserState _geyserState = new GroundGeyserState();
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -69,18 +69,15 @@ public class GroundStateManager : MonoBehaviour
         _allState.Add(_desertState);
         _allState.Add(_waterState);
         _allState.Add(_tropicalState);
-        _allState.Add(_savaneState);
-        _allState.Add(_hotSpringState);
+        _allState.Add(_savannaState);
+        _allState.Add(_geyserState);
         
     }
 
     private void Start()
     {
-        n_MapManager.Instance.UpdateGround += GetValuesAround;
         n_MapManager.Instance.CheckBiome += LaunchCheckForBiome;
         n_MapManager.Instance.ResetSelection += ResetIndicator;
-
-        // ResetBiome();
     }
 
     public void InitState(AllStates state)
@@ -91,10 +88,10 @@ public class GroundStateManager : MonoBehaviour
 
     public void ChangeState(AllStates state)
     {
+        _statesEnum = state;
         currentState = _allState[(int)state];
+        // print(currentState);
         currentState.EnterState(this);
-
-        //LaunchCheckForBiome();
     }
 
     private void LaunchCheckForBiome()
@@ -114,12 +111,6 @@ public class GroundStateManager : MonoBehaviour
         GameObject go = Instantiate(_meshes[meshNb], _meshParent.transform);
         _meshCurrent = go;
     }
-
-    // public void ChangeValues(float humidity, float temperature)
-    // {
-    //     Humidity = humidity;
-    //     Temperature = temperature;
-    // }
 
     public void ChangeCoords(Vector2Int coords)
     {
@@ -145,75 +136,10 @@ public class GroundStateManager : MonoBehaviour
             if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
 
             var grnd = n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            grnd.currentState.CheckUpdate(grnd, currentState);
-            //n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetValuesAround();
+            // grnd.currentState.CheckUpdate(grnd, currentState);
+            var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
+            grnd.ChangeState(newState);
         }
-    }
-
-    public void GetValuesAround() // Get the average temperature and humidity from his 6* neighbors
-    {
-        if (_isUpdating) return;
-        _isUpdating = true;
-
-        // _temperatureAround = 0;
-        // _humidityAround = 0;
-        // _countBlocAround = 0;
-
-        Vector2Int[] hexDirections = new Vector2Int[6];
-        // Important for the offset with hex coords
-        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
-
-        foreach (var hexPos in hexDirections)
-        {
-            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
-            // Check if inside of array
-            if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
-            // Check if something exist
-            if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-            // Check if has GroundManager
-            if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-            // It's good
-            
-            
-            
-            //_temperatureAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().Temperature;
-            //_humidityAround += n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().Humidity;
-            //_countBlocAround++;
-        }
-
-        //StartCoroutine(WaitToChange());
-    }
-
-    private IEnumerator WaitToChange()
-    {
-        yield return new WaitForSeconds(.01f);
-        //var newHumidity = (_humidityAround / _countBlocAround + Humidity) / 2;
-        //var newTemperature = (_temperatureAround / _countBlocAround + Temperature) / 2;
-        //print("old humi : " + Humidity + " / old tempe : " + Temperature + " ----- " + "humi : " + newHumidity + " / tempe : " + newTemperature);
-        //ChangeValues(newHumidity, newTemperature);
-        CheckIfNeedUpdate();
-        _isUpdating = false;
-    }
-
-    private void CheckIfNeedUpdate() // "System" to transform bloc's state according to its temperature and humidity
-    {
-        // switch (Temperature)
-        // {
-        //     // Plain
-        //     case >= 1 and < 47 when Humidity is < 50 and > 11:
-        //         ChangeState(0);
-        //         break;
-        //     // Desert
-        //     case >= 33 when Humidity <= 10:
-        //         ChangeState(1);
-        //         break;
-        //     // Water
-        //     case >= 1 and < 47 when Humidity >= 26:
-        //         ChangeState(2);
-        //         break;
-        // }
-        
     }
 
     public void OnSelected() // When bloc is Selected by the player
@@ -221,9 +147,14 @@ public class GroundStateManager : MonoBehaviour
         n_MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
     }
 
-    public GroundBaseState GetActualState()
+    public GroundBaseState GetCurrentState()
     {
         return currentState;
+    }
+
+    public AllStates GetCurrentStateEnum()
+    {
+        return _statesEnum;
     }
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
@@ -347,11 +278,6 @@ public class GroundStateManager : MonoBehaviour
         _indicator.GetComponent<GroundIndicator>().ForceEntered();
     }
 
-    // public void ChangeTemperature(int howMany)
-    // {
-    //     Temperature += howMany;
-    // }
-
     public GameObject GetMeshParent()
     {
         return _meshParent;
@@ -369,7 +295,6 @@ public class GroundStateManager : MonoBehaviour
 
     private void OnDisable()
     {
-        n_MapManager.Instance.UpdateGround -= GetValuesAround;
         n_MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
         n_MapManager.Instance.ResetSelection -= ResetIndicator;
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundHotSpringState : GroundBaseState
+public class GroundGeyserState : GroundBaseState
 {
     public override void InitState(GroundStateManager ground)
     {
@@ -35,10 +35,10 @@ public class GroundHotSpringState : GroundBaseState
             case GroundTropicalState:
                 ground.ChangeState(AllStates.Water);
                 break;
-            case GroundSavaneState:
+            case GroundSavannaState:
                 ground.ChangeState(AllStates.Tropical);
                 break;
-            case GroundHotSpringState:
+            case GroundGeyserState:
                 // ground.ChangeState(5);
                 Debug.Log("Deja une Source Chaude");
                 break;

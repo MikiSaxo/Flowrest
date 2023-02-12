@@ -109,11 +109,11 @@ public class n_MapManager : MonoBehaviour
                         break;
                     case SAVANE:
                         GameObject savane = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(savane, x, y, AllStates.Savane);
+                        InitObj(savane, x, y, AllStates.Savanna);
                         break;
                     case HOT_SPRING:
                         GameObject hotSpring = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(hotSpring, x, y, AllStates.HotSpring);
+                        InitObj(hotSpring, x, y, AllStates.Geyser);
                         break;
                     case NONE:
                         break;

@@ -29,7 +29,7 @@ public class GroundWaterState : GroundBaseState
                 ground.ChangeState(AllStates.Tropical);
                 break;
             case GroundDesertState:
-                ground.ChangeState(AllStates.HotSpring);
+                ground.ChangeState(AllStates.Geyser);
                 break;
             case GroundWaterState:
                 Debug.Log("deja de l'eau");
@@ -37,11 +37,11 @@ public class GroundWaterState : GroundBaseState
             case GroundTropicalState:
                 ground.ChangeState(AllStates.Tropical);
                 break;
-            case GroundSavaneState:
+            case GroundSavannaState:
                 ground.ChangeState(AllStates.Plain);
                 break;
-            case GroundHotSpringState:
-                ground.ChangeState(AllStates.HotSpring);
+            case GroundGeyserState:
+                ground.ChangeState(AllStates.Geyser);
                 break;
         }
     }

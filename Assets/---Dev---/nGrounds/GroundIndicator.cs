@@ -172,7 +172,7 @@ public class GroundIndicator : MonoBehaviour
     private void ChangeTemperature()
     {
         //gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
-        gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
+        // gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
 
         gameObject.GetComponentInParent<GroundFeedbackTemperature>()
             .LaunchFB(n_MapManager.Instance.TemperatureSelected > 0);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundSavaneState : GroundBaseState
+public class GroundSavannaState : GroundBaseState
 {
     public override void InitState(GroundStateManager ground)
     {
@@ -35,11 +35,11 @@ public class GroundSavaneState : GroundBaseState
             case GroundTropicalState:
                 ground.ChangeState(AllStates.Plain);
                 break;
-            case GroundSavaneState:
+            case GroundSavannaState:
                 // ground.ChangeState(4);
                 Debug.Log("Deja une Savane");
                 break;
-            case GroundHotSpringState:
+            case GroundGeyserState:
                 ground.ChangeState(AllStates.Tropical);
                 break;
         }

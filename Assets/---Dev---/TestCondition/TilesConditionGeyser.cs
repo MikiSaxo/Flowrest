@@ -6,9 +6,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 [Serializable]
-public class TilesCondition
+public class TilesConditionGeyser : TilesCondition
 {
-  public AllStates Current;
-  public AllStates Other;
-  public AllStates Result;
+    
 }

@@ -27,7 +27,7 @@ public class GroundTropicalState : GroundBaseState
                 ground.ChangeState(AllStates.Plain);
                 break;
             case GroundDesertState:
-                ground.ChangeState(AllStates.Savane);
+                ground.ChangeState(AllStates.Savanna);
                 break;
             case GroundWaterState:
                 ground.ChangeState(AllStates.Water);
@@ -36,10 +36,10 @@ public class GroundTropicalState : GroundBaseState
                 // ground.ChangeState(3);
                 Debug.Log("Deja un Tropical");
                 break;
-            case GroundSavaneState:
+            case GroundSavannaState:
                 ground.ChangeState(AllStates.Plain);
                 break;
-            case GroundHotSpringState:
+            case GroundGeyserState:
                 ground.ChangeState(AllStates.Water);
                 break;
         }
