@@ -12,7 +12,11 @@ public enum AllStates
     Water = 2,
     Tropical = 3,
     Savanna = 4,
-    Geyser = 5
+    Geyser = 5,
+    Snow = 6,
+    PolarDesert = 7,
+    Tundra = 8,
+    Swamp = 9
 }
 
 public class GroundStateManager : MonoBehaviour
@@ -31,6 +35,10 @@ public class GroundStateManager : MonoBehaviour
     private GroundTropicalState _tropicalState = new GroundTropicalState();
     private GroundSavannaState _savannaState = new GroundSavannaState();
     private GroundGeyserState _geyserState = new GroundGeyserState();
+    private GroundSnowState _snowState = new GroundSnowState();
+    private GroundPolarDesertState _polarDesertState = new GroundPolarDesertState();
+    private GroundTundraState _tundraState = new GroundTundraState();
+    private GroundSwampState _swampState = new GroundSwampState();
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -71,7 +79,10 @@ public class GroundStateManager : MonoBehaviour
         _allState.Add(_tropicalState);
         _allState.Add(_savannaState);
         _allState.Add(_geyserState);
-        
+        _allState.Add(_snowState);
+        _allState.Add(_polarDesertState);
+        _allState.Add(_tundraState);
+        _allState.Add(_swampState);
     }
 
     private void Start()

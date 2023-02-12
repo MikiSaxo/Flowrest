@@ -15,6 +15,10 @@ public class ConditionManager : MonoBehaviour
     public TilesConditionTropical[] TileConditionsTropical;
     public TilesConditionSavanna[] TileConditionsSavanna;
     public TilesConditionGeyser[] TileConditionsGeyser;
+    public TilesConditionSnow[] TileConditionsSnow;
+    public TilesConditionPolarDesert[] TileConditionsPolarDesert;
+    public TilesConditionTundra[] TileConditionsTundra;
+    public TilesConditionSwamp[] TileConditionsSwamp;
 
     private void Awake()
     {
@@ -29,6 +33,10 @@ public class ConditionManager : MonoBehaviour
         _tileAllConditions.AddRange(TileConditionsSavanna);
         _tileAllConditions.AddRange(TileConditionsTropical);
         _tileAllConditions.AddRange(TileConditionsGeyser);
+        _tileAllConditions.AddRange(TileConditionsSnow);
+        _tileAllConditions.AddRange(TileConditionsPolarDesert);
+        _tileAllConditions.AddRange(TileConditionsTundra);
+        _tileAllConditions.AddRange(TileConditionsSwamp);
     }
 
 

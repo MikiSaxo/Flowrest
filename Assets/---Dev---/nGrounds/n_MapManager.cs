@@ -47,8 +47,12 @@ public class n_MapManager : MonoBehaviour
     private const char DESERT = 'D';
     private const char WATER = 'W';
     private const char TROPICAL = 'T';
-    private const char SAVANE = 'S';
-    private const char HOT_SPRING = 'H';
+    private const char SAVANNA = 'S';
+    private const char GEYSER = 'H';
+    private const char SNOW = 'G';
+    private const char POLAR_DESERT = 'O';
+    private const char TUNDRA = 'U';
+    private const char SWAMP = 'M';
 
     private const float QUARTER_OFFSET = .75f;
     private const float HALF_OFFSET = .5f;
@@ -107,13 +111,29 @@ public class n_MapManager : MonoBehaviour
                         GameObject tropical = Instantiate(_groundPrefab, _map.transform);
                         InitObj(tropical, x, y, AllStates.Tropical);
                         break;
-                    case SAVANE:
-                        GameObject savane = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(savane, x, y, AllStates.Savanna);
+                    case SAVANNA:
+                        GameObject savanna = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(savanna, x, y, AllStates.Savanna);
                         break;
-                    case HOT_SPRING:
-                        GameObject hotSpring = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(hotSpring, x, y, AllStates.Geyser);
+                    case GEYSER:
+                        GameObject geyser = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(geyser, x, y, AllStates.Geyser);
+                        break;
+                    case SNOW:
+                        GameObject snow = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(snow, x, y, AllStates.Snow);
+                        break;
+                    case POLAR_DESERT:
+                        GameObject polar = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(polar, x, y, AllStates.PolarDesert);
+                        break;
+                    case TUNDRA:
+                        GameObject tundra = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(tundra, x, y, AllStates.Tundra);
+                        break;
+                    case SWAMP:
+                        GameObject swamp = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(swamp, x, y, AllStates.Swamp);
                         break;
                     case NONE:
                         break;

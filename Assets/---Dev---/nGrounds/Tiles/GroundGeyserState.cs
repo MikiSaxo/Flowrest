@@ -21,27 +21,6 @@ public class GroundGeyserState : GroundBaseState
     
     public override void CheckUpdate(GroundStateManager ground, GroundBaseState neighboorGround)
     {
-        switch (neighboorGround)
-        {
-            case GroundPlainState:
-                ground.ChangeState(AllStates.Tropical);
-                break;
-            case GroundDesertState:
-                ground.ChangeState(AllStates.Desert);
-                break;
-            case GroundWaterState:
-                ground.ChangeState(AllStates.Water);
-                break;
-            case GroundTropicalState:
-                ground.ChangeState(AllStates.Water);
-                break;
-            case GroundSavannaState:
-                ground.ChangeState(AllStates.Tropical);
-                break;
-            case GroundGeyserState:
-                // ground.ChangeState(5);
-                Debug.Log("Deja une Source Chaude");
-                break;
-        }
+       
     }
 }

@@ -21,27 +21,6 @@ public class GroundTropicalState : GroundBaseState
     
     public override void CheckUpdate(GroundStateManager ground, GroundBaseState neighboorGround)
     {
-        switch (neighboorGround)
-        {
-            case GroundPlainState:
-                ground.ChangeState(AllStates.Plain);
-                break;
-            case GroundDesertState:
-                ground.ChangeState(AllStates.Savanna);
-                break;
-            case GroundWaterState:
-                ground.ChangeState(AllStates.Water);
-                break;
-            case GroundTropicalState:
-                // ground.ChangeState(3);
-                Debug.Log("Deja un Tropical");
-                break;
-            case GroundSavannaState:
-                ground.ChangeState(AllStates.Plain);
-                break;
-            case GroundGeyserState:
-                ground.ChangeState(AllStates.Water);
-                break;
-        }
+    
     }
 }

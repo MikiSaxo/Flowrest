@@ -22,27 +22,6 @@ public class GroundDesertState : GroundBaseState
     
     public override void CheckUpdate(GroundStateManager ground, GroundBaseState neighboorGround)
     {
-        switch (neighboorGround)
-        {
-            case GroundPlainState:
-                ground.ChangeState(AllStates.Savanna);
-                break;
-            case GroundDesertState:
-                // ground.ChangeState(1);
-                Debug.Log("Deja un Desert");
-                break;
-            case GroundWaterState:
-                ground.ChangeState(AllStates.Geyser);
-                break;
-            case GroundTropicalState:
-                ground.ChangeState(AllStates.Savanna);
-                break;
-            case GroundSavannaState:
-                ground.ChangeState(AllStates.Savanna);
-                break;
-            case GroundGeyserState:
-                ground.ChangeState(AllStates.Geyser);
-                break;
-        }
+      
     }
 }
