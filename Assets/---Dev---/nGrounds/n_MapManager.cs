@@ -65,6 +65,7 @@ public class n_MapManager : MonoBehaviour
     private void Start()
     {
         InitializeMap();
+        LastStateButtonSelected = AllStates.None;
     }
 
     private void InitializeMap()
@@ -332,5 +333,10 @@ public class n_MapManager : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public AllStates GetLastGroundSelected()
+    {
+        return _lastGroundSelected != null ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum() : LastStateButtonSelected;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum AllStates
 {
@@ -26,8 +27,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsBiome { get; set; }
 
     private AllStates _statesEnum;
-
-
+    
     private GroundBaseState currentState;
     private GroundPlainState _plainState = new GroundPlainState();
     private GroundDesertState _desertState = new GroundDesertState();
@@ -43,6 +43,7 @@ public class GroundStateManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
+    [SerializeField] private GroundPrevisu _fB_Previsu;
 
     [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField]
     private int _minNbAroundBiome;
@@ -302,6 +303,21 @@ public class GroundStateManager : MonoBehaviour
     public void EnabledWaterCubes(bool which)
     {
         gameObject.GetComponentInChildren<WaterMesh>().IsEnabled(which);
+    }
+
+    public void ActivateIconPrevisu()
+    {
+        var getState = n_MapManager.Instance.GetLastGroundSelected();
+        if (getState == AllStates.None) return;
+        
+        var resultState = ConditionManager.Instance.GetState(getState, GetCurrentStateEnum());
+        
+        _fB_Previsu.ActivateIcon((int)resultState);
+    }
+
+    public void DeactivateIconPrevisu()
+    {
+        _fB_Previsu.DeactivateIcon();
     }
 
     private void OnDisable()
