@@ -35,7 +35,7 @@ public class nUIButton : MonoBehaviour
         // SetupTemperature(text, color, nbLeft);
         _colorButton.color = color;
         _textButton.text = text;
-        ChangeNumberLeft(nbLeft);
+        UpdateNumberLeft(nbLeft);
         _stateButton = stat;
     }
 
@@ -62,9 +62,9 @@ public class nUIButton : MonoBehaviour
         return _numberGroundLeft;
     }
 
-    public void ChangeNumberLeft(int decrease)
+    public void UpdateNumberLeft(int numberToAdd)
     {
-        _numberGroundLeft += decrease;
+        _numberGroundLeft += numberToAdd;
 
         _textNumber.text = _isTemperature ? $"{_numberGroundLeft/9}" : $"{_numberGroundLeft}";
     }

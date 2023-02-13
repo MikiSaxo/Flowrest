@@ -107,4 +107,9 @@ public class SetupUIGround : MonoBehaviour
     {
         obj.transform.DOScale(Vector3.one, _bounceValues.y);
     }
+
+    public void AddNewGround(int which)
+    {
+        _UIGround[which].GetComponent<nUIButton>().UpdateNumberLeft(1);
+    }
 }

@@ -174,7 +174,7 @@ public class SaveMapManager : MonoBehaviour
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
+        LastButtonSelected.GetComponent<nUIButton>().UpdateNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
