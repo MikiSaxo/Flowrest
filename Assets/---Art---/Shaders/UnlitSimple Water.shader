@@ -33,6 +33,7 @@ Shader "Unlit/Simple Water"
 			#pragma multi_compile_fog
  
 			#include "UnityCG.cginc"
+
  
 			struct appdata
 			{
@@ -60,10 +61,10 @@ Shader "Unlit/Simple Water"
 			{
 				v2f o;
 				UNITY_INITIALIZE_OUTPUT(v2f, o);
-				float4 tex = tex2Dlod(_NoiseTex, float4(v.uv.xy, 0, 0));//extra noise tex
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
+				float4 tex = tex2Dlod(_NoiseTex, float4(o.worldPos.xz, 0, 0));//extra noise tex
 				v.vertex.y += sin(_Time.z * _Speed + (v.vertex.x * v.vertex.z * _Amount * tex)) * _Height;//movement
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
  
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				o.scrPos = ComputeScreenPos(o.vertex); 
@@ -78,6 +79,7 @@ Shader "Unlit/Simple Water"
  
 				half4 col = tex2D(_MainTex, (i.worldPos.xz * _Scale) - (distortx * _TextureDistort));// texture times tint;			
 				half depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(i.scrPos ))); // depth
+				//half depth = Linear01Depth(SHADERGRAPH_SAMPLE_SCENE_DEPTH(UV.xy), _ZBufferParams); // depth
 				half4 foamLine =1 - saturate(_Foam* (depth - i.scrPos.w ) ) ;// foam line by comparing depth and screenposition
 				col *= _Color;
 				col += (step(0.4 * distortx,foamLine) * _FoamC); // add the foam line and tint to the texture
