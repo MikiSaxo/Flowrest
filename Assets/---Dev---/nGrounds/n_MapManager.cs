@@ -65,6 +65,7 @@ public class n_MapManager : MonoBehaviour
     private void Start()
     {
         InitializeMap();
+        LastStateButtonSelected = AllStates.None;
     }
 
     private void InitializeMap()
@@ -243,7 +244,7 @@ public class n_MapManager : MonoBehaviour
 
     public void DecreaseNumberButton()
     {
-        LastObjButtonSelected.GetComponent<nUIButton>().ChangeNumberLeft(-1);
+        LastObjButtonSelected.GetComponent<nUIButton>().UpdateNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
@@ -267,22 +268,31 @@ public class n_MapManager : MonoBehaviour
         // Update map
         MapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         MapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
+        
         // Change position
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
+        
         // Change coords inside of GroundManager
         _lastGroundSelected.GetComponent<GroundStateManager>().ChangeCoords(newCoords);
         which.GetComponent<GroundStateManager>().ChangeCoords(_lastGroundCoordsSelected);
+        
         // Reset selection's color of the two Grounds
         _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         which.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
         which.GetComponent<GroundStateManager>().UpdateGroundsAround();
+        
+        //Get Bloc to UI
+        var tileToAdd = ConditionManager.Instance.GetState(_lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum(),
+            which.GetComponent<GroundStateManager>().GetCurrentStateEnum());
+        SetupUIGround.Instance.AddNewGround((int)tileToAdd);
+        print(tileToAdd + " added");
+        
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();
-
-        CheckForBiome();
+        // CheckForBiome();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -323,5 +333,10 @@ public class n_MapManager : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public AllStates GetLastGroundSelected()
+    {
+        return _lastGroundSelected != null ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum() : LastStateButtonSelected;
     }
 }

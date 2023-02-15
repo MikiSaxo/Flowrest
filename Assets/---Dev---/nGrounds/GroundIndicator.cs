@@ -8,8 +8,9 @@ using TMPro;
 public class GroundIndicator : MonoBehaviour
 {
     [SerializeField] private GameObject _parent;
-    [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private Material[] _mats;
+
+    // [SerializeField] private MeshRenderer _mesh;
+    // [SerializeField] private Material[] _mats;
     [SerializeField] private GameObject _meshParent;
 
     private float _startYPos;
@@ -19,6 +20,7 @@ public class GroundIndicator : MonoBehaviour
     private bool _isEntered;
     private Vector2Int _coords;
     private List<GameObject> _tempEntered = new List<GameObject>();
+    private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
 
     private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
@@ -47,11 +49,10 @@ public class GroundIndicator : MonoBehaviour
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
-        // _mesh.enabled = true;
         _isEntered = true;
-
-        //ValuesSignForGround.Instance.ChangeValues(_parent.GetComponent<GroundStateManager>().Temperature, _parent.GetComponent<GroundStateManager>().Humidity);
-        CheckHasWaterMesh();
+        
+        //CheckHasWaterMesh();
+        CallAllAroundForPrevisu();
         CheckIfTemperatureSelected();
 
         if (_isSelected) return;
@@ -64,11 +65,11 @@ public class GroundIndicator : MonoBehaviour
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
-        // _mesh.enabled = false;
         _isEntered = false;
 
         ValuesSignForGround.Instance.NoValue();
-        CheckHasWaterMesh();
+        //CheckHasWaterMesh();
+        ResetAllAroundPrevisu();
         ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);
@@ -137,8 +138,10 @@ public class GroundIndicator : MonoBehaviour
 
             _isSelected = true; // Useful to block Trigger enter and exit
             MoveYMesh(_selectedYPos, .3f); // Make animation
-            n_MapManager.Instance.IsGroundFirstSelected = true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
-            _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
+            n_MapManager.Instance.IsGroundFirstSelected =
+                true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
+            _parent.GetComponent<GroundStateManager>()
+                .OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
             ChangeBlocOrTemperature(); // Transform the bloc with new state
@@ -150,7 +153,7 @@ public class GroundIndicator : MonoBehaviour
         // _mesh.material = _mats[0];
         // _mesh.enabled = false;
         _isEntered = false;
-        CheckHasWaterMesh();
+        //CheckHasWaterMesh();
         MoveYMesh(_startYPos, .1f);
         n_MapManager.Instance.IsGroundFirstSelected = false;
     }
@@ -183,15 +186,15 @@ public class GroundIndicator : MonoBehaviour
     private void PoseBloc()
     {
         // Idk if really helpful but security
-        if (!n_MapManager.Instance.CanPoseBloc()) return; 
+        if (!n_MapManager.Instance.CanPoseBloc()) return;
 
         // Avoid to update by same ground
-        if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc == (int)n_MapManager.Instance.LastStateButtonSelected) return; 
+        if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
+            (int)n_MapManager.Instance.LastStateButtonSelected) return;
 
         // Init the new State
-        gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastStateButtonSelected); 
-        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(); 
-
+        gameObject.GetComponentInParent<GroundStateManager>().InitState(n_MapManager.Instance.LastStateButtonSelected);
+        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
 
         ResetForNextChange();
     }
@@ -209,5 +212,42 @@ public class GroundIndicator : MonoBehaviour
 
         n_MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
         n_MapManager.Instance.ResetButtonSelected();
+    }
+
+    private void CallAllAroundForPrevisu()
+    {
+        print("hello");
+        _coords = _parent.GetComponent<GroundStateManager>().GetCoords();
+
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
+        foreach (var hexPos in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= n_MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= n_MapManager.Instance.MapGrid.GetLength(1)) continue;
+            // Check if something exist
+            if (n_MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundManager
+            if (!n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+                continue;
+
+            var ground = n_MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
+            ground.ActivateIconPrevisu();
+            
+            _stockPrevisu.Add(ground);
+        }
+    }
+
+    private void ResetAllAroundPrevisu()
+    {
+        foreach (var previsu in _stockPrevisu)
+        {
+            previsu.DeactivateIconPrevisu();
+        }
+        _stockPrevisu.Clear();
     }
 }
