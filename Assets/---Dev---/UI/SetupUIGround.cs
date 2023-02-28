@@ -8,15 +8,15 @@ public class SetupUIGround : MonoBehaviour
 {
     public static SetupUIGround Instance;
 
-    [Header("Setup")] [SerializeField] private GameObject[] _UIGround;
-    [SerializeField] private GameObject[] _UITemperature;
-    [SerializeField] private GameObject _fBDnd;
+    [Header("Setup")] [SerializeField] private GameObject _fBDnd;
+    [SerializeField] private GameObject[] _groundButtons;
+    // [SerializeField] private GameObject[] _UITemperature;
 
     [Header("Ground")] [SerializeField] private GroundUIData[] _groundDatas;
-    [SerializeField] private string[] _texts;
-    [SerializeField] private Color[] _colors;
-    [SerializeField] private int[] _nbLeft;
-    [SerializeField] private AllStates[] _groundState;
+    // [SerializeField] private string[] _texts;
+    // [SerializeField] private Color[] _colors;
+    // [SerializeField] private int[] _nbLeft;
+    // [SerializeField] private AllStates[] _groundState;
 
     // [Header("Temperature")] [SerializeField]
     // private string[] _textsTemperature;
@@ -24,7 +24,7 @@ public class SetupUIGround : MonoBehaviour
     // [SerializeField] private Color[] _colorsTemperature;
     // [SerializeField] private int[] _nbLeftTemperature;
 
-    [Header("Anims")] [SerializeField] private Vector2 _bounceValues;
+    // [Header("Anims")] [SerializeField] private Vector2 _bounceValues;
 
     private void Awake()
     {
@@ -33,10 +33,10 @@ public class SetupUIGround : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < _UIGround.Length; i++)
+        for (int i = 0; i < _groundButtons.Length; i++)
         {
             var getData = _groundDatas[i];
-            _UIGround[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, 0, getData.GroundState);
+            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, 0, getData.GroundState);
         }
 
         // for (int j = 0; j < _UITemperature.Length; j++)
@@ -48,7 +48,7 @@ public class SetupUIGround : MonoBehaviour
 
     public void UpdateFbGround(int whichState) // Use by Ground buttons
     {
-        UpdateFB((AllStates)whichState, false);
+        UpdateFB((AllStates)whichState);
     }
 
     // public void UpdateFbTemperature(int whichTemperature) // Use by Temperature buttons
@@ -56,7 +56,7 @@ public class SetupUIGround : MonoBehaviour
     //     //UpdateFB(whichTemperature, true);
     // }
 
-    private void UpdateFB(AllStates state, bool isTemp)
+    private void UpdateFB(AllStates state)
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
@@ -70,8 +70,9 @@ public class SetupUIGround : MonoBehaviour
         // }
         // else
         // {
-        _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[(int)state], _texts[(int)state]);
-        MapManager.Instance.LastObjButtonSelected = _UIGround[(int)state];
+        _fBDnd.GetComponent<FollowMouseDND>()
+            .UpdateObject(_groundDatas[(int)state].ColorIcon, _groundDatas[(int)state].Name);
+        MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
         // }
 
         if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
@@ -95,23 +96,23 @@ public class SetupUIGround : MonoBehaviour
         // n_MapManager.Instance.ResetGroundSelected();
     }
 
-    public void BounceButtonAnim(GameObject obj)
-    {
-        //AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
-    }
+    // public void BounceButtonAnim(GameObject obj)
+    // {
+    //     //AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
+    // }
+    //
+    // public void MouseEnterButton(GameObject obj)
+    // {
+    //     obj.transform.DOScale(Vector3.one * 1.1f, _bounceValues.x);
+    // }
 
-    public void MouseEnterButton(GameObject obj)
-    {
-        obj.transform.DOScale(Vector3.one * 1.1f, _bounceValues.x);
-    }
-
-    public void MouseLeaveButton(GameObject obj)
-    {
-        obj.transform.DOScale(Vector3.one, _bounceValues.y);
-    }
+    // public void MouseLeaveButton(GameObject obj)
+    // {
+    //     obj.transform.DOScale(Vector3.one, _bounceValues.y);
+    // }
 
     public void AddNewGround(int which)
     {
-        _UIGround[which].GetComponent<UIButton>().UpdateNumberLeft(1);
+        _groundButtons[which].GetComponent<UIButton>().UpdateNumberLeft(1);
     }
 }

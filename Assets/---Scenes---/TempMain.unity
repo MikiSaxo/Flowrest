@@ -855,7 +855,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5be07bf52781ee48922a5da8785acc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UIGround:
+  _fBDnd: {fileID: 1588833879}
+  _groundButtons:
   - {fileID: 1823376392}
   - {fileID: 165741261}
   - {fileID: 965410138}
@@ -866,10 +867,6 @@ MonoBehaviour:
   - {fileID: 1457837286}
   - {fileID: 222827554}
   - {fileID: 142523029}
-  _UITemperature:
-  - {fileID: 1815364826}
-  - {fileID: 1216679987}
-  _fBDnd: {fileID: 1588833879}
   _groundDatas:
   - {fileID: 11400000, guid: 7230ad23d566ee848a9ec40996cffd30, type: 2}
   - {fileID: 11400000, guid: a4d29f184aa9e244f8f827fb7f95b00c, type: 2}
@@ -881,31 +878,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 055137acb69eefe44b3378e32760a79f, type: 2}
   - {fileID: 11400000, guid: 499b4888c32e9214cb82ae9047d2fa69, type: 2}
   - {fileID: 11400000, guid: 7dbd49384c8efbc43bfe231cb872c09c, type: 2}
-  _texts:
-  - Plain
-  - Desert
-  - Water
-  - Tropical
-  - Savane
-  - Geyser
-  - Snow
-  - PolarDesert
-  - Tundra
-  - Swamp
-  _colors:
-  - {r: 0.0627451, g: 1, b: 0, a: 1}
-  - {r: 0.9019608, g: 0.52156866, b: 0.11372549, a: 1}
-  - {r: 0, g: 0.30980393, b: 1, a: 1}
-  - {r: 0.42352942, g: 0.5764706, b: 0.28235295, a: 1}
-  - {r: 0.7921569, g: 0.8117647, b: 0.003921569, a: 1}
-  - {r: 0.49411765, g: 0.9490196, b: 1, a: 1}
-  - {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
-  - {r: 0.050980393, g: 0, b: 0.8392157, a: 1}
-  - {r: 0.2784314, g: 0.5647059, b: 0.59607846, a: 1}
-  - {r: 0.36862746, g: 0.2784314, b: 0.59607846, a: 1}
-  _nbLeft: 01000000000000000000000000000000000000000000000000000000000000000000000000000000
-  _groundState: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
-  _bounceValues: {x: 0.15, y: 0.1}
 --- !u!1 &523940194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,7 +3431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -485, y: 458.99}
+  m_AnchoredPosition: {x: -508.9, y: 458.99}
   m_SizeDelta: {x: 130, y: 109.9823}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1321336699
