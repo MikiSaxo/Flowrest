@@ -131,27 +131,28 @@ public class SaveMapManager : MonoBehaviour
 
         if (button != null) // Prevent to use an actual empty button
         {
-            if (button.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
                 return;
         }
 
         if (LastButtonSelected != null) // Deactivate the last one selected
-            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
+            LastButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(true);
+            LastButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(true);
 
-            if (!LastButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
-            {
-                // LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
-                TemperatureSelected = 0;
-            }
-            else
-                TemperatureSelected = LastButtonSelected.GetComponent<nUIButton>().GetHisTemperature();
+            TemperatureSelected = 0;
+            // if (!LastButtonSelected.GetComponent<UIButton>().GetIsTemperature())
+            // {
+            //     // LastNbButtonSelected = LastButtonSelected.GetComponent<nUIButton>().GetStateButton();
+            //     TemperatureSelected = 0;
+            // }
+            // else
+            //     TemperatureSelected = LastButtonSelected.GetComponent<UIButton>().GetHisTemperature();
             // FollowMouseDND.Instance.CanMove = true;
         }
         else
@@ -169,17 +170,17 @@ public class SaveMapManager : MonoBehaviour
 
     public bool CanPoseBloc()
     {
-        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
+        return LastButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<nUIButton>().UpdateNumberLeft(-1);
+        LastButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
     {
-        return LastButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0;
+        return LastButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)

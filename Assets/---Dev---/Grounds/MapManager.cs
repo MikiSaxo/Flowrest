@@ -19,7 +19,7 @@ public class MapManager : MonoBehaviour
     public GameObject[,] MapGrid;
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
-    public int TemperatureSelected { get; set; }
+    // public int TemperatureSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
@@ -168,12 +168,13 @@ public class MapManager : MonoBehaviour
                 MapGrid[x, y] = null;
             }
         }
+
         ChangeLevel();
     }
 
     private void ChangeLevel()
     {
-        if (_actualLevel < _nbMaxLevel-1)
+        if (_actualLevel < _nbMaxLevel - 1)
             _actualLevel++;
         InitializeMap();
     }
@@ -199,57 +200,59 @@ public class MapManager : MonoBehaviour
     {
         if (IsGroundFirstSelected) return;
 
-        if (button != null) // Prevent to use an actual empty button
+        // Prevent to use an actual empty button
+        if (button != null) 
         {
-            if (button.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
                 return;
         }
 
-        if (LastObjButtonSelected != null) // Deactivate the last one selected
-            LastObjButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(false);
+        // Deactivate the last one selected
+        if (LastObjButtonSelected != null) 
+            LastObjButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
 
         if (LastObjButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastObjButtonSelected.GetComponent<nUIButton>().NeedActivateSelectedIcon(true);
+            LastObjButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(true);
+            LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
 
-            if (!LastObjButtonSelected.GetComponent<nUIButton>().GetIsTemperature())
-            {
-                LastStateButtonSelected = LastObjButtonSelected.GetComponent<nUIButton>().GetStateButton();
-                TemperatureSelected = 0;
-            }
-            else
-                TemperatureSelected = LastObjButtonSelected.GetComponent<nUIButton>().GetHisTemperature();
-            // FollowMouseDND.Instance.CanMove = true;
+            // TemperatureSelected = 0;
+            // if (!LastObjButtonSelected.GetComponent<UIButton>().GetIsTemperature())
+            // {
+            // }
+            // else
+            //     TemperatureSelected = LastObjButtonSelected.GetComponent<UIButton>().GetHisTemperature();
+            //FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
             _isDragNDrop = true;
             LastStateButtonSelected = AllStates.None;
-            TemperatureSelected = 0;
+            // TemperatureSelected = 0;
         }
     }
 
-    public void ChangeCurrentTemperature(int temperature)
-    {
-        TemperatureSelected = temperature;
-    }
+    // public void ChangeCurrentTemperature(int temperature)
+    // {
+    //     TemperatureSelected = temperature;
+    // }
 
     public bool CanPoseBloc()
     {
-        return LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() > 0;
+        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastObjButtonSelected.GetComponent<nUIButton>().UpdateNumberLeft(-1);
+        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
     {
-        return LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0;
+        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
@@ -268,27 +271,28 @@ public class MapManager : MonoBehaviour
         // Update map
         MapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         MapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
-        
+
         // Change position
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
-        
+
         // Change coords inside of GroundManager
         _lastGroundSelected.GetComponent<GroundStateManager>().ChangeCoords(newCoords);
         which.GetComponent<GroundStateManager>().ChangeCoords(_lastGroundCoordsSelected);
-        
+
         // Reset selection's color of the two Grounds
         _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         which.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
         which.GetComponent<GroundStateManager>().UpdateGroundsAround();
-        
+
         //Get Bloc to UI
-        var tileToAdd = ConditionManager.Instance.GetState(_lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum(),
+        var tileToAdd = ConditionManager.Instance.GetState(
+            _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum(),
             which.GetComponent<GroundStateManager>().GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
         print(tileToAdd + " added");
-        
+
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();
@@ -337,6 +341,8 @@ public class MapManager : MonoBehaviour
 
     public AllStates GetLastGroundSelected()
     {
-        return _lastGroundSelected != null ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum() : LastStateButtonSelected;
+        return _lastGroundSelected != null
+            ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
+            : LastStateButtonSelected;
     }
 }

@@ -53,7 +53,7 @@ public class GroundIndicator : MonoBehaviour
         
         //CheckHasWaterMesh();
         CallAllAroundForPrevisu();
-        CheckIfTemperatureSelected();
+        // CheckIfTemperatureSelected();
 
         if (_isSelected) return;
 
@@ -67,59 +67,59 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         _isEntered = false;
 
-        ValuesSignForGround.Instance.NoValue();
+        // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
         ResetAllAroundPrevisu();
-        ResetTemperatureSelected();
+        // ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);
     }
 
-    private void CheckHasWaterMesh()
-    {
-        if (_parent.GetComponent<GroundStateManager>().IdOfBloc == 2)
-            _parent.GetComponent<GroundStateManager>().EnabledWaterCubes(_isEntered);
-    }
+    // private void CheckHasWaterMesh()
+    // {
+    //     if (_parent.GetComponent<GroundStateManager>().IdOfBloc == 2)
+    //         _parent.GetComponent<GroundStateManager>().EnabledWaterCubes(_isEntered);
+    // }
 
-    private void CheckIfTemperatureSelected()
-    {
-        _coords = _parent.GetComponent<GroundStateManager>().GetCoords();
+    // private void CheckIfTemperatureSelected()
+    // {
+    //     _coords = _parent.GetComponent<GroundStateManager>().GetCoords();
+    //
+    //     if (MapManager.Instance.TemperatureSelected != 0)
+    //     {
+    //         Vector2Int[] hexDirections = new Vector2Int[6];
+    //         // Important for the offset with hex coords
+    //         hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+    //
+    //         foreach (var hexPos in hexDirections)
+    //         {
+    //             Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+    //             // Check if inside of array
+    //             if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+    //                 newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
+    //             // Check if something exist
+    //             if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+    //             // Check if has GroundManager
+    //             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+    //                 continue;
+    //
+    //             MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+    //                 .ForceEnteredIndicator();
+    //
+    //             _tempEntered.Add(MapManager.Instance.MapGrid[newPos.x, newPos.y]);
+    //         }
+    //     }
+    // }
 
-        if (MapManager.Instance.TemperatureSelected != 0)
-        {
-            Vector2Int[] hexDirections = new Vector2Int[6];
-            // Important for the offset with hex coords
-            hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
-
-            foreach (var hexPos in hexDirections)
-            {
-                Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
-                // Check if inside of array
-                if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                    newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
-                // Check if something exist
-                if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-                // Check if has GroundManager
-                if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
-                    continue;
-
-                MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .ForceEnteredIndicator();
-
-                _tempEntered.Add(MapManager.Instance.MapGrid[newPos.x, newPos.y]);
-            }
-        }
-    }
-
-    private void ResetTemperatureSelected()
-    {
-        foreach (var ground in _tempEntered)
-        {
-            ground.GetComponent<GroundStateManager>().ResetIndicator();
-        }
-
-        _tempEntered.Clear();
-    }
+    // private void ResetTemperatureSelected()
+    // {
+    //     foreach (var ground in _tempEntered)
+    //     {
+    //         ground.GetComponent<GroundStateManager>().ResetIndicator();
+    //     }
+    //
+    //     _tempEntered.Clear();
+    // }
 
     private void Update()
     {
@@ -131,20 +131,20 @@ public class GroundIndicator : MonoBehaviour
 
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
 
-
         if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
             if (_isSelected) return; // Block if click again on it
 
             _isSelected = true; // Useful to block Trigger enter and exit
-            MoveYMesh(_selectedYPos, .3f); // Make animation
-            MapManager.Instance.IsGroundFirstSelected =
-                true; // Avoid to transform the bloc by clicking on UI Ground Button after selected first
-            _parent.GetComponent<GroundStateManager>()
-                .OnSelected(); // Call its parent to tell which one was selected to MapManager
+            // Make animation
+            MoveYMesh(_selectedYPos, .3f);
+            // Avoid to transform the bloc by clicking on UI Ground Button after selected first
+            MapManager.Instance.IsGroundFirstSelected = true; 
+            _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
-            ChangeBlocOrTemperature(); // Transform the bloc with new state
+            PoseBloc();
+            // ChangeBlocOrTemperature(); // Transform the bloc with new state
     }
 
     public void ResetIndicator()
@@ -164,24 +164,24 @@ public class GroundIndicator : MonoBehaviour
         _meshParent.transform.DOMoveY(height, duration);
     }
 
-    private void ChangeBlocOrTemperature()
-    {
-        if (MapManager.Instance.TemperatureSelected == 0)
-            PoseBloc();
-        else
-            ChangeTemperature();
-    }
+    // private void ChangeBlocOrTemperature()
+    // {
+        // if (MapManager.Instance.TemperatureSelected == 0)
+            // PoseBloc();
+        // else
+            // ChangeTemperature();
+    // }
 
-    private void ChangeTemperature()
-    {
-        //gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
-        // gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
-
-        gameObject.GetComponentInParent<GroundFeedbackTemperature>()
-            .LaunchFB(MapManager.Instance.TemperatureSelected > 0);
-
-        ResetForNextChange();
-    }
+    // private void ChangeTemperature()
+    // {
+    //     //gameObject.GetComponentInParent<GroundStateManager>().ChangeTemperature(n_MapManager.Instance.TemperatureSelected);
+    //     // gameObject.GetComponentInParent<GroundStateManager>().GetValuesAround();
+    //
+    //      gameObject.GetComponentInParent<GroundFeedbackTemperature>()
+    //      .LaunchFB(MapManager.Instance.TemperatureSelected > 0);
+    //
+    //     ResetForNextChange();
+    // }
 
     private void PoseBloc()
     {

@@ -5,23 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum States
-{
-    Plain = 0,
-    Desert = 1,
-    Water = 2
-}
-
-public class nUIButton : MonoBehaviour
+public class UIButton : MonoBehaviour
 {
     [Header("Setup")] public AllStates _stateButton;
     [SerializeField] private TextMeshProUGUI _textButton;
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
-    [Header("Setup for Hot n Cold")]
-    [SerializeField] private bool _isTemperature;
-    [SerializeField] private int _temperature;
+    // [Header("Setup for Hot n Cold")]
+    // [SerializeField] private bool _isTemperature;
+    // [SerializeField] private int _temperature;
 
     private int _numberGroundLeft;
 
@@ -39,13 +32,13 @@ public class nUIButton : MonoBehaviour
         _stateButton = stat;
     }
 
-    public void SetupTemperature(string text, Color color, int nbLeft)
-    {
-        _colorButton.color = color;
-        _textButton.text = text;
-        SetupNumberLeftTemperature(nbLeft);
-        // ChangeNumberLeft(nbLeft);
-    }
+    // public void SetupTemperature(string text, Color color, int nbLeft)
+    // {
+    //     _colorButton.color = color;
+    //     _textButton.text = text;
+    //     SetupNumberLeftTemperature(nbLeft);
+    //     // ChangeNumberLeft(nbLeft);
+    // }
 
     public void NeedActivateSelectedIcon(bool which)
     {
@@ -65,24 +58,25 @@ public class nUIButton : MonoBehaviour
     public void UpdateNumberLeft(int numberToAdd)
     {
         _numberGroundLeft += numberToAdd;
-
-        _textNumber.text = _isTemperature ? $"{_numberGroundLeft/9}" : $"{_numberGroundLeft}";
+    
+        //_textNumber.text = _isTemperature ? $"{_numberGroundLeft/9}" : $"{_numberGroundLeft}";
+        _textNumber.text = $"{_numberGroundLeft}";
     }
 
-    public void SetupNumberLeftTemperature(int nb)
-    {
-        _numberGroundLeft += nb;
-        _numberGroundLeft *= 9;
-        _textNumber.text = $"{_numberGroundLeft/9}";
-    }
+    // public void SetupNumberLeftTemperature(int nb)
+    // {
+    //     _numberGroundLeft += nb;
+    //     _numberGroundLeft *= 9;
+    //     _textNumber.text = $"{_numberGroundLeft/9}";
+    // }
 
-    public bool GetIsTemperature()
-    {
-        return _isTemperature;
-    }
-
-    public int GetHisTemperature()
-    {
-        return _temperature;
-    }
+    // public bool GetIsTemperature()
+    // {
+    //     return _isTemperature;
+    // }
+    //
+    // public int GetHisTemperature()
+    // {
+    //     return _temperature;
+    // }
 }
