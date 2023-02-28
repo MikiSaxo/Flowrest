@@ -53,7 +53,7 @@ public class ScreensManager : MonoBehaviour
     public void VictoryDialogues()
     {
         _dialoguesParent.SetActive(true);
-        _dialoguesText.text = _dialoguesString[n_MapManager.Instance.GetActualLevel()+1];
+        _dialoguesText.text = _dialoguesString[MapManager.Instance.GetActualLevel()+1];
     }
 
     public void AlmanachScreen()
@@ -67,7 +67,7 @@ public class ScreensManager : MonoBehaviour
         _countScreen = 0;
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
-        n_MapManager.Instance.ResetAllMap();
+        MapManager.Instance.ResetAllMap();
         _isVictory = false;
         StartCoroutine(UnlockMouse());
     }

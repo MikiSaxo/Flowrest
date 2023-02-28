@@ -17,7 +17,7 @@ public class WaterSourceManager : MonoBehaviour
 
     private void Start()
     {
-        MapManager.Instance.CheckWaterSource += LaunchWaterCanFlow;
+        FirstMapManager.Instance.CheckWaterSource += LaunchWaterCanFlow;
     }
 
     public void ChangeCoords(Vector2Int newCoords) // Change the coords of the water in the InitLvl
@@ -30,7 +30,7 @@ public class WaterSourceManager : MonoBehaviour
         // Reset all the water
         ResetAllWater();
         // Start the recursive
-        CheckIfWaterCanFlow(MapManager.Instance.MapGrid, _coords, true, true, true, true);
+        CheckIfWaterCanFlow(FirstMapManager.Instance.MapGrid, _coords, true, true, true, true);
         // Reboot the water for a future test
         StartCoroutine(ResetWaterTreated());
     }
@@ -109,13 +109,13 @@ public class WaterSourceManager : MonoBehaviour
     public void EditorTransformTo(GameObject which)
     {
         GameObject go = Instantiate(which, transform.position, Quaternion.identity);
-        go.transform.parent = EditorLevelParent.Instance.gameObject.transform;
+        // go.transform.parent = EditorLevelParent.Instance.gameObject.transform;
         print("demo");
         Destroy(gameObject);
     }
 
     private void OnDisable()
     {
-        MapManager.Instance.CheckWaterSource -= LaunchWaterCanFlow;
+        FirstMapManager.Instance.CheckWaterSource -= LaunchWaterCanFlow;
     }
 }

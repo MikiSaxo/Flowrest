@@ -56,36 +56,36 @@ public class SetupUIGround : MonoBehaviour
 
     private void UpdateFB(AllStates state, bool isTemp)
     {
-        if (n_MapManager.Instance.IsGroundFirstSelected) return;
+        if (MapManager.Instance.IsGroundFirstSelected) return;
 
-        n_MapManager.Instance.ResetButtonSelected();
-        n_MapManager.Instance.ResetGroundSelected();
+        MapManager.Instance.ResetButtonSelected();
+        MapManager.Instance.ResetGroundSelected();
 
         if (isTemp)
         {
             _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colorsTemperature[(int)state], _textsTemperature[(int)state]);
-            n_MapManager.Instance.LastObjButtonSelected = _UITemperature[(int)state];
+            MapManager.Instance.LastObjButtonSelected = _UITemperature[(int)state];
         }
         else
         {
             _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colors[(int)state], _texts[(int)state]);
-            n_MapManager.Instance.LastObjButtonSelected = _UIGround[(int)state];
+            MapManager.Instance.LastObjButtonSelected = _UIGround[(int)state];
         }
 
-        if (n_MapManager.Instance.LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0)
+        if (MapManager.Instance.LastObjButtonSelected.GetComponent<nUIButton>().GetNumberLeft() <= 0)
         {
-            n_MapManager.Instance.LastObjButtonSelected = null;
+            MapManager.Instance.LastObjButtonSelected = null;
             return;
         }
         
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
-        n_MapManager.Instance.LastStateButtonSelected = state;
+        MapManager.Instance.LastStateButtonSelected = state;
     }
 
     public void EndFb() // Use by Ground buttons
     {
-        if (n_MapManager.Instance.IsGroundFirstSelected) return;
+        if (MapManager.Instance.IsGroundFirstSelected) return;
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
 
