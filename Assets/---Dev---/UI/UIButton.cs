@@ -12,6 +12,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private Image _colorButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
+    
     // [Header("Setup for Hot n Cold")]
     // [SerializeField] private bool _isTemperature;
     // [SerializeField] private int _temperature;
@@ -61,6 +62,9 @@ public class UIButton : MonoBehaviour
     
         //_textNumber.text = _isTemperature ? $"{_numberGroundLeft/9}" : $"{_numberGroundLeft}";
         _textNumber.text = $"{_numberGroundLeft}";
+
+        if (_numberGroundLeft <= 0)
+            SetupUIGround.Instance.GroundEmpty((int)_stateButton);
     }
 
     // public void SetupNumberLeftTemperature(int nb)

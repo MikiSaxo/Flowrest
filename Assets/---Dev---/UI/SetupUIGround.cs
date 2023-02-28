@@ -37,6 +37,7 @@ public class SetupUIGround : MonoBehaviour
         {
             var getData = _groundDatas[i];
             _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, 0, getData.GroundState);
+            GroundEmpty(i);
         }
 
         // for (int j = 0; j < _UITemperature.Length; j++)
@@ -113,6 +114,12 @@ public class SetupUIGround : MonoBehaviour
 
     public void AddNewGround(int which)
     {
+        _groundButtons[which].SetActive(true);
         _groundButtons[which].GetComponent<UIButton>().UpdateNumberLeft(1);
     }
+
+    public void GroundEmpty(int which)
+    {
+        _groundButtons[which].SetActive(false);
+    } 
 }
