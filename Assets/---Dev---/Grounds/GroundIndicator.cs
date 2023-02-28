@@ -54,7 +54,7 @@ public class GroundIndicator : MonoBehaviour
         //CheckHasWaterMesh();
         CallAllAroundForPrevisu();
         CallSelectedPrevisu();
-        MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
+        //MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
         // CheckIfTemperatureSelected();
 
         if (_isSelected) return;
@@ -72,8 +72,8 @@ public class GroundIndicator : MonoBehaviour
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
         ResetAllAroundPrevisu();
-        MapManager.Instance.ResetAroundSelectedPrevisu();
-        MapManager.Instance.ResetCurrentEntered();
+        // MapManager.Instance.ResetAroundSelectedPrevisu();
+        //MapManager.Instance.ResetCurrentEntered();
         // ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);

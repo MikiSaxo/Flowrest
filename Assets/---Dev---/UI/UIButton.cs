@@ -9,7 +9,7 @@ public class UIButton : MonoBehaviour
 {
     [Header("Setup")] public AllStates _stateButton;
     [SerializeField] private TextMeshProUGUI _textButton;
-    [SerializeField] private Image _colorButton;
+    [SerializeField] private Image _iconButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
     
@@ -24,10 +24,11 @@ public class UIButton : MonoBehaviour
         NeedActivateSelectedIcon(false);
     }
 
-    public void Setup(string text, Color color, int nbLeft, AllStates stat)
+    public void Setup(string text, Color color, Sprite icon, int nbLeft, AllStates stat)
     {
         // SetupTemperature(text, color, nbLeft);
-        _colorButton.color = color;
+        _iconButton.sprite = icon;
+        _iconButton.color = color;
         _textButton.text = text;
         UpdateNumberLeft(nbLeft);
         _stateButton = stat;

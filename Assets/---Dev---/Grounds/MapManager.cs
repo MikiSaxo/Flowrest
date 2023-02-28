@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
     private string[] _mapInfo;
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject _lastGroundSelected;
-    private GroundStateManager _currentEntered;
+    // private GroundStateManager _currentEntered;
 
     // private Vector2Int[] _directionsOne = new Vector2Int[]
     // { new(0, 0), new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
@@ -300,8 +300,8 @@ public class MapManager : MonoBehaviour
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
+        ResetAroundSelectedPrevisu();
         ResetGroundSelected();
-        ResetCurrentAroundSelectedPrevisu();
         // CheckForBiome();
     }
 
@@ -320,10 +320,10 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().SelectedActivateIconPrevisu(state);
     }
 
-    public void SetCurrentEntered(GroundStateManager ground)
-    {
-        _currentEntered = ground;
-    }
+    // public void SetCurrentEntered(GroundStateManager ground)
+    // {
+    //     _currentEntered = ground;
+    // }
 
     public bool GetIsDragNDrop()
     {
@@ -335,16 +335,16 @@ public class MapManager : MonoBehaviour
         return _actualLevel;
     }
 
-    public void ResetCurrentEntered()
-    {
-        //_currentEntered = null;
-    }
+    // public void ResetCurrentEntered()
+    // {
+    //     _currentEntered = null;
+    // }
 
-    public void ResetCurrentAroundSelectedPrevisu()
-    {
-        if (_currentEntered != null)
-            _currentEntered.ResetAroundSelectedPrevisu();
-    }
+    // public void ResetCurrentAroundSelectedPrevisu()
+    // {
+    //     if (_currentEntered != null)
+    //         _currentEntered.ResetAroundSelectedPrevisu();
+    // }
 
     public void ResetAroundSelectedPrevisu()
     {

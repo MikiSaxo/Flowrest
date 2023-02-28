@@ -36,7 +36,7 @@ public class SetupUIGround : MonoBehaviour
         for (int i = 0; i < _groundButtons.Length; i++)
         {
             var getData = _groundDatas[i];
-            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, 0, getData.GroundState);
+            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, getData.Icon, getData.NbLeft, getData.GroundState);
             GroundEmpty(i);
         }
 
