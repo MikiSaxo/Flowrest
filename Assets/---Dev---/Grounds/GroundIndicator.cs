@@ -151,7 +151,7 @@ public class GroundIndicator : MonoBehaviour
             PoseBloc();
         // ChangeBlocOrTemperature(); // Transform the bloc with new state
     }
-    
+
     private void MoveYMesh(float height, float duration)
     {
         _meshParent.transform.DOKill();
@@ -190,8 +190,10 @@ public class GroundIndicator : MonoBehaviour
         gameObject.GetComponentInParent<GroundStateManager>().InitState(MapManager.Instance.LastStateButtonSelected);
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
 
+        ResetAllAroundPrevisu();
         ResetForNextChange();
     }
+
     private void CallAllAroundForPrevisu()
     {
         // print("hello");
