@@ -18,7 +18,9 @@ public class MapManager : MonoBehaviour
     public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
     public AllStates LastStateButtonSelected { get; set; }
+
     public GameObject LastObjButtonSelected { get; set; }
+
     // public int TemperatureSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
 
@@ -32,6 +34,7 @@ public class MapManager : MonoBehaviour
     private string[] _mapInfo;
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject _lastGroundSelected;
+    private GroundStateManager _currentEntered;
 
     // private Vector2Int[] _directionsOne = new Vector2Int[]
     // { new(0, 0), new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
@@ -201,14 +204,14 @@ public class MapManager : MonoBehaviour
         if (IsGroundFirstSelected) return;
 
         // Prevent to use an actual empty button
-        if (button != null) 
+        if (button != null)
         {
             if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
                 return;
         }
 
         // Deactivate the last one selected
-        if (LastObjButtonSelected != null) 
+        if (LastObjButtonSelected != null)
             LastObjButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
@@ -291,11 +294,14 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum(),
             which.GetComponent<GroundStateManager>().GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
+        GroundCollected.Instance.StartAnim(_lastGroundSelected.GetComponent<GroundStateManager>()
+            .GetGroundPrevisu((int)tileToAdd));
         print(tileToAdd + " added");
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();
+        ResetCurrentAroundSelectedPrevisu();
         // CheckForBiome();
     }
 
@@ -306,6 +312,44 @@ public class MapManager : MonoBehaviour
         // Update lastSelected if need to call Swap() after
         _lastGroundSelected = which;
         _lastGroundCoordsSelected = coords;
+    }
+
+    public void PrevisuAroundSelected(AllStates state)
+    {
+        if (_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<GroundStateManager>().SelectedActivateIconPrevisu(state);
+    }
+
+    public void SetCurrentEntered(GroundStateManager ground)
+    {
+        _currentEntered = ground;
+    }
+
+    public bool GetIsDragNDrop()
+    {
+        return _isDragNDrop;
+    }
+
+    public int GetActualLevel()
+    {
+        return _actualLevel;
+    }
+
+    public void ResetCurrentEntered()
+    {
+        //_currentEntered = null;
+    }
+
+    public void ResetCurrentAroundSelectedPrevisu()
+    {
+        if (_currentEntered != null)
+            _currentEntered.ResetAroundSelectedPrevisu();
+    }
+
+    public void ResetAroundSelectedPrevisu()
+    {
+        if (_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<GroundStateManager>().ResetAroundSelectedPrevisu();
     }
 
     public void ResetButtonSelected()
@@ -322,16 +366,6 @@ public class MapManager : MonoBehaviour
     public void ResetAllSelection()
     {
         ResetSelection?.Invoke();
-    }
-
-    public bool GetIsDragNDrop()
-    {
-        return _isDragNDrop;
-    }
-
-    public int GetActualLevel()
-    {
-        return _actualLevel;
     }
 
     public void RestartScene()

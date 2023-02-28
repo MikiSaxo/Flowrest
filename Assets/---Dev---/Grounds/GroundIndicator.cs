@@ -50,9 +50,11 @@ public class GroundIndicator : MonoBehaviour
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
-        
+
         //CheckHasWaterMesh();
         CallAllAroundForPrevisu();
+        CallSelectedPrevisu();
+        MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
         // CheckIfTemperatureSelected();
 
         if (_isSelected) return;
@@ -70,6 +72,8 @@ public class GroundIndicator : MonoBehaviour
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
         ResetAllAroundPrevisu();
+        MapManager.Instance.ResetAroundSelectedPrevisu();
+        MapManager.Instance.ResetCurrentEntered();
         // ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);
@@ -139,25 +143,15 @@ public class GroundIndicator : MonoBehaviour
             // Make animation
             MoveYMesh(_selectedYPos, .3f);
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
-            MapManager.Instance.IsGroundFirstSelected = true; 
-            _parent.GetComponent<GroundStateManager>().OnSelected(); // Call its parent to tell which one was selected to MapManager
+            MapManager.Instance.IsGroundFirstSelected = true;
+            _parent.GetComponent<GroundStateManager>()
+                .OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
             PoseBloc();
-            // ChangeBlocOrTemperature(); // Transform the bloc with new state
+        // ChangeBlocOrTemperature(); // Transform the bloc with new state
     }
-
-    public void ResetIndicator()
-    {
-        _isSelected = false;
-        // _mesh.material = _mats[0];
-        // _mesh.enabled = false;
-        _isEntered = false;
-        //CheckHasWaterMesh();
-        MoveYMesh(_startYPos, .1f);
-        MapManager.Instance.IsGroundFirstSelected = false;
-    }
-
+    
     private void MoveYMesh(float height, float duration)
     {
         _meshParent.transform.DOKill();
@@ -166,10 +160,10 @@ public class GroundIndicator : MonoBehaviour
 
     // private void ChangeBlocOrTemperature()
     // {
-        // if (MapManager.Instance.TemperatureSelected == 0)
-            // PoseBloc();
-        // else
-            // ChangeTemperature();
+    // if (MapManager.Instance.TemperatureSelected == 0)
+    // PoseBloc();
+    // else
+    // ChangeTemperature();
     // }
 
     // private void ChangeTemperature()
@@ -198,22 +192,6 @@ public class GroundIndicator : MonoBehaviour
 
         ResetForNextChange();
     }
-
-    private void ResetForNextChange()
-    {
-        MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Button 
-        MapManager.Instance.CheckForBiome();
-
-        // Block if was not drag n drop or if the button is empty
-        if (MapManager.Instance.CheckIfButtonIsEmpty())
-            MapManager.Instance.ResetAllSelection();
-
-        if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
-
-        MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
-        MapManager.Instance.ResetButtonSelected();
-    }
-
     private void CallAllAroundForPrevisu()
     {
         // print("hello");
@@ -236,18 +214,50 @@ public class GroundIndicator : MonoBehaviour
                 continue;
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            ground.ActivateIconPrevisu();
-            
+            ground.LookingActivateIconPrevisu();
+
             _stockPrevisu.Add(ground);
         }
     }
 
-    private void ResetAllAroundPrevisu()
+    private void CallSelectedPrevisu()
+    {
+        MapManager.Instance.PrevisuAroundSelected(_parent.GetComponent<GroundStateManager>().GetCurrentStateEnum());
+    }
+
+    public void ResetIndicator()
+    {
+        _isSelected = false;
+        // _mesh.material = _mats[0];
+        // _mesh.enabled = false;
+        _isEntered = false;
+        //CheckHasWaterMesh();
+        MoveYMesh(_startYPos, .1f);
+        MapManager.Instance.IsGroundFirstSelected = false;
+    }
+
+    private void ResetForNextChange()
+    {
+        MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Button 
+        //MapManager.Instance.CheckForBiome();
+
+        // Block if was not drag n drop or if the button is empty
+        if (MapManager.Instance.CheckIfButtonIsEmpty())
+            MapManager.Instance.ResetAllSelection();
+
+        if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
+
+        MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
+        MapManager.Instance.ResetButtonSelected();
+    }
+
+    public void ResetAllAroundPrevisu()
     {
         foreach (var previsu in _stockPrevisu)
         {
             previsu.DeactivateIconPrevisu();
         }
+
         _stockPrevisu.Clear();
     }
 }

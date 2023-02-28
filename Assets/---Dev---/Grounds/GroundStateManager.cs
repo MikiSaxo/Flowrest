@@ -72,6 +72,8 @@ public class GroundStateManager : MonoBehaviour
     private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
+    private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
+
     private void Awake()
     {
         _allState.Add(_plainState);
@@ -198,6 +200,7 @@ public class GroundStateManager : MonoBehaviour
 
     private void FirstCheckIfBiome()
     {
+        return;
         for (int i = -1; i < 2; i++)
         {
             for (int j = -1; j < 2; j++)
@@ -305,19 +308,71 @@ public class GroundStateManager : MonoBehaviour
         gameObject.GetComponentInChildren<WaterMesh>().IsEnabled(which);
     }
 
-    public void ActivateIconPrevisu()
+    public void LookingActivateIconPrevisu()
     {
         var getState = MapManager.Instance.GetLastGroundSelected();
         if (getState == AllStates.None) return;
         
-        var resultState = ConditionManager.Instance.GetState(getState, GetCurrentStateEnum());
+       ActivateIconPrevisu(getState);
+    }
+
+    public void ActivateIconPrevisu(AllStates state)
+    {
+        var resultState = ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
+
+        if (resultState == GetCurrentStateEnum())
+            return;
         
         _fB_Previsu.ActivateIcon((int)resultState);
+    }
+
+    public void SelectedActivateIconPrevisu(AllStates state)
+    {
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
+        foreach (var hexPos in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
+            // Check if something exist
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundManager
+            if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+                continue;
+
+            var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
+            ground.ActivateIconPrevisu(state);
+            
+            _stockPrevisu.Add(ground);
+        }
     }
 
     public void DeactivateIconPrevisu()
     {
         _fB_Previsu.DeactivateIcon();
+    }
+
+    public void ResetAroundSelectedPrevisu()
+    {
+        // if (_stockPrevisu.Count == 0)
+        //     return;
+        print(_stockPrevisu.Count);
+        
+        foreach (var previsu in _stockPrevisu)
+        {
+            previsu.DeactivateIconPrevisu();
+            //previsu.GetComponent<GroundIndicator>().ResetAllAroundPrevisu();
+        }
+        _stockPrevisu.Clear();
+    }
+
+    public Sprite GetGroundPrevisu(int index)
+    {
+        return _fB_Previsu.GetIconTile(index);
     }
 
     private void OnDisable()

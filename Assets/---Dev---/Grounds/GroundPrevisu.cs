@@ -23,4 +23,9 @@ public class GroundPrevisu : MonoBehaviour
     {
         _sprRnd.enabled = false;
     }
+
+    public Sprite GetIconTile(int index)
+    {
+        return _iconTile[index];
+    }
 }
