@@ -52,8 +52,10 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = true;
 
         //CheckHasWaterMesh();
-        CallAllAroundForPrevisu();
+        
+        CallAroundPrevisu();
         CallSelectedPrevisu();
+        
         //MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
         // CheckIfTemperatureSelected();
 
@@ -71,9 +73,11 @@ public class GroundIndicator : MonoBehaviour
 
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
+        
         ResetAllAroundPrevisu();
         // MapManager.Instance.ResetAroundSelectedPrevisu();
         //MapManager.Instance.ResetCurrentEntered();
+        
         // ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);
@@ -193,7 +197,7 @@ public class GroundIndicator : MonoBehaviour
         ResetForNextChange();
     }
 
-    private void CallAllAroundForPrevisu()
+    private void CallAroundPrevisu()
     {
         // print("hello");
         _coords = _parent.GetCoords();
@@ -215,13 +219,16 @@ public class GroundIndicator : MonoBehaviour
                 continue;
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            ground.LookingActivateIconPrevisu();
+            ground.LookingNewPrevisu();
 
             _stockPrevisu.Add(ground);
         }
 
-        _parent.LookingActivateIconPrevisu();
-        _stockPrevisu.Add(_parent);
+        print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
+        if(MapManager.Instance.GetLastStateSelected() != AllStates.None)
+            _parent.ActivatePrevisu((int)MapManager.Instance.GetLastStateSelected());
+        // _parent.ActivateIconPrevisu();
+        // _stockPrevisu.Add(_parent);
     }
 
     private void CallSelectedPrevisu()
@@ -259,7 +266,7 @@ public class GroundIndicator : MonoBehaviour
     {
         foreach (var previsu in _stockPrevisu)
         {
-            previsu.DeactivateIconPrevisu();
+            previsu.DeactivatePrevisu();
         }
 
         _stockPrevisu.Clear();

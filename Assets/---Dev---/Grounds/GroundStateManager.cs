@@ -25,8 +25,10 @@ public class GroundStateManager : MonoBehaviour
     public int IdOfBloc { get; set; }
     public bool IsTreated { get; set; }
     public bool IsBiome { get; set; }
+    public bool IsProtected { get; set; }
 
     private AllStates _statesEnum;
+    private AllStates _statePrevisu;
 
     private GroundBaseState currentState;
     private GroundPlainState _plainState = new GroundPlainState();
@@ -102,6 +104,8 @@ public class GroundStateManager : MonoBehaviour
 
     public void ChangeState(AllStates state)
     {
+        if (IsProtected) return;
+        
         _statesEnum = state;
         currentState = _allState[(int)state];
         // print(currentState);
@@ -308,25 +312,34 @@ public class GroundStateManager : MonoBehaviour
         gameObject.GetComponentInChildren<WaterMesh>().IsEnabled(which);
     }
 
-    public void LookingActivateIconPrevisu()
+    // Called when entered second indicator and it's around the one selected
+    public void LookingNewPrevisu()
     {
-        var getState = MapManager.Instance.GetLastGroundSelected();
+        var getState = MapManager.Instance.GetLastStateSelected();
         if (getState == AllStates.None) return;
 
-        ActivateIconPrevisu(getState);
+        GetNewPrevisu(getState);
     }
 
-    public void ActivateIconPrevisu(AllStates state)
+    public void GetNewPrevisu(AllStates state)
     {
-        var resultState = ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
+        int resultState = (int)ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
 
-        if (resultState == GetCurrentStateEnum())
+        if (_fB_Previsu.IsIconActivated())
+        {
+            int currentPrevisuState = _fB_Previsu.GetIndexActualIcon();
+            resultState = (int)ConditionManager.Instance.GetState((AllStates)currentPrevisuState, state);
+            // print("old = " + currentPrevisuState + " new = " + resultState);
+        }
+        
+        if (resultState == (int)GetCurrentStateEnum())
             return;
 
-        _fB_Previsu.ActivateIcon((int)resultState);
+        ActivatePrevisu(resultState);
     }
 
-    public void SelectedActivateIconPrevisu(AllStates state)
+    // Called when this bloc is selected
+    public void SelectedLaunchAroundPrevisu(AllStates state)
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
@@ -345,16 +358,22 @@ public class GroundStateManager : MonoBehaviour
                 continue;
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            ground.ActivateIconPrevisu(state);
+            ground.GetNewPrevisu(state);
 
             _stockPrevisu.Add(ground);
         }
 
-        ActivateIconPrevisu(state);
+        ActivatePrevisu((int)state);
         _stockPrevisu.Add(this);
     }
 
-    public void DeactivateIconPrevisu()
+    public void ActivatePrevisu(int resultStateNumber)
+    {
+        print("result = " + resultStateNumber);
+        _fB_Previsu.ActivateIcon(resultStateNumber);
+    }
+
+    public void DeactivatePrevisu()
     {
         _fB_Previsu.DeactivateIcon();
     }
@@ -367,7 +386,7 @@ public class GroundStateManager : MonoBehaviour
 
         foreach (var previsu in _stockPrevisu)
         {
-            previsu.DeactivateIconPrevisu();
+            previsu.DeactivatePrevisu();
             //previsu.GetComponent<GroundIndicator>().ResetAllAroundPrevisu();
         }
 

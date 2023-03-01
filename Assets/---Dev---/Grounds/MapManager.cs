@@ -278,24 +278,31 @@ public class MapManager : MonoBehaviour
         // Change position
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
-
+        
+        // Get GroundStateManager 
+        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
+        var gWhich = which.GetComponent<GroundStateManager>();
+        
+        // Protect these blocs a transformation
+        gLastGroundSelected.IsProtected = true;
+        gWhich.IsProtected = true;
+        
         // Change coords inside of GroundManager
-        _lastGroundSelected.GetComponent<GroundStateManager>().ChangeCoords(newCoords);
-        which.GetComponent<GroundStateManager>().ChangeCoords(_lastGroundCoordsSelected);
+        gLastGroundSelected.ChangeCoords(newCoords);
+        gWhich.ChangeCoords(_lastGroundCoordsSelected);
 
         // Reset selection's color of the two Grounds
-        _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
-        which.GetComponent<GroundStateManager>().ResetIndicator();
-        _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
-        which.GetComponent<GroundStateManager>().UpdateGroundsAround();
+        gLastGroundSelected.ResetIndicator();
+        gWhich.ResetIndicator();
+        gLastGroundSelected.UpdateGroundsAround();
+        gWhich.UpdateGroundsAround();
 
         //Get Bloc to UI
         var tileToAdd = ConditionManager.Instance.GetState(
-            _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum(),
-            which.GetComponent<GroundStateManager>().GetCurrentStateEnum());
+            gLastGroundSelected.GetCurrentStateEnum(),
+            gWhich.GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-        GroundCollected.Instance.StartAnim(_lastGroundSelected.GetComponent<GroundStateManager>()
-            .GetGroundPrevisu((int)tileToAdd));
+        GroundCollected.Instance.StartAnim(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd));
         print(tileToAdd + " added");
 
         //ResetLastSelected
@@ -303,6 +310,10 @@ public class MapManager : MonoBehaviour
         ResetAroundSelectedPrevisu();
         ResetGroundSelected();
         // CheckForBiome();
+        
+        // Reset protect
+        gLastGroundSelected.IsProtected = false;
+        gWhich.IsProtected = false;
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -317,7 +328,7 @@ public class MapManager : MonoBehaviour
     public void PrevisuAroundSelected(AllStates state)
     {
         if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<GroundStateManager>().SelectedActivateIconPrevisu(state);
+            _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
     }
 
     // public void SetCurrentEntered(GroundStateManager ground)
@@ -373,7 +384,7 @@ public class MapManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public AllStates GetLastGroundSelected()
+    public AllStates GetLastStateSelected()
     {
         return _lastGroundSelected != null
             ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
