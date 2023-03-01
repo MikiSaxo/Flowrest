@@ -27,7 +27,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsBiome { get; set; }
 
     private AllStates _statesEnum;
-    
+
     private GroundBaseState currentState;
     private GroundPlainState _plainState = new GroundPlainState();
     private GroundDesertState _desertState = new GroundDesertState();
@@ -312,8 +312,8 @@ public class GroundStateManager : MonoBehaviour
     {
         var getState = MapManager.Instance.GetLastGroundSelected();
         if (getState == AllStates.None) return;
-        
-       ActivateIconPrevisu(getState);
+
+        ActivateIconPrevisu(getState);
     }
 
     public void ActivateIconPrevisu(AllStates state)
@@ -322,7 +322,7 @@ public class GroundStateManager : MonoBehaviour
 
         if (resultState == GetCurrentStateEnum())
             return;
-        
+
         _fB_Previsu.ActivateIcon((int)resultState);
     }
 
@@ -346,9 +346,12 @@ public class GroundStateManager : MonoBehaviour
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             ground.ActivateIconPrevisu(state);
-            
+
             _stockPrevisu.Add(ground);
         }
+
+        ActivateIconPrevisu(state);
+        _stockPrevisu.Add(this);
     }
 
     public void DeactivateIconPrevisu()
@@ -361,12 +364,13 @@ public class GroundStateManager : MonoBehaviour
         // if (_stockPrevisu.Count == 0)
         //     return;
         print(_stockPrevisu.Count);
-        
+
         foreach (var previsu in _stockPrevisu)
         {
             previsu.DeactivateIconPrevisu();
             //previsu.GetComponent<GroundIndicator>().ResetAllAroundPrevisu();
         }
+
         _stockPrevisu.Clear();
     }
 

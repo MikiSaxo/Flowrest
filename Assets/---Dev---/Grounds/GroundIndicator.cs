@@ -7,7 +7,7 @@ using TMPro;
 
 public class GroundIndicator : MonoBehaviour
 {
-    [SerializeField] private GameObject _parent;
+    [SerializeField] private GroundStateManager _parent;
 
     // [SerializeField] private MeshRenderer _mesh;
     // [SerializeField] private Material[] _mats;
@@ -144,8 +144,7 @@ public class GroundIndicator : MonoBehaviour
             MoveYMesh(_selectedYPos, .3f);
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
-            _parent.GetComponent<GroundStateManager>()
-                .OnSelected(); // Call its parent to tell which one was selected to MapManager
+            _parent.OnSelected(); // Call its parent to tell which one was selected to MapManager
         }
         else // Second case: Change state of pose with a new one
             PoseBloc();
@@ -197,7 +196,7 @@ public class GroundIndicator : MonoBehaviour
     private void CallAllAroundForPrevisu()
     {
         // print("hello");
-        _coords = _parent.GetComponent<GroundStateManager>().GetCoords();
+        _coords = _parent.GetCoords();
 
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
@@ -220,11 +219,14 @@ public class GroundIndicator : MonoBehaviour
 
             _stockPrevisu.Add(ground);
         }
+
+        _parent.LookingActivateIconPrevisu();
+        _stockPrevisu.Add(_parent);
     }
 
     private void CallSelectedPrevisu()
     {
-        MapManager.Instance.PrevisuAroundSelected(_parent.GetComponent<GroundStateManager>().GetCurrentStateEnum());
+        MapManager.Instance.PrevisuAroundSelected(_parent.GetCurrentStateEnum());
     }
 
     public void ResetIndicator()
