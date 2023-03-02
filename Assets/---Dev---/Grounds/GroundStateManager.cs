@@ -26,6 +26,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsTreated { get; set; }
     public bool IsBiome { get; set; }
     public bool IsProtected { get; set; }
+    public bool IsProtectedPrevisu { get; set; }
 
     private AllStates _statesEnum;
     private AllStates _statePrevisu;
@@ -323,19 +324,20 @@ public class GroundStateManager : MonoBehaviour
 
     public void GetNewPrevisu(AllStates state)
     {
-        int resultState = (int)ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
+        int resultStateNumber = (int)ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
 
         if (_fB_Previsu.IsIconActivated())
         {
             int currentPrevisuState = _fB_Previsu.GetIndexActualIcon();
-            resultState = (int)ConditionManager.Instance.GetState((AllStates)currentPrevisuState, state);
+            resultStateNumber = (int)ConditionManager.Instance.GetState((AllStates)currentPrevisuState, state);
             // print("old = " + currentPrevisuState + " new = " + resultState);
         }
         
-        if (resultState == (int)GetCurrentStateEnum())
+        if (resultStateNumber == (int)GetCurrentStateEnum())
             return;
 
-        ActivatePrevisu(resultState);
+        if(!IsProtectedPrevisu)
+            ActivatePrevisu(resultStateNumber);
     }
 
     // Called when this bloc is selected
@@ -369,7 +371,9 @@ public class GroundStateManager : MonoBehaviour
 
     public void ActivatePrevisu(int resultStateNumber)
     {
-        print("result = " + resultStateNumber);
+        if (resultStateNumber == (int)GetCurrentStateEnum())
+            return;
+        // print("result = " + resultStateNumber);
         _fB_Previsu.ActivateIcon(resultStateNumber);
     }
 
@@ -380,14 +384,9 @@ public class GroundStateManager : MonoBehaviour
 
     public void ResetAroundSelectedPrevisu()
     {
-        // if (_stockPrevisu.Count == 0)
-        //     return;
-        print(_stockPrevisu.Count);
-
         foreach (var previsu in _stockPrevisu)
         {
             previsu.DeactivatePrevisu();
-            //previsu.GetComponent<GroundIndicator>().ResetAllAroundPrevisu();
         }
 
         _stockPrevisu.Clear();

@@ -53,8 +53,8 @@ public class GroundIndicator : MonoBehaviour
 
         //CheckHasWaterMesh();
         
-        CallAroundPrevisu();
-        CallSelectedPrevisu();
+        //CallAroundPrevisu();
+        //CallSelectedPrevisu();
         
         //MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
         // CheckIfTemperatureSelected();
@@ -66,15 +66,17 @@ public class GroundIndicator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //ResetAllAroundPrevisu();
+        
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         _isEntered = false;
+        _parent.IsProtectedPrevisu = false;
 
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
         
-        ResetAllAroundPrevisu();
         // MapManager.Instance.ResetAroundSelectedPrevisu();
         //MapManager.Instance.ResetCurrentEntered();
         
@@ -135,6 +137,7 @@ public class GroundIndicator : MonoBehaviour
         {
             ResetIndicator();
             MapManager.Instance.ResetGroundSelected();
+            ResetAllAroundPrevisu();
         }
 
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
@@ -224,7 +227,8 @@ public class GroundIndicator : MonoBehaviour
             _stockPrevisu.Add(ground);
         }
 
-        print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
+        // print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
+        _parent.IsProtectedPrevisu = true;
         if(MapManager.Instance.GetLastStateSelected() != AllStates.None)
             _parent.ActivatePrevisu((int)MapManager.Instance.GetLastStateSelected());
         // _parent.ActivateIconPrevisu();

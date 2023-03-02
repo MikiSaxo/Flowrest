@@ -184,8 +184,12 @@ public class MapManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Right click to Reset
+        // Right click to Reset
+        if (Input.GetMouseButtonDown(1))
+        {
             ResetButtonSelected();
+            ResetAroundSelectedPrevisu();
+        }
     }
 
     public void UpdateMap()
