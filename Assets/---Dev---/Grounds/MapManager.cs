@@ -301,13 +301,21 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.UpdateGroundsAround();
         gWhich.UpdateGroundsAround();
 
-        //Get Bloc to UI
+        // Get Bloc to UI
         var tileToAdd = ConditionManager.Instance.GetState(
             gLastGroundSelected.GetCurrentStateEnum(),
             gWhich.GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
         GroundCollected.Instance.StartAnim(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd));
         print(tileToAdd + " added");
+        
+        // Spend energy
+        CrystalsManager.Instance.ReduceEnergyBySwap();
+        
+        // Get crystals if have crystals
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false);
+        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false);
+        
 
         //ResetLastSelected
         IsGroundFirstSelected = false;

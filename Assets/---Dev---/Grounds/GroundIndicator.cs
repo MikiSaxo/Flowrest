@@ -196,6 +196,10 @@ public class GroundIndicator : MonoBehaviour
         gameObject.GetComponentInParent<GroundStateManager>().InitState(MapManager.Instance.LastStateButtonSelected);
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
 
+        // Spend energy
+        CrystalsManager.Instance.ReduceEnergyByLandingGround();
+
+        // Reset
         ResetAllAroundPrevisu();
         ResetForNextChange();
     }
