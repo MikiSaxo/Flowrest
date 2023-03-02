@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TexturePlanete
-  m_Shader: {fileID: -6465566751694194690, guid: 5331ce280cec8df4b8cd0275abe8ea55, type: 3}
+  m_Name: Shader Graphs_Bend The World with Alpha
+  m_Shader: {fileID: -6465566751694194690, guid: 3dd7f7f12b429944991c1fc2878ab7a5, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -20,8 +20,20 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Planete_Texture:
-        m_Texture: {fileID: 2800000, guid: db9351dfe8e27ca4aade9482c9d03e0c, type: 3}
+    - _Alphatexturee:
+        m_Texture: {fileID: 2800000, guid: 9ff44c4bf1b3c974b915f7ac5476b62f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -38,11 +50,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_3ABC7807: 0
+    - Vector1_4CD55FDA: 0
+    - Vector1_7A7E7197: 1
+    - Vector1_9DE51220: 0
+    - Vector1_A11B8994: 0.23
+    - Vector1_DD1FCB98: 0
+    - _DayNight: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors: []
+    m_Colors:
+    - Color_ABAAA1DA: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 0.1745283, b: 0.1745283, a: 0}
+    - _Color_1: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &3966970558511243638
+--- !u!114 &8727517964348344055
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
