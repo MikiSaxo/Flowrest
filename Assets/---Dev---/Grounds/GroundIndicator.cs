@@ -47,6 +47,7 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
+        if (_parent.GetCurrentStateEnum()  == AllStates.Mountain) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;

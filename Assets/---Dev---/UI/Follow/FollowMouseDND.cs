@@ -32,9 +32,9 @@ public class FollowMouseDND : MonoBehaviour
             Move();
     }
 
-    public void UpdateObject(Color color, string text)
+    public void UpdateObject(Sprite sprite, string text)
     {
-        _iconButton.color = color;
+        _iconButton.sprite = sprite;
         _text.text = text;
     }
 

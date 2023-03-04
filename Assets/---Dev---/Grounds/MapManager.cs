@@ -55,7 +55,8 @@ public class MapManager : MonoBehaviour
     private const char SNOW = 'G';
     private const char POLAR_DESERT = 'O';
     private const char TUNDRA = 'U';
-    private const char SWAMP = 'M';
+    private const char SWAMP = 'A';
+    private const char MOUNTAIN = 'M';
 
     private const float QUARTER_OFFSET = .75f;
     private const float HALF_OFFSET = .5f;
@@ -138,6 +139,10 @@ public class MapManager : MonoBehaviour
                     case SWAMP:
                         GameObject swamp = Instantiate(_groundPrefab, _map.transform);
                         InitObj(swamp, x, y, AllStates.Swamp);
+                        break;
+                    case MOUNTAIN:
+                        GameObject mountain = Instantiate(_groundPrefab, _map.transform);
+                        InitObj(mountain, x, y, AllStates.Mountain);
                         break;
                     case NONE:
                         break;
