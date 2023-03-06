@@ -21,29 +21,22 @@ public class MapManager : MonoBehaviour
 
     public GameObject LastObjButtonSelected { get; set; }
 
-    // public int TemperatureSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
-    [SerializeField] private int _nbMaxLevel;
+
+    [Header("Level")] [SerializeField] private string _levelName;
+    [SerializeField] private int _levelTotalNumber;
+    [SerializeField] private Vector2Int[] _crystalsCoords;
 
     private int _actualLevel;
     private bool _isDragNDrop;
     private string[] _mapInfo;
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject _lastGroundSelected;
-    // private GroundStateManager _currentEntered;
 
-    // private Vector2Int[] _directionsOne = new Vector2Int[]
-    // { new(0, 0), new(1, 0), new(-1, 0), new(0, 1), new(0, -1) };
-
-    // private Vector2Int[] _directionsTwo = new Vector2Int[]
-    // { new(2, 0), new(-2, 0), new(0, 2), new(0, -2) };
-
-    // public int _lastNbButtonSelected;
-    // private int[,] _tempGroundSelectedGrid;
 
     private const char NONE = 'N';
     private const char PLAIN = 'P';
@@ -73,7 +66,7 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMap()
     {
-        var mapName = $"Level{_actualLevel}";
+        var mapName = $"{_levelName}{_actualLevel}";
         // Get the text map
         string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
         _mapInfo = File.ReadAllLines(map);
@@ -159,6 +152,16 @@ public class MapManager : MonoBehaviour
         which.GetComponent<GroundStateManager>().InitState(state);
         // Update _mapGrid
         MapGrid[x, y] = which;
+        // Init Crystal or not
+        foreach (var crystalsCoords in _crystalsCoords)
+        {
+            if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
+
+            which.GetComponent<CrystalsGround>().UpdateCrystals(true);
+            return;
+        }
+
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false);
     }
 
     public void ResetAllMap()
@@ -177,7 +180,7 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel()
     {
-        if (_actualLevel < _nbMaxLevel - 1)
+        if (_actualLevel < _levelTotalNumber - 1)
             _actualLevel++;
         InitializeMap();
     }
@@ -282,15 +285,15 @@ public class MapManager : MonoBehaviour
         // Change position
         (_lastGroundSelected.transform.position, which.transform.position) =
             (which.transform.position, _lastGroundSelected.transform.position);
-        
+
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
-        
+
         // Protect these blocs a transformation
         gLastGroundSelected.IsProtected = true;
         gWhich.IsProtected = true;
-        
+
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
@@ -308,21 +311,21 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
         GroundCollected.Instance.StartAnim(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd));
         print(tileToAdd + " added");
-        
+
         // Spend energy
         CrystalsManager.Instance.ReduceEnergyBySwap();
-        
+
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false);
         _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false);
-        
+
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetAroundSelectedPrevisu();
         ResetGroundSelected();
         // CheckForBiome();
-        
+
         // Reset protect
         gLastGroundSelected.IsProtected = false;
         gWhich.IsProtected = false;
