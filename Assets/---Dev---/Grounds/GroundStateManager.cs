@@ -17,7 +17,8 @@ public enum AllStates
     Snow = 6,
     PolarDesert = 7,
     Tundra = 8,
-    Swamp = 9
+    Swamp = 9,
+    Mountain = 10
 }
 
 public class GroundStateManager : MonoBehaviour
@@ -42,6 +43,7 @@ public class GroundStateManager : MonoBehaviour
     private GroundPolarDesertState _polarDesertState = new GroundPolarDesertState();
     private GroundTundraState _tundraState = new GroundTundraState();
     private GroundSwampState _swampState = new GroundSwampState();
+    private GroundMountainState _mountainState = new GroundMountainState();
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -89,6 +91,7 @@ public class GroundStateManager : MonoBehaviour
         _allState.Add(_polarDesertState);
         _allState.Add(_tundraState);
         _allState.Add(_swampState);
+        _allState.Add(_mountainState);
     }
 
     private void Start()
@@ -153,6 +156,8 @@ public class GroundStateManager : MonoBehaviour
             if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
             // Check if has GroundManager
             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+            // Check if not a Mountain
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain) continue; 
 
             var grnd = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             // grnd.currentState.CheckUpdate(grnd, currentState);
@@ -358,6 +363,8 @@ public class GroundStateManager : MonoBehaviour
             // Check if has GroundManager
             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
                 continue;
+            // Check if not a Mountain
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain) continue; 
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             ground.GetNewPrevisu(state);

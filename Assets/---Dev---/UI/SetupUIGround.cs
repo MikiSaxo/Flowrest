@@ -72,7 +72,7 @@ public class SetupUIGround : MonoBehaviour
         // else
         // {
         _fBDnd.GetComponent<FollowMouseDND>()
-            .UpdateObject(_groundDatas[(int)state].ColorIcon, _groundDatas[(int)state].Name);
+            .UpdateObject(_groundDatas[(int)state].Icon, _groundDatas[(int)state].Name);
         MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
         // }
 
