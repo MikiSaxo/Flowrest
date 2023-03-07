@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2742,10 +2742,10 @@ MonoBehaviour:
   _energyBar: {fileID: 1089502438}
   _hitEnergyBar: {fileID: 101532696}
   _numberToDisplay: {fileID: 1321497134}
-  _earnedByGround: 15
-  _earnedByRecycling: 10
+  _earnedByGround: 8
+  _earnedByRecycling: 6
   _lostBySwap: 10
-  _lostByLandingGround: 5
+  _lostByLandingGround: 6
 --- !u!114 &762752806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6594,7 +6594,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 840934079}
   m_HandleRect: {fileID: 840934077}
   m_Direction: 2
-  m_Value: 1.0000012
+  m_Value: 1.000001
   m_Size: 0.72113115
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7747,7 +7747,7 @@ PrefabInstance:
       objectReference: {fileID: 29539077}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelName
-      value: Level
+      value: Gasp
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelsName
@@ -7755,7 +7755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelTotalNumber
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalsCoords.Array.size
@@ -7767,7 +7767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalLevelData.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _energyByLevels.Array.data[0]
@@ -7780,11 +7780,15 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalLevelData.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 394fe3e33be96b5488b35f6d80659ef8, type: 2}
+      objectReference: {fileID: 11400000, guid: 2fae956ed8fff184cb12176302cbb4cb, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalLevelData.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 1ee67ca6cb137fc498450d9c74ed4c6f, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _crystalLevelData.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fae956ed8fff184cb12176302cbb4cb, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalsCoords.Array.data[0].x
       value: 1
