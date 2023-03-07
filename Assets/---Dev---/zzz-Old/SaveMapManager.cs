@@ -136,14 +136,14 @@ public class SaveMapManager : MonoBehaviour
         }
 
         if (LastButtonSelected != null) // Deactivate the last one selected
-            LastButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(false);
+            LastButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(true);
+            LastButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
 
             TemperatureSelected = 0;
             // if (!LastButtonSelected.GetComponent<UIButton>().GetIsTemperature())

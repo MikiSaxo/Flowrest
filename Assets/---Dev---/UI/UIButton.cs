@@ -21,7 +21,7 @@ public class UIButton : MonoBehaviour
 
     private void Start()
     {
-        NeedActivateSelectedIcon(false);
+        ActivateSelectedIcon(false);
     }
 
     public void Setup(string text, Color color, Sprite icon, int nbLeft, AllStates stat)
@@ -42,7 +42,7 @@ public class UIButton : MonoBehaviour
     //     // ChangeNumberLeft(nbLeft);
     // }
 
-    public void NeedActivateSelectedIcon(bool which)
+    public void ActivateSelectedIcon(bool which)
     {
         _selectedIcon.SetActive(which);
     }

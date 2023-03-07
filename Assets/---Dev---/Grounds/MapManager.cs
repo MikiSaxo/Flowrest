@@ -167,7 +167,7 @@ public class MapManager : MonoBehaviour
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
-            which.GetComponent<CrystalsGround>().UpdateCrystals(true,true);
+            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
             return;
         }
 
@@ -202,6 +202,7 @@ public class MapManager : MonoBehaviour
         {
             ResetButtonSelected();
             ResetAroundSelectedPrevisu();
+            TrashCrystalManager.Instance.UpdateTrashCan(false);
         }
     }
 
@@ -220,6 +221,9 @@ public class MapManager : MonoBehaviour
     {
         if (IsGroundFirstSelected) return;
 
+        // Activate Trash can
+        TrashCrystalManager.Instance.UpdateTrashCan(true);
+
         // Prevent to use an actual empty button
         if (button != null)
         {
@@ -229,14 +233,14 @@ public class MapManager : MonoBehaviour
 
         // Deactivate the last one selected
         if (LastObjButtonSelected != null)
-            LastObjButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(false);
+            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
 
         if (LastObjButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastObjButtonSelected.GetComponent<UIButton>().NeedActivateSelectedIcon(true);
+            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
             LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
 
             // TemperatureSelected = 0;
@@ -360,6 +364,18 @@ public class MapManager : MonoBehaviour
     // {
     //     _currentEntered = ground;
     // }
+
+    public void UseTrashCan()
+    {
+        print("hello trash");
+        
+        if (LastObjButtonSelected == null) return;
+
+        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        CrystalsManager.Instance.EarnEnergyByRecycling();
+        FollowMouseDND.Instance.AnimDeactivateObject();
+        ChangeActivatedButton(null);
+    }
 
     public bool GetIsDragNDrop()
     {
