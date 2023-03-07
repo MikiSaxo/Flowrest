@@ -2682,6 +2682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fdae0c706bf984cb7363252bc9f6bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _trashCan: {fileID: 0}
 --- !u!1 &812776336
 GameObject:
   m_ObjectHideFlags: 0
@@ -7603,7 +7604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelTotalNumber
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalsCoords.Array.size
@@ -7615,7 +7616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalLevelData.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _energyByLevels.Array.data[0]
@@ -7641,6 +7642,10 @@ PrefabInstance:
       propertyPath: _crystalLevelData.Array.data[3]
       value: 
       objectReference: {fileID: 11400000, guid: dbc734d582563784cb8950014585fc40, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _crystalLevelData.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 51d2e6dacd0b2874d8233cc4ed994300, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalsCoords.Array.data[0].x
       value: 1
