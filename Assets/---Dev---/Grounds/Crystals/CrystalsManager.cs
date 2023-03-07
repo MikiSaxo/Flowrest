@@ -5,21 +5,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
+using TMPro;
 
 public class CrystalsManager : MonoBehaviour
 {
     public static CrystalsManager Instance;
 
-    [Header("Setup")] [SerializeField] private Slider _energyBar;
+    [Header("Setup")][SerializeField] private Slider _energyBar;
     [SerializeField] private Slider _hitEnergyBar;
+    [SerializeField] private TextMeshProUGUI _numberToDisplay;
 
-    [Header("Energy Earn")] [SerializeField]
-    private float _earnedByGround;
+    [Header("Energy Earn")]
+    [SerializeField]    private float _earnedByGround;
 
     [SerializeField] private float _earnedByRecycling;
 
-    [Header("Energy Lose")] [SerializeField]
-    private float _lostBySwap;
+    [Header("Energy Lose")]
+    [SerializeField]    private float _lostBySwap;
 
     [SerializeField] private float _lostByLandingGround;
 
@@ -49,7 +51,7 @@ public class CrystalsManager : MonoBehaviour
     {
         value *= .01f;
         _energyValue -= value;
-        
+
         if (_energyValue <= 0)
             _energyValue = 0;
         // print("reduce _energyValue :" + _energyValue);
@@ -59,6 +61,8 @@ public class CrystalsManager : MonoBehaviour
 
         _energyBar.value = _energyValue;
         _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
+        int number = (int)(_energyValue * 100);
+        _numberToDisplay.text = $"{number}";
     }
 
     public void EarnEnergyByGround()
@@ -75,7 +79,7 @@ public class CrystalsManager : MonoBehaviour
     {
         value *= .01f;
         _energyValue += value;
-        
+
         if (_energyValue >= 1)
             _energyValue = 1;
         // print("earn _energyValue :" + _energyValue);
@@ -85,6 +89,8 @@ public class CrystalsManager : MonoBehaviour
 
         _hitEnergyBar.DOValue(_energyValue, .4f);
         _energyBar.DOValue(_energyValue, .4f);
+        int number = (int)(_energyValue * 100);
+        _numberToDisplay.text = $"{number}";
     }
 
     private void Update()
