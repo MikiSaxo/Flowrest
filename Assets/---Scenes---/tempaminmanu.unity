@@ -499,7 +499,9 @@ MonoBehaviour:
   _map: {fileID: 29539077}
   _groundPrefab: {fileID: 7614459207405979688, guid: 8eed7b7805b7ba942b07e24e6da88f74, type: 3}
   _distance: 10
-  _nbMaxLevel: 3
+  _levelName: 
+  _levelTotalNumber: 0
+  _crystalLevelData: []
 --- !u!4 &205250337
 Transform:
   m_ObjectHideFlags: 0
@@ -5690,7 +5692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1639263002
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5725,7 +5727,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f0a4519e466472541be7b2df7ac43b7e, type: 2}
+  - {fileID: 2100000, guid: badb41a1650a23d498600bc05c988db3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6929,7 +6931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &1966751000
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7001,7 +7003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966750999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -313.2, y: 62.6, z: -31.6}
+  m_LocalPosition: {x: -313.2, y: 269, z: -31.6}
   m_LocalScale: {x: 35.913, y: 35.913, z: 35.913}
   m_ConstrainProportionsScale: 0
   m_Children: []
