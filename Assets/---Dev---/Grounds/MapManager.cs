@@ -29,7 +29,9 @@ public class MapManager : MonoBehaviour
 
     [Header("Level")] [SerializeField] private string _levelName;
     [SerializeField] private int _levelTotalNumber;
-    [SerializeField] private Vector2Int[] _crystalsCoords;
+
+    [Header("Crystal / Energy")] [SerializeField]
+    private CrystalLevelData[] _crystalLevelData;
 
     private int _actualLevel;
     private bool _isDragNDrop;
@@ -76,6 +78,8 @@ public class MapManager : MonoBehaviour
         _mapSize.y = _mapInfo.Length;
         // Init the grids
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
+        //Init energy
+        CrystalsManager.Instance.InitEnergy(_crystalLevelData[_actualLevel].EnergyAtStart);
 
         InitializeLevel(_mapSize);
     }
@@ -158,15 +162,16 @@ public class MapManager : MonoBehaviour
         // Update _mapGrid
         MapGrid[x, y] = which;
         // Init Crystal or not
-        foreach (var crystalsCoords in _crystalsCoords)
+        Vector2Int[] coordsByCurrentLvl = _crystalLevelData[_actualLevel].Coords;
+        foreach (var crystalsCoords in coordsByCurrentLvl)
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
-            which.GetComponent<CrystalsGround>().UpdateCrystals(true);
+            which.GetComponent<CrystalsGround>().UpdateCrystals(true,true);
             return;
         }
 
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false);
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
     }
 
     public void ResetAllMap()
@@ -321,8 +326,8 @@ public class MapManager : MonoBehaviour
         CrystalsManager.Instance.ReduceEnergyBySwap();
 
         // Get crystals if have crystals
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false);
-        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false);
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
 
 
         //ResetLastSelected

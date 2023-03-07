@@ -16,12 +16,12 @@ public class CrystalsManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
 
     [Header("Energy Earn")]
-    [SerializeField]    private float _earnedByGround;
+    [SerializeField] private float _earnedByGround;
 
     [SerializeField] private float _earnedByRecycling;
 
     [Header("Energy Lose")]
-    [SerializeField]    private float _lostBySwap;
+    [SerializeField] private float _lostBySwap;
 
     [SerializeField] private float _lostByLandingGround;
 
@@ -34,7 +34,15 @@ public class CrystalsManager : MonoBehaviour
 
     private void Start()
     {
-        _energyValue = 1;
+        // _energyValue = 1;
+    }
+
+    public void InitEnergy(int startEnergy)
+    {
+        _energyValue = startEnergy * .001f;
+        _energyBar.value = _energyValue;
+        _hitEnergyBar.value = _energyValue;
+        _numberToDisplay.text = $"{startEnergy}";
     }
 
     public void ReduceEnergyBySwap()
@@ -61,7 +69,7 @@ public class CrystalsManager : MonoBehaviour
 
         _energyBar.value = _energyValue;
         _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
-        int number = (int)(_energyValue * 100);
+        int number = (int)(_energyValue * 1000);
         _numberToDisplay.text = $"{number}";
     }
 
@@ -89,7 +97,7 @@ public class CrystalsManager : MonoBehaviour
 
         _hitEnergyBar.DOValue(_energyValue, .4f);
         _energyBar.DOValue(_energyValue, .4f);
-        int number = (int)(_energyValue * 100);
+        int number = (int)(_energyValue * 1000);
         _numberToDisplay.text = $"{number}";
     }
 
