@@ -222,7 +222,8 @@ public class MapManager : MonoBehaviour
         if (IsGroundFirstSelected) return;
 
         // Activate Trash can
-        TrashCrystalManager.Instance.UpdateTrashCan(true);
+        if(button != null)
+            TrashCrystalManager.Instance.UpdateTrashCan(true);
 
         // Prevent to use an actual empty button
         if (button != null)
@@ -374,7 +375,8 @@ public class MapManager : MonoBehaviour
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         CrystalsManager.Instance.EarnEnergyByRecycling();
         FollowMouseDND.Instance.AnimDeactivateObject();
-        ChangeActivatedButton(null);
+        TrashCrystalManager.Instance.UpdateTrashCan(false);
+        ResetButtonSelected();
     }
 
     public bool GetIsDragNDrop()

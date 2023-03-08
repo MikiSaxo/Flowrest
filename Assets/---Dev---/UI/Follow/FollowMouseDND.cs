@@ -9,7 +9,7 @@ using DG.Tweening;
 public class FollowMouseDND : MonoBehaviour
 {
     public static FollowMouseDND Instance;
-    
+
     public bool CanMove;
     [SerializeField] private Image _iconButton;
     [SerializeField] private TextMeshProUGUI _text;
@@ -28,7 +28,7 @@ public class FollowMouseDND : MonoBehaviour
 
     private void Update()
     {
-        if(CanMove)
+        if (CanMove)
             Move();
     }
 
@@ -40,6 +40,7 @@ public class FollowMouseDND : MonoBehaviour
 
     public void AnimDeactivateObject()
     {
+        SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
         _iconButton.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear).OnComplete(DeactivateObject);
         _text.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear);
     }

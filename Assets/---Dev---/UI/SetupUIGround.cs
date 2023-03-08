@@ -9,22 +9,14 @@ public class SetupUIGround : MonoBehaviour
     public static SetupUIGround Instance;
 
     [Header("Setup")] [SerializeField] private GameObject _fBDnd;
-    [SerializeField] private GameObject[] _groundButtons;
+    public OpenCloseMenu GroundStockage;
+
+    [Header("Ground Buttons")] [SerializeField]
+    private GameObject[] _groundButtons;
     // [SerializeField] private GameObject[] _UITemperature;
 
-    [Header("Ground")] [SerializeField] private GroundUIData[] _groundDatas;
-    // [SerializeField] private string[] _texts;
-    // [SerializeField] private Color[] _colors;
-    // [SerializeField] private int[] _nbLeft;
-    // [SerializeField] private AllStates[] _groundState;
+    [Header("Ground Data")] [SerializeField] private GroundUIData[] _groundData;
 
-    // [Header("Temperature")] [SerializeField]
-    // private string[] _textsTemperature;
-    //
-    // [SerializeField] private Color[] _colorsTemperature;
-    // [SerializeField] private int[] _nbLeftTemperature;
-
-    // [Header("Anims")] [SerializeField] private Vector2 _bounceValues;
 
     private void Awake()
     {
@@ -35,8 +27,9 @@ public class SetupUIGround : MonoBehaviour
     {
         for (int i = 0; i < _groundButtons.Length; i++)
         {
-            var getData = _groundDatas[i];
-            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, getData.Icon, getData.NbLeft, getData.GroundState);
+            var getData = _groundData[i];
+            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, getData.Icon,
+                getData.NbLeft, getData.GroundState);
             GroundEmpty(i);
         }
 
@@ -63,18 +56,12 @@ public class SetupUIGround : MonoBehaviour
 
         MapManager.Instance.ResetButtonSelected();
         MapManager.Instance.ResetGroundSelected();
+        
+        TrashCrystalManager.Instance.UpdateTrashCan(true);
 
-        // if (isTemp)
-        // {
-        //     _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_colorsTemperature[(int)state], _textsTemperature[(int)state]);
-        //     MapManager.Instance.LastObjButtonSelected = _UITemperature[(int)state];
-        // }
-        // else
-        // {
         _fBDnd.GetComponent<FollowMouseDND>()
-            .UpdateObject(_groundDatas[(int)state].Icon, _groundDatas[(int)state].Name);
+            .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
         MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
-        // }
 
         if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
         {
@@ -85,6 +72,7 @@ public class SetupUIGround : MonoBehaviour
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         MapManager.Instance.LastStateButtonSelected = state;
+        GroundStockage.ForcedOpen = true;
     }
 
     public void EndFb() // Use by Ground buttons
@@ -92,25 +80,12 @@ public class SetupUIGround : MonoBehaviour
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
+        MapManager.Instance.ResetButtonSelected();
+        TrashCrystalManager.Instance.UpdateTrashCan(false);
 
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();
     }
-
-    // public void BounceButtonAnim(GameObject obj)
-    // {
-    //     //AnimDotween.Instance.BounceAnim(obj, _bounceValues.x, _bounceValues.y);
-    // }
-    //
-    // public void MouseEnterButton(GameObject obj)
-    // {
-    //     obj.transform.DOScale(Vector3.one * 1.1f, _bounceValues.x);
-    // }
-
-    // public void MouseLeaveButton(GameObject obj)
-    // {
-    //     obj.transform.DOScale(Vector3.one, _bounceValues.y);
-    // }
 
     public void AddNewGround(int which)
     {
@@ -121,5 +96,5 @@ public class SetupUIGround : MonoBehaviour
     public void GroundEmpty(int which)
     {
         _groundButtons[which].SetActive(false);
-    } 
+    }
 }

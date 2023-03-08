@@ -15,6 +15,9 @@ public class CrystalsManager : MonoBehaviour
     [SerializeField] private Slider _hitEnergyBar;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
 
+    [Header("Energy Base")]
+    [Tooltip("If max energy = 1000, put 1000 - If 100, put 100")] [SerializeField] private int _howBase;
+    
     [Header("Energy Earn")]
     [SerializeField] private float _earnedByGround;
 
@@ -26,20 +29,18 @@ public class CrystalsManager : MonoBehaviour
     [SerializeField] private float _lostByLandingGround;
 
     private float _energyValue;
+    private float _baseInf;
 
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
-        // _energyValue = 1;
+        
+        _baseInf = 1 / (float)_howBase;
     }
 
     public void InitEnergy(int startEnergy)
     {
-        _energyValue = startEnergy * .001f;
+        _energyValue = startEnergy * _baseInf;
         _energyBar.value = _energyValue;
         _hitEnergyBar.value = _energyValue;
         _numberToDisplay.text = $"{startEnergy}";
@@ -57,7 +58,7 @@ public class CrystalsManager : MonoBehaviour
 
     private void ReduceEnergy(float value)
     {
-        value *= .01f;
+        value *= _baseInf;
         _energyValue -= value;
 
         if (_energyValue <= 0)
@@ -69,7 +70,7 @@ public class CrystalsManager : MonoBehaviour
 
         _energyBar.value = _energyValue;
         _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
-        int number = (int)(_energyValue * 1000);
+        int number = (int)(_energyValue * _howBase);
         _numberToDisplay.text = $"{number}";
     }
 
@@ -85,7 +86,7 @@ public class CrystalsManager : MonoBehaviour
 
     private void EarnEnergy(float value)
     {
-        value *= .01f;
+        value *= _baseInf;
         _energyValue += value;
 
         if (_energyValue >= 1)
@@ -97,7 +98,7 @@ public class CrystalsManager : MonoBehaviour
 
         _hitEnergyBar.DOValue(_energyValue, .4f);
         _energyBar.DOValue(_energyValue, .4f);
-        int number = (int)(_energyValue * 1000);
+        int number = (int)(_energyValue * _howBase);
         _numberToDisplay.text = $"{number}";
     }
 
