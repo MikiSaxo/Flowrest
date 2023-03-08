@@ -47,6 +47,7 @@ public class FollowMouseDND : MonoBehaviour
 
     private void DeactivateObject()
     {
+        MapManager.Instance.ResetButtonSelected();
         _iconButton.transform.DOScale(Vector2.one, 0);
         _text.transform.DOScale(Vector2.one, 0);
         gameObject.SetActive(false);

@@ -47,16 +47,20 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
-        if (_parent.GetCurrentStateEnum()  == AllStates.Mountain) return;
+        if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
+        if (MapManager.Instance.LastObjButtonSelected != null)
+        {
+            if ((int)_parent.GetCurrentStateEnum() == MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft()) return;
+        }
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
         //CheckHasWaterMesh();
-        
+
         //CallAroundPrevisu();
         //CallSelectedPrevisu();
-        
+
         //MapManager.Instance.SetCurrentEntered(_parent.GetComponent<GroundStateManager>());
         // CheckIfTemperatureSelected();
 
@@ -68,7 +72,7 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //ResetAllAroundPrevisu();
-        
+
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
@@ -77,10 +81,10 @@ public class GroundIndicator : MonoBehaviour
 
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
-        
+
         // MapManager.Instance.ResetAroundSelectedPrevisu();
         //MapManager.Instance.ResetCurrentEntered();
-        
+
         // ResetTemperatureSelected();
 
         MoveYMesh(_startYPos, .1f);
@@ -143,6 +147,7 @@ public class GroundIndicator : MonoBehaviour
 
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
 
+        print(MapManager.Instance.LastObjButtonSelected);
         if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
             if (_isSelected) return; // Block if click again on it
@@ -199,6 +204,9 @@ public class GroundIndicator : MonoBehaviour
 
         // Spend energy
         CrystalsManager.Instance.ReduceEnergyByLandingGround();
+        
+        // Disable Trash
+        TrashCrystalManager.Instance.UpdateTrashCan(false);
 
         // Reset
         ResetAllAroundPrevisu();
@@ -234,7 +242,7 @@ public class GroundIndicator : MonoBehaviour
 
         // print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
         _parent.IsProtectedPrevisu = true;
-        if(MapManager.Instance.GetLastStateSelected() != AllStates.None)
+        if (MapManager.Instance.GetLastStateSelected() != AllStates.None)
             _parent.ActivatePrevisu((int)MapManager.Instance.GetLastStateSelected());
         // _parent.ActivateIconPrevisu();
         // _stockPrevisu.Add(_parent);

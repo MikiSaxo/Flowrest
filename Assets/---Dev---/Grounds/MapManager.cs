@@ -222,8 +222,13 @@ public class MapManager : MonoBehaviour
         if (IsGroundFirstSelected) return;
 
         // Activate Trash can
-        if(button != null)
+        if (button != null)
+        {
             TrashCrystalManager.Instance.UpdateTrashCan(true);
+            SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
+        }
+        else
+            SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
 
         // Prevent to use an actual empty button
         if (button != null)
@@ -259,11 +264,6 @@ public class MapManager : MonoBehaviour
             // TemperatureSelected = 0;
         }
     }
-
-    // public void ChangeCurrentTemperature(int temperature)
-    // {
-    //     TemperatureSelected = temperature;
-    // }
 
     public bool CanPoseBloc()
     {
@@ -361,15 +361,10 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
     }
 
-    // public void SetCurrentEntered(GroundStateManager ground)
-    // {
-    //     _currentEntered = ground;
-    // }
-
     public void UseTrashCan()
     {
         print("hello trash");
-        
+
         if (LastObjButtonSelected == null) return;
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);

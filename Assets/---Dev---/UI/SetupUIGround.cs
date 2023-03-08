@@ -72,6 +72,7 @@ public class SetupUIGround : MonoBehaviour
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         MapManager.Instance.LastStateButtonSelected = state;
+        MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
         GroundStockage.ForcedOpen = true;
     }
 
@@ -80,7 +81,7 @@ public class SetupUIGround : MonoBehaviour
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
-        MapManager.Instance.ResetButtonSelected();
+        
         TrashCrystalManager.Instance.UpdateTrashCan(false);
 
         // n_MapManager.Instance.ResetButtonSelected();

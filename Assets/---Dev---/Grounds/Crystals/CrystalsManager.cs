@@ -70,8 +70,8 @@ public class CrystalsManager : MonoBehaviour
 
         _energyBar.value = _energyValue;
         _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
-        int number = (int)(_energyValue * _howBase);
-        _numberToDisplay.text = $"{number}";
+        float number = (_energyValue * _howBase);
+        _numberToDisplay.text = $"{(int)number}";
     }
 
     public void EarnEnergyByGround()
@@ -98,8 +98,8 @@ public class CrystalsManager : MonoBehaviour
 
         _hitEnergyBar.DOValue(_energyValue, .4f);
         _energyBar.DOValue(_energyValue, .4f);
-        int number = (int)(_energyValue * _howBase);
-        _numberToDisplay.text = $"{number}";
+        float number = _energyValue * _howBase;
+        _numberToDisplay.text = $"{(int)number}";
     }
 
     private void Update()
