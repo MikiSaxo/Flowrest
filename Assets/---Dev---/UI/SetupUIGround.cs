@@ -98,4 +98,15 @@ public class SetupUIGround : MonoBehaviour
     {
         _groundButtons[which].SetActive(false);
     }
+
+    public bool CheckIfGround()
+    {
+        foreach (var button in _groundButtons)
+        {
+            if (button.gameObject.activeSelf)
+                return true;
+        }
+
+        return false;
+    }
 }

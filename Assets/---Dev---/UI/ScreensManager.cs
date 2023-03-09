@@ -10,6 +10,7 @@ public class ScreensManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _dialoguesParent;
     [SerializeField] private GameObject _titlesParent;
+    [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private TextMeshProUGUI _dialoguesText;
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _dialoguesString;
@@ -60,6 +61,12 @@ public class ScreensManager : MonoBehaviour
     {
         _dialoguesParent.SetActive(false);
         _titlesText.text = _titlesString[1];
+    }
+
+    public void GameOver()
+    {
+        _bg.SetActive(true);
+        _gameOverParent.SetActive(true);
     }
 
     public void ChangeToLevelSupp()

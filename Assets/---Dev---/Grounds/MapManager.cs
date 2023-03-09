@@ -374,6 +374,15 @@ public class MapManager : MonoBehaviour
         ResetButtonSelected();
     }
 
+    public void CheckIfGameOver()
+    {
+        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap() &&
+            CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() && !SetupUIGround.Instance.CheckIfGround())
+        {
+            
+        }
+    }
+
     public bool GetIsDragNDrop()
     {
         return _isDragNDrop;

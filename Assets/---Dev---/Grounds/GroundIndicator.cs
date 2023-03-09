@@ -50,8 +50,13 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
         if (MapManager.Instance.LastObjButtonSelected != null)
         {
-            if ((int)_parent.GetCurrentStateEnum() == MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft()) return;
+            if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
         }
+
+        if (MapManager.Instance.LastObjButtonSelected == null && CrystalsManager.Instance.IsEnergyInferiorToCostSwap())
+            return;
+        if (MapManager.Instance.LastObjButtonSelected != null && CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
+            return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
@@ -147,7 +152,7 @@ public class GroundIndicator : MonoBehaviour
 
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
 
-        print(MapManager.Instance.LastObjButtonSelected);
+        // print(MapManager.Instance.LastObjButtonSelected);
         if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
             if (_isSelected) return; // Block if click again on it
@@ -204,7 +209,7 @@ public class GroundIndicator : MonoBehaviour
 
         // Spend energy
         CrystalsManager.Instance.ReduceEnergyByLandingGround();
-        
+
         // Disable Trash
         TrashCrystalManager.Instance.UpdateTrashCan(false);
 

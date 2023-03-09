@@ -23,13 +23,14 @@ public class CrystalsManager : MonoBehaviour
 
     [SerializeField] private float _earnedByRecycling;
 
-    [Header("Energy Lose")]
-    [SerializeField] private float _lostBySwap;
+    [Header("Energy Cost")]
+    [SerializeField] private float _costBySwap;
 
-    [SerializeField] private float _lostByLandingGround;
+    [SerializeField] private float _costByLandingGround;
 
     private float _energyValue;
     private float _baseInf;
+    private int _currentEnergy;
 
     private void Awake()
     {
@@ -44,16 +45,17 @@ public class CrystalsManager : MonoBehaviour
         _energyBar.value = _energyValue;
         _hitEnergyBar.value = _energyValue;
         _numberToDisplay.text = $"{startEnergy}";
+        _currentEnergy = startEnergy;
     }
 
     public void ReduceEnergyBySwap()
     {
-        ReduceEnergy(_lostBySwap);
+        ReduceEnergy(_costBySwap);
     }
 
     public void ReduceEnergyByLandingGround()
     {
-        ReduceEnergy(_lostByLandingGround);
+        ReduceEnergy(_costByLandingGround);
     }
 
     private void ReduceEnergy(float value)
@@ -72,6 +74,7 @@ public class CrystalsManager : MonoBehaviour
         _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
         float number = (_energyValue * _howBase);
         _numberToDisplay.text = $"{(int)number}";
+        _currentEnergy = (int)number;
     }
 
     public void EarnEnergyByGround()
@@ -100,11 +103,27 @@ public class CrystalsManager : MonoBehaviour
         _energyBar.DOValue(_energyValue, .4f);
         float number = _energyValue * _howBase;
         _numberToDisplay.text = $"{(int)number}";
+        _currentEnergy = (int)number;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
             EarnEnergyByRecycling();
+    }
+
+    public int GetCurrentenergy()
+    {
+        return _currentEnergy;
+    }
+
+    public bool IsEnergyInferiorToCostSwap()
+    {
+        return _currentEnergy < _costBySwap;
+    }
+
+    public bool IsEnergyInferiorToCostLandingGround()
+    {
+        return _currentEnergy < _costByLandingGround;
     }
 }
