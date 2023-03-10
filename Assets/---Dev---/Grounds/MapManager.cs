@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject _lastGroundSelected;
 
+    private Dictionary<char, AllStates> dico = new Dictionary<char, AllStates>();
 
     private const char NONE = 'N';
     private const char PLAIN = 'P';
@@ -63,6 +64,19 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
+        dico.Add(NONE, AllStates.None);
+        dico.Add(PLAIN, AllStates.Plain);
+        dico.Add(DESERT, AllStates.Desert);
+        dico.Add(WATER, AllStates.Water);
+        dico.Add(TROPICAL, AllStates.Tropical);
+        dico.Add(SAVANNA, AllStates.Savanna);
+        dico.Add(GEYSER, AllStates.Geyser);
+        dico.Add(SNOW, AllStates.Snow);
+        dico.Add(POLAR_DESERT, AllStates.PolarDesert);
+        dico.Add(TUNDRA, AllStates.Tundra);
+        dico.Add(SWAMP, AllStates.Swamp);
+        dico.Add(MOUNTAIN, AllStates.Mountain);
+        
         InitializeMap();
         LastStateButtonSelected = AllStates.None;
     }
@@ -84,7 +98,71 @@ public class MapManager : MonoBehaviour
         InitializeLevel(_mapSize);
     }
 
-    private void InitializeLevel(Vector2Int sizeMap) //Map creation
+    // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
+    // {
+    //     for (int x = 0; x < sizeMap.x; x++)
+    //     {
+    //         for (int y = 0; y < sizeMap.y; y++)
+    //         {
+    //             // Get the string of the actual line
+    //             string line = _mapInfo[y];
+    //             // Get the actual char of the string of the actual line
+    //             char whichEnvironment = line[x];
+    //
+    //             switch (whichEnvironment)
+    //             {
+    //                 case PLAIN:
+    //                     GameObject plains = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(plains, x, y, AllStates.Plain);
+    //                     break;
+    //                 case DESERT:
+    //                     GameObject desert = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(desert, x, y, AllStates.Desert);
+    //                     break;
+    //                 case WATER:
+    //                     GameObject water = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(water, x, y, AllStates.Water);
+    //                     break;
+    //                 case TROPICAL:
+    //                     GameObject tropical = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(tropical, x, y, AllStates.Tropical);
+    //                     break;
+    //                 case SAVANNA:
+    //                     GameObject savanna = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(savanna, x, y, AllStates.Savanna);
+    //                     break;
+    //                 case GEYSER:
+    //                     GameObject geyser = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(geyser, x, y, AllStates.Geyser);
+    //                     break;
+    //                 case SNOW:
+    //                     GameObject snow = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(snow, x, y, AllStates.Snow);
+    //                     break;
+    //                 case POLAR_DESERT:
+    //                     GameObject polar = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(polar, x, y, AllStates.PolarDesert);
+    //                     break;
+    //                 case TUNDRA:
+    //                     GameObject tundra = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(tundra, x, y, AllStates.Tundra);
+    //                     break;
+    //                 case SWAMP:
+    //                     GameObject swamp = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(swamp, x, y, AllStates.Swamp);
+    //                     break;
+    //                 case MOUNTAIN:
+    //                     GameObject mountain = Instantiate(_groundPrefab, _map.transform);
+    //                     InitObj(mountain, x, y, AllStates.Mountain);
+    //                     break;
+    //                 case NONE:
+    //                     break;
+    //             }
+    //         }
+    //     }
+    // }
+
+    private void InitializeLevel(Vector2Int sizeMap)
     {
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -95,55 +173,8 @@ public class MapManager : MonoBehaviour
                 // Get the actual char of the string of the actual line
                 char whichEnvironment = line[x];
 
-                switch (whichEnvironment)
-                {
-                    case PLAIN:
-                        GameObject plains = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(plains, x, y, AllStates.Plain);
-                        break;
-                    case DESERT:
-                        GameObject desert = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(desert, x, y, AllStates.Desert);
-                        break;
-                    case WATER:
-                        GameObject water = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(water, x, y, AllStates.Water);
-                        break;
-                    case TROPICAL:
-                        GameObject tropical = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(tropical, x, y, AllStates.Tropical);
-                        break;
-                    case SAVANNA:
-                        GameObject savanna = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(savanna, x, y, AllStates.Savanna);
-                        break;
-                    case GEYSER:
-                        GameObject geyser = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(geyser, x, y, AllStates.Geyser);
-                        break;
-                    case SNOW:
-                        GameObject snow = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(snow, x, y, AllStates.Snow);
-                        break;
-                    case POLAR_DESERT:
-                        GameObject polar = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(polar, x, y, AllStates.PolarDesert);
-                        break;
-                    case TUNDRA:
-                        GameObject tundra = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(tundra, x, y, AllStates.Tundra);
-                        break;
-                    case SWAMP:
-                        GameObject swamp = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(swamp, x, y, AllStates.Swamp);
-                        break;
-                    case MOUNTAIN:
-                        GameObject mountain = Instantiate(_groundPrefab, _map.transform);
-                        InitObj(mountain, x, y, AllStates.Mountain);
-                        break;
-                    case NONE:
-                        break;
-                }
+                GameObject test = Instantiate(_groundPrefab, _map.transform);
+                InitObj(test, x, y, dico[whichEnvironment]);
             }
         }
     }
