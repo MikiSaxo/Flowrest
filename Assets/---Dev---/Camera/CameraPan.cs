@@ -8,22 +8,32 @@ public class CameraPan : MonoBehaviour
     private Vector3 _dragOrigin;
     private bool _canZoom;
     private float groundZ = 0;
-    
+
     [SerializeField] private float _zoomSpeed;
-    [SerializeField] private float _rotationSpeed;
+
+    // [SerializeField] private float _rotationSpeed;
     [SerializeField] private Vector2Int _minMaxZoom;
-    [SerializeField] private Vector2Int _minMaxRotation;
+
+    // [SerializeField] private Vector2Int _minMaxRotation;
+    [SerializeField] private Vector2Int _maxMovX;
+    [SerializeField] private Vector2Int _maxMovZ;
+
+    private float _startPosX;
+    private float _startPosZ;
 
     private void Start()
     {
         _cam = GetComponent<Camera>();
         _canZoom = true;
+
+        _startPosX = transform.position.x;
+        _startPosZ = transform.position.z;
     }
 
     private void Update()
     {
         PanCamera();
-        if(_canZoom)
+        if (_canZoom)
             Zoom();
     }
 
@@ -34,15 +44,24 @@ public class CameraPan : MonoBehaviour
         {
             _dragOrigin = GetWorldPosition(groundZ);
         }
+
         if (Input.GetMouseButton(2))
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
+
             // Add the dif to the cam pos
-            _cam.transform.position += new Vector3(dif.x, 0, dif.y);
+            // if (_cam.transform.position.x + dif.x > _startPosX + _maxMovX.x
+            //     || _cam.transform.position.x - dif.x < _startPosX - _maxMovX.y
+            //     || _cam.transform.position.z + dif.y > _startPosZ + _maxMovZ.x
+            //     || _cam.transform.position.z - dif.y < _startPosZ - _maxMovZ.y)
+            //     return;
+
+            _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.y));
+            // _cam.transform.position += new Vector3(dif.x, 0, dif.y)
         }
     }
-    
+
     private Vector3 GetWorldPosition(float z)
     {
         Ray mousePos = _cam.ScreenPointToRay(Input.mousePosition);
@@ -83,6 +102,19 @@ public class CameraPan : MonoBehaviour
         //float newSize = _cam.orthographicSize + _zoomStep * whichZoom;
         // Change zoom and Block it if too much
         //_cam.orthographicSize = Mathf.Clamp(newSize, _camSizeEnds.x, _camSizeEnds.y);
+    }
+
+    private Vector3 ClampCamera(Vector3 targetPosition)
+    {
+        float minX = _startPosX - _maxMovX.y;
+        float maxX = _startPosX + _maxMovX.x;
+        float minZ = _startPosZ - _maxMovZ.y;
+        float maxZ = _startPosZ + _maxMovZ.x;
+
+        float newX = Mathf.Clamp(targetPosition.x, minX, maxX);
+        float newZ = Mathf.Clamp(targetPosition.z, minZ, maxZ);
+
+        return new Vector3(newX, targetPosition.y, newZ);
     }
 
     public void HasEnterredScrollBar(bool which)

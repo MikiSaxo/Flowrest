@@ -54,8 +54,11 @@ public class MapManager : MonoBehaviour
     private const char SWAMP = 'A';
     private const char MOUNTAIN = 'M';
 
-    private const float QUARTER_OFFSET = .75f;
+    private const float QUARTER_OFFSET = .85f;
     private const float HALF_OFFSET = .5f;
+
+    // [SerializeField] private float _quaterOffset; 
+    // [SerializeField] private float _halfOffset; 
 
     private void Awake()
     {
@@ -356,7 +359,7 @@ public class MapManager : MonoBehaviour
             gWhich.GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
         ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd), String.Empty);
-        print(tileToAdd + " added");
+        // print(tileToAdd + " added");
 
         // Spend energy
         CrystalsManager.Instance.ReduceEnergyBySwap();
