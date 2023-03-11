@@ -67,5 +67,6 @@ public class GroundCollected : MonoBehaviour
     {
         transform.DOMove(_tpPoints[2].position, _durationDispawn);
         transform.DOScale(0, _durationDispawn);
+        SetupUIGround.Instance.GroundStockage.OnMouseEntered();
     }
 }

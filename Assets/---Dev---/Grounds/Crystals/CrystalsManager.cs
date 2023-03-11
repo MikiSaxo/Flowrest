@@ -31,6 +31,7 @@ public class CrystalsManager : MonoBehaviour
     private float _energyValue;
     private float _baseInf;
     private int _currentEnergy;
+    private float _tempValue;
 
     private void Awake()
     {
@@ -50,68 +51,64 @@ public class CrystalsManager : MonoBehaviour
 
     public void ReduceEnergyBySwap()
     {
-        ReduceEnergy(_costBySwap);
+        StartCoroutine(WaitToUpdate(-_costBySwap));
     }
 
     public void ReduceEnergyByLandingGround()
     {
-        ReduceEnergy(_costByLandingGround);
-    }
-
-    private void ReduceEnergy(float value)
-    {
-        value *= _baseInf;
-        _energyValue -= value;
-
-        if (_energyValue <= 0)
-            _energyValue = 0;
-        // print("reduce _energyValue :" + _energyValue);
-
-        _energyBar.DOKill();
-        _hitEnergyBar.DOKill();
-
-        _energyBar.value = _energyValue;
-        _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
-        float number = (_energyValue * _howBase);
-        _numberToDisplay.text = $"{(int)number}";
-        _currentEnergy = (int)number;
+        StartCoroutine(WaitToUpdate(-_costByLandingGround));
     }
 
     public void EarnEnergyByGround()
     {
-        EarnEnergy(_earnedByGround);
+        StartCoroutine(WaitToUpdate(_earnedByGround));
     }
 
     public void EarnEnergyByRecycling()
     {
-        EarnEnergy(_earnedByRecycling);
+        StartCoroutine(WaitToUpdate(_earnedByRecycling));
     }
-
-    private void EarnEnergy(float value)
+    IEnumerator WaitToUpdate(float value)
+    {
+        _tempValue += value;
+        yield return new WaitForSeconds(.01f);
+        UpdateEnergy(_tempValue);
+        _tempValue = 0;
+    }
+    private void UpdateEnergy(float value)
     {
         value *= _baseInf;
         _energyValue += value;
-
-        if (_energyValue >= 1)
-            _energyValue = 1;
-        // print("earn _energyValue :" + _energyValue);
-
+        
         _energyBar.DOKill();
         _hitEnergyBar.DOKill();
 
-        _hitEnergyBar.DOValue(_energyValue, .4f);
-        _energyBar.DOValue(_energyValue, .4f);
+        if (value < 0)
+        {
+            if (_energyValue <= 0)
+                _energyValue = 0;
+            
+            _energyBar.value = _energyValue;
+            _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
+        }
+        else
+        {
+            if (_energyValue >= 1)
+                _energyValue = 1;
+            
+            _hitEnergyBar.DOValue(_energyValue, .4f);
+            _energyBar.DOValue(_energyValue, .4f);
+        }
+        
         float number = _energyValue * _howBase;
         _numberToDisplay.text = $"{(int)number}";
         _currentEnergy = (int)number;
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
             EarnEnergyByRecycling();
     }
-
     public int GetCurrentenergy()
     {
         return _currentEnergy;

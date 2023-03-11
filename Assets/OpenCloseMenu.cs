@@ -60,8 +60,6 @@ public class OpenCloseMenu : MonoBehaviour
         if(_cooldownToClose > 0)
             _cooldownToClose -= Time.deltaTime;
         else
-        {
             CloseAnim();
-        }
     }
 }
