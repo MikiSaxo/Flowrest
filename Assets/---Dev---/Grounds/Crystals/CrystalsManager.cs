@@ -32,6 +32,8 @@ public class CrystalsManager : MonoBehaviour
     private float _baseInf;
     private int _currentEnergy;
     private float _tempValue;
+    private float _timerSpawnFBCrystal;
+    [SerializeField] private float _cooldownSpawnFBCrystal;
 
     private void Awake()
     {
@@ -72,6 +74,7 @@ public class CrystalsManager : MonoBehaviour
     {
         _tempValue += value;
         yield return new WaitForSeconds(.01f);
+        ItemCollectedManager.Instance.SpawnFBCrystalCollected((int)_tempValue);
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }

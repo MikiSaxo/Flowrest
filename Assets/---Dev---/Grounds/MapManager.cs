@@ -355,7 +355,7 @@ public class MapManager : MonoBehaviour
             gLastGroundSelected.GetCurrentStateEnum(),
             gWhich.GetCurrentStateEnum());
         SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-        GroundCollected.Instance.StartAnim(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd));
+        ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd), String.Empty);
         print(tileToAdd + " added");
 
         // Spend energy
