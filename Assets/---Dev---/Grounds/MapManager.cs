@@ -457,10 +457,10 @@ public class MapManager : MonoBehaviour
         ResetSelection?.Invoke();
     }
 
-    public void RestartScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    // public void RestartScene()
+    // {
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    // }
 
     public AllStates GetLastStateSelected()
     {

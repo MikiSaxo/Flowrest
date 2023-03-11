@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Playables;
 
 public class OpenCloseMenu : MonoBehaviour
 {
@@ -14,10 +15,11 @@ public class OpenCloseMenu : MonoBehaviour
     [SerializeField] private bool _isClosed;
     [SerializeField] private bool _isTriggered;
 
-    [SerializeField]  private float _cooldownReset;
+    [SerializeField] private float _cooldownReset;
     private float _cooldownToClose;
-    
+
     public bool ForcedOpen { get; set; }
+    public bool IsMenuPauseOpen { get; set; }
 
     private void OpenAnim()
     {
@@ -53,11 +55,22 @@ public class OpenCloseMenu : MonoBehaviour
         OpenAnim();
     }
 
+    public void KeepOpen()
+    {
+        ForcedOpen = true;
+    }
+
+    public void LeaveKeepOpen()
+    {
+        if (!IsMenuPauseOpen)
+            ForcedOpen = false;
+    }
+
     private void Update()
     {
-        if (!_isTriggered || ForcedOpen) return;
+        if (!_isTriggered || ForcedOpen || IsMenuPauseOpen) return;
 
-        if(_cooldownToClose > 0)
+        if (_cooldownToClose > 0)
             _cooldownToClose -= Time.deltaTime;
         else
             CloseAnim();

@@ -32,23 +32,12 @@ public class SetupUIGround : MonoBehaviour
                 getData.NbLeft, getData.GroundState);
             GroundEmpty(i);
         }
-
-        // for (int j = 0; j < _UITemperature.Length; j++)
-        // {
-        //     _UITemperature[j].GetComponent<UIButton>()
-        //         .SetupTemperature(_textsTemperature[j], _colorsTemperature[j], _nbLeftTemperature[j]);
-        // }
     }
 
     public void UpdateFbGround(int whichState) // Use by Ground buttons
     {
         UpdateFB((AllStates)whichState);
     }
-
-    // public void UpdateFbTemperature(int whichTemperature) // Use by Temperature buttons
-    // {
-    //     //UpdateFB(whichTemperature, true);
-    // }
 
     private void UpdateFB(AllStates state)
     {

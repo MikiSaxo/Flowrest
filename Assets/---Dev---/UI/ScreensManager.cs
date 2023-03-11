@@ -7,11 +7,13 @@ using UnityEngine.Playables;
 
 public class ScreensManager : MonoBehaviour
 {
-    [Header("Setup")] [SerializeField] private GameObject _bg;
+    [Header("Parents")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _dialoguesParent;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
-    [SerializeField] private TextMeshProUGUI _dialoguesText;
+    [SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuPauseTriggered;
+    [Header("Texts")] [SerializeField] private TextMeshProUGUI _dialoguesText;
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _dialoguesString;
     [SerializeField] private string[] _titlesString;
@@ -67,6 +69,25 @@ public class ScreensManager : MonoBehaviour
     {
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
+    }
+
+    public void UpdatePause(bool state)
+    {
+        if (state)
+        {
+            _bg.SetActive(true);
+            _menuPauseParent.SetActive(true);
+            FollowMouse.Instance.IsBlockMouse(true);
+            _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = true;
+        }
+        else
+        {
+            _bg.SetActive(false);
+            _menuPauseParent.SetActive(false);
+            FollowMouse.Instance.IsBlockMouse(false);
+            _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = false;
+            _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
+        }
     }
 
     public void ChangeToLevelSupp()

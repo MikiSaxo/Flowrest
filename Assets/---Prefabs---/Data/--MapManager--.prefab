@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6942186750416081795}
   - component: {fileID: 6942186750416081794}
   - component: {fileID: 6942186750416081792}
+  - component: {fileID: 7932208195159704568}
   m_Layer: 0
   m_Name: --MapManager--
   m_TagString: Untagged
@@ -49,7 +50,9 @@ MonoBehaviour:
   _map: {fileID: 0}
   _groundPrefab: {fileID: 7614459207405979688, guid: 8eed7b7805b7ba942b07e24e6da88f74, type: 3}
   _distance: 10
-  _nbMaxLevel: 3
+  _levelName: 
+  _levelTotalNumber: 0
+  _crystalLevelData: []
 --- !u!114 &6942186750416081792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,3 +376,15 @@ MonoBehaviour:
   - Current: 9
     Other: 9
     Result: 9
+--- !u!114 &7932208195159704568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942186750416081853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62d4f443db2e604b831d699691756e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
