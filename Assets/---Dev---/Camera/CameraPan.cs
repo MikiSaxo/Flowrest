@@ -10,24 +10,14 @@ public class CameraPan : MonoBehaviour
     private float groundZ = 0;
 
     [SerializeField] private float _zoomSpeed;
-
-    // [SerializeField] private float _rotationSpeed;
-    [SerializeField] private Vector2Int _minMaxZoom;
-
-    // [SerializeField] private Vector2Int _minMaxRotation;
-    [SerializeField] private Vector2Int _maxMovX;
-    [SerializeField] private Vector2Int _maxMovZ;
-
-    private float _startPosX;
-    private float _startPosZ;
+    [Tooltip("It represents the min and max value for the X position")][SerializeField] private Vector2Int _minMaxPosX;
+    [Tooltip("It represents the min and max value for the Y position")][SerializeField] private Vector2Int _minMaxPosY;
+    [Tooltip("It represents the min and max value for the Z position")][SerializeField] private Vector2Int _minMaxPosZ;
 
     private void Start()
     {
         _cam = GetComponent<Camera>();
         _canZoom = true;
-
-        _startPosX = transform.position.x;
-        _startPosZ = transform.position.z;
     }
 
     private void Update()
@@ -42,7 +32,13 @@ public class CameraPan : MonoBehaviour
         // Get the startPos of the mouse
         if (Input.GetMouseButtonDown(2))
         {
-            _dragOrigin = GetWorldPosition(groundZ);
+            var getPos = GetWorldPosition(groundZ);
+            // if (getPos.y < 0)
+                getPos = new Vector3(getPos.x, 10, getPos.z);
+            
+            _dragOrigin = getPos;
+            
+            print(_dragOrigin);
         }
 
         if (Input.GetMouseButton(2))
@@ -50,15 +46,8 @@ public class CameraPan : MonoBehaviour
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
 
-            // Add the dif to the cam pos
-            // if (_cam.transform.position.x + dif.x > _startPosX + _maxMovX.x
-            //     || _cam.transform.position.x - dif.x < _startPosX - _maxMovX.y
-            //     || _cam.transform.position.z + dif.y > _startPosZ + _maxMovZ.x
-            //     || _cam.transform.position.z - dif.y < _startPosZ - _maxMovZ.y)
-            //     return;
-
+            // Add the dif to the cam pos and check if it's clamped
             _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.y));
-            // _cam.transform.position += new Vector3(dif.x, 0, dif.y)
         }
     }
 
@@ -83,13 +72,14 @@ public class CameraPan : MonoBehaviour
         // Clamp the zoom level to the min and max zoom values
         var pos = transform.position;
         float zoom = pos.magnitude + scroll * _zoomSpeed;
-        zoom = Mathf.Clamp(zoom, _minMaxZoom.x, _minMaxZoom.y);
+        // zoom = Mathf.Clamp(zoom, _minMaxZoom.x, _minMaxZoom.y);
 
         // Update the camera's position based on the clamped zoom level
         var posX = pos.x;
         pos = pos.normalized * zoom;
         pos = new Vector3(posX, pos.y, pos.z);
-        transform.position = pos;
+        
+        _cam.transform.position = ClampCamera(pos);
 
         // Rotate the camera based on the mouse X axis input
         // float rotation = scroll * _rotationSpeed;
@@ -106,15 +96,11 @@ public class CameraPan : MonoBehaviour
 
     private Vector3 ClampCamera(Vector3 targetPosition)
     {
-        float minX = _startPosX - _maxMovX.y;
-        float maxX = _startPosX + _maxMovX.x;
-        float minZ = _startPosZ - _maxMovZ.y;
-        float maxZ = _startPosZ + _maxMovZ.x;
+        float newX = Mathf.Clamp(targetPosition.x, _minMaxPosX.x, _minMaxPosX.y);
+        float newY = Mathf.Clamp(targetPosition.y, _minMaxPosY.x, _minMaxPosY.y);
+        float newZ = Mathf.Clamp(targetPosition.z, _minMaxPosZ.x, _minMaxPosZ.y);
 
-        float newX = Mathf.Clamp(targetPosition.x, minX, maxX);
-        float newZ = Mathf.Clamp(targetPosition.z, minZ, maxZ);
-
-        return new Vector3(newX, targetPosition.y, newZ);
+        return new Vector3(newX, newY, newZ);
     }
 
     public void HasEnterredScrollBar(bool which)
