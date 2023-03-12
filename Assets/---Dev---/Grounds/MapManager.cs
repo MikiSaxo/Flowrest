@@ -430,13 +430,14 @@ public class MapManager : MonoBehaviour
 
     public void UseTrashCan()
     {
-        print("hello trash");
+        // print("hello trash");
 
         if (LastObjButtonSelected == null) return;
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         CrystalsManager.Instance.EarnEnergyByRecycling();
-        FollowMouseDND.Instance.AnimDeactivateObject();
+        if(!_isDragNDrop)
+            FollowMouseDND.Instance.AnimDeactivateObject();
         TrashCrystalManager.Instance.UpdateTrashCan(false);
         ResetButtonSelected();
     }
