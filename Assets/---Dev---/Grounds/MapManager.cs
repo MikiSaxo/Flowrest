@@ -120,6 +120,10 @@ public class MapManager : MonoBehaviour
         // Update if flower quest
         if(_levelData[_actualLevel].IsFlower)
             QuestsManager.InitQuestFlower(_levelData[_actualLevel].WhichStateFlower);
+        
+        // Update if No Specific Tile quest
+        if(_levelData[_actualLevel].IsNoSpecificTiles)
+            QuestsManager.InitQuestNoSpecificTiles(_levelData[_actualLevel].WhichStateNoSpecificTiles);
 
         // Init Level
         InitializeLevel(_mapSize);

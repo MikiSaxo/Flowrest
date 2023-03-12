@@ -17,4 +17,6 @@ public class LevelData : ScriptableObject
    public AllStates WhichStateFloor;
    public bool IsFlower;
    public AllStates[] WhichStateFlower;
+   public bool IsNoSpecificTiles;
+   public AllStates[] WhichStateNoSpecificTiles;
 }
