@@ -21,11 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _FlowMap:
-        m_Texture: {fileID: 2800000, guid: 697031c42baa9bd47b6fd6967a331c75, type: 3}
+        m_Texture: {fileID: 2800000, guid: 25ee1853059d27e4abd181b9bb46a537, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoamTex:
-        m_Texture: {fileID: 2800000, guid: 697031c42baa9bd47b6fd6967a331c75, type: 3}
+        m_Texture: {fileID: 2800000, guid: fa1eb7a1ba068464989248825c73a77c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -45,20 +45,20 @@ Material:
     - _Ambiante_Occlusion: 0.34
     - _Bending_Range: 282
     - _Choppiness: 0.21
-    - _FlowSpeed: 6.01
-    - _FlowStrength: 0
+    - _FlowSpeed: 0.01
+    - _FlowStrength: 0.07
     - _FoamDistance: 1
     - _Height: -157.82
     - _Metalic: 0.2
     - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Size: 85
+    - _Size: 1
     - _Start_Bending_At: -72
     - _smoothness: 0
     m_Colors:
     - _Colordtexture: {r: 1, g: 1, b: 1, a: 0}
-    - _CouleurContourColision: {r: 1, g: 0.7411765, b: 0.99258757, a: 0}
+    - _CouleurContourColision: {r: 1, g: 1, b: 1, a: 0}
     - _DarkFoamColor: {r: 0.3019608, g: 0.39607844, b: 0.7058824, a: 1}
     - _LightFoamColor: {r: 0.3019608, g: 0.39607844, b: 0.7058824, a: 1}
     - _WaterColor: {r: 0.3019608, g: 0.39607844, b: 0.7058824, a: 1}
