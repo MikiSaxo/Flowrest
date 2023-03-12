@@ -106,8 +106,7 @@ public class MapManager : MonoBehaviour
 
         // Update if has inventory
         HasInventory = _levelData[_currentLevel].HasInventory;
-        if (!HasInventory)
-            SetupUIGround.Instance.NoInventory();
+        SetupUIGround.Instance.UpdateInventory(HasInventory);
 
         // Update if has trash can
         HasTrashCan = _levelData[_currentLevel].HasTrashCan;
@@ -116,15 +115,15 @@ public class MapManager : MonoBehaviour
         // Update if full floor quest
         if (_levelData[_currentLevel].IsFullFloor)
             QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor);
-        
+
         // Update if flower quest
-        if(_levelData[_currentLevel].IsFlower)
+        if (_levelData[_currentLevel].IsFlower)
             QuestsManager.InitQuestFlower(_levelData[_currentLevel].WhichStateFlower);
-        
+
         // Update if No Specific Tile quest
-        if(_levelData[_currentLevel].IsNoSpecificTiles)
+        if (_levelData[_currentLevel].IsNoSpecificTiles)
             QuestsManager.InitQuestNoSpecificTiles(_levelData[_currentLevel].WhichStateNoSpecificTiles);
-        
+
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
 
@@ -418,7 +417,7 @@ public class MapManager : MonoBehaviour
         ResetAroundSelectedPrevisu();
         ResetGroundSelected();
         // CheckForBiome();
-        
+
         QuestsManager.CheckQuest();
 
         // Reset protect
@@ -449,7 +448,7 @@ public class MapManager : MonoBehaviour
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         CrystalsManager.Instance.EarnEnergyByRecycling();
-        if(!_isDragNDrop)
+        if (!_isDragNDrop)
             FollowMouseDND.Instance.AnimDeactivateObject();
         TrashCrystalManager.Instance.UpdateTrashCan(false);
         ResetButtonSelected();

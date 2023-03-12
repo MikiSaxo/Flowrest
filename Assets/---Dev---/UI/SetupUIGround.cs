@@ -94,9 +94,9 @@ public class SetupUIGround : MonoBehaviour
         _groundButtons[which].SetActive(false);
     }
 
-    public void NoInventory()
+    public void UpdateInventory(bool state)
     {
-        GroundStockage.gameObject.SetActive(false);
+        GroundStockage.gameObject.SetActive(state);
     }
 
     public bool CheckIfGround()
