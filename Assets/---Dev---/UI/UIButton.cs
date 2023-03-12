@@ -68,6 +68,13 @@ public class UIButton : MonoBehaviour
             SetupUIGround.Instance.GroundEmpty((int)_stateButton);
     }
 
+    public void ResetToEmpty()
+    {
+        ActivateSelectedIcon(false);
+        _numberGroundLeft = 0;
+        SetupUIGround.Instance.GroundEmpty((int)_stateButton);
+    }
+
     // public void SetupNumberLeftTemperature(int nb)
     // {
     //     _numberGroundLeft += nb;

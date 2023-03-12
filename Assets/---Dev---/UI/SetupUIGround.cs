@@ -17,7 +17,8 @@ public class SetupUIGround : MonoBehaviour
 
     [Header("Ground Data")] [SerializeField] private GroundUIData[] _groundData;
 
-
+    private bool _hasInventory;
+    
     private void Awake()
     {
         Instance = this;
@@ -34,6 +35,10 @@ public class SetupUIGround : MonoBehaviour
         }
     }
 
+    public void SetIfHasInvetory(bool state)
+    {
+        _hasInventory = state;
+    }
     public void UpdateFbGround(int whichState) // Use by Ground buttons
     {
         UpdateFB((AllStates)whichState);
@@ -46,7 +51,8 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ResetButtonSelected();
         MapManager.Instance.ResetGroundSelected();
         
-        TrashCrystalManager.Instance.UpdateTrashCan(true);
+        if(_hasInventory)
+            TrashCrystalManager.Instance.UpdateTrashCan(true);
 
         _fBDnd.GetComponent<FollowMouseDND>()
             .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
@@ -88,6 +94,11 @@ public class SetupUIGround : MonoBehaviour
         _groundButtons[which].SetActive(false);
     }
 
+    public void NoInventory()
+    {
+        GroundStockage.gameObject.SetActive(false);
+    }
+
     public bool CheckIfGround()
     {
         foreach (var button in _groundButtons)
@@ -97,5 +108,13 @@ public class SetupUIGround : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void ResetAllButtons()
+    {
+        foreach (var but in _groundButtons)
+        {
+            but.GetComponent<UIButton>().ResetToEmpty();
+        }
     }
 }

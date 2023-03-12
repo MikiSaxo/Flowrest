@@ -102,6 +102,8 @@ public class GroundStateManager : MonoBehaviour
 
     public void InitState(AllStates state)
     {
+        if (state == AllStates.None) return;
+        
         _allState[(int)state].InitState(this);
         ChangeState(state);
     }

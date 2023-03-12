@@ -22,6 +22,9 @@ public class MapManager : MonoBehaviour
     public GameObject LastObjButtonSelected { get; set; }
 
     public bool IsGroundFirstSelected { get; set; }
+    public bool HasInventory { get; private set; }
+    public bool HasTrashCan { get; private set; }
+    public QuestManager QuestsManager;
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
@@ -30,8 +33,7 @@ public class MapManager : MonoBehaviour
     [Header("Level")] [SerializeField] private string _levelName;
     [SerializeField] private int _levelTotalNumber;
 
-    [Header("Crystal / Energy")] [SerializeField]
-    private CrystalLevelData[] _crystalLevelData;
+    [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private int _actualLevel;
     private bool _isDragNDrop;
@@ -79,7 +81,7 @@ public class MapManager : MonoBehaviour
         dico.Add(TUNDRA, AllStates.Tundra);
         dico.Add(SWAMP, AllStates.Swamp);
         dico.Add(MOUNTAIN, AllStates.Mountain);
-        
+
         InitializeMap();
         LastStateButtonSelected = AllStates.None;
     }
@@ -87,17 +89,35 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         var mapName = $"{_levelName}{_actualLevel}";
+
         // Get the text map
         string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
         _mapInfo = File.ReadAllLines(map);
+
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
+
         // Init the grids
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
-        //Init energy
-        CrystalsManager.Instance.InitEnergy(_crystalLevelData[_actualLevel].EnergyAtStart);
 
+        // Init energy
+        CrystalsManager.Instance.InitEnergy(_levelData[_actualLevel].EnergyAtStart);
+
+        // Update if has inventory
+        HasInventory = _levelData[_actualLevel].HasInventory;
+        if (!HasInventory)
+            SetupUIGround.Instance.NoInventory();
+
+        // Update if has trash can
+        HasTrashCan = _levelData[_actualLevel].HasTrashCan;
+        SetupUIGround.Instance.SetIfHasInvetory(HasTrashCan);
+
+        // Update if full floor quests
+        if (_levelData[_actualLevel].IsFullFloor)
+            QuestsManager.InitQuestFullFloor(_levelData[_actualLevel].WhichState);
+
+        // Init Level
         InitializeLevel(_mapSize);
     }
 
@@ -176,27 +196,37 @@ public class MapManager : MonoBehaviour
                 // Get the actual char of the string of the actual line
                 char whichEnvironment = line[x];
 
-                GameObject test = Instantiate(_groundPrefab, _map.transform);
-                InitObj(test, x, y, dico[whichEnvironment]);
+                if (dico[whichEnvironment] != AllStates.None)
+                {
+                    GameObject test = Instantiate(_groundPrefab, _map.transform);
+                    InitObj(test, x, y, dico[whichEnvironment]);
+                }
             }
         }
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
     {
+        if (state == AllStates.None) return;
+
         float hexOffset = 0;
         if (x % 2 == 1)
             hexOffset = HALF_OFFSET;
+
         // Tp ground to its position
         which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
+
         // Change coords of the ground
         which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
+
         //Init state of ground
         which.GetComponent<GroundStateManager>().InitState(state);
+
         // Update _mapGrid
         MapGrid[x, y] = which;
+
         // Init Crystal or not
-        Vector2Int[] coordsByCurrentLvl = _crystalLevelData[_actualLevel].Coords;
+        Vector2Int[] coordsByCurrentLvl = _levelData[_actualLevel].Coords;
         foreach (var crystalsCoords in coordsByCurrentLvl)
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
@@ -226,6 +256,7 @@ public class MapManager : MonoBehaviour
     {
         if (_actualLevel < _levelTotalNumber - 1)
             _actualLevel++;
+
         InitializeMap();
     }
 
@@ -258,7 +289,8 @@ public class MapManager : MonoBehaviour
         // Activate Trash can
         if (button != null)
         {
-            TrashCrystalManager.Instance.UpdateTrashCan(true);
+            if (HasTrashCan)
+                TrashCrystalManager.Instance.UpdateTrashCan(true);
             SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
         }
         else
@@ -354,12 +386,14 @@ public class MapManager : MonoBehaviour
         gWhich.UpdateGroundsAround();
 
         // Get Bloc to UI
-        var tileToAdd = ConditionManager.Instance.GetState(
-            gLastGroundSelected.GetCurrentStateEnum(),
-            gWhich.GetCurrentStateEnum());
-        SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-        ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd), String.Empty);
-        // print(tileToAdd + " added");
+        if (HasInventory)
+        {
+            var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
+                gWhich.GetCurrentStateEnum());
+            SetupUIGround.Instance.AddNewGround((int)tileToAdd);
+            ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),
+                String.Empty);
+        }
 
         // Spend energy
         CrystalsManager.Instance.ReduceEnergyBySwap();
@@ -367,7 +401,6 @@ public class MapManager : MonoBehaviour
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
         _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
@@ -413,7 +446,7 @@ public class MapManager : MonoBehaviour
         if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap() &&
             CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() && !SetupUIGround.Instance.CheckIfGround())
         {
-            
+            ScreensManager.Instance.GameOver();
         }
     }
 
@@ -425,6 +458,18 @@ public class MapManager : MonoBehaviour
     public int GetActualLevel()
     {
         return _actualLevel;
+    }
+
+    public void RestartLevel()
+    {
+        ResetAllMap();
+        ResetAllSelection();
+        ResetButtonSelected();
+        ResetGroundSelected();
+        SetupUIGround.Instance.ResetAllButtons();
+        ScreensManager.Instance.RestartSceneOrLevel();
+
+        InitializeMap();
     }
 
     // public void ResetCurrentEntered()

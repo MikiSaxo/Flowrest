@@ -33,7 +33,7 @@ public class CrystalsManager : MonoBehaviour
     private int _currentEnergy;
     private float _tempValue;
     private float _timerSpawnFBCrystal;
-    [SerializeField] private float _cooldownSpawnFBCrystal;
+    // [SerializeField] private float _cooldownSpawnFBCrystal;
 
     private void Awake()
     {
@@ -106,11 +106,14 @@ public class CrystalsManager : MonoBehaviour
         float number = _energyValue * _howBase;
         _numberToDisplay.text = $"{(int)number}";
         _currentEnergy = (int)number;
+
+        MapManager.Instance.QuestsManager.CheckQuest();
+        MapManager.Instance.CheckIfGameOver();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            EarnEnergyByRecycling();
+            ReduceEnergyBySwap();
     }
     public int GetCurrentenergy()
     {

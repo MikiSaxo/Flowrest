@@ -7,6 +7,8 @@ using UnityEngine.Playables;
 
 public class ScreensManager : MonoBehaviour
 {
+    public static ScreensManager Instance;
+        
     [Header("Parents")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _dialoguesParent;
     [SerializeField] private GameObject _titlesParent;
@@ -21,6 +23,11 @@ public class ScreensManager : MonoBehaviour
     private bool _isVictory;
     private bool _isFirstScreen;
     private int _countScreen;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -69,6 +76,7 @@ public class ScreensManager : MonoBehaviour
     {
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
+        FollowMouse.Instance.IsBlockMouse(true);
     }
 
     public void UpdatePause(bool state)
@@ -88,6 +96,16 @@ public class ScreensManager : MonoBehaviour
             _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = false;
             _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
         }
+    }
+
+    public void RestartSceneOrLevel()
+    {
+        _bg.SetActive(false);
+        _gameOverParent.SetActive(false);
+        FollowMouse.Instance.IsBlockMouse(false);
+        _menuPauseParent.SetActive(false);
+        _dialoguesParent.SetActive(false);
+        _titlesParent.SetActive(false);
     }
 
     public void ChangeToLevelSupp()

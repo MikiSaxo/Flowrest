@@ -37,8 +37,6 @@ public class CameraPan : MonoBehaviour
                 getPos = new Vector3(getPos.x, 10, getPos.z);
             
             _dragOrigin = getPos;
-            
-            print(_dragOrigin);
         }
 
         if (Input.GetMouseButton(2))
