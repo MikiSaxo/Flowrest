@@ -19,4 +19,7 @@ public class LevelData : ScriptableObject
    public AllStates[] WhichStateFlower;
    public bool IsNoSpecificTiles;
    public AllStates[] WhichStateNoSpecificTiles;
+
+   [Header("Dialogs")] public string[] DialogToDisplayAtTheBeginning;
+   public string[] DialogToDisplayAtTheEnd;
 }

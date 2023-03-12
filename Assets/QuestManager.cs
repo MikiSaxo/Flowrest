@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     private bool _isFullFloor;
+
     private AllStates _fullFloorState;
     // private bool _isFullFloorCompleted;
 
@@ -35,12 +36,16 @@ public class QuestManager : MonoBehaviour
 
     public void CheckQuest()
     {
-        if (_isFullFloor)
-            print("full floor completed? : " + CheckFullFloorQuest());
-        else if (_isFlower)
-            print("flower completed : " + CheckFlowerQuest());
-        else if(_isNoSpecificTiles)
-            print("no specific completed : " + CheckNoSpecificTileQuest());
+        if (_isFullFloor && CheckFullFloorQuest())
+            ScreensManager.Instance.VictoryScreen();
+        else if (_isFlower && CheckFlowerQuest())
+            ScreensManager.Instance.VictoryScreen();
+        else if (_isNoSpecificTiles && CheckNoSpecificTileQuest())
+            ScreensManager.Instance.VictoryScreen();
+
+        // print("flower completed : " + CheckFlowerQuest());
+        // print("full floor completed? : " + CheckFullFloorQuest());
+        // print("no specific completed : " + CheckNoSpecificTileQuest());
     }
 
     private bool CheckFullFloorQuest()
@@ -57,6 +62,9 @@ public class QuestManager : MonoBehaviour
                     continue;
 
                 if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.None)
+                    continue;
+                
+                if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain)
                     continue;
 
                 if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() != _fullFloorState)
@@ -99,7 +107,7 @@ public class QuestManager : MonoBehaviour
     private bool CheckNoSpecificTileQuest()
     {
         GameObject[,] map = MapManager.Instance.MapGrid;
-        
+
         for (int x = 0; x < map.GetLength(0); x++)
         {
             for (int y = 0; y < map.GetLength(1); y++)

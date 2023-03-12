@@ -35,7 +35,7 @@ public class MapManager : MonoBehaviour
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
-    private int _actualLevel;
+    private int _currentLevel;
     private bool _isDragNDrop;
     private string[] _mapInfo;
     private Vector2Int _lastGroundCoordsSelected;
@@ -88,7 +88,7 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMap()
     {
-        var mapName = $"{_levelName}{_actualLevel}";
+        var mapName = $"{_levelName}{_currentLevel}";
 
         // Get the text map
         string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
@@ -102,28 +102,31 @@ public class MapManager : MonoBehaviour
         MapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
         // Init energy
-        CrystalsManager.Instance.InitEnergy(_levelData[_actualLevel].EnergyAtStart);
+        CrystalsManager.Instance.InitEnergy(_levelData[_currentLevel].EnergyAtStart);
 
         // Update if has inventory
-        HasInventory = _levelData[_actualLevel].HasInventory;
+        HasInventory = _levelData[_currentLevel].HasInventory;
         if (!HasInventory)
             SetupUIGround.Instance.NoInventory();
 
         // Update if has trash can
-        HasTrashCan = _levelData[_actualLevel].HasTrashCan;
+        HasTrashCan = _levelData[_currentLevel].HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(HasTrashCan);
 
         // Update if full floor quest
-        if (_levelData[_actualLevel].IsFullFloor)
-            QuestsManager.InitQuestFullFloor(_levelData[_actualLevel].WhichStateFloor);
+        if (_levelData[_currentLevel].IsFullFloor)
+            QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor);
         
         // Update if flower quest
-        if(_levelData[_actualLevel].IsFlower)
-            QuestsManager.InitQuestFlower(_levelData[_actualLevel].WhichStateFlower);
+        if(_levelData[_currentLevel].IsFlower)
+            QuestsManager.InitQuestFlower(_levelData[_currentLevel].WhichStateFlower);
         
         // Update if No Specific Tile quest
-        if(_levelData[_actualLevel].IsNoSpecificTiles)
-            QuestsManager.InitQuestNoSpecificTiles(_levelData[_actualLevel].WhichStateNoSpecificTiles);
+        if(_levelData[_currentLevel].IsNoSpecificTiles)
+            QuestsManager.InitQuestNoSpecificTiles(_levelData[_currentLevel].WhichStateNoSpecificTiles);
+        
+        // Update Dialogs
+        ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
 
         // Init Level
         InitializeLevel(_mapSize);
@@ -234,7 +237,7 @@ public class MapManager : MonoBehaviour
         MapGrid[x, y] = which;
 
         // Init Crystal or not
-        Vector2Int[] coordsByCurrentLvl = _levelData[_actualLevel].Coords;
+        Vector2Int[] coordsByCurrentLvl = _levelData[_currentLevel].Coords;
         foreach (var crystalsCoords in coordsByCurrentLvl)
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
@@ -262,8 +265,8 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel()
     {
-        if (_actualLevel < _levelTotalNumber - 1)
-            _actualLevel++;
+        if (_currentLevel < _levelTotalNumber - 1)
+            _currentLevel++;
 
         InitializeMap();
     }
@@ -466,9 +469,14 @@ public class MapManager : MonoBehaviour
         return _isDragNDrop;
     }
 
-    public int GetActualLevel()
+    public int GetCurrentLevel()
     {
-        return _actualLevel;
+        return _currentLevel;
+    }
+
+    public string[] GetDialogAtVictory()
+    {
+        return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
     }
 
     public void RestartLevel()
