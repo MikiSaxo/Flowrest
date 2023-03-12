@@ -103,7 +103,7 @@ public class GroundStateManager : MonoBehaviour
     public void InitState(AllStates state)
     {
         if (state == AllStates.None) return;
-        
+
         _allState[(int)state].InitState(this);
         ChangeState(state);
     }
@@ -111,7 +111,7 @@ public class GroundStateManager : MonoBehaviour
     public void ChangeState(AllStates state)
     {
         if (IsProtected) return;
-        
+
         _statesEnum = state;
         currentState = _allState[(int)state];
         // print(currentState);
@@ -159,7 +159,8 @@ public class GroundStateManager : MonoBehaviour
             // Check if has GroundManager
             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
             // Check if not a Mountain
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain) continue; 
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
 
             var grnd = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             // grnd.currentState.CheckUpdate(grnd, currentState);
@@ -339,11 +340,11 @@ public class GroundStateManager : MonoBehaviour
             resultStateNumber = (int)ConditionManager.Instance.GetState((AllStates)currentPrevisuState, state);
             // print("old = " + currentPrevisuState + " new = " + resultState);
         }
-        
+
         if (resultStateNumber == (int)GetCurrentStateEnum())
             return;
 
-        if(!IsProtectedPrevisu)
+        if (!IsProtectedPrevisu)
             ActivatePrevisu(resultStateNumber);
     }
 
@@ -366,7 +367,8 @@ public class GroundStateManager : MonoBehaviour
             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
                 continue;
             // Check if not a Mountain
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain) continue; 
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
 
             var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             ground.GetNewPrevisu(state);
@@ -404,6 +406,37 @@ public class GroundStateManager : MonoBehaviour
     public Sprite GetGroundPrevisu(int index)
     {
         return _fB_Previsu.GetIconTile(index);
+    }
+
+    public bool CheckIfFlower()
+    {
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+        int count = 0;
+
+        foreach (var hexPos in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
+            // Check if something exist
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundManager
+            if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+                continue;
+            // Check if same as itself
+            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                    .GetCurrentStateEnum() != GetCurrentStateEnum())
+                continue;
+            
+            // Good
+            count++;
+        }
+
+        // print(gameObject.name + " count " + count);
+        return count >= 6;
     }
 
     private void OnDisable()

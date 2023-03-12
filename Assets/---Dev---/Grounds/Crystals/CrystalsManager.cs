@@ -107,7 +107,6 @@ public class CrystalsManager : MonoBehaviour
         _numberToDisplay.text = $"{(int)number}";
         _currentEnergy = (int)number;
 
-        MapManager.Instance.QuestsManager.CheckQuest();
         MapManager.Instance.CheckIfGameOver();
     }
     private void Update()

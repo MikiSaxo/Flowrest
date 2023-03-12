@@ -14,5 +14,7 @@ public class LevelData : ScriptableObject
    public bool HasTrashCan;
 
    [Header("Quests")] public bool IsFullFloor;
-   public AllStates WhichState;
+   public AllStates WhichStateFloor;
+   public bool IsFlower;
+   public AllStates[] WhichStateFlower;
 }

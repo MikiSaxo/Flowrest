@@ -113,9 +113,13 @@ public class MapManager : MonoBehaviour
         HasTrashCan = _levelData[_actualLevel].HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(HasTrashCan);
 
-        // Update if full floor quests
+        // Update if full floor quest
         if (_levelData[_actualLevel].IsFullFloor)
-            QuestsManager.InitQuestFullFloor(_levelData[_actualLevel].WhichState);
+            QuestsManager.InitQuestFullFloor(_levelData[_actualLevel].WhichStateFloor);
+        
+        // Update if flower quest
+        if(_levelData[_actualLevel].IsFlower)
+            QuestsManager.InitQuestFlower(_levelData[_actualLevel].WhichStateFlower);
 
         // Init Level
         InitializeLevel(_mapSize);
@@ -407,6 +411,8 @@ public class MapManager : MonoBehaviour
         ResetAroundSelectedPrevisu();
         ResetGroundSelected();
         // CheckForBiome();
+        
+        QuestsManager.CheckQuest();
 
         // Reset protect
         gLastGroundSelected.IsProtected = false;
