@@ -31,9 +31,14 @@ public class GroundIndicator : MonoBehaviour
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
 
+    public void SetStartYPos(float value)
+    {
+        _startYPos = value;
+    }
+
     private void Start()
     {
-        _startYPos = _meshParent.transform.position.y;
+        _startYPos = 0;
         _hoveredYPos = _startYPos + HOVERED_Y_POS;
         _selectedYPos = _startYPos + SELECTED_Y_POS;
     }

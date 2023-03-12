@@ -8,18 +8,20 @@ using UnityEngine.Playables;
 public class ScreensManager : MonoBehaviour
 {
     public static ScreensManager Instance;
-        
+
     [Header("Parents")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _dialoguesParent;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuQuest;
+    [SerializeField] private TMP_Text _descriptionQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Texts")] [SerializeField] private TextMeshProUGUI _dialoguesText;
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _titlesString;
-    
+
     private List<string> _dialogsToDisplay = new List<string>();
     private bool _isDialogTime;
     private bool _isBeginning;
@@ -39,27 +41,34 @@ public class ScreensManager : MonoBehaviour
     public void InitDialogs(string[] dialogs, bool isBeginning)
     {
         // print("Init Dialog length = " + dialogs.Length);
-        if(_dialogsToDisplay.Count != 0)
+        if (_dialogsToDisplay.Count != 0)
             _dialogsToDisplay.Clear();
-        
+
         foreach (var dialog in dialogs)
         {
             _dialogsToDisplay.Add(dialog);
         }
 
-        if(isBeginning)
+        if (isBeginning)
             BeginningDialog();
     }
-    
+
+    public void InitQuestDescription(string text)
+    {
+        _descriptionQuest.text = text;
+    }
+
     public void VictoryScreen()
     {
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
-        
+
         _isDialogTime = true;
-        
+
         _dialoguesParent.SetActive(true);
-        _dialoguesText.text = _dialogsToDisplay[_countScreen];
+        // _dialoguesText.text = _dialogsToDisplay[_countScreen];
+        _dialoguesText.text = String.Empty;
+        StartCoroutine(UpdateText());
         FollowMouse.Instance.IsBlockMouse(true);
     }
 
@@ -67,9 +76,11 @@ public class ScreensManager : MonoBehaviour
     {
         _isDialogTime = true;
         _isBeginning = true;
-        
+
         _dialoguesParent.SetActive(true);
-        _dialoguesText.text = _dialogsToDisplay[_countScreen];
+        // _dialoguesText.text = _dialogsToDisplay[_countScreen];
+        _dialoguesText.text = String.Empty;
+        StartCoroutine(UpdateText());
         FollowMouse.Instance.IsBlockMouse(true);
     }
 
@@ -78,14 +89,14 @@ public class ScreensManager : MonoBehaviour
         _countScreen = 0;
         _isDialogTime = false;
         _isBeginning = false;
-        
+
         _dialoguesParent.SetActive(false);
         FollowMouse.Instance.IsBlockMouse(false);
-        
+
         // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
-        
+
         InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
-        
+        _menuQuest.GetComponent<OpenCloseMenu>().MoveMenu();
     }
 
     public void AlmanachScreen()
@@ -148,6 +159,7 @@ public class ScreensManager : MonoBehaviour
         FollowMouse.Instance.IsBlockMouse(false);
     }
 
+
     private void Update()
     {
         if (!_isDialogTime) return;
@@ -155,10 +167,12 @@ public class ScreensManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _countScreen++;
-            
+
             if (_countScreen < _dialogsToDisplay.Count)
             {
-                _dialoguesText.text = _dialogsToDisplay[_countScreen];
+                // _dialoguesText.text = _dialogsToDisplay[_countScreen];
+                _dialoguesText.text = String.Empty;
+                StartCoroutine(UpdateText());
             }
             else
             {
@@ -168,5 +182,19 @@ public class ScreensManager : MonoBehaviour
                     ChangeToLevelSupp();
             }
         }
+    }
+
+    IEnumerator UpdateText()
+    {
+        foreach (char c in _dialogsToDisplay[_countScreen].ToCharArray())
+        {
+            _dialoguesText.text += c;
+            yield return new WaitForSeconds(.005f);
+        }
+    }
+
+    public bool GetIsDialogTime()
+    {
+        return _isDialogTime;
     }
 }

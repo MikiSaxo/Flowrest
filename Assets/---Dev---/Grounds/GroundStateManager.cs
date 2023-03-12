@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
+using DG.Tweening;
 
 public enum AllStates
 {
@@ -32,6 +32,7 @@ public class GroundStateManager : MonoBehaviour
     private AllStates _statesEnum;
     private AllStates _statePrevisu;
 
+    #region AllState
     private GroundBaseState currentState;
     private GroundPlainState _plainState = new GroundPlainState();
     private GroundDesertState _desertState = new GroundDesertState();
@@ -44,7 +45,8 @@ public class GroundStateManager : MonoBehaviour
     private GroundTundraState _tundraState = new GroundTundraState();
     private GroundSwampState _swampState = new GroundSwampState();
     private GroundMountainState _mountainState = new GroundMountainState();
-
+#endregion
+    
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
@@ -65,6 +67,7 @@ public class GroundStateManager : MonoBehaviour
     private float _countSameBlocAround;
     private float _countIfEnoughBloc;
     private bool _isUpdating;
+    private float _startYPosMeshParent;
 
     private List<GameObject> _groundInBiome = new List<GameObject>();
 
@@ -98,6 +101,9 @@ public class GroundStateManager : MonoBehaviour
     {
         MapManager.Instance.CheckBiome += LaunchCheckForBiome;
         MapManager.Instance.ResetSelection += ResetIndicator;
+
+        _startYPosMeshParent = 0;
+        // _indicator.GetComponent<GroundIndicator>().SetStartYPos(_startYPosMeshParent);
     }
 
     public void InitState(AllStates state)
@@ -112,10 +118,27 @@ public class GroundStateManager : MonoBehaviour
     {
         if (IsProtected) return;
 
+        if(state != _statesEnum)
+            BounceAnim();
+        
         _statesEnum = state;
         currentState = _allState[(int)state];
         // print(currentState);
         currentState.EnterState(this);
+    }
+
+    [SerializeField] private float _bottomBounceValue;
+    [SerializeField] private float _timeBounceValue;
+    private void BounceAnim()
+    {
+        _meshParent.transform.DOKill();
+        _meshParent.transform.DOMoveY(_startYPosMeshParent - _bottomBounceValue, 0).OnComplete(GetBackMeshParentYPos);
+    }
+
+    private void GetBackMeshParentYPos()
+    {
+        _meshParent.transform.DOKill();
+        _meshParent.transform.DOMoveY(_startYPosMeshParent, _timeBounceValue).SetEase(Ease.OutElastic);
     }
 
     private void LaunchCheckForBiome()

@@ -35,6 +35,8 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void MoveMenu()
     {
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+
         if (_isClosed)
         {
             OpenAnim();
@@ -49,6 +51,8 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void OnMouseEntered()
     {
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        
         if (!_isTriggered) return;
 
         _cooldownToClose = _cooldownReset;
