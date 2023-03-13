@@ -249,7 +249,7 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
     }
 
-    public void ResetAllMap()
+    public void ResetAllMap(bool nextLevel)
     {
         for (int x = 0; x < _mapSize.x; x++)
         {
@@ -262,12 +262,12 @@ public class MapManager : MonoBehaviour
 
         SetupUIGround.Instance.ResetAllButtons();
 
-        ChangeLevel();
+        ChangeLevel(nextLevel);
     }
 
-    private void ChangeLevel()
+    private void ChangeLevel(bool nextlevel)
     {
-        if (_currentLevel < _levelTotalNumber - 1)
+        if (_currentLevel < _levelTotalNumber - 1 && nextlevel)
             _currentLevel++;
 
         InitializeMap();
@@ -482,16 +482,17 @@ public class MapManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        ResetAllMap();
+        ResetAllMap(false);
         ResetAllSelection();
         ResetButtonSelected();
         ResetGroundSelected();
         SetupUIGround.Instance.ResetAllButtons();
         ScreensManager.Instance.RestartSceneOrLevel();
+        ResetAllMap(false);
 
-        InitializeMap();
+        // InitializeMap();
     }
-
+    
     // public void ResetCurrentEntered()
     // {
     //     _currentEntered = null;
