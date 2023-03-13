@@ -29,6 +29,7 @@ public class ScreensManager : MonoBehaviour
     private bool _isDialogTime;
     private bool _isBeginning;
     private bool _isFirstScreen;
+    private bool _isPaused;
     private int _countScreen;
     private int _countDialog;
     private bool _stopCorou;
@@ -128,6 +129,7 @@ public class ScreensManager : MonoBehaviour
     {
         if (state)
         {
+            _isPaused = true;
             _bg.SetActive(true);
             _menuPauseParent.SetActive(true);
             FollowMouse.Instance.IsBlockMouse(true);
@@ -135,6 +137,7 @@ public class ScreensManager : MonoBehaviour
         }
         else
         {
+            _isPaused = false;
             _bg.SetActive(false);
             _menuPauseParent.SetActive(false);
             FollowMouse.Instance.IsBlockMouse(false);
@@ -178,6 +181,9 @@ public class ScreensManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePause(!_isPaused);
+        
         if (!_isDialogTime) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -205,8 +211,10 @@ public class ScreensManager : MonoBehaviour
                     EndBeginningDialog();
                 else
                     ChangeToLevelSupp();
+        
             }
         }
+
     }
 
     IEnumerator UpdateText()

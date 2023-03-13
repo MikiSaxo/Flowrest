@@ -113,11 +113,10 @@ public class CrystalsManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            ReduceEnergyBySwap();
-        if (Input.GetKeyDown(KeyCode.R)) {
-            EarnEnergyByGround();
-        }
+        // if (Input.GetKeyDown(KeyCode.F))
+        //     ReduceEnergyBySwap();
+        // if (Input.GetKeyDown(KeyCode.R)) 
+        //     EarnEnergyByGround();
     }
     public int GetCurrentenergy()
     {
