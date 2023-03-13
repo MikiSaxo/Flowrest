@@ -59,6 +59,12 @@ public class OpenCloseMenu : MonoBehaviour
         OpenAnim();
     }
 
+    public void OpenMenuQuest()
+    {
+        OpenAnim();
+        _isClosed = false;
+    }
+
     public void KeepOpen()
     {
         ForcedOpen = true;

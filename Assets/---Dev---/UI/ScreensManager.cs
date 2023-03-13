@@ -28,6 +28,8 @@ public class ScreensManager : MonoBehaviour
     private bool _isBeginning;
     private bool _isFirstScreen;
     private int _countScreen;
+    private int _countDialog;
+    private bool _stopCorou;
 
     private void Awake()
     {
@@ -99,7 +101,7 @@ public class ScreensManager : MonoBehaviour
         // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
 
         InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
-        _menuQuest.GetComponent<OpenCloseMenu>().MoveMenu();
+        _menuQuest.GetComponent<OpenCloseMenu>().OpenMenuQuest();
     }
 
     public void AlmanachScreen()
@@ -136,6 +138,10 @@ public class ScreensManager : MonoBehaviour
 
     public void RestartSceneOrLevel()
     {
+        _isDialogTime = false;
+        _countScreen = 0;
+        _countDialog = 0;
+        
         _bg.SetActive(false);
         _gameOverParent.SetActive(false);
         FollowMouse.Instance.IsBlockMouse(false);
@@ -153,7 +159,7 @@ public class ScreensManager : MonoBehaviour
         _dialoguesParent.SetActive(false);
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
-        MapManager.Instance.ResetAllMap();
+        MapManager.Instance.ResetAllMap(true);
         // StartCoroutine(UnlockMouse());
     }
 
@@ -162,9 +168,6 @@ public class ScreensManager : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         FollowMouse.Instance.IsBlockMouse(false);
     }
-
-    private int _countDialog;
-    private bool _stopCorou;
 
     private void Update()
     {
