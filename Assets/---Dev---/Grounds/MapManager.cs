@@ -126,7 +126,7 @@ public class MapManager : MonoBehaviour
 
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
-        ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription);
+        ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription, _levelData[_currentLevel].QuestImage);
 
         // Init Level
         InitializeLevel(_mapSize);

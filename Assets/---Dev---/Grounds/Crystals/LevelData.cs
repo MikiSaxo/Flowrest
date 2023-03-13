@@ -15,6 +15,7 @@ public class LevelData : ScriptableObject
 
    [Header("Quests")]
    public string QuestDescription;
+   public Sprite QuestImage;
    public bool IsFullFloor;
    public AllStates WhichStateFloor;
    public bool IsFlower;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class ScreensManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _menuPauseParent;
     [SerializeField] private GameObject _menuQuest;
     [SerializeField] private TMP_Text _descriptionQuest;
+    [SerializeField] private Image _imageQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Texts")] [SerializeField] private TextMeshProUGUI _dialoguesText;
@@ -56,10 +58,13 @@ public class ScreensManager : MonoBehaviour
             BeginningDialog();
     }
 
-    public void InitQuestDescription(string text)
+    public void InitQuestDescription(string text, Sprite img)
     {
         text ??= String.Empty;
+        // img ??= null;
 
+        _imageQuest.gameObject.SetActive(img != null);
+        _imageQuest.sprite = img;
         _descriptionQuest.text = text;
     }
 
