@@ -458,8 +458,11 @@ public class MapManager : MonoBehaviour
 
     public void CheckIfGameOver()
     {
-        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap() &&
-            CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() && !SetupUIGround.Instance.CheckIfGround())
+        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !HasInventory;
+
+        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap() 
+            && inven 
+            && !SetupUIGround.Instance.CheckIfGround())
         {
             ScreensManager.Instance.GameOver();
         }
