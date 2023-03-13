@@ -70,7 +70,6 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
         GroundStockage.ForcedOpen = true;
     }
-
     public void EndFb() // Use by Ground buttons
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
@@ -116,5 +115,10 @@ public class SetupUIGround : MonoBehaviour
         {
             but.GetComponent<UIButton>().ResetToEmpty();
         }
+    }
+
+    public void FollowDndDeactivate()
+    {
+        _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
     }
 }

@@ -60,7 +60,8 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.LastObjButtonSelected == null && CrystalsManager.Instance.IsEnergyInferiorToCostSwap())
             return;
-        if (MapManager.Instance.LastObjButtonSelected != null && CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
+        if (MapManager.Instance.LastObjButtonSelected != null &&
+            CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
             return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
@@ -217,6 +218,9 @@ public class GroundIndicator : MonoBehaviour
 
         // Disable Trash
         TrashCrystalManager.Instance.UpdateTrashCan(false);
+
+        // Launch Quest
+        MapManager.Instance.QuestsManager.CheckQuest();
 
         // Reset
         ResetAllAroundPrevisu();

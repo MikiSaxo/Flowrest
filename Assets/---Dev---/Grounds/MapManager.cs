@@ -260,6 +260,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        SetupUIGround.Instance.ResetAllButtons();
+
         ChangeLevel();
     }
 
@@ -449,8 +451,7 @@ public class MapManager : MonoBehaviour
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         CrystalsManager.Instance.EarnEnergyByRecycling();
-        if (!_isDragNDrop)
-            FollowMouseDND.Instance.AnimDeactivateObject();
+        SetupUIGround.Instance.FollowDndDeactivate();
         TrashCrystalManager.Instance.UpdateTrashCan(false);
         ResetButtonSelected();
     }

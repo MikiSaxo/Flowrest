@@ -103,9 +103,11 @@ public class CrystalsManager : MonoBehaviour
             _energyBar.DOValue(_energyValue, .4f);
         }
         
-        float number = _energyValue * _howBase;
-        _numberToDisplay.text = $"{(int)number}";
-        _currentEnergy = (int)number;
+        // print(_energyValue *_howBase);
+        float round = Mathf.Round(_energyValue * _howBase);
+        int number = int.Parse(round + "");
+        _numberToDisplay.text = $"{number}";
+        _currentEnergy = number;
 
         MapManager.Instance.CheckIfGameOver();
     }
@@ -113,6 +115,9 @@ public class CrystalsManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
             ReduceEnergyBySwap();
+        if (Input.GetKeyDown(KeyCode.R)) {
+            EarnEnergyByGround();
+        }
     }
     public int GetCurrentenergy()
     {

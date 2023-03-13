@@ -21,6 +21,7 @@ public class ScreensManager : MonoBehaviour
     [Header("Texts")] [SerializeField] private TextMeshProUGUI _dialoguesText;
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _titlesString;
+    [SerializeField] private float _dialogSpeed = .01f;
 
     private List<string> _dialogsToDisplay = new List<string>();
     private bool _isDialogTime;
@@ -87,6 +88,8 @@ public class ScreensManager : MonoBehaviour
     private void EndBeginningDialog()
     {
         _countScreen = 0;
+        _countDialog = 0;
+        
         _isDialogTime = false;
         _isBeginning = false;
 
@@ -145,6 +148,7 @@ public class ScreensManager : MonoBehaviour
     {
         _isDialogTime = false;
         _countScreen = 0;
+        _countDialog = 0;
 
         _dialoguesParent.SetActive(false);
         _bg.SetActive(false);
@@ -159,6 +163,8 @@ public class ScreensManager : MonoBehaviour
         FollowMouse.Instance.IsBlockMouse(false);
     }
 
+    private int _countDialog;
+    private bool _stopCorou;
 
     private void Update()
     {
@@ -166,13 +172,22 @@ public class ScreensManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _countScreen++;
-
-            if (_countScreen < _dialogsToDisplay.Count)
+            if (_countScreen < _dialogsToDisplay.Count * 2 -1)
             {
-                // _dialoguesText.text = _dialogsToDisplay[_countScreen];
-                _dialoguesText.text = String.Empty;
-                StartCoroutine(UpdateText());
+                if (_countScreen % 2 == 0)
+                {
+                    _stopCorou = true;
+                    _dialoguesText.text = _dialogsToDisplay[_countDialog];
+                    StopCoroutine(UpdateText());
+                }
+                else
+                {
+                    // print("anim");
+                    _countDialog++;
+                    _dialoguesText.text = String.Empty;
+                    StartCoroutine(UpdateText());
+                }
+                _countScreen++;
             }
             else
             {
@@ -186,11 +201,19 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator UpdateText()
     {
-        foreach (char c in _dialogsToDisplay[_countScreen].ToCharArray())
+        foreach (char c in _dialogsToDisplay[_countDialog].ToCharArray())
         {
+            if (_stopCorou)
+            {
+                // print("stop");
+                _stopCorou = false;
+                yield break;
+                print("drop it");
+            }
             _dialoguesText.text += c;
-            yield return new WaitForSeconds(.005f);
+            yield return new WaitForSeconds(_dialogSpeed);
         }
+        _countScreen++;
     }
 
     public bool GetIsDialogTime()
