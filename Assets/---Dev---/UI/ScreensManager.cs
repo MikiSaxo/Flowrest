@@ -58,6 +58,8 @@ public class ScreensManager : MonoBehaviour
 
     public void InitQuestDescription(string text)
     {
+        text ??= String.Empty;
+
         _descriptionQuest.text = text;
     }
 
