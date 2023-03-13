@@ -12,29 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Build3
   m_EditorClassIdentifier: 
-  EnergyAtStart: 850
-  Coords:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  EnergyAtStart: 1000
+  Coords: []
   HasInventory: 1
-  HasTrashCan: 1
-  QuestDescription: "Faire dispara\xEEtre les tiles de <color=#dffdff>neige</color>, 
-    <color=#48A8D1>d'eau</color> et de <color=#b33e37>geyser."
-  QuestImage: {fileID: 21300000, guid: b9042615a0d2d914bab4c4e747c3b943, type: 3}
+  HasTrashCan: 0
+  QuestDescription: "R\xE9aliser une fleur de 7 tiles de <color=#4f452a>mar\xE9cage</color>."
+  QuestImage: {fileID: 21300000, guid: 6bf7e6aab31fcbb43a0eaa22af9bb6b9, type: 3}
   IsFullFloor: 0
-  WhichStateFloor: 0
-  IsFlower: 0
-  WhichStateFlower: 
-  IsNoSpecificTiles: 1
-  WhichStateNoSpecificTiles: 020000000500000006000000
+  WhichStateFloor: -1
+  IsFlower: 1
+  WhichStateFlower: 09000000
+  IsNoSpecificTiles: 0
+  WhichStateNoSpecificTiles: 
   DialogToDisplayAtTheBeginning:
-  - "Bon quelquefois tu risques de ne pas avoir besoin de tout ce que tu poss\xE8des
-    dans ton inventaire mais on a \xE9galement trouv\xE9 la solution \xE0 la mani\xE8re
-    EKorp ! "
-  - "Tu peux recycler ce que ton inventaire contient et r\xE9cup\xE9rer de l\u2019\xE9nergie
-    gr\xE2ce aux \xE9l\xE9ments que tu recycles. "
-  - Et oui rien ne se perd, tout se transforme avec EKorp !
+  - "La deuxi\xE8me technologie utilis\xE9e dans notre entreprise c\u2019est l\u2019inventaire
+    !"
+  - "Il te permet de conserver le plus de ressources perdues dans la transformation
+    et de cr\xE9er un nouvel environnement afin de n\u2019avoir aucunes pertes !"
+  - "Pour l\u2019utiliser, tu n\u2019as qu\u2019\xE0 \xE9changer deux environnements
+    comme tu l\u2019as appris\u202F; cela cr\xE9era un environnement qui sera envoy\xE9
+    directement dans ton inventaire."
+  - "Tu n\u2019auras ensuite qu\u2019\xE0 d\xE9placer de ton inventaire n\u2019importe
+    quel environnement par celui-ci ! Je te laisse tester pour la journ\xE9e bon
+    courage !"
   DialogToDisplayAtTheEnd:
-  - 'Tu apprends vite dis-donc ! '
-  - Retrouve-moi demain pour ton dernier jour de stage.
+  - "Repose-toi bien ce soir, la premi\xE8re utilisation de l\u2019inventaire peut
+    toujours \xE9puiser et demain, on commencera enfin les choses s\xE9rieuses."
