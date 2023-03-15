@@ -18,6 +18,7 @@ public class MapManager : MonoBehaviour
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
+    public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }
 
 
@@ -115,6 +116,9 @@ public class MapManager : MonoBehaviour
 
         // Update if bloc last grounds swapped
         _blockLastGroundsSwapped = _levelData[_currentLevel].BlockLastGroundsSwapped;
+
+        // Reset Quest Number
+        QuestsManager.ResetQuestNumbers();
 
         // Update if full floor quest
         if (_levelData[_currentLevel].WhichStateFloor.Length > 0)
@@ -326,12 +330,12 @@ public class MapManager : MonoBehaviour
             gLastGroundSelected.JustBeenSwaped = true;
             gWhich.UpdateFBReloadEnergy(true);
             gLastGroundSelected.UpdateFBReloadEnergy(true);
-            
+
             if (_lastGroundSwaped[0] != null)
                 _lastGroundSwaped[0].UpdateNoSwap(false);
             if (_lastGroundSwaped[1] != null)
                 _lastGroundSwaped[1].UpdateNoSwap(false);
-            
+
             _lastGroundSwaped[0] = gWhich;
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
@@ -394,6 +398,8 @@ public class MapManager : MonoBehaviour
 
     public void CheckIfGameOver()
     {
+        if (IsVictory) return;
+
         bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
 
         if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap()
@@ -443,6 +449,7 @@ public class MapManager : MonoBehaviour
         }
 
         SetupUIGround.Instance.ResetAllButtons();
+        IsVictory = false;
 
         ChangeLevel(nextLevel);
     }
@@ -482,7 +489,7 @@ public class MapManager : MonoBehaviour
             _lastGroundSwaped[0].UpdateNoSwap(false);
         if (_lastGroundSwaped[1] != null)
             _lastGroundSwaped[1].UpdateNoSwap(false);
-        
+
         _lastGroundSwaped[0] = null;
         _lastGroundSwaped[1] = null;
     }

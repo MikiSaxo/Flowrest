@@ -62,6 +62,12 @@ public class QuestManager : MonoBehaviour
         // print("no specific completed : " + CheckNoSpecificTileQuest());
     }
 
+    public void ResetQuestNumbers()
+    {
+        _countQuestNumber = 0;
+        _countQuestDone = 0;
+    }
+
     private bool CheckFullFloorQuest()
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
@@ -72,16 +78,18 @@ public class QuestManager : MonoBehaviour
             {
                 if (map[x, y] == null) continue;
 
-                if (map[x, y].GetComponent<GroundStateManager>() == null)
+                var grnd = map[x, y].GetComponent<GroundStateManager>();
+                
+                if (grnd == null)
                     continue;
 
-                if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.None)
+                if (grnd.GetCurrentStateEnum() == AllStates.None)
                     continue;
 
-                if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain)
+                if (grnd.GetCurrentStateEnum() == AllStates.Mountain)
                     continue;
 
-                if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() != _fullFloorState)
+                if (grnd.GetCurrentStateEnum() != _fullFloorState)
                     return false;
             }
         }
@@ -145,6 +153,6 @@ public class QuestManager : MonoBehaviour
     private void WarnFullFloorQuest()
     {
         if(_isFullFloor)
-            Debug.LogWarning("Be careful, Quest full floor is on");
+            Debug.LogWarning("Be careful, Quest full floor is on and it's combine with another");
     }
 }
