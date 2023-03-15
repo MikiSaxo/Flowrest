@@ -255,6 +255,10 @@ public class GroundStateManager : MonoBehaviour
         _meshParent.transform.DOMoveY(_startYPosMeshParent, _timeBounceValue).SetEase(Ease.OutElastic);
     }
 
+    public Sprite GetGroundPrevisu(int index)
+    {
+        return _fbPrevisu.GetIconTile(index);
+    }
     public Vector2Int GetCoords()
     {
         return _coords;
@@ -479,10 +483,7 @@ public class GroundStateManager : MonoBehaviour
     //     _stockPrevisu.Clear();
     // }
 
-    // public Sprite GetGroundPrevisu(int index)
-    // {
-    //     return _fB_Previsu.GetIconTile(index);
-    // }
+    
     //
     // public void GetNewPrevisu(AllStates state)
     // {
