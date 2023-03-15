@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraPan : MonoBehaviour
@@ -9,15 +10,30 @@ public class CameraPan : MonoBehaviour
     private bool _canZoom;
     private float groundZ = 0;
 
+    [Header("Zoom")]
     [SerializeField] private float _zoomSpeed;
-    [Tooltip("It represents the min and max value for the X position")][SerializeField] private Vector2Int _minMaxPosX;
-    [Tooltip("It represents the min and max value for the Y position")][SerializeField] private Vector2Int _minMaxPosY;
-    [Tooltip("It represents the min and max value for the Z position")][SerializeField] private Vector2Int _minMaxPosZ;
+    
+    [Header("Anim Rotation")]
+    [SerializeField] private Vector2Int _rotaXStartEnd;
+    [SerializeField] private float _durationAnimRota;
+
+    [Header("Block Cam")]
+    [Tooltip("It represents the min and max value for the X position")] [SerializeField]
+    private Vector2Int _minMaxPosX;
+
+    [Tooltip("It represents the min and max value for the Y position")] [SerializeField]
+    private Vector2Int _minMaxPosY;
+
+    [Tooltip("It represents the min and max value for the Z position")] [SerializeField]
+    private Vector2Int _minMaxPosZ;
 
     private void Start()
     {
         _cam = GetComponent<Camera>();
         _canZoom = true;
+
+        _cam.transform.DORotate(new Vector3(_rotaXStartEnd.x, 0, 0), 0);
+        _cam.transform.DORotate(new Vector3(_rotaXStartEnd.y, 0, 0), _durationAnimRota);
     }
 
     private void Update()
@@ -34,8 +50,8 @@ public class CameraPan : MonoBehaviour
         {
             var getPos = GetWorldPosition(groundZ);
             // if (getPos.y < 0)
-                getPos = new Vector3(getPos.x, 10, getPos.z);
-            
+            getPos = new Vector3(getPos.x, 10, getPos.z);
+
             _dragOrigin = getPos;
         }
 
@@ -76,7 +92,7 @@ public class CameraPan : MonoBehaviour
         var posX = pos.x;
         pos = pos.normalized * zoom;
         pos = new Vector3(posX, pos.y, pos.z);
-        
+
         _cam.transform.position = ClampCamera(pos);
 
         // Rotate the camera based on the mouse X axis input
