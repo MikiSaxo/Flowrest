@@ -326,9 +326,9 @@ public class MapManager : MonoBehaviour
             gLastGroundSelected.JustBeenSwaped = true;
             
             if (_lastGroundSwaped[0] != null)
-                _lastGroundSwaped[0].JustBeenSwaped = false;
+                _lastGroundSwaped[0].UpdateNoSwap(false);
             if (_lastGroundSwaped[1] != null)
-                _lastGroundSwaped[1].JustBeenSwaped = false;
+                _lastGroundSwaped[1].UpdateNoSwap(false);
             
             _lastGroundSwaped[0] = gWhich;
             _lastGroundSwaped[1] = gLastGroundSelected;
@@ -477,9 +477,9 @@ public class MapManager : MonoBehaviour
     public void ResetTwoLastSwapped()
     {
         if (_lastGroundSwaped[0] != null)
-            _lastGroundSwaped[0].JustBeenSwaped = false;
+            _lastGroundSwaped[0].UpdateNoSwap(false);
         if (_lastGroundSwaped[1] != null)
-            _lastGroundSwaped[1].JustBeenSwaped = false;
+            _lastGroundSwaped[1].UpdateNoSwap(false);
         
         _lastGroundSwaped[0] = null;
         _lastGroundSwaped[1] = null;

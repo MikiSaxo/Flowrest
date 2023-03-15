@@ -7,6 +7,7 @@ using UnityEngine;
 public class GroundPrevisu : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprRnd;
+    [SerializeField] private Sprite _noSwap;
     [SerializeField] private Sprite[] _iconTile;
 
     private int _indexIcon;
@@ -36,6 +37,12 @@ public class GroundPrevisu : MonoBehaviour
     public int GetIndexActualIcon()
     {
         return _indexIcon;
+    }
+
+    public void UpdateSwap(bool state)
+    {
+        _sprRnd.enabled = state;
+        _sprRnd.sprite = _noSwap;
     }
 
     public Sprite GetIconTile(int index)

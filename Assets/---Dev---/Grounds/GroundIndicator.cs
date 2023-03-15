@@ -67,7 +67,11 @@ public class GroundIndicator : MonoBehaviour
             CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
             return;
 
-        if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null) return;
+        if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null)
+        {
+            _parent.UpdateNoSwap(true);
+            return;
+        }
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
@@ -88,8 +92,10 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //ResetAllAroundPrevisu();
+        _parent.UpdateFbNoSwap();
 
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
+
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         _isEntered = false;

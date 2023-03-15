@@ -34,7 +34,10 @@ public class GroundStateManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
-    // [SerializeField] private GroundPrevisu _fB_Previsu;
+    
+    [Header("Feedbacks")]
+    [SerializeField] private GroundPrevisu _fbPrevisu;
+    [SerializeField] private GameObject _fbReloadEnergy;
 
     [Header("Anim values")] [SerializeField]
     private float _bottomBounceValue;
@@ -210,6 +213,18 @@ public class GroundStateManager : MonoBehaviour
             var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
             grnd.ChangeState(newState);
         }
+    }
+
+    public void UpdateNoSwap(bool state)
+    {
+        _fbPrevisu.UpdateSwap(state);
+        _fbReloadEnergy.SetActive(state);
+        JustBeenSwaped = state;
+    }
+
+    public void UpdateFbNoSwap()
+    {
+        _fbPrevisu.UpdateSwap(false);
     }
 
     private void BounceAnim()
