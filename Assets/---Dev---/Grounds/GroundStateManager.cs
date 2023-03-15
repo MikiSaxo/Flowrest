@@ -218,13 +218,19 @@ public class GroundStateManager : MonoBehaviour
     public void UpdateNoSwap(bool state)
     {
         _fbPrevisu.UpdateSwap(state);
-        _fbReloadEnergy.SetActive(state);
+        UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
     }
 
-    public void UpdateFbNoSwap()
+    public void UpdateFbNoSwap(bool state)
     {
-        _fbPrevisu.UpdateSwap(false);
+        _fbPrevisu.UpdateSwap(state);
+    }
+
+    public void UpdateFBReloadEnergy(bool state)
+    {
+        _fbReloadEnergy.SetActive(state);
+
     }
 
     private void BounceAnim()

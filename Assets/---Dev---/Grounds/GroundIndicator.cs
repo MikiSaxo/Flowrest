@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using TMPro;
 
 public class GroundIndicator : MonoBehaviour
@@ -92,7 +93,7 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //ResetAllAroundPrevisu();
-        _parent.UpdateFbNoSwap();
+        _parent.UpdateFbNoSwap(false);
 
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
 

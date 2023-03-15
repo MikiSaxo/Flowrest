@@ -324,6 +324,8 @@ public class MapManager : MonoBehaviour
         {
             gWhich.JustBeenSwaped = true;
             gLastGroundSelected.JustBeenSwaped = true;
+            gWhich.UpdateFBReloadEnergy(true);
+            gLastGroundSelected.UpdateFBReloadEnergy(true);
             
             if (_lastGroundSwaped[0] != null)
                 _lastGroundSwaped[0].UpdateNoSwap(false);
