@@ -153,7 +153,7 @@ public class GroundIndicator : MonoBehaviour
         {
             ResetIndicator();
             MapManager.Instance.ResetGroundSelected();
-            ResetAllAroundPrevisu();
+            // ResetAllAroundPrevisu();
         }
 
         if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
@@ -223,48 +223,8 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.QuestsManager.CheckQuest();
 
         // Reset
-        ResetAllAroundPrevisu();
+        // ResetAllAroundPrevisu();
         ResetForNextChange();
-    }
-
-    private void CallAroundPrevisu()
-    {
-        // print("hello");
-        _coords = _parent.GetCoords();
-
-        Vector2Int[] hexDirections = new Vector2Int[6];
-        // Important for the offset with hex coords
-        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
-
-        foreach (var hexPos in hexDirections)
-        {
-            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
-            // Check if inside of array
-            if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
-            // Check if something exist
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-            // Check if has GroundManager
-            if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
-                continue;
-
-            var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            ground.LookingNewPrevisu();
-
-            _stockPrevisu.Add(ground);
-        }
-
-        // print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
-        _parent.IsProtectedPrevisu = true;
-        if (MapManager.Instance.GetLastStateSelected() != AllStates.None)
-            _parent.ActivatePrevisu((int)MapManager.Instance.GetLastStateSelected());
-        // _parent.ActivateIconPrevisu();
-        // _stockPrevisu.Add(_parent);
-    }
-
-    private void CallSelectedPrevisu()
-    {
-        MapManager.Instance.PrevisuAroundSelected(_parent.GetCurrentStateEnum());
     }
 
     public void ResetIndicator()
@@ -293,13 +253,51 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.ResetButtonSelected();
     }
 
-    public void ResetAllAroundPrevisu()
-    {
-        foreach (var previsu in _stockPrevisu)
-        {
-            previsu.DeactivatePrevisu();
-        }
-
-        _stockPrevisu.Clear();
-    }
+    // private void CallAroundPrevisu()
+    // {
+    //     // print("hello");
+    //     _coords = _parent.GetCoords();
+    //
+    //     Vector2Int[] hexDirections = new Vector2Int[6];
+    //     // Important for the offset with hex coords
+    //     hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+    //
+    //     foreach (var hexPos in hexDirections)
+    //     {
+    //         Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+    //         // Check if inside of array
+    //         if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
+    //             newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
+    //         // Check if something exist
+    //         if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+    //         // Check if has GroundManager
+    //         if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+    //             continue;
+    //
+    //         var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
+    //         ground.LookingNewPrevisu();
+    //
+    //         _stockPrevisu.Add(ground);
+    //     }
+    //
+    //     // print(MapManager.Instance.GetLastStateSelected() + " / " + (int)MapManager.Instance.GetLastStateSelected());
+    //     _parent.IsProtectedPrevisu = true;
+    //     if (MapManager.Instance.GetLastStateSelected() != AllStates.None)
+    //         _parent.ActivatePrevisu((int)MapManager.Instance.GetLastStateSelected());
+    //     // _parent.ActivateIconPrevisu();
+    //     // _stockPrevisu.Add(_parent);
+    // }
+    // private void CallSelectedPrevisu()
+    // {
+    //     MapManager.Instance.PrevisuAroundSelected(_parent.GetCurrentStateEnum());
+    // }
+    // public void ResetAllAroundPrevisu()
+    // {
+    //     foreach (var previsu in _stockPrevisu)
+    //     {
+    //         previsu.DeactivatePrevisu();
+    //     }
+    //
+    //     _stockPrevisu.Clear();
+    // }
 }

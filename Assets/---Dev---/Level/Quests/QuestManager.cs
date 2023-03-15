@@ -6,43 +6,57 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     private bool _isFullFloor;
+    private bool _isFlower;
+    private bool _isNoSpecificTiles;
 
     private AllStates _fullFloorState;
-    // private bool _isFullFloorCompleted;
-
-    private bool _isFlower;
     private AllStates[] _flowerState;
-
-    private bool _isNoSpecificTiles;
     private AllStates[] _noSpecificTileState;
+
+    private int _countQuestDone;
+    private int _countQuestNumber;
 
     public void InitQuestFullFloor(AllStates whichState)
     {
         _isFullFloor = true;
         _fullFloorState = whichState;
+        _countQuestNumber++;
     }
 
     public void InitQuestFlower(AllStates[] whichState)
     {
         _isFlower = true;
         _flowerState = whichState;
+        _countQuestNumber++;
+        
+        WarnFullFloorQuest();
     }
 
     public void InitQuestNoSpecificTiles(AllStates[] whichState)
     {
         _isNoSpecificTiles = true;
         _noSpecificTileState = whichState;
+        _countQuestNumber++;
+        
+        WarnFullFloorQuest();
     }
 
     public void CheckQuest()
     {
         if (_isFullFloor && CheckFullFloorQuest())
-            ScreensManager.Instance.VictoryScreen();
-        else if (_isFlower && CheckFlowerQuest())
-            ScreensManager.Instance.VictoryScreen();
-        else if (_isNoSpecificTiles && CheckNoSpecificTileQuest())
-            ScreensManager.Instance.VictoryScreen();
+            _countQuestDone++;
 
+        if (_isFlower && CheckFlowerQuest())
+            _countQuestDone++;
+
+        if (_isNoSpecificTiles && CheckNoSpecificTileQuest())
+            _countQuestDone++;
+
+        
+        if (_countQuestDone == _countQuestNumber)
+            ScreensManager.Instance.VictoryScreen();
+        else
+            _countQuestDone = 0;
         // print("flower completed : " + CheckFlowerQuest());
         // print("full floor completed? : " + CheckFullFloorQuest());
         // print("no specific completed : " + CheckNoSpecificTileQuest());
@@ -63,7 +77,7 @@ public class QuestManager : MonoBehaviour
 
                 if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.None)
                     continue;
-                
+
                 if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == AllStates.Mountain)
                     continue;
 
@@ -126,5 +140,11 @@ public class QuestManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void WarnFullFloorQuest()
+    {
+        if(_isFullFloor)
+            Debug.LogWarning("Be careful, Quest full floor is on");
     }
 }

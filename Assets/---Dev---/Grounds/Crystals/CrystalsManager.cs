@@ -20,12 +20,10 @@ public class CrystalsManager : MonoBehaviour
     
     [Header("Energy Earn")]
     [SerializeField] private float _earnedByGround;
-
     [SerializeField] private float _earnedByRecycling;
 
     [Header("Energy Cost")]
     [SerializeField] private float _costBySwap;
-
     [SerializeField] private float _costByLandingGround;
 
     private float _energyValue;
@@ -33,7 +31,6 @@ public class CrystalsManager : MonoBehaviour
     private int _currentEnergy;
     private float _tempValue;
     private float _timerSpawnFBCrystal;
-    // [SerializeField] private float _cooldownSpawnFBCrystal;
 
     private void Awake()
     {
@@ -103,7 +100,7 @@ public class CrystalsManager : MonoBehaviour
             _energyBar.DOValue(_energyValue, .4f);
         }
         
-        // print(_energyValue *_howBase);
+        // Bad system to avoid 499 or 501 but 500 
         float round = Mathf.Round(_energyValue * _howBase);
         int number = int.Parse(round + "");
         _numberToDisplay.text = $"{number}";
@@ -113,14 +110,10 @@ public class CrystalsManager : MonoBehaviour
     }
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.F))
-        //     ReduceEnergyBySwap();
-        // if (Input.GetKeyDown(KeyCode.R)) 
-        //     EarnEnergyByGround();
-    }
-    public int GetCurrentenergy()
-    {
-        return _currentEnergy;
+        if (Input.GetKeyDown(KeyCode.F))
+            ReduceEnergyBySwap();
+        if (Input.GetKeyDown(KeyCode.R)) 
+            EarnEnergyByGround();
     }
 
     public bool IsEnergyInferiorToCostSwap()

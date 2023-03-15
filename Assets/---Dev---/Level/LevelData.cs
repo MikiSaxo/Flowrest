@@ -13,14 +13,12 @@ public class LevelData : ScriptableObject
    public bool HasInventory;
    public bool HasTrashCan;
 
-   [Header("Quests")]
+   [Header("Quests Info")]
    public string QuestDescription;
    public Sprite QuestImage;
-   public bool IsFullFloor;
-   public AllStates WhichStateFloor;
-   public bool IsFlower;
+   [Header("Quests Choose")]
+   public AllStates[] WhichStateFloor;
    public AllStates[] WhichStateFlower;
-   public bool IsNoSpecificTiles;
    public AllStates[] WhichStateNoSpecificTiles;
 
    [Header("Dialogs")] public string[] DialogToDisplayAtTheBeginning;

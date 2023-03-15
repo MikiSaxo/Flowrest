@@ -173,12 +173,6 @@ public class ScreensManager : MonoBehaviour
         // StartCoroutine(UnlockMouse());
     }
 
-    IEnumerator UnlockMouse()
-    {
-        yield return new WaitForSeconds(.1f);
-        FollowMouse.Instance.IsBlockMouse(false);
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -226,7 +220,6 @@ public class ScreensManager : MonoBehaviour
                 // print("stop");
                 _stopCorou = false;
                 yield break;
-                print("drop it");
             }
             _dialoguesText.text += c;
             yield return new WaitForSeconds(_dialogSpeed);

@@ -15,29 +15,28 @@ public class MapManager : MonoBehaviour
     public event Action CheckBiome;
     public event Action ResetSelection;
 
-    public Vector2Int _mapSize;
     public GameObject[,] MapGrid;
+
     public AllStates LastStateButtonSelected { get; set; }
-
     public GameObject LastObjButtonSelected { get; set; }
-
     public bool IsGroundFirstSelected { get; set; }
-    public bool HasInventory { get; private set; }
-    public bool HasTrashCan { get; private set; }
-    public QuestManager QuestsManager;
+    public QuestManager QuestsManager { get; private set; }
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
 
     [Header("Level")] [SerializeField] private string _levelName;
-    [SerializeField] private int _levelTotalNumber;
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
-    private int _currentLevel;
+    private bool _hasTrashCan;
+    private bool _hasInventory;
     private bool _isDragNDrop;
+    private int _currentLevel;
     private string[] _mapInfo;
+
+    private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject _lastGroundSelected;
 
@@ -59,12 +58,10 @@ public class MapManager : MonoBehaviour
     private const float QUARTER_OFFSET = .85f;
     private const float HALF_OFFSET = .5f;
 
-    // [SerializeField] private float _quaterOffset; 
-    // [SerializeField] private float _halfOffset; 
-
     private void Awake()
     {
         Instance = this;
+        QuestsManager = GetComponent<QuestManager>();
     }
 
     private void Start()
@@ -105,28 +102,29 @@ public class MapManager : MonoBehaviour
         CrystalsManager.Instance.InitEnergy(_levelData[_currentLevel].EnergyAtStart);
 
         // Update if has inventory
-        HasInventory = _levelData[_currentLevel].HasInventory;
-        SetupUIGround.Instance.UpdateInventory(HasInventory);
+        _hasInventory = _levelData[_currentLevel].HasInventory;
+        SetupUIGround.Instance.UpdateInventory(_hasInventory);
 
         // Update if has trash can
-        HasTrashCan = _levelData[_currentLevel].HasTrashCan;
-        SetupUIGround.Instance.SetIfHasInvetory(HasTrashCan);
+        _hasTrashCan = _levelData[_currentLevel].HasTrashCan;
+        SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
 
         // Update if full floor quest
-        if (_levelData[_currentLevel].IsFullFloor)
-            QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor);
+        if (_levelData[_currentLevel].WhichStateFloor.Length > 0)
+            QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor[0]);
 
         // Update if flower quest
-        if (_levelData[_currentLevel].IsFlower)
+        if (_levelData[_currentLevel].WhichStateFlower.Length > 0)
             QuestsManager.InitQuestFlower(_levelData[_currentLevel].WhichStateFlower);
 
         // Update if No Specific Tile quest
-        if (_levelData[_currentLevel].IsNoSpecificTiles)
+        if (_levelData[_currentLevel].WhichStateNoSpecificTiles.Length > 0)
             QuestsManager.InitQuestNoSpecificTiles(_levelData[_currentLevel].WhichStateNoSpecificTiles);
 
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
-        ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription, _levelData[_currentLevel].QuestImage);
+        ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
+            _levelData[_currentLevel].QuestImage);
 
         // Init Level
         InitializeLevel(_mapSize);
@@ -267,7 +265,7 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel(bool nextlevel)
     {
-        if (_currentLevel < _levelTotalNumber - 1 && nextlevel)
+        if (_currentLevel < _levelData.Length - 1 && nextlevel)
             _currentLevel++;
 
         InitializeMap();
@@ -279,7 +277,7 @@ public class MapManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             ResetButtonSelected();
-            ResetAroundSelectedPrevisu();
+            // ResetAroundSelectedPrevisu();
             TrashCrystalManager.Instance.UpdateTrashCan(false);
         }
     }
@@ -302,7 +300,7 @@ public class MapManager : MonoBehaviour
         // Activate Trash can
         if (button != null)
         {
-            if (HasTrashCan)
+            if (_hasTrashCan)
                 TrashCrystalManager.Instance.UpdateTrashCan(true);
             SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
         }
@@ -399,13 +397,12 @@ public class MapManager : MonoBehaviour
         gWhich.UpdateGroundsAround();
 
         // Get Bloc to UI
-        if (HasInventory)
+        if (_hasInventory)
         {
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
             SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-            ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),
-                String.Empty);
+            // ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),String.Empty);
         }
 
         // Spend energy
@@ -417,7 +414,7 @@ public class MapManager : MonoBehaviour
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
-        ResetAroundSelectedPrevisu();
+        // ResetAroundSelectedPrevisu();
         ResetGroundSelected();
         // CheckForBiome();
 
@@ -437,11 +434,11 @@ public class MapManager : MonoBehaviour
         _lastGroundCoordsSelected = coords;
     }
 
-    public void PrevisuAroundSelected(AllStates state)
-    {
-        if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
-    }
+    // public void PrevisuAroundSelected(AllStates state)
+    // {
+    //     if (_lastGroundSelected != null)
+    //         _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
+    // }
 
     public void UseTrashCan()
     {
@@ -458,10 +455,10 @@ public class MapManager : MonoBehaviour
 
     public void CheckIfGameOver()
     {
-        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !HasInventory;
+        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
 
-        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap() 
-            && inven 
+        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap()
+            && inven
             && !SetupUIGround.Instance.CheckIfGround())
         {
             ScreensManager.Instance.GameOver();
@@ -495,7 +492,7 @@ public class MapManager : MonoBehaviour
 
         // InitializeMap();
     }
-    
+
     // public void ResetCurrentEntered()
     // {
     //     _currentEntered = null;
@@ -507,11 +504,11 @@ public class MapManager : MonoBehaviour
     //         _currentEntered.ResetAroundSelectedPrevisu();
     // }
 
-    public void ResetAroundSelectedPrevisu()
-    {
-        if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<GroundStateManager>().ResetAroundSelectedPrevisu();
-    }
+    // public void ResetAroundSelectedPrevisu()
+    // {
+    //     if (_lastGroundSelected != null)
+    //         _lastGroundSelected.GetComponent<GroundStateManager>().ResetAroundSelectedPrevisu();
+    // }
 
     public void ResetButtonSelected()
     {
