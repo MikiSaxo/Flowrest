@@ -15,13 +15,12 @@ public class MapManager : MonoBehaviour
     public event Action CheckBiome;
     public event Action ResetSelection;
 
-    public GameObject[,] MapGrid;
-
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
     public QuestManager QuestsManager { get; private set; }
 
+    
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
@@ -38,10 +37,12 @@ public class MapManager : MonoBehaviour
 
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
+    private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
 
     private Dictionary<char, AllStates> dico = new Dictionary<char, AllStates>();
 
+    
     private const char NONE = 'N';
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
@@ -63,7 +64,6 @@ public class MapManager : MonoBehaviour
         Instance = this;
         QuestsManager = GetComponent<QuestManager>();
     }
-
     private void Start()
     {
         dico.Add(NONE, AllStates.None);
@@ -96,7 +96,7 @@ public class MapManager : MonoBehaviour
         _mapSize.y = _mapInfo.Length;
 
         // Init the grids
-        MapGrid = new GameObject[_mapSize.x, _mapSize.y];
+        _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
         // Init energy
         CrystalsManager.Instance.InitEnergy(_levelData[_currentLevel].EnergyAtStart);
@@ -129,7 +129,314 @@ public class MapManager : MonoBehaviour
         // Init Level
         InitializeLevel(_mapSize);
     }
+    private void InitializeLevel(Vector2Int sizeMap)
+    {
+        for (int x = 0; x < sizeMap.x; x++)
+        {
+            for (int y = 0; y < sizeMap.y; y++)
+            {
+                // Get the string of the actual line
+                string line = _mapInfo[y];
+                // Get the actual char of the string of the actual line
+                char whichEnvironment = line[x];
 
+                if (dico[whichEnvironment] != AllStates.None)
+                {
+                    GameObject test = Instantiate(_groundPrefab, _map.transform);
+                    InitObj(test, x, y, dico[whichEnvironment]);
+                }
+            }
+        }
+    }
+    private void InitObj(GameObject which, int x, int y, AllStates state)
+    {
+        if (state == AllStates.None) return;
+
+        float hexOffset = 0;
+        if (x % 2 == 1)
+            hexOffset = HALF_OFFSET;
+
+        // Tp ground to its position
+        which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
+
+        // Change coords of the ground
+        which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
+
+        //Init state of ground
+        which.GetComponent<GroundStateManager>().InitState(state);
+
+        // Update _mapGrid
+        _mapGrid[x, y] = which;
+
+        // Init Crystal or not
+        Vector2Int[] coordsByCurrentLvl = _levelData[_currentLevel].Coords;
+        foreach (var crystalsCoords in coordsByCurrentLvl)
+        {
+            if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
+
+            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
+            return;
+        }
+
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
+    }
+
+    private void Update()
+    {
+        // Right click to Reset
+        if (Input.GetMouseButtonDown(1))
+        {
+            ResetButtonSelected();
+            // ResetAroundSelectedPrevisu();
+            TrashCrystalManager.Instance.UpdateTrashCan(false);
+        }
+    }
+    public void UpdateMap()
+    {
+        UpdateGround?.Invoke();
+    }
+
+    private void ChangeLevel(bool nextlevel)
+    {
+        if (_currentLevel < _levelData.Length - 1 && nextlevel)
+            _currentLevel++;
+
+        InitializeMap();
+    }
+    public void ChangeActivatedButton(GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
+    {
+        if (IsGroundFirstSelected) return;
+
+        // Activate Trash can
+        if (button != null)
+        {
+            if (_hasTrashCan)
+                TrashCrystalManager.Instance.UpdateTrashCan(true);
+            SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
+        }
+        else
+            SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
+
+        // Prevent to use an actual empty button
+        if (button != null)
+        {
+            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
+                return;
+        }
+
+        // Deactivate the last one selected
+        if (LastObjButtonSelected != null)
+            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+        // Update the current selected or if no one was selected -> can be null
+        LastObjButtonSelected = button;
+
+        if (LastObjButtonSelected != null)
+        {
+            _isDragNDrop = false;
+            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
+            LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
+
+            // TemperatureSelected = 0;
+            // if (!LastObjButtonSelected.GetComponent<UIButton>().GetIsTemperature())
+            // {
+            // }
+            // else
+            //     TemperatureSelected = LastObjButtonSelected.GetComponent<UIButton>().GetHisTemperature();
+            //FollowMouseDND.Instance.CanMove = true;
+        }
+        else
+        {
+            _isDragNDrop = true;
+            LastStateButtonSelected = AllStates.None;
+            // TemperatureSelected = 0;
+        }
+    }
+
+    public bool CanPoseBloc()
+    {
+        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
+    }
+
+    public void DecreaseNumberButton()
+    {
+        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+    }
+
+    private void GroundSwap(GameObject which, Vector2Int newCoords)
+    {
+        // Update map
+        _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
+        _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
+
+        // Change position
+        (_lastGroundSelected.transform.position, which.transform.position) =
+            (which.transform.position, _lastGroundSelected.transform.position);
+
+        // Get GroundStateManager 
+        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
+        var gWhich = which.GetComponent<GroundStateManager>();
+
+        // Protect these blocs a transformation
+        gLastGroundSelected.IsProtected = true;
+        gWhich.IsProtected = true;
+
+        // Change coords inside of GroundManager
+        gLastGroundSelected.ChangeCoords(newCoords);
+        gWhich.ChangeCoords(_lastGroundCoordsSelected);
+
+        // Reset selection's color of the two Grounds
+        gLastGroundSelected.ResetIndicator();
+        gWhich.ResetIndicator();
+        gLastGroundSelected.UpdateGroundsAround();
+        gWhich.UpdateGroundsAround();
+
+        // Get Bloc to UI
+        if (_hasInventory)
+        {
+            var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
+                gWhich.GetCurrentStateEnum());
+            SetupUIGround.Instance.AddNewGround((int)tileToAdd);
+            // ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),String.Empty);
+        }
+
+        // Spend energy
+        CrystalsManager.Instance.ReduceEnergyBySwap();
+
+        // Get crystals if have crystals
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+
+        //ResetLastSelected
+        IsGroundFirstSelected = false;
+        // ResetAroundSelectedPrevisu();
+        ResetGroundSelected();
+        // CheckForBiome();
+
+        QuestsManager.CheckQuest();
+
+        // Reset protect
+        gLastGroundSelected.IsProtected = false;
+        gWhich.IsProtected = false;
+    }
+    public void UseTrashCan()
+    {
+        // print("hello trash");
+
+        if (LastObjButtonSelected == null) return;
+
+        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        CrystalsManager.Instance.EarnEnergyByRecycling();
+        SetupUIGround.Instance.FollowDndDeactivate();
+        TrashCrystalManager.Instance.UpdateTrashCan(false);
+        ResetButtonSelected();
+    }
+    
+    private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
+    {
+        // Reset to start from scratch
+        ResetGroundSelected();
+        // Update lastSelected if need to call Swap() after
+        _lastGroundSelected = which;
+        _lastGroundCoordsSelected = coords;
+    }
+    public bool CheckIfButtonIsEmpty()
+    {
+        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
+    }
+    public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
+    {
+        if (LastObjButtonSelected != null) return;
+
+        // If was checkAround -> go swap
+        if (_lastGroundSelected != null)
+            GroundSwap(which, newCoords);
+        else
+            CheckAroundGroundSelected(which, newCoords);
+    }
+    public void CheckForBiome()
+    {
+        CheckBiome?.Invoke();
+    }
+    public void CheckIfGameOver()
+    {
+        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
+
+        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap()
+            && inven
+            && !SetupUIGround.Instance.CheckIfGround())
+        {
+            ScreensManager.Instance.GameOver();
+        }
+    }
+    
+    public AllStates GetLastStateSelected()
+    {
+        return _lastGroundSelected != null
+            ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
+            : LastStateButtonSelected;
+    }
+
+    public GameObject[,] GetMapGrid()
+    {
+        return _mapGrid;
+    }
+    public bool GetIsDragNDrop()
+    {
+        return _isDragNDrop;
+    }
+    public int GetCurrentLevel()
+    {
+        return _currentLevel;
+    }
+    public string[] GetDialogAtVictory()
+    {
+        return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
+    }
+
+    public void ResetAllMap(bool nextLevel)
+    {
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                Destroy(_mapGrid[x, y]);
+                _mapGrid[x, y] = null;
+            }
+        }
+
+        SetupUIGround.Instance.ResetAllButtons();
+
+        ChangeLevel(nextLevel);
+    }
+    public void RestartLevel()
+    {
+        ResetAllMap(false);
+        ResetAllSelection();
+        ResetButtonSelected();
+        ResetGroundSelected();
+        SetupUIGround.Instance.ResetAllButtons();
+        ScreensManager.Instance.RestartSceneOrLevel();
+        ResetAllMap(false);
+
+        // InitializeMap();
+    }
+
+    public void ResetButtonSelected()
+    {
+        ChangeActivatedButton(null);
+    }
+
+    public void ResetGroundSelected()
+    {
+        _lastGroundSelected = null;
+        _lastGroundCoordsSelected = new Vector2Int(-1, -1);
+    }
+
+    public void ResetAllSelection()
+    {
+        ResetSelection?.Invoke();
+    }
+ 
     // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
     // {
     //     for (int x = 0; x < sizeMap.x; x++)
@@ -193,306 +500,13 @@ public class MapManager : MonoBehaviour
     //         }
     //     }
     // }
-
-    private void InitializeLevel(Vector2Int sizeMap)
-    {
-        for (int x = 0; x < sizeMap.x; x++)
-        {
-            for (int y = 0; y < sizeMap.y; y++)
-            {
-                // Get the string of the actual line
-                string line = _mapInfo[y];
-                // Get the actual char of the string of the actual line
-                char whichEnvironment = line[x];
-
-                if (dico[whichEnvironment] != AllStates.None)
-                {
-                    GameObject test = Instantiate(_groundPrefab, _map.transform);
-                    InitObj(test, x, y, dico[whichEnvironment]);
-                }
-            }
-        }
-    }
-
-    private void InitObj(GameObject which, int x, int y, AllStates state)
-    {
-        if (state == AllStates.None) return;
-
-        float hexOffset = 0;
-        if (x % 2 == 1)
-            hexOffset = HALF_OFFSET;
-
-        // Tp ground to its position
-        which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
-
-        // Change coords of the ground
-        which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
-
-        //Init state of ground
-        which.GetComponent<GroundStateManager>().InitState(state);
-
-        // Update _mapGrid
-        MapGrid[x, y] = which;
-
-        // Init Crystal or not
-        Vector2Int[] coordsByCurrentLvl = _levelData[_currentLevel].Coords;
-        foreach (var crystalsCoords in coordsByCurrentLvl)
-        {
-            if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
-
-            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
-            return;
-        }
-
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
-    }
-
-    public void ResetAllMap(bool nextLevel)
-    {
-        for (int x = 0; x < _mapSize.x; x++)
-        {
-            for (int y = 0; y < _mapSize.y; y++)
-            {
-                Destroy(MapGrid[x, y]);
-                MapGrid[x, y] = null;
-            }
-        }
-
-        SetupUIGround.Instance.ResetAllButtons();
-
-        ChangeLevel(nextLevel);
-    }
-
-    private void ChangeLevel(bool nextlevel)
-    {
-        if (_currentLevel < _levelData.Length - 1 && nextlevel)
-            _currentLevel++;
-
-        InitializeMap();
-    }
-
-    private void Update()
-    {
-        // Right click to Reset
-        if (Input.GetMouseButtonDown(1))
-        {
-            ResetButtonSelected();
-            // ResetAroundSelectedPrevisu();
-            TrashCrystalManager.Instance.UpdateTrashCan(false);
-        }
-    }
-
-    public void UpdateMap()
-    {
-        UpdateGround?.Invoke();
-    }
-
-    public void CheckForBiome()
-    {
-        CheckBiome?.Invoke();
-    }
-
-    // Activate or not the UI Button's indicator and update if one was selected or not
-    public void ChangeActivatedButton(GameObject button)
-    {
-        if (IsGroundFirstSelected) return;
-
-        // Activate Trash can
-        if (button != null)
-        {
-            if (_hasTrashCan)
-                TrashCrystalManager.Instance.UpdateTrashCan(true);
-            SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
-        }
-        else
-            SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
-
-        // Prevent to use an actual empty button
-        if (button != null)
-        {
-            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
-                return;
-        }
-
-        // Deactivate the last one selected
-        if (LastObjButtonSelected != null)
-            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
-        // Update the current selected or if no one was selected -> can be null
-        LastObjButtonSelected = button;
-
-        if (LastObjButtonSelected != null)
-        {
-            _isDragNDrop = false;
-            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
-            LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
-
-            // TemperatureSelected = 0;
-            // if (!LastObjButtonSelected.GetComponent<UIButton>().GetIsTemperature())
-            // {
-            // }
-            // else
-            //     TemperatureSelected = LastObjButtonSelected.GetComponent<UIButton>().GetHisTemperature();
-            //FollowMouseDND.Instance.CanMove = true;
-        }
-        else
-        {
-            _isDragNDrop = true;
-            LastStateButtonSelected = AllStates.None;
-            // TemperatureSelected = 0;
-        }
-    }
-
-    public bool CanPoseBloc()
-    {
-        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
-    }
-
-    public void DecreaseNumberButton()
-    {
-        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
-    }
-
-    public bool CheckIfButtonIsEmpty()
-    {
-        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
-    }
-
-    public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
-    {
-        if (LastObjButtonSelected != null) return;
-
-        // If was checkAround -> go swap
-        if (_lastGroundSelected != null)
-            GroundSwap(which, newCoords);
-        else
-            CheckAroundGroundSelected(which, newCoords);
-    }
-
-    private void GroundSwap(GameObject which, Vector2Int newCoords)
-    {
-        // Update map
-        MapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
-        MapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
-
-        // Change position
-        (_lastGroundSelected.transform.position, which.transform.position) =
-            (which.transform.position, _lastGroundSelected.transform.position);
-
-        // Get GroundStateManager 
-        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
-        var gWhich = which.GetComponent<GroundStateManager>();
-
-        // Protect these blocs a transformation
-        gLastGroundSelected.IsProtected = true;
-        gWhich.IsProtected = true;
-
-        // Change coords inside of GroundManager
-        gLastGroundSelected.ChangeCoords(newCoords);
-        gWhich.ChangeCoords(_lastGroundCoordsSelected);
-
-        // Reset selection's color of the two Grounds
-        gLastGroundSelected.ResetIndicator();
-        gWhich.ResetIndicator();
-        gLastGroundSelected.UpdateGroundsAround();
-        gWhich.UpdateGroundsAround();
-
-        // Get Bloc to UI
-        if (_hasInventory)
-        {
-            var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
-                gWhich.GetCurrentStateEnum());
-            SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-            // ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),String.Empty);
-        }
-
-        // Spend energy
-        CrystalsManager.Instance.ReduceEnergyBySwap();
-
-        // Get crystals if have crystals
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-
-        //ResetLastSelected
-        IsGroundFirstSelected = false;
-        // ResetAroundSelectedPrevisu();
-        ResetGroundSelected();
-        // CheckForBiome();
-
-        QuestsManager.CheckQuest();
-
-        // Reset protect
-        gLastGroundSelected.IsProtected = false;
-        gWhich.IsProtected = false;
-    }
-
-    private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
-    {
-        // Reset to start from scratch
-        ResetGroundSelected();
-        // Update lastSelected if need to call Swap() after
-        _lastGroundSelected = which;
-        _lastGroundCoordsSelected = coords;
-    }
-
+    
     // public void PrevisuAroundSelected(AllStates state)
     // {
     //     if (_lastGroundSelected != null)
     //         _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
     // }
-
-    public void UseTrashCan()
-    {
-        // print("hello trash");
-
-        if (LastObjButtonSelected == null) return;
-
-        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
-        CrystalsManager.Instance.EarnEnergyByRecycling();
-        SetupUIGround.Instance.FollowDndDeactivate();
-        TrashCrystalManager.Instance.UpdateTrashCan(false);
-        ResetButtonSelected();
-    }
-
-    public void CheckIfGameOver()
-    {
-        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
-
-        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap()
-            && inven
-            && !SetupUIGround.Instance.CheckIfGround())
-        {
-            ScreensManager.Instance.GameOver();
-        }
-    }
-
-    public bool GetIsDragNDrop()
-    {
-        return _isDragNDrop;
-    }
-
-    public int GetCurrentLevel()
-    {
-        return _currentLevel;
-    }
-
-    public string[] GetDialogAtVictory()
-    {
-        return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
-    }
-
-    public void RestartLevel()
-    {
-        ResetAllMap(false);
-        ResetAllSelection();
-        ResetButtonSelected();
-        ResetGroundSelected();
-        SetupUIGround.Instance.ResetAllButtons();
-        ScreensManager.Instance.RestartSceneOrLevel();
-        ResetAllMap(false);
-
-        // InitializeMap();
-    }
-
+    
     // public void ResetCurrentEntered()
     // {
     //     _currentEntered = null;
@@ -509,32 +523,4 @@ public class MapManager : MonoBehaviour
     //     if (_lastGroundSelected != null)
     //         _lastGroundSelected.GetComponent<GroundStateManager>().ResetAroundSelectedPrevisu();
     // }
-
-    public void ResetButtonSelected()
-    {
-        ChangeActivatedButton(null);
-    }
-
-    public void ResetGroundSelected()
-    {
-        _lastGroundSelected = null;
-        _lastGroundCoordsSelected = new Vector2Int(-1, -1);
-    }
-
-    public void ResetAllSelection()
-    {
-        ResetSelection?.Invoke();
-    }
-
-    // public void RestartScene()
-    // {
-    //     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    // }
-
-    public AllStates GetLastStateSelected()
-    {
-        return _lastGroundSelected != null
-            ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
-            : LastStateButtonSelected;
-    }
 }

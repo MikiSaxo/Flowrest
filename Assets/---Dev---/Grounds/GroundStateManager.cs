@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public enum AllStates
 {
@@ -32,22 +33,22 @@ public class GroundStateManager : MonoBehaviour
     [SerializeField] private GameObject[] _meshes;
     // [SerializeField] private GroundPrevisu _fB_Previsu;
 
-    [Header("Anim values")]
-    [SerializeField] private float _bottomBounceValue;
+    [Header("Anim values")] [SerializeField]
+    private float _bottomBounceValue;
     [SerializeField] private float _timeBounceValue;
 
-    [Header("Temp coords just to see it")]
-    [SerializeField] private Vector2Int _coords;
+    [Header("Temp coords just to see it")] [SerializeField]
+    private Vector2Int _coords;
 
     private AllStates _statesEnum;
     private AllStates _statePrevisu;
     private bool _isTreated;
     private bool _isBiome;
-    
+
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
-    
+
     #region AllState
 
     private GroundBaseState currentState;
@@ -152,16 +153,17 @@ public class GroundStateManager : MonoBehaviour
         foreach (var hexPos in hexDirections)
         {
             Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            var mapGrid = MapManager.Instance.GetMapGrid();
             // Check if inside of array
-            if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
+            if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= mapGrid.GetLength(1)) continue;
             // Check if something exist
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
+            if (mapGrid[newPos.x, newPos.y] == null) continue;
             // Check if has GroundManager
-            if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
                 continue;
             // Check if same as itself
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
                     .GetCurrentStateEnum() != GetCurrentStateEnum())
                 continue;
 
@@ -182,19 +184,24 @@ public class GroundStateManager : MonoBehaviour
         foreach (var hexPos in hexDirections)
         {
             Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            var mapGrid = MapManager.Instance.GetMapGrid();
 
             // Check if inside of array
-            if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-                newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
-            // Check if something exist
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-            // Check if has GroundManager
-            if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-            // Check if not a Mountain
-            if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
+            if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= mapGrid.GetLength(1)) continue;
 
-            var grnd = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
+            // Check if something exist
+            if (mapGrid[newPos.x, newPos.y] == null) continue;
+
+            // Check if has GroundManager
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+
+            // Check if not a Mountain
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
+            
+
+            var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             // grnd.currentState.CheckUpdate(grnd, currentState);
             var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
             grnd.ChangeState(newState);

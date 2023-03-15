@@ -64,7 +64,7 @@ public class QuestManager : MonoBehaviour
 
     private bool CheckFullFloorQuest()
     {
-        GameObject[,] map = MapManager.Instance.MapGrid;
+        GameObject[,] map = MapManager.Instance.GetMapGrid();
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -91,7 +91,7 @@ public class QuestManager : MonoBehaviour
 
     private bool CheckFlowerQuest()
     {
-        GameObject[,] map = MapManager.Instance.MapGrid;
+        GameObject[,] map = MapManager.Instance.GetMapGrid();
         int count = 0;
 
         for (int x = 0; x < map.GetLength(0); x++)
@@ -120,7 +120,7 @@ public class QuestManager : MonoBehaviour
 
     private bool CheckNoSpecificTileQuest()
     {
-        GameObject[,] map = MapManager.Instance.MapGrid;
+        GameObject[,] map = MapManager.Instance.GetMapGrid();
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
