@@ -52,9 +52,9 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
-        
+
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
-        
+
         if (MapManager.Instance.LastObjButtonSelected != null)
         {
             if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
@@ -62,14 +62,14 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.LastObjButtonSelected == null && CrystalsManager.Instance.IsEnergyInferiorToCostSwap())
             return;
-        
+
         if (MapManager.Instance.LastObjButtonSelected != null &&
             CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
             return;
 
-        if (_parent.JustBeenSwaped) return;
+        if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null) return;
 
-            other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
+        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
         //CheckHasWaterMesh();
@@ -162,6 +162,9 @@ public class GroundIndicator : MonoBehaviour
         // Launch Quest
         MapManager.Instance.QuestsManager.CheckQuest();
 
+        // Reset Two lst grounds swapped
+        MapManager.Instance.ResetTwoLastSwapped();
+
         // Reset
         // ResetAllAroundPrevisu();
         ResetForNextChange();
@@ -192,7 +195,7 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
         MapManager.Instance.ResetButtonSelected();
     }
-    
+
 
     // private void CheckHasWaterMesh()
     // {
@@ -258,7 +261,7 @@ public class GroundIndicator : MonoBehaviour
     //
     //     ResetForNextChange();
     // }
-    
+
     // private void CallAroundPrevisu()
     // {
     //     // print("hello");

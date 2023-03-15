@@ -474,6 +474,17 @@ public class MapManager : MonoBehaviour
         ResetSelection?.Invoke();
     }
 
+    public void ResetTwoLastSwapped()
+    {
+        if (_lastGroundSwaped[0] != null)
+            _lastGroundSwaped[0].JustBeenSwaped = false;
+        if (_lastGroundSwaped[1] != null)
+            _lastGroundSwaped[1].JustBeenSwaped = false;
+        
+        _lastGroundSwaped[0] = null;
+        _lastGroundSwaped[1] = null;
+    }
+
     // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
     // {
     //     for (int x = 0; x < sizeMap.x; x++)
