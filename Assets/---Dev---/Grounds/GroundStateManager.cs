@@ -27,6 +27,9 @@ public class GroundStateManager : MonoBehaviour
     public int IdOfBloc { get; set; }
     public bool IsProtected { get; set; }
     public bool IsProtectedPrevisu { get; set; }
+    
+    public bool JustBeenSwaped { get; set; }
+
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -40,11 +43,12 @@ public class GroundStateManager : MonoBehaviour
     [Header("Temp coords just to see it")] [SerializeField]
     private Vector2Int _coords;
 
-    private AllStates _statesEnum;
-    private AllStates _statePrevisu;
-    private bool _isTreated;
-    private bool _isBiome;
+    
+    // private AllStates _statePrevisu;
+    // private bool _isTreated;
+    // private bool _isBiome;
 
+    private AllStates _statesEnum;
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();

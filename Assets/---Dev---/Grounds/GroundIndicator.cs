@@ -67,7 +67,9 @@ public class GroundIndicator : MonoBehaviour
             CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
             return;
 
-        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
+        if (_parent.JustBeenSwaped) return;
+
+            other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
         //CheckHasWaterMesh();

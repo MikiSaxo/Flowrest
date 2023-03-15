@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     public bool IsGroundFirstSelected { get; set; }
     public QuestManager QuestsManager { get; private set; }
 
-    
+
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
@@ -31,6 +31,7 @@ public class MapManager : MonoBehaviour
 
     private bool _hasTrashCan;
     private bool _hasInventory;
+    private bool _blockLastGroundsSwapped;
     private bool _isDragNDrop;
     private int _currentLevel;
     private string[] _mapInfo;
@@ -40,9 +41,11 @@ public class MapManager : MonoBehaviour
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
 
+    private GroundStateManager[] _lastGroundSwaped = new GroundStateManager[2];
+
     private Dictionary<char, AllStates> dico = new Dictionary<char, AllStates>();
 
-    
+
     private const char NONE = 'N';
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
@@ -64,6 +67,7 @@ public class MapManager : MonoBehaviour
         Instance = this;
         QuestsManager = GetComponent<QuestManager>();
     }
+
     private void Start()
     {
         dico.Add(NONE, AllStates.None);
@@ -109,6 +113,9 @@ public class MapManager : MonoBehaviour
         _hasTrashCan = _levelData[_currentLevel].HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
 
+        // Update if bloc last grounds swapped
+        _blockLastGroundsSwapped = _levelData[_currentLevel].BlockLastGroundsSwapped;
+
         // Update if full floor quest
         if (_levelData[_currentLevel].WhichStateFloor.Length > 0)
             QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor[0]);
@@ -129,6 +136,7 @@ public class MapManager : MonoBehaviour
         // Init Level
         InitializeLevel(_mapSize);
     }
+
     private void InitializeLevel(Vector2Int sizeMap)
     {
         for (int x = 0; x < sizeMap.x; x++)
@@ -148,6 +156,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+
     private void InitObj(GameObject which, int x, int y, AllStates state)
     {
         if (state == AllStates.None) return;
@@ -191,6 +200,7 @@ public class MapManager : MonoBehaviour
             TrashCrystalManager.Instance.UpdateTrashCan(false);
         }
     }
+
     public void UpdateMap()
     {
         UpdateGround?.Invoke();
@@ -203,7 +213,10 @@ public class MapManager : MonoBehaviour
 
         InitializeMap();
     }
-    public void ChangeActivatedButton(GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
+
+    public void
+        ChangeActivatedButton(
+            GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
     {
         if (IsGroundFirstSelected) return;
 
@@ -306,6 +319,21 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
         _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
 
+        // Bloc for Next Swap
+        if (_blockLastGroundsSwapped)
+        {
+            gWhich.JustBeenSwaped = true;
+            gLastGroundSelected.JustBeenSwaped = true;
+            
+            if (_lastGroundSwaped[0] != null)
+                _lastGroundSwaped[0].JustBeenSwaped = false;
+            if (_lastGroundSwaped[1] != null)
+                _lastGroundSwaped[1].JustBeenSwaped = false;
+            
+            _lastGroundSwaped[0] = gWhich;
+            _lastGroundSwaped[1] = gLastGroundSelected;
+        }
+
         //ResetLastSelected
         IsGroundFirstSelected = false;
         // ResetAroundSelectedPrevisu();
@@ -318,6 +346,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.IsProtected = false;
         gWhich.IsProtected = false;
     }
+
     public void UseTrashCan()
     {
         // print("hello trash");
@@ -330,7 +359,7 @@ public class MapManager : MonoBehaviour
         TrashCrystalManager.Instance.UpdateTrashCan(false);
         ResetButtonSelected();
     }
-    
+
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
     {
         // Reset to start from scratch
@@ -339,10 +368,12 @@ public class MapManager : MonoBehaviour
         _lastGroundSelected = which;
         _lastGroundCoordsSelected = coords;
     }
+
     public bool CheckIfButtonIsEmpty()
     {
         return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
     }
+
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)
     {
         if (LastObjButtonSelected != null) return;
@@ -353,10 +384,12 @@ public class MapManager : MonoBehaviour
         else
             CheckAroundGroundSelected(which, newCoords);
     }
+
     public void CheckForBiome()
     {
         CheckBiome?.Invoke();
     }
+
     public void CheckIfGameOver()
     {
         bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
@@ -368,7 +401,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.GameOver();
         }
     }
-    
+
     public AllStates GetLastStateSelected()
     {
         return _lastGroundSelected != null
@@ -380,14 +413,17 @@ public class MapManager : MonoBehaviour
     {
         return _mapGrid;
     }
+
     public bool GetIsDragNDrop()
     {
         return _isDragNDrop;
     }
+
     public int GetCurrentLevel()
     {
         return _currentLevel;
     }
+
     public string[] GetDialogAtVictory()
     {
         return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
@@ -408,6 +444,7 @@ public class MapManager : MonoBehaviour
 
         ChangeLevel(nextLevel);
     }
+
     public void RestartLevel()
     {
         ResetAllMap(false);
@@ -436,7 +473,7 @@ public class MapManager : MonoBehaviour
     {
         ResetSelection?.Invoke();
     }
- 
+
     // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
     // {
     //     for (int x = 0; x < sizeMap.x; x++)
@@ -500,13 +537,13 @@ public class MapManager : MonoBehaviour
     //         }
     //     }
     // }
-    
+
     // public void PrevisuAroundSelected(AllStates state)
     // {
     //     if (_lastGroundSelected != null)
     //         _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
     // }
-    
+
     // public void ResetCurrentEntered()
     // {
     //     _currentEntered = null;

@@ -12,6 +12,7 @@ public class LevelData : ScriptableObject
    [Header("Mechanics")] 
    public bool HasInventory;
    public bool HasTrashCan;
+   public bool BlockLastGroundsSwapped;
 
    [Header("Quests Info")]
    public string QuestDescription;
