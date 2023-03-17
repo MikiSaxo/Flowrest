@@ -90,8 +90,9 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMap()
     {
-        var mapName = $"{_levelName}{_currentLevel}";
-
+        // var mapName = $"{_levelName}{_currentLevel}";
+        var mapName = _levelData[_currentLevel].LevelName;
+        
         // Get the text map
         string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
         _mapInfo = File.ReadAllLines(map);
@@ -99,8 +100,6 @@ public class MapManager : MonoBehaviour
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
-
-        print("_mapSize " + _mapSize);
 
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];

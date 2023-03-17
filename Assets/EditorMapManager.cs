@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using DG.Tweening;
+using TMPro;
 
 public class EditorMapManager : MonoBehaviour
 {
@@ -13,10 +15,13 @@ public class EditorMapManager : MonoBehaviour
     [SerializeField] private Vector2Int _mapSize;
     [SerializeField] private GameObject _groundsParent;
     [SerializeField] private GameObject _groundEditorPrefab;
+    [SerializeField] private TMP_InputField _inputFieldMapName;
     [SerializeField] private GameObject[] _hexGroundMeshes;
 
     private char _currentCharSelected;
     private char[,] _mapGrid;
+    private string _mapName;
+    private GameObject[,] _mapGridGround;
     private GameObject _lastObjButtonSelected { get; set; }
     private readonly Dictionary<char, GameObject> _groundDico = new Dictionary<char, GameObject>();
 
@@ -65,6 +70,7 @@ public class EditorMapManager : MonoBehaviour
     {
         // Init the grids
         _mapGrid = new char[_mapSize.x, _mapSize.y];
+        _mapGridGround = new GameObject[_mapSize.x, _mapSize.y];
 
         // Init Level
         InitializeLevel(_mapSize);
@@ -95,6 +101,7 @@ public class EditorMapManager : MonoBehaviour
         ground.GetComponent<EditorGroundManager>().UpdateCoords(x, y);
 
         _mapGrid[x, y] = NONE;
+        _mapGridGround[x, y] = ground;
     }
 
     private void Update()
@@ -123,6 +130,17 @@ public class EditorMapManager : MonoBehaviour
     {
         UpdateMap(letter, coords.x, coords.y);
     }
+
+    public void UpdateMapName()
+    {
+        _mapName = _inputFieldMapName.text;
+
+        if (_inputFieldMapName.text == "") return;
+        
+        CreateTextFile();
+
+        _inputFieldMapName.text = "";
+    }
     
     public void ChangeActivatedButton(GameObject button)
     {
@@ -136,9 +154,20 @@ public class EditorMapManager : MonoBehaviour
             _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
     }
 
+    public void ResetAllMap()
+    {
+        for (int y = 0; y < _mapGrid.GetLength(1); y++) 
+        {
+            for (int x = 0; x < _mapGrid.GetLength(0); x++) 
+            {
+                _mapGridGround[x, y].GetComponent<EditorGroundManager>().DestroyGround();
+            }
+        }
+    }
+
     public void CreateTextFile()
     {
-        string textName = Application.streamingAssetsPath + "/Map-Init/" + "Michel0" + ".txt";
+        string textName = Application.streamingAssetsPath + "/Map-Init/" + _mapName + ".txt";
 
         if (File.Exists(textName))
             File.Delete(textName);

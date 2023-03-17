@@ -19,6 +19,8 @@ public class EditorGroundManager : MonoBehaviour
     private GameObject _currentGround;
     private char _currentCharState;
     private Vector2Int _coords;
+    
+    private const char NONE = 'N';
 
     private void Start()
     {
@@ -49,7 +51,7 @@ public class EditorGroundManager : MonoBehaviour
     {
         if (_currentGround != null)
         {
-            _currentCharState = 'N';
+            _currentCharState = NONE;
             Destroy(_currentGround);
         }
         
@@ -84,11 +86,18 @@ public class EditorGroundManager : MonoBehaviour
             InstantiateGround();
         
         if(Input.GetMouseButton(1) && _isEntered)
-            Destroy(_currentGround);
+            DestroyGround();
     }
 
     public void UpdateCoords(int x, int y)
     {
         _coords = new Vector2Int(x, y);
+    }
+
+    public void DestroyGround()
+    {
+        _currentCharState = NONE;
+        EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
+        Destroy(_currentGround);
     }
 }
