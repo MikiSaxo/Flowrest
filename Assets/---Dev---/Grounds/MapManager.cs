@@ -100,6 +100,8 @@ public class MapManager : MonoBehaviour
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
 
+        print("_mapSize " + _mapSize);
+
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 

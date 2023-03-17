@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using DG.Tweening;
 
 public class EditorMapManager : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class EditorMapManager : MonoBehaviour
 
     [SerializeField] private float _distance;
     [SerializeField] private Vector2Int _mapSize;
-    [SerializeField] private GameObject _map;
+    [SerializeField] private GameObject _groundsParent;
     [SerializeField] private GameObject _groundEditorPrefab;
     [SerializeField] private GameObject[] _hexGroundMeshes;
 
@@ -55,7 +57,7 @@ public class EditorMapManager : MonoBehaviour
         _groundDico.Add(MOUNTAIN, _hexGroundMeshes[10]);
 
         _currentCharSelected = NONE;
-        
+
         InitializeMap();
     }
 
@@ -74,7 +76,7 @@ public class EditorMapManager : MonoBehaviour
         {
             for (int y = 0; y < sizeMap.y; y++)
             {
-                GameObject ground = Instantiate(_groundEditorPrefab, _map.transform);
+                GameObject ground = Instantiate(_groundEditorPrefab, _groundsParent.transform);
                 InitObj(ground, x, y);
             }
         }
@@ -82,19 +84,44 @@ public class EditorMapManager : MonoBehaviour
 
     private void InitObj(GameObject ground, int x, int y)
     {
+        ground.transform.DORotate(Vector3.zero,0);
+
         float hexOffset = 0;
         if (x % 2 == 1)
             hexOffset = HALF_OFFSET;
 
         ground.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
-        
-        _mapGrid[x, y] = NONE;
 
+        ground.GetComponent<EditorGroundManager>().UpdateCoords(x, y);
+
+        _mapGrid[x, y] = NONE;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            CreateTextFile();
+        // if (Input.GetMouseButtonDown(1))
+        // {
+        //     if(_lastObjButtonSelected != null)
+        //         _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+        //     _currentCharSelected = NONE;
+        // }
     }
 
     public void UpdateCharSelected(string letter)
     {
         _currentCharSelected = letter[0];
+    }
+
+    public void UpdateMap(char letter, int x, int y)
+    {
+        _mapGrid[x, y] = letter;
+    }
+
+    public void UpdateMap(char letter, Vector2Int coords)
+    {
+        UpdateMap(letter, coords.x, coords.y);
     }
     
     public void ChangeActivatedButton(GameObject button)
@@ -109,6 +136,35 @@ public class EditorMapManager : MonoBehaviour
             _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
     }
 
+    public void CreateTextFile()
+    {
+        string textName = Application.streamingAssetsPath + "/Map-Init/" + "Michel0" + ".txt";
+
+        if (File.Exists(textName))
+            File.Delete(textName);
+
+        string map = ConvertMapGridToString();
+        File.WriteAllText(textName, map);
+
+        RefreshEditorProjectWindow();
+    }
+
+    private string ConvertMapGridToString()
+    {
+        var str = String.Empty;
+        
+        for (int y = 0; y < _mapGrid.GetLength(1); y++) 
+        {
+            for (int x = 0; x < _mapGrid.GetLength(0); x++) 
+            {
+                str += _mapGrid[x, y];
+            }
+            str += "\n";
+        }
+
+        return str;
+    }
+
     public GameObject GetObjSelectedButton()
     {
         return _groundDico[_currentCharSelected];
@@ -117,5 +173,12 @@ public class EditorMapManager : MonoBehaviour
     public char GetCharSelectedButton()
     {
         return _currentCharSelected;
+    }
+    
+    void RefreshEditorProjectWindow()
+    {
+#if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+#endif
     }
 }

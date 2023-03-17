@@ -18,6 +18,7 @@ public class EditorGroundManager : MonoBehaviour
     private bool _isEntered;
     private GameObject _currentGround;
     private char _currentCharState;
+    private Vector2Int _coords;
 
     private void Start()
     {
@@ -57,6 +58,8 @@ public class EditorGroundManager : MonoBehaviour
         GameObject go = Instantiate(EditorMapManager.Instance.GetObjSelectedButton(), _indicator.transform);
         _currentGround = go;
         _currentCharState = EditorMapManager.Instance.GetCharSelectedButton();
+        
+        EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
     }
 
     private void UpdateSizeIndicator(float size)
@@ -79,5 +82,13 @@ public class EditorGroundManager : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && _isEntered)
             InstantiateGround();
+        
+        if(Input.GetMouseButton(1) && _isEntered)
+            Destroy(_currentGround);
+    }
+
+    public void UpdateCoords(int x, int y)
+    {
+        _coords = new Vector2Int(x, y);
     }
 }
