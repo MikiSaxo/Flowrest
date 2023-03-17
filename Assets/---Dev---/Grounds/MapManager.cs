@@ -154,8 +154,8 @@ public class MapManager : MonoBehaviour
 
                 if (dico[whichEnvironment] != AllStates.None)
                 {
-                    GameObject test = Instantiate(_groundPrefab, _map.transform);
-                    InitObj(test, x, y, dico[whichEnvironment]);
+                    GameObject ground = Instantiate(_groundPrefab, _map.transform);
+                    InitObj(ground, x, y, dico[whichEnvironment]);
                 }
             }
         }

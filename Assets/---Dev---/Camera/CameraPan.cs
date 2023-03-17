@@ -10,15 +10,14 @@ public class CameraPan : MonoBehaviour
     private bool _canZoom;
     private float groundZ = 0;
 
-    [Header("Zoom")]
-    [SerializeField] private float _zoomSpeed;
-    
-    [Header("Anim Rotation")]
-    [SerializeField] private Vector2Int _rotaXStartEnd;
+    [Header("Zoom")] [SerializeField] private float _zoomSpeed;
+
+    [Header("Anim Rotation")] [SerializeField]
+    private Vector2Int _rotaXStartEnd;
+
     [SerializeField] private float _durationAnimRota;
 
-    [Header("Block Cam")]
-    [Tooltip("It represents the min and max value for the X position")] [SerializeField]
+    [Header("Block Cam")] [Tooltip("It represents the min and max value for the X position")] [SerializeField]
     private Vector2Int _minMaxPosX;
 
     [Tooltip("It represents the min and max value for the Y position")] [SerializeField]
@@ -27,10 +26,13 @@ public class CameraPan : MonoBehaviour
     [Tooltip("It represents the min and max value for the Z position")] [SerializeField]
     private Vector2Int _minMaxPosZ;
 
+    private Vector3 _camPosStartDrag;
+
     private void Start()
     {
         _cam = GetComponent<Camera>();
         _canZoom = true;
+
 
         _cam.transform.DORotate(new Vector3(_rotaXStartEnd.x, 0, 0), 0);
         _cam.transform.DORotate(new Vector3(_rotaXStartEnd.y, 0, 0), _durationAnimRota);
@@ -48,6 +50,8 @@ public class CameraPan : MonoBehaviour
         // Get the startPos of the mouse
         if (Input.GetMouseButtonDown(2))
         {
+            groundZ = _cam.transform.position.z;
+            // _camPosStartDrag = _cam.transform.position;
             var getPos = GetWorldPosition(groundZ);
             // if (getPos.y < 0)
             getPos = new Vector3(getPos.x, 10, getPos.z);
@@ -59,9 +63,8 @@ public class CameraPan : MonoBehaviour
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
-
             // Add the dif to the cam pos and check if it's clamped
-            _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.y));
+            _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.z));
         }
     }
 
