@@ -218,10 +218,10 @@ public class MapManager : MonoBehaviour
         InitializeMap();
     }
 
-    public void
-        ChangeActivatedButton(
-            GameObject button) // Activate or not the UI Button's indicator and update if one was selected or not
+    public void ChangeActivatedButton(GameObject button)
     {
+        // Activate or not the UI Button's indicator and update if one was selected or not
+
         if (IsGroundFirstSelected) return;
 
         // Activate Trash can
@@ -313,7 +313,8 @@ public class MapManager : MonoBehaviour
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
             SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-            ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),String.Empty);
+            ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),
+                String.Empty);
         }
 
         // Spend energy

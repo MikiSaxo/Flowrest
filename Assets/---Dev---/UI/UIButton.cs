@@ -26,21 +26,12 @@ public class UIButton : MonoBehaviour
 
     public void Setup(string text, Color color, Sprite icon, int nbLeft, AllStates stat)
     {
-        // SetupTemperature(text, color, nbLeft);
         _iconButton.sprite = icon;
         _iconButton.color = color;
         _textButton.text = text;
         UpdateNumberLeft(nbLeft);
         _stateButton = stat;
     }
-
-    // public void SetupTemperature(string text, Color color, int nbLeft)
-    // {
-    //     _colorButton.color = color;
-    //     _textButton.text = text;
-    //     SetupNumberLeftTemperature(nbLeft);
-    //     // ChangeNumberLeft(nbLeft);
-    // }
 
     public void ActivateSelectedIcon(bool which)
     {
@@ -61,7 +52,6 @@ public class UIButton : MonoBehaviour
     {
         _numberGroundLeft += numberToAdd;
     
-        //_textNumber.text = _isTemperature ? $"{_numberGroundLeft/9}" : $"{_numberGroundLeft}";
         _textNumber.text = $"{_numberGroundLeft}";
 
         if (_numberGroundLeft <= 0)
@@ -74,21 +64,4 @@ public class UIButton : MonoBehaviour
         _numberGroundLeft = 0;
         SetupUIGround.Instance.GroundEmpty((int)_stateButton);
     }
-
-    // public void SetupNumberLeftTemperature(int nb)
-    // {
-    //     _numberGroundLeft += nb;
-    //     _numberGroundLeft *= 9;
-    //     _textNumber.text = $"{_numberGroundLeft/9}";
-    // }
-
-    // public bool GetIsTemperature()
-    // {
-    //     return _isTemperature;
-    // }
-    //
-    // public int GetHisTemperature()
-    // {
-    //     return _temperature;
-    // }
 }

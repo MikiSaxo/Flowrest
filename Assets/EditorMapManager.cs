@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class EditorMapManager : MonoBehaviour
 {
+    public static EditorMapManager Instance;
+
+    [SerializeField] private float _distance;
     [SerializeField] private Vector2Int _mapSize;
     [SerializeField] private GameObject _map;
     [SerializeField] private GameObject _groundEditorPrefab;
-    [SerializeField] private float _distance;
+    [SerializeField] private GameObject[] _hexGroundMeshes;
 
+    private char _currentCharSelected;
     private char[,] _mapGrid;
+    private GameObject _lastObjButtonSelected { get; set; }
+    private readonly Dictionary<char, GameObject> _groundDico = new Dictionary<char, GameObject>();
 
     private const char NONE = 'N';
     private const char PLAIN = 'P';
@@ -28,8 +34,28 @@ public class EditorMapManager : MonoBehaviour
     private const float QUARTER_OFFSET = .85f;
     private const float HALF_OFFSET = .5f;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
+        _groundDico.Add(NONE, null);
+        _groundDico.Add(PLAIN, _hexGroundMeshes[0]);
+        _groundDico.Add(DESERT, _hexGroundMeshes[1]);
+        _groundDico.Add(WATER, _hexGroundMeshes[2]);
+        _groundDico.Add(TROPICAL, _hexGroundMeshes[3]);
+        _groundDico.Add(SAVANNA, _hexGroundMeshes[4]);
+        _groundDico.Add(GEYSER, _hexGroundMeshes[5]);
+        _groundDico.Add(SNOW, _hexGroundMeshes[6]);
+        _groundDico.Add(POLAR_DESERT, _hexGroundMeshes[7]);
+        _groundDico.Add(TUNDRA, _hexGroundMeshes[8]);
+        _groundDico.Add(SWAMP, _hexGroundMeshes[9]);
+        _groundDico.Add(MOUNTAIN, _hexGroundMeshes[10]);
+
+        _currentCharSelected = NONE;
+        
         InitializeMap();
     }
 
@@ -64,5 +90,32 @@ public class EditorMapManager : MonoBehaviour
         
         _mapGrid[x, y] = NONE;
 
+    }
+
+    public void UpdateCharSelected(string letter)
+    {
+        _currentCharSelected = letter[0];
+    }
+    
+    public void ChangeActivatedButton(GameObject button)
+    {
+        // Deactivate the last one selected
+        if (_lastObjButtonSelected != null)
+            _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+        // Update the current selected or if no one was selected -> can be null
+        _lastObjButtonSelected = button;
+
+        if (_lastObjButtonSelected != null)
+            _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
+    }
+
+    public GameObject GetObjSelectedButton()
+    {
+        return _groundDico[_currentCharSelected];
+    }
+
+    public char GetCharSelectedButton()
+    {
+        return _currentCharSelected;
     }
 }

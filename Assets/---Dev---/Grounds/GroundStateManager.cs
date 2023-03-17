@@ -482,7 +482,6 @@ public class GroundStateManager : MonoBehaviour
     //
     //     _stockPrevisu.Clear();
     // }
-
     
     //
     // public void GetNewPrevisu(AllStates state)

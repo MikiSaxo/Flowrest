@@ -51,7 +51,10 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void OnMouseEntered()
     {
-        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        if (ScreensManager.Instance != null)
+        {
+            if (ScreensManager.Instance.GetIsDialogTime()) return;
+        }
         
         if (!_isTriggered) return;
 
