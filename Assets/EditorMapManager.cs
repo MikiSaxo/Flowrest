@@ -15,6 +15,7 @@ public class EditorMapManager : MonoBehaviour
     [SerializeField] private Vector2Int _mapSize;
     [SerializeField] private GameObject _groundsParent;
     [SerializeField] private GameObject _groundEditorPrefab;
+    [SerializeField] private EditorSaveMap _editorSaveMap;
     [SerializeField] private TMP_InputField _inputFieldMapName;
     [SerializeField] private GameObject[] _hexGroundMeshes;
 
@@ -106,14 +107,17 @@ public class EditorMapManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-            CreateTextFile();
         // if (Input.GetMouseButtonDown(1))
         // {
         //     if(_lastObjButtonSelected != null)
         //         _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
         //     _currentCharSelected = NONE;
         // }
+    }
+
+    public void SaveMap()
+    {
+        _editorSaveMap.UpdateMapName(_mapGrid);
     }
 
     public void UpdateCharSelected(string letter)
@@ -131,17 +135,6 @@ public class EditorMapManager : MonoBehaviour
         UpdateMap(letter, coords.x, coords.y);
     }
 
-    public void UpdateMapName()
-    {
-        _mapName = _inputFieldMapName.text;
-
-        if (_inputFieldMapName.text == "") return;
-        
-        CreateTextFile();
-
-        _inputFieldMapName.text = "";
-    }
-    
     public void ChangeActivatedButton(GameObject button)
     {
         // Deactivate the last one selected
@@ -165,35 +158,6 @@ public class EditorMapManager : MonoBehaviour
         }
     }
 
-    public void CreateTextFile()
-    {
-        string textName = Application.streamingAssetsPath + "/Map-Init/" + _mapName + ".txt";
-
-        if (File.Exists(textName))
-            File.Delete(textName);
-
-        string map = ConvertMapGridToString();
-        File.WriteAllText(textName, map);
-
-        RefreshEditorProjectWindow();
-    }
-
-    private string ConvertMapGridToString()
-    {
-        var str = String.Empty;
-        
-        for (int y = 0; y < _mapGrid.GetLength(1); y++) 
-        {
-            for (int x = 0; x < _mapGrid.GetLength(0); x++) 
-            {
-                str += _mapGrid[x, y];
-            }
-            str += "\n";
-        }
-
-        return str;
-    }
-
     public GameObject GetObjSelectedButton()
     {
         return _groundDico[_currentCharSelected];
@@ -202,12 +166,5 @@ public class EditorMapManager : MonoBehaviour
     public char GetCharSelectedButton()
     {
         return _currentCharSelected;
-    }
-    
-    void RefreshEditorProjectWindow()
-    {
-#if UNITY_EDITOR
-        UnityEditor.AssetDatabase.Refresh();
-#endif
     }
 }
