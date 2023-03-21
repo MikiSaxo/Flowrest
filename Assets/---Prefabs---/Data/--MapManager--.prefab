@@ -47,12 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe5f04720cac6a40a4d9d95d4f81c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapSize: {x: 0, y: 0}
   _map: {fileID: 0}
   _groundPrefab: {fileID: 7614459207405979688, guid: 8eed7b7805b7ba942b07e24e6da88f74, type: 3}
   _distance: 10
   _levelName: 
-  _levelTotalNumber: 0
   _levelData: []
 --- !u!114 &6942186750416081792
 MonoBehaviour:
@@ -66,14 +64,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddfd435b252c9cf4a864d92e80e6d450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tileAllConditions: []
+  _tileAllConditions:
+  - Current: 0
+    Other: 0
+    Result: 0
   TileConditionsPlain:
   - Current: 0
     Other: 1
     Result: 4
   - Current: 0
     Other: 2
-    Result: 3
+    Result: 9
   - Current: 0
     Other: 0
     Result: 0
@@ -138,7 +139,7 @@ MonoBehaviour:
     Result: 2
   - Current: 2
     Other: 0
-    Result: 3
+    Result: 9
   - Current: 2
     Other: 3
     Result: 2
