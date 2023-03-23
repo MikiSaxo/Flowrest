@@ -29,6 +29,7 @@ public class MapManager : MonoBehaviour
     [Header("Level")] [SerializeField] private string _levelName;
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
+    [SerializeField] private string[] _lvlDataName;
 
     private bool _hasTrashCan;
     private bool _hasInventory;
@@ -41,6 +42,8 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
+
+    private LvlData _lvlData;
 
     private GroundStateManager[] _lastGroundSwaped = new GroundStateManager[2];
 
@@ -183,7 +186,15 @@ public class MapManager : MonoBehaviour
         _mapGrid[x, y] = which;
 
         // Init Crystal or not
+        // string coords = Application.streamingAssetsPath + $"/Map-Init/{_lvlDataName[_currentLevel]}.txt";
+        // print(coords);
+        // var _coordsInfo = File.ReadAllText(coords);
+        //
+        // _lvlData = JsonUtility.FromJson<LvlData>(_coordsInfo);
+        // Vector2Int[] coordsByCurrentLvl = _lvlData.Coords.ToArray();
+        
         Vector2Int[] coordsByCurrentLvl = _levelData[_currentLevel].Coords;
+        
         foreach (var crystalsCoords in coordsByCurrentLvl)
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;

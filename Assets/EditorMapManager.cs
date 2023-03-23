@@ -15,8 +15,6 @@ public class EditorMapManager : MonoBehaviour
     [SerializeField] private Vector2Int _mapSize;
     [SerializeField] private GameObject _groundsParent;
     [SerializeField] private GameObject _groundEditorPrefab;
-    [SerializeField] private EditorSaveMap _editorSaveMap;
-    [SerializeField] private TMP_InputField _inputFieldMapName;
     [SerializeField] private GameObject[] _hexGroundMeshes;
 
     private char _currentCharSelected;
@@ -38,6 +36,8 @@ public class EditorMapManager : MonoBehaviour
     private const char TUNDRA = 'U';
     private const char SWAMP = 'A';
     private const char MOUNTAIN = 'M';
+    
+    private const char ENERGY = 'C';
 
     private const float QUARTER_OFFSET = .85f;
     private const float HALF_OFFSET = .5f;
@@ -117,7 +117,7 @@ public class EditorMapManager : MonoBehaviour
 
     public void SaveMap()
     {
-        _editorSaveMap.UpdateMapName(_mapGrid);
+        EditorSaveMap.Instance.UpdateMapName(_mapGrid);
     }
 
     public void UpdateCharSelected(string letter)

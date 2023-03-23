@@ -31,44 +31,6 @@ public class EditorSetupUIGround : MonoBehaviour
         //UpdateFB((AllStates)whichState);
     }
 
-    // private void UpdateFB(AllStates state)
-    // {
-    //     if (MapManager.Instance.IsGroundFirstSelected) return;
-    //
-    //     MapManager.Instance.ResetButtonSelected();
-    //     MapManager.Instance.ResetGroundSelected();
-    //     
-    //     if(_hasInventory)
-    //         TrashCrystalManager.Instance.UpdateTrashCan(true);
-    //
-    //     _fBDnd.GetComponent<FollowMouseDND>()
-    //         .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
-    //     MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
-    //
-    //     if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
-    //     {
-    //         MapManager.Instance.LastObjButtonSelected = null;
-    //         return;
-    //     }
-    //
-    //     _fBDnd.SetActive(true);
-    //     _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
-    //     MapManager.Instance.LastStateButtonSelected = state;
-    //     MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
-    //     GroundStockage.ForcedOpen = true;
-    // }
-    // public void EndFb() // Use by Ground buttons
-    // {
-    //     if (MapManager.Instance.IsGroundFirstSelected) return;
-    //
-    //     _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
-    //     
-    //     TrashCrystalManager.Instance.UpdateTrashCan(false);
-    //
-    //     // n_MapManager.Instance.ResetButtonSelected();
-    //     // n_MapManager.Instance.ResetGroundSelected();
-    // }
-
     public void AddNewGround(int which)
     {
         _groundButtons[which].SetActive(true);
@@ -108,4 +70,42 @@ public class EditorSetupUIGround : MonoBehaviour
     {
         //_fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
     }
+    
+    // private void UpdateFB(AllStates state)
+    // {
+    //     if (MapManager.Instance.IsGroundFirstSelected) return;
+    //
+    //     MapManager.Instance.ResetButtonSelected();
+    //     MapManager.Instance.ResetGroundSelected();
+    //     
+    //     if(_hasInventory)
+    //         TrashCrystalManager.Instance.UpdateTrashCan(true);
+    //
+    //     _fBDnd.GetComponent<FollowMouseDND>()
+    //         .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
+    //     MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
+    //
+    //     if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
+    //     {
+    //         MapManager.Instance.LastObjButtonSelected = null;
+    //         return;
+    //     }
+    //
+    //     _fBDnd.SetActive(true);
+    //     _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
+    //     MapManager.Instance.LastStateButtonSelected = state;
+    //     MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
+    //     GroundStockage.ForcedOpen = true;
+    // }
+    // public void EndFb() // Use by Ground buttons
+    // {
+    //     if (MapManager.Instance.IsGroundFirstSelected) return;
+    //
+    //     _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
+    //     
+    //     TrashCrystalManager.Instance.UpdateTrashCan(false);
+    //
+    //     // n_MapManager.Instance.ResetButtonSelected();
+    //     // n_MapManager.Instance.ResetGroundSelected();
+    // }
 }

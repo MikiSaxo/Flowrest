@@ -10,6 +10,7 @@ public class EditorGroundManager : MonoBehaviour
 {
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject _cube;
+    [SerializeField] private GameObject _energy;
     [SerializeField] private float _valueAnimSize;
     [SerializeField] private float _valueSize;
     [SerializeField] private float _valueMovingUp;
@@ -19,7 +20,7 @@ public class EditorGroundManager : MonoBehaviour
     private GameObject _currentGround;
     private char _currentCharState;
     private Vector2Int _coords;
-    
+
     private const char NONE = 'N';
 
     private void Start()
@@ -47,23 +48,6 @@ public class EditorGroundManager : MonoBehaviour
         UpdateSizeIndicator(1);
     }
 
-    private void InstantiateGround()
-    {
-        if (_currentGround != null)
-        {
-            _currentCharState = NONE;
-            Destroy(_currentGround);
-        }
-        
-        if (EditorMapManager.Instance.GetObjSelectedButton() == null) return;
-
-        GameObject go = Instantiate(EditorMapManager.Instance.GetObjSelectedButton(), _indicator.transform);
-        _currentGround = go;
-        _currentCharState = EditorMapManager.Instance.GetCharSelectedButton();
-        
-        EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
-    }
-
     private void UpdateSizeIndicator(float size)
     {
         _cube.transform.DOKill();
@@ -77,16 +61,24 @@ public class EditorGroundManager : MonoBehaviour
         if (_isEntered)
             _indicator.transform.DOMoveY(_indicator.transform.position.y + _valueMovingUp, _valueAnimSize);
         else
-            _indicator.transform.DOMoveY(_startPosY, _valueAnimSize/2);
+            _indicator.transform.DOMoveY(_startPosY, _valueAnimSize / 2);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && _isEntered)
+        if (Input.GetMouseButton(0) && _isEntered && EditorMapManager.Instance.GetCharSelectedButton() != 'C')
             InstantiateGround();
-        
-        if(Input.GetMouseButton(1) && _isEntered)
-            DestroyGround();
+
+        if (Input.GetMouseButton(1) && _isEntered)
+        {
+            if (EditorMapManager.Instance.GetCharSelectedButton() == 'C')
+                DestroyEnergy();
+            else
+                DestroyGround();
+        }
+
+        if (Input.GetMouseButtonDown(0) && _isEntered && EditorMapManager.Instance.GetCharSelectedButton() == 'C')
+            InstantiateEnergy();
     }
 
     public void UpdateCoords(int x, int y)
@@ -94,8 +86,39 @@ public class EditorGroundManager : MonoBehaviour
         _coords = new Vector2Int(x, y);
     }
 
+    private void InstantiateGround()
+    {
+        if (_currentGround != null)
+        {
+            _currentCharState = NONE;
+            Destroy(_currentGround);
+        }
+
+        if (EditorMapManager.Instance.GetObjSelectedButton() == null) return;
+
+        GameObject go = Instantiate(EditorMapManager.Instance.GetObjSelectedButton(), _indicator.transform);
+        _currentGround = go;
+        _currentCharState = EditorMapManager.Instance.GetCharSelectedButton();
+
+        EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
+    }
+
+    private void InstantiateEnergy()
+    {
+        if (_currentGround == null) return;
+
+        EditorSaveMap.Instance.UpdateCoordsEnergy(_coords);
+        _energy.SetActive(true);
+    }
+
+    private void DestroyEnergy()
+    {
+        _energy.SetActive(false);
+    }
+
     public void DestroyGround()
     {
+        DestroyEnergy();
         _currentCharState = NONE;
         EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
         Destroy(_currentGround);
