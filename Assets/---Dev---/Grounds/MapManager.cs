@@ -26,10 +26,10 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
 
-    [Header("Level")] [SerializeField] private string _levelName;
+    // [Header("Level")] [SerializeField] private string _levelName;
+    // [SerializeField] private string[] _lvlDataName;
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
-    [SerializeField] private string[] _lvlDataName;
 
     private bool _hasTrashCan;
     private bool _hasInventory;
@@ -95,7 +95,7 @@ public class MapManager : MonoBehaviour
     {
         // var mapName = $"{_levelName}{_currentLevel}";
         var mapName = _levelData[_currentLevel].LevelName;
-        
+        var curLvl = _levelData[_currentLevel];
         // Get the text map
         string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
         _mapInfo = File.ReadAllLines(map);
@@ -108,33 +108,37 @@ public class MapManager : MonoBehaviour
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
         // Init energy
-        CrystalsManager.Instance.InitEnergy(_levelData[_currentLevel].EnergyAtStart);
+        CrystalsManager.Instance.InitEnergy(curLvl.EnergyAtStart);
 
         // Update if has inventory
-        _hasInventory = _levelData[_currentLevel].HasInventory;
+        _hasInventory = curLvl.HasInventory;
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
 
         // Update if has trash can
-        _hasTrashCan = _levelData[_currentLevel].HasTrashCan;
+        _hasTrashCan = curLvl.HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
 
         // Update if bloc last grounds swapped
-        _blockLastGroundsSwapped = _levelData[_currentLevel].BlockLastGroundsSwapped;
+        _blockLastGroundsSwapped = curLvl.BlockLastGroundsSwapped;
 
         // Reset Quest Number
         QuestsManager.ResetQuestNumbers();
 
         // Update if full floor quest
-        if (_levelData[_currentLevel].WhichStateFloor.Length > 0)
-            QuestsManager.InitQuestFullFloor(_levelData[_currentLevel].WhichStateFloor[0]);
+        if (curLvl.WhichStateFloor.Length > 0)
+            QuestsManager.InitQuestFullFloor(curLvl.WhichStateFloor[0]);
 
         // Update if flower quest
         if (_levelData[_currentLevel].WhichStateFlower.Length > 0)
-            QuestsManager.InitQuestFlower(_levelData[_currentLevel].WhichStateFlower);
+            QuestsManager.InitQuestFlower(curLvl.WhichStateFlower);
 
         // Update if No Specific Tile quest
-        if (_levelData[_currentLevel].WhichStateNoSpecificTiles.Length > 0)
-            QuestsManager.InitQuestNoSpecificTiles(_levelData[_currentLevel].WhichStateNoSpecificTiles);
+        if (curLvl.WhichStateNoSpecificTiles.Length > 0)
+            QuestsManager.InitQuestNoSpecificTiles(curLvl.WhichStateNoSpecificTiles);
+        
+        // Update if Tile Chain quest
+        if(curLvl.WhichTileChain.Length > 0)
+            QuestsManager.InitQuestTileChain(curLvl.WhichTileChain[0], curLvl.NumberTileChain);
 
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);

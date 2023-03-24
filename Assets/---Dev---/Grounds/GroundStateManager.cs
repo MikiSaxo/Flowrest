@@ -27,26 +27,27 @@ public class GroundStateManager : MonoBehaviour
     public int IdOfBloc { get; set; }
     public bool IsProtected { get; set; }
     public bool IsProtectedPrevisu { get; set; }
-    
+
     public bool JustBeenSwaped { get; set; }
 
+    public bool IsTreated { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
     [SerializeField] private GameObject[] _meshes;
-    
-    [Header("Feedbacks")]
-    [SerializeField] private GroundPrevisu _fbPrevisu;
+
+    [Header("Feedbacks")] [SerializeField] private GroundPrevisu _fbPrevisu;
     [SerializeField] private GameObject _fbReloadEnergy;
 
     [Header("Anim values")] [SerializeField]
     private float _bottomBounceValue;
+
     [SerializeField] private float _timeBounceValue;
 
     [Header("Temp coords just to see it")] [SerializeField]
     private Vector2Int _coords;
 
-    
+
     // private AllStates _statePrevisu;
     // private bool _isTreated;
     // private bool _isBiome;
@@ -55,6 +56,9 @@ public class GroundStateManager : MonoBehaviour
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
+    private int _countTileChain;
+    private List<GroundStateManager> _stockTileChain = new List<GroundStateManager>();
+
 
     #region AllState
 
@@ -182,6 +186,41 @@ public class GroundStateManager : MonoBehaviour
         return count >= 6;
     }
 
+    public int CountSameTileConnected(GameObject[,] mapGrid, Vector2Int coords, AllStates state)
+    {
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
+        foreach (var dir in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= mapGrid.GetLength(1)) continue;
+            // Check if not null
+            if (mapGrid[newPos.x, newPos.y] == null) continue;
+            // Check if has GroundStateManager
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+            // Check if has been already treated
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
+            // Check if same State
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() !=
+                state) continue;
+
+            // It's good 
+            _countTileChain++;
+            mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
+            _stockTileChain.Add( mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>());
+            // Restart the recursive
+            CountSameTileConnected(mapGrid, newPos, state);
+        }
+
+        return _countTileChain;
+    }
+
+   
+
     public void UpdateGroundsAround()
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
@@ -206,7 +245,7 @@ public class GroundStateManager : MonoBehaviour
             // Check if not a Mountain
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
                     .GetCurrentStateEnum() == AllStates.Mountain) continue;
-            
+
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             // grnd.currentState.CheckUpdate(grnd, currentState);
@@ -230,7 +269,6 @@ public class GroundStateManager : MonoBehaviour
     public void UpdateFBReloadEnergy(bool state)
     {
         _fbReloadEnergy.SetActive(state);
-
     }
 
     private void BounceAnim()
@@ -259,6 +297,7 @@ public class GroundStateManager : MonoBehaviour
     {
         return _fbPrevisu.GetIconTile(index);
     }
+
     public Vector2Int GetCoords()
     {
         return _coords;
@@ -271,6 +310,16 @@ public class GroundStateManager : MonoBehaviour
         // StartCoroutine(WaitToCheckForBiome());
     }
 
+    public void ResetCountTileChain()
+    {
+        foreach (var grn in _stockTileChain)
+        {
+            grn.IsTreated = false;
+        }
+        _stockTileChain.Clear();
+        _countTileChain = 0;
+        IsTreated = false;
+    }
     private void OnDisable()
     {
         // MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
@@ -482,7 +531,7 @@ public class GroundStateManager : MonoBehaviour
     //
     //     _stockPrevisu.Clear();
     // }
-    
+
     //
     // public void GetNewPrevisu(AllStates state)
     // {
