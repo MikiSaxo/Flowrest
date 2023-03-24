@@ -2730,9 +2730,9 @@ MonoBehaviour:
   _numberToDisplay: {fileID: 1321497134}
   _howBase: 0
   _earnedByGround: 8
-  _earnedByRecycling: 6
-  _costBySwap: 0
-  _costByLandingGround: 0
+  _earnedByRecycling: 2
+  _costBySwap: 5
+  _costByLandingGround: 3
 --- !u!114 &762752806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2846,6 +2846,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoomSpeed: 5
+  _rotaXStartEnd: {x: 0, y: 0}
+  _durationAnimRota: 0
   _minMaxPosX: {x: 0, y: 0}
   _minMaxPosY: {x: 0, y: 0}
   _minMaxPosZ: {x: 0, y: 0}
@@ -6197,12 +6199,14 @@ MonoBehaviour:
   _menuPauseParent: {fileID: 0}
   _menuQuest: {fileID: 0}
   _descriptionQuest: {fileID: 0}
+  _imageQuest: {fileID: 0}
   _menuPauseTriggered: {fileID: 0}
   _dialoguesText: {fileID: 1199444735}
   _titlesText: {fileID: 523940195}
   _titlesString:
   - Victory !
   - "Nouvelle d\xE9couverte dans l'almanach :"
+  _dialogSpeed: 0.01
 --- !u!114 &1764261891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7736,7 +7740,7 @@ PrefabInstance:
       objectReference: {fileID: 29539077}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelName
-      value: Romygasp
+      value: Niveau
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelsName
@@ -7746,6 +7750,14 @@ PrefabInstance:
       propertyPath: _levelTotalNumber
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _levelData.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _levelData.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: dbc734d582563784cb8950014585fc40, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalsCoords.Array.size
       value: 3
