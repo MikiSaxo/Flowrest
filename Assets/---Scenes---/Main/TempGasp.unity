@@ -8233,10 +8233,10 @@ MonoBehaviour:
   _hitEnergyBar: {fileID: 101532696}
   _numberToDisplay: {fileID: 1321497134}
   _howBase: 1000
-  _earnedByGround: 200
-  _earnedByRecycling: 150
-  _costBySwap: 100
-  _costByLandingGround: 60
+  _earnedByGround: 80
+  _earnedByRecycling: 20
+  _costBySwap: 50
+  _costByLandingGround: 30
 --- !u!114 &762752806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8427,6 +8427,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoomSpeed: 5
+  _rotaXStartEnd: {x: 0, y: 0}
+  _durationAnimRota: 0
   _minMaxPosX: {x: -3, y: 37}
   _minMaxPosY: {x: 33, y: 68}
   _minMaxPosZ: {x: -40, y: -10}
@@ -12566,12 +12568,16 @@ MonoBehaviour:
   _titlesParent: {fileID: 51693967}
   _gameOverParent: {fileID: 2134788108}
   _menuPauseParent: {fileID: 1601367369}
+  _menuQuest: {fileID: 0}
+  _descriptionQuest: {fileID: 0}
+  _imageQuest: {fileID: 0}
   _menuPauseTriggered: {fileID: 94625345}
   _dialoguesText: {fileID: 1199444735}
   _titlesText: {fileID: 523940195}
   _titlesString:
   - Victory !
   - "Nouvelle d\xE9couverte dans l'almanach :"
+  _dialogSpeed: 0.01
 --- !u!114 &1764261891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15292,7 +15298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelName
-      value: Build
+      value: Niveau 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _halfOffset
@@ -15316,12 +15322,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
-      value: 5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _lvlDataName.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 2fae956ed8fff184cb12176302cbb4cb, type: 2}
+      objectReference: {fileID: 11400000, guid: dbc734d582563784cb8950014585fc40, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[1]
       value: 
@@ -15345,6 +15355,10 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _energyByLevels.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _lvlDataName.Array.data[0]
+      value: Niveau
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _crystalLevelData.Array.size
