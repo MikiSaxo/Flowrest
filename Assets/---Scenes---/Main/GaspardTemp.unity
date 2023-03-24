@@ -8388,10 +8388,10 @@ MonoBehaviour:
   _hitEnergyBar: {fileID: 101532696}
   _numberToDisplay: {fileID: 1321497134}
   _howBase: 1000
-  _earnedByGround: 200
-  _earnedByRecycling: 100
-  _costBySwap: 60
-  _costByLandingGround: 40
+  _earnedByGround: 80
+  _earnedByRecycling: 20
+  _costBySwap: 50
+  _costByLandingGround: 30
 --- !u!114 &762752806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15774,7 +15774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _lvlDataName.Array.size
@@ -15787,7 +15787,7 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 316d2f36bbf8658488db30c31d1da8ad, type: 2}
+      objectReference: {fileID: 11400000, guid: 26a49e1b282f02246a488a5a95ccb8e1, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[2]
       value: 
@@ -15810,6 +15810,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _lvlDataName.Array.data[0]
+      value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _lvlDataName.Array.data[1]
       value: test
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
