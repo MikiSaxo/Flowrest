@@ -66,19 +66,23 @@ public class EditorGroundManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0) && _isEntered && EditorMapManager.Instance.GetCharSelectedButton() != 'C')
-            InstantiateGround();
+        if (!_isEntered) return;
+        
+        if (Input.GetMouseButton(0))
+        {
+            if (EditorMapManager.Instance.GetCharSelectedButton() != 'C')
+                InstantiateGround();
+            else
+                InstantiateEnergy();
+        }
 
-        if (Input.GetMouseButton(1) && _isEntered)
+        if (Input.GetMouseButton(1))
         {
             if (EditorMapManager.Instance.GetCharSelectedButton() == 'C')
                 DestroyEnergy();
             else
                 DestroyGround();
         }
-
-        if (Input.GetMouseButtonDown(0) && _isEntered && EditorMapManager.Instance.GetCharSelectedButton() == 'C')
-            InstantiateEnergy();
     }
 
     public void UpdateCoords(int x, int y)

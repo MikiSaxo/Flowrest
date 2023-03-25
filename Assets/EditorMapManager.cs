@@ -115,11 +115,6 @@ public class EditorMapManager : MonoBehaviour
         // }
     }
 
-    public void SaveMap()
-    {
-        EditorSaveMap.Instance.UpdateMapName(_mapGrid);
-    }
-
     public void UpdateCharSelected(string letter)
     {
         _currentCharSelected = letter[0];
@@ -167,4 +162,9 @@ public class EditorMapManager : MonoBehaviour
     {
         return _currentCharSelected;
     }
+
+    public char[,] GetMapGrid()
+    {
+        return _mapGrid;
+    } 
 }

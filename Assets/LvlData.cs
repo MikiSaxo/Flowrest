@@ -6,16 +6,16 @@ using UnityEngine;
 [Serializable]
 public class LvlData
 {
-    //[Header("Level")] public string LevelName;
+    [Header("Map")] public string Map;
    
     [Header("Crystal Data")]
-    //[Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
+    [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
     public List<Vector2Int> Coords;
-    //
-    // [Header("Mechanics")] 
-    // public bool HasInventory;
-    // public bool HasTrashCan;
-    // public bool BlockLastGroundsSwapped;
+    
+    [Header("Mechanics")] 
+    public bool HasInventory;
+    public bool HasTrashCan;
+    public bool BlockLastGroundsSwapped;
     //
     // [Header("Quests Info")]
     // public string QuestDescription;
