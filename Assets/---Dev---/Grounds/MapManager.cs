@@ -140,6 +140,10 @@ public class MapManager : MonoBehaviour
         if(curLvl.WhichTileChain.Length > 0)
             QuestsManager.InitQuestTileChain(curLvl.WhichTileChain[0], curLvl.NumberTileChain);
 
+        // Update if Tile Count
+        if(curLvl.WhichTileCount.Length > 0)
+            QuestsManager.InitQuestTileCount(curLvl.WhichTileCount[0], curLvl.NumberTileCount);
+        
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,

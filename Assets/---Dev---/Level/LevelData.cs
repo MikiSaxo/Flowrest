@@ -25,6 +25,8 @@ public class LevelData : ScriptableObject
    public AllStates[] WhichStateNoSpecificTiles;
    public AllStates[] WhichTileChain;
    public int NumberTileChain;
+   public AllStates[] WhichTileCount;
+   public int NumberTileCount;
 
    [Header("Dialogs")] public string[] DialogToDisplayAtTheBeginning;
    public string[] DialogToDisplayAtTheEnd;

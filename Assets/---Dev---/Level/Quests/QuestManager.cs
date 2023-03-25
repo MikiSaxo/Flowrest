@@ -9,14 +9,17 @@ public class QuestManager : MonoBehaviour
     private bool _isFlower;
     private bool _isNoSpecificTiles;
     private bool _isTileChain;
+    private bool _isTileCount;
 
     private AllStates _fullFloorState;
     private AllStates[] _flowerState;
     private AllStates[] _noSpecificTileState;
-    private AllStates _tileChain;
+    private AllStates _tileChainState;
+    private AllStates _tileCountState;
 
     private int _tileChainNumber;
-    private int _tileChainCount;
+    private int _tileCountNumber;
+    private int _tileCount;
 
     private int _countQuestDone;
     private int _countQuestNumber;
@@ -49,10 +52,22 @@ public class QuestManager : MonoBehaviour
     public void InitQuestTileChain(AllStates whichState, int numberToReach)
     {
         _isTileChain = true;
-        _tileChain = whichState;
+        _tileChainState = whichState;
         _tileChainNumber = numberToReach;
-        _tileChainCount = 0;
         _countQuestNumber++;
+
+        WarnFullFloorQuest();
+    }
+
+    public void InitQuestTileCount(AllStates whichState, int numberToReach)
+    {
+        _isTileCount = true;
+        _tileCountState = whichState;
+        _tileCountNumber = numberToReach;
+        _tileCount = 0;
+        _countQuestNumber++;
+
+        WarnFullFloorQuest();
     }
 
     public void CheckQuest()
@@ -60,20 +75,11 @@ public class QuestManager : MonoBehaviour
         if (_isFullFloor && CheckFullFloorQuest()
             || _isFlower && CheckFlowerQuest()
             || _isNoSpecificTiles && CheckNoSpecificTileQuest()
-            || _isTileChain && CheckTileChain())
+            || _isTileChain && CheckTileChain()
+            || _isTileCount && CheckTileCountQuest())
             _countQuestDone++;
 
-        // if (_isFlower && CheckFlowerQuest())
-        //     _countQuestDone++;
-        //
-        // if (_isNoSpecificTiles && CheckNoSpecificTileQuest())
-        //     _countQuestDone++;
-        //
-        // if (_isTileChain && CheckTileChain())
-        //     _countQuestDone++;
-
-
-        if (_countQuestDone == _countQuestNumber)
+        if (_countQuestDone == _countQuestNumber && _countQuestNumber > 0)
             ScreensManager.Instance.VictoryScreen();
         else
             _countQuestDone = 0;
@@ -184,7 +190,7 @@ public class QuestManager : MonoBehaviour
                     continue;
 
                 var grnd = map[x, y].GetComponent<GroundStateManager>();
-                int getNb = grnd.CountSameTileConnected(map, grnd.GetCoords(), _tileChain);
+                int getNb = grnd.CountSameTileConnected(map, grnd.GetCoords(), _tileChainState);
                 grnd.ResetCountTileChain();
 
                 if (getNb >= _tileChainNumber)
@@ -195,6 +201,33 @@ public class QuestManager : MonoBehaviour
         return false;
     }
 
+    private bool CheckTileCountQuest()
+    {
+        _tileCount = 0;
+        print("launch count quest");
+        
+        GameObject[,] map = MapManager.Instance.GetMapGrid();
+
+        for (int x = 0; x < map.GetLength(0); x++)
+        {
+            for (int y = 0; y < map.GetLength(1); y++)
+            {
+                if (map[x, y] == null) continue;
+
+                var grnd = map[x, y].GetComponent<GroundStateManager>();
+
+                if (grnd == null)
+                    continue;
+
+                if (grnd.GetCurrentStateEnum() != _tileCountState)
+                    continue;
+
+                _tileCount++;
+            }
+        }
+        print(_tileCount + " / "+ _tileCountNumber);
+        return _tileCount >= _tileCountNumber;
+    }
 
     private void WarnFullFloorQuest()
     {
