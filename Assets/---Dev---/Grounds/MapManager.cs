@@ -137,13 +137,19 @@ public class MapManager : MonoBehaviour
             QuestsManager.InitQuestNoSpecificTiles(curLvl.WhichStateNoSpecificTiles);
         
         // Update if Tile Chain quest
-        if(curLvl.WhichTileChain.Length > 0)
-            QuestsManager.InitQuestTileChain(curLvl.WhichTileChain[0], curLvl.NumberTileChain);
+        if (curLvl.WhichTileChain != null)
+        {
+            if(curLvl.WhichTileChain.Length > 0)
+                QuestsManager.InitQuestTileChain(curLvl.WhichTileChain[0], curLvl.NumberTileChain);
+        }
 
         // Update if Tile Count
-        if(curLvl.WhichTileCount.Length > 0)
-            QuestsManager.InitQuestTileCount(curLvl.WhichTileCount[0], curLvl.NumberTileCount);
-        
+        if (curLvl.WhichTileCount != null)
+        {
+            if (curLvl.WhichTileCount.Length > 0)
+                QuestsManager.InitQuestTileCount(curLvl.WhichTileCount[0], curLvl.NumberTileCount);
+        }
+
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
