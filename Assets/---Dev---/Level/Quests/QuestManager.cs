@@ -92,6 +92,12 @@ public class QuestManager : MonoBehaviour
     {
         _countQuestNumber = 0;
         _countQuestDone = 0;
+
+        _isFullFloor = false;
+        _isFlower = false;
+        _isNoSpecificTiles = false;
+        _isTileChain = false;
+        _isTileCount = false;
     }
 
     private bool CheckFullFloorQuest()
@@ -205,7 +211,7 @@ public class QuestManager : MonoBehaviour
     {
         _tileCount = 0;
         print("launch count quest");
-        
+
         GameObject[,] map = MapManager.Instance.GetMapGrid();
 
         for (int x = 0; x < map.GetLength(0); x++)
@@ -225,7 +231,8 @@ public class QuestManager : MonoBehaviour
                 _tileCount++;
             }
         }
-        print(_tileCount + " / "+ _tileCountNumber);
+
+        print(_tileCount + " / " + _tileCountNumber);
         return _tileCount >= _tileCountNumber;
     }
 
