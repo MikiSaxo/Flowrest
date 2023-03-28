@@ -43,7 +43,7 @@ public class MapManager : MonoBehaviour
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
 
-    private LvlData _lvlData;
+    private MapConstructData _mapConstructData;
 
     private GroundStateManager[] _lastGroundSwaped = new GroundStateManager[2];
 

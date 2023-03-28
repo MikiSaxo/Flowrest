@@ -67,7 +67,7 @@ public class EditorGroundManager : MonoBehaviour
     private void Update()
     {
         if (!_isEntered) return;
-        
+
         if (Input.GetMouseButton(0))
         {
             if (EditorMapManager.Instance.GetCharSelectedButton() != 'C')
@@ -111,13 +111,14 @@ public class EditorGroundManager : MonoBehaviour
     {
         if (_currentGround == null) return;
 
-        EditorSaveMap.Instance.UpdateCoordsEnergy(_coords);
+        EditorSaveMap.Instance.AddCoordsEnergy(_coords);
         _energy.SetActive(true);
     }
 
     private void DestroyEnergy()
     {
         _energy.SetActive(false);
+        EditorSaveMap.Instance.DestroyCoordsEnergy(_coords);
     }
 
     public void DestroyGround()

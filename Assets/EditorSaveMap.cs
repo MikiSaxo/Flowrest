@@ -24,7 +24,7 @@ public class EditorSaveMap : MonoBehaviour
     [SerializeField] private Color _colorNotGood;
 
     private string _mapName;
-    private LvlData _currentLvlData;
+    public MapConstructData _currentMapConstructData;
     private string _hexColorGood;
     private string _hexColorNotGood;
 
@@ -43,7 +43,7 @@ public class EditorSaveMap : MonoBehaviour
         _hexColorGood = $"<color=#{_colorGood.ToHexString()}>";
         _hexColorNotGood = $"<color=#{_colorNotGood.ToHexString()}>";
 
-        _currentLvlData = new LvlData();
+        // _currentMapConstructData = new MapConstructData();
         //SaveJson();
     }
 
@@ -68,31 +68,6 @@ public class EditorSaveMap : MonoBehaviour
         _inputFieldMapName.text = "";
     }
 
-    private void UpdateEnergyAtStart()
-    {
-        if (_inputFieldMapName.text == "")
-        {
-            _currentLvlData.EnergyAtStart = 0;
-            SpawnFbText($"{_hexColorNotGood}No Energy At Start set");
-            return;
-        }
-        
-        _currentLvlData.EnergyAtStart = int.Parse(_inputFieldEnergyAtStart.text);
-    }
-
-    public void UpdateHasInventory(Toggle toggle)
-    {
-        _currentLvlData.HasInventory = toggle.isOn;
-    }
-    public void UpdateHasTrashCan(Toggle toggle)
-    {
-        _currentLvlData.HasTrashCan = toggle.isOn;
-    }
-    public void UpdateHasBlockLastGroundsSwapped(Toggle toggle)
-    {
-        _currentLvlData.BlockLastGroundsSwapped = toggle.isOn;
-    }
-
     private void SpawnFbText(string text)
     {
         GameObject go = Instantiate(_fBTextPrefab, _fBTextParent.transform);
@@ -114,13 +89,13 @@ public class EditorSaveMap : MonoBehaviour
         string map = ConvertMapGridToString(mapGrid);
         File.WriteAllText(textName, map);
         if (map != null)
-            _currentLvlData.Map = map;
+            _currentMapConstructData.Map = map;
     }
 
     public void SaveMap()
     {
         UpdateMapName(EditorMapManager.Instance.GetMapGrid());
-        UpdateEnergyAtStart();
+        // UpdateEnergyAtStart();
 
         if (_mapName == "") return;
         
@@ -154,9 +129,16 @@ public class EditorSaveMap : MonoBehaviour
 #endif
     }
 
-    public void UpdateCoordsEnergy(Vector2Int coords)
+    public void AddCoordsEnergy(Vector2Int coords)
     {
-        _currentLvlData.Coords.Add(coords);
+        if(!_currentMapConstructData.Coords.Contains(coords))
+            _currentMapConstructData.Coords.Add(coords);
+    }
+
+    public void DestroyCoordsEnergy(Vector2Int coords)
+    {
+        if(_currentMapConstructData.Coords.Contains(coords))
+            _currentMapConstructData.Coords.Remove(coords);
     }
 
     private void SaveJson()
@@ -166,11 +148,36 @@ public class EditorSaveMap : MonoBehaviour
         // _currentLvlData.Map = map;
 
 
-        LvlData lvlData = new LvlData();
-        lvlData = _currentLvlData;
+        MapConstructData mapConstructData = new MapConstructData();
+        mapConstructData = _currentMapConstructData;
 
-        string json = JsonUtility.ToJson(lvlData);
+        string json = JsonUtility.ToJson(mapConstructData);
         File.WriteAllText($"{Application.streamingAssetsPath}/{_folderDestination}/{_mapName}-Json.txt", json);
         RefreshEditorProjectWindow();
     }
+    
+    // private void UpdateEnergyAtStart()
+    // {
+    //     if (_inputFieldMapName.text == "")
+    //     {
+    //         _currentMapConstructData.EnergyAtStart = 0;
+    //         SpawnFbText($"{_hexColorNotGood}No Energy At Start set");
+    //         return;
+    //     }
+    //     
+    //     _currentMapConstructData.EnergyAtStart = int.Parse(_inputFieldEnergyAtStart.text);
+    // }
+    //
+    // public void UpdateHasInventory(Toggle toggle)
+    // {
+    //     _currentMapConstructData.HasInventory = toggle.isOn;
+    // }
+    // public void UpdateHasTrashCan(Toggle toggle)
+    // {
+    //     _currentMapConstructData.HasTrashCan = toggle.isOn;
+    // }
+    // public void UpdateHasBlockLastGroundsSwapped(Toggle toggle)
+    // {
+    //     _currentMapConstructData.BlockLastGroundsSwapped = toggle.isOn;
+    // }
 }
