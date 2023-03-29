@@ -116,6 +116,9 @@ public class EditorSaveMap : MonoBehaviour
                 str += mapGrid[x, y];
             }
 
+            if(y == mapGrid.GetLength(1)-1)
+                continue;
+            
             str += "\n";
         }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
    [Header("Level")] public string LevelName;
+   public string LevelFolder;
    
    [Header("Crystal Data")]
    [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
@@ -28,6 +29,7 @@ public class LevelData : ScriptableObject
    public AllStates[] WhichTileCount;
    public int NumberTileCount;
 
-   [Header("Dialogs")] public string[] DialogToDisplayAtTheBeginning;
+   [Header("Dialogs")] public string CharacterName;
+   public string[] DialogToDisplayAtTheBeginning;
    public string[] DialogToDisplayAtTheEnd;
 }

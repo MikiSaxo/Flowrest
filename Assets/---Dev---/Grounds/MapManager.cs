@@ -49,7 +49,6 @@ public class MapManager : MonoBehaviour
 
     private Dictionary<char, AllStates> dico = new Dictionary<char, AllStates>();
 
-
     private const char NONE = 'N';
     private const char PLAIN = 'P';
     private const char DESERT = 'D';
@@ -94,11 +93,16 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         // var mapName = $"{_levelName}{_currentLevel}";
-        var mapName = _levelData[_currentLevel].LevelName;
-        var curLvl = _levelData[_currentLevel];
+        // var mapName = _levelData[_currentLevel].LevelName;
+        var mapNameJson = _levelData[_currentLevel].LevelName;
+        var mapFolderName = _levelData[_currentLevel].LevelFolder;
+        var currentLvl = _levelData[_currentLevel];
+
         // Get the text map
-        string map = Application.streamingAssetsPath + $"/Map-Init/{mapName}.txt";
-        _mapInfo = File.ReadAllLines(map);
+        string mapPath = Application.streamingAssetsPath + $"/{mapFolderName}/{mapNameJson}.txt";
+        var lineJson = File.ReadAllText(mapPath);
+        _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
+        _mapInfo = _mapConstructData.Map.Split("\n");
 
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
@@ -107,51 +111,52 @@ public class MapManager : MonoBehaviour
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
-        // Init energy
-        CrystalsManager.Instance.InitEnergy(curLvl.EnergyAtStart);
+        // Init Start energy
+        CrystalsManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
         // Update if has inventory
-        _hasInventory = curLvl.HasInventory;
+        _hasInventory = currentLvl.HasInventory;
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
 
         // Update if has trash can
-        _hasTrashCan = curLvl.HasTrashCan;
+        _hasTrashCan = currentLvl.HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
 
         // Update if bloc last grounds swapped
-        _blockLastGroundsSwapped = curLvl.BlockLastGroundsSwapped;
+        _blockLastGroundsSwapped = currentLvl.BlockLastGroundsSwapped;
 
         // Reset Quest Number
         QuestsManager.ResetQuestNumbers();
 
         // Update if full floor quest
-        if (curLvl.WhichStateFloor.Length > 0)
-            QuestsManager.InitQuestFullFloor(curLvl.WhichStateFloor[0]);
+        if (currentLvl.WhichStateFloor.Length > 0)
+            QuestsManager.InitQuestFullFloor(currentLvl.WhichStateFloor[0]);
 
         // Update if flower quest
         if (_levelData[_currentLevel].WhichStateFlower.Length > 0)
-            QuestsManager.InitQuestFlower(curLvl.WhichStateFlower);
+            QuestsManager.InitQuestFlower(currentLvl.WhichStateFlower);
 
         // Update if No Specific Tile quest
-        if (curLvl.WhichStateNoSpecificTiles.Length > 0)
-            QuestsManager.InitQuestNoSpecificTiles(curLvl.WhichStateNoSpecificTiles);
-        
+        if (currentLvl.WhichStateNoSpecificTiles.Length > 0)
+            QuestsManager.InitQuestNoSpecificTiles(currentLvl.WhichStateNoSpecificTiles);
+
         // Update if Tile Chain quest
-        if (curLvl.WhichTileChain != null)
+        if (currentLvl.WhichTileChain != null)
         {
-            if(curLvl.WhichTileChain.Length > 0)
-                QuestsManager.InitQuestTileChain(curLvl.WhichTileChain[0], curLvl.NumberTileChain);
+            if (currentLvl.WhichTileChain.Length > 0)
+                QuestsManager.InitQuestTileChain(currentLvl.WhichTileChain[0], currentLvl.NumberTileChain);
         }
 
         // Update if Tile Count
-        if (curLvl.WhichTileCount != null)
+        if (currentLvl.WhichTileCount != null)
         {
-            if (curLvl.WhichTileCount.Length > 0)
-                QuestsManager.InitQuestTileCount(curLvl.WhichTileCount[0], curLvl.NumberTileCount);
+            if (currentLvl.WhichTileCount.Length > 0)
+                QuestsManager.InitQuestTileCount(currentLvl.WhichTileCount[0], currentLvl.NumberTileCount);
         }
 
         // Update Dialogs
         ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
+        ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
             _levelData[_currentLevel].QuestImage);
 
@@ -200,15 +205,8 @@ public class MapManager : MonoBehaviour
         _mapGrid[x, y] = which;
 
         // Init Crystal or not
-        // string coords = Application.streamingAssetsPath + $"/Map-Init/{_lvlDataName[_currentLevel]}.txt";
-        // print(coords);
-        // var _coordsInfo = File.ReadAllText(coords);
-        //
-        // _lvlData = JsonUtility.FromJson<LvlData>(_coordsInfo);
-        // Vector2Int[] coordsByCurrentLvl = _lvlData.Coords.ToArray();
-        
-        Vector2Int[] coordsByCurrentLvl = _levelData[_currentLevel].Coords;
-        
+        Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
+
         foreach (var crystalsCoords in coordsByCurrentLvl)
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;

@@ -11,7 +11,6 @@ public class ScreensManager : MonoBehaviour
     public static ScreensManager Instance;
 
     [Header("Parents")] [SerializeField] private GameObject _bg;
-    [SerializeField] private GameObject _dialoguesParent;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _menuPauseParent;
@@ -20,10 +19,15 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private Image _imageQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
 
-    [Header("Texts")] [SerializeField] private TextMeshProUGUI _dialoguesText;
+    [Header("Dialogs")] 
+    [SerializeField] private GameObject _dialoguesParent;
+    [SerializeField] private TMP_Text _characterName;
+    [SerializeField] private TMP_Text _dialoguesText;
+    [SerializeField] private float _dialogSpeed = .01f;
+    
+    [Header("Titles")]
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _titlesString;
-    [SerializeField] private float _dialogSpeed = .01f;
 
     private List<string> _dialogsToDisplay = new List<string>();
     private bool _isDialogTime;
@@ -57,6 +61,11 @@ public class ScreensManager : MonoBehaviour
 
         if (isBeginning)
             BeginningDialog();
+    }
+
+    public void InitCharaName(string charaName)
+    {
+        _characterName.text = charaName;
     }
 
     public void InitQuestDescription(string text, Sprite img)
