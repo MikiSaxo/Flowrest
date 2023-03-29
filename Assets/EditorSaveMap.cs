@@ -63,7 +63,7 @@ public class EditorSaveMap : MonoBehaviour
             return;
         }
 
-        CreateTextFile(mapGrid);
+        //CreateTextFile(mapGrid);
 
         _inputFieldMapName.text = "";
     }
@@ -155,7 +155,7 @@ public class EditorSaveMap : MonoBehaviour
         mapConstructData = _currentMapConstructData;
 
         string json = JsonUtility.ToJson(mapConstructData);
-        File.WriteAllText($"{Application.streamingAssetsPath}/{_folderDestination}/{_mapName}-Json.txt", json);
+        File.WriteAllText($"{Application.streamingAssetsPath}/{_folderDestination}/{_mapName}.txt", json);
         RefreshEditorProjectWindow();
     }
     

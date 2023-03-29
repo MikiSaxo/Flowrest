@@ -24,6 +24,8 @@ public class QuestManager : MonoBehaviour
     private int _countQuestDone;
     private int _countQuestNumber;
 
+    private List<AllStates> _flowerStateDone = new List<AllStates>();
+
     public void InitQuestFullFloor(AllStates whichState)
     {
         _isFullFloor = true;
@@ -72,14 +74,18 @@ public class QuestManager : MonoBehaviour
 
     public void CheckQuest()
     {
-        if (_isFullFloor && CheckFullFloorQuest()
-            || _isFlower && CheckFlowerQuest()
-            || _isNoSpecificTiles && CheckNoSpecificTileQuest()
-            || _isTileChain && CheckTileChain()
-            || _isTileCount && CheckTileCountQuest())
+        if (_isFullFloor && CheckFullFloorQuest())
+            _countQuestDone++;
+        if (_isFlower && CheckFlowerQuest())
+            _countQuestDone++;
+        if (_isNoSpecificTiles && CheckNoSpecificTileQuest())
+            _countQuestDone++;
+        if (_isTileChain && CheckTileChain())
+            _countQuestDone++;
+        if (_isTileCount && CheckTileCountQuest())
             _countQuestDone++;
 
-        if (_countQuestDone == _countQuestNumber && _countQuestNumber > 0)
+        if (_countQuestDone >= _countQuestNumber && _countQuestNumber > 0)
             ScreensManager.Instance.VictoryScreen();
         else
             _countQuestDone = 0;
@@ -133,6 +139,7 @@ public class QuestManager : MonoBehaviour
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
         int count = 0;
+        _flowerStateDone.Clear();
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -146,9 +153,11 @@ public class QuestManager : MonoBehaviour
                 foreach (var state in _flowerState)
                 {
                     if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state &&
-                        map[x, y].GetComponent<GroundStateManager>().CheckIfFlower())
+                        map[x, y].GetComponent<GroundStateManager>().CheckIfFlower() &&
+                        !_flowerStateDone.Contains(state))
                     {
                         count++;
+                        _flowerStateDone.Add(state);
                         break;
                     }
                 }
