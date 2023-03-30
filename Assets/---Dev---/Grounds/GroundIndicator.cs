@@ -55,6 +55,8 @@ public class GroundIndicator : MonoBehaviour
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
+        
+        if (_parent.IsForceSwapBlocked) return;
 
         if (MapManager.Instance.LastObjButtonSelected != null)
         {

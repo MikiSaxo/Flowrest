@@ -31,6 +31,8 @@ public class GroundStateManager : MonoBehaviour
     public bool JustBeenSwaped { get; set; }
 
     public bool IsTreated { get; set; }
+    
+    public bool IsForceSwapBlocked { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -219,7 +221,10 @@ public class GroundStateManager : MonoBehaviour
         return _countTileChain;
     }
 
-   
+    public void UpdatePrevisuArrow(bool state)
+    {
+        _fbPrevisu.UpdateArrow(state);
+    }
 
     public void UpdateGroundsAround()
     {

@@ -13,6 +13,7 @@ public class SetupUIGround : MonoBehaviour
 
     [Header("Ground Buttons")] [SerializeField]
     private GameObject[] _groundButtons;
+    [SerializeField] private float _timeSpawnButton;
     // [SerializeField] private GameObject[] _UITemperature;
 
     [Header("Ground Data")] [SerializeField] private GroundUIData[] _groundData;
@@ -84,8 +85,16 @@ public class SetupUIGround : MonoBehaviour
 
     public void AddNewGround(int which)
     {
-        _groundButtons[which].SetActive(true);
-        _groundButtons[which].GetComponent<UIButton>().UpdateNumberLeft(1);
+        var button = _groundButtons[which];
+        
+        button.SetActive(true);
+        button.GetComponent<UIButton>().UpdateNumberLeft(1);
+
+        // Need to remove Animator component to avoid using a parent
+        // var parent = button.transform.parent;
+        // parent.gameObject.transform.DOScale(0, 0);
+        // parent.gameObject.transform.DOScale(1, _timeSpawnButton).SetEase(Ease.OutBounce);
+        // parent.gameObject.transform.DOPunchScale(Vector3.one, _timeSpawnButton, 5, .5f);
     }
 
     public void GroundEmpty(int which)

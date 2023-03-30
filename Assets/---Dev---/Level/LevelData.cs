@@ -16,6 +16,7 @@ public class LevelData : ScriptableObject
    public bool HasInventory;
    public bool HasTrashCan;
    public bool BlockLastGroundsSwapped;
+   public Vector2Int[] ForceChangeThese2Tiles;
 
    [Header("Quests Info")]
    public string QuestDescription;

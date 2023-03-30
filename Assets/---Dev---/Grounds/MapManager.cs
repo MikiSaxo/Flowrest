@@ -34,6 +34,8 @@ public class MapManager : MonoBehaviour
     private bool _hasTrashCan;
     private bool _hasInventory;
     private bool _blockLastGroundsSwapped;
+    private bool _isForceSwap;
+    private List<Vector2Int> _stockForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
     private int _currentLevel;
     private string[] _mapInfo;
@@ -125,6 +127,14 @@ public class MapManager : MonoBehaviour
         // Update if bloc last grounds swapped
         _blockLastGroundsSwapped = currentLvl.BlockLastGroundsSwapped;
 
+        // Update if force 2 first bloc swap
+        if (currentLvl.ForceChangeThese2Tiles.Length != 0)
+        {
+            _isForceSwap = true;
+            _stockForceSwap.Add(currentLvl.ForceChangeThese2Tiles[0]);
+            _stockForceSwap.Add(currentLvl.ForceChangeThese2Tiles[1]);
+        }
+
         // Reset Quest Number
         QuestsManager.ResetQuestNumbers();
 
@@ -195,11 +205,13 @@ public class MapManager : MonoBehaviour
         // Tp ground to its position
         which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
 
+        // Get Groudn State Manager
+        var ground = which.GetComponent<GroundStateManager>();
         // Change coords of the ground
-        which.GetComponent<GroundStateManager>().ChangeCoords(new Vector2Int(x, y));
+        ground.ChangeCoords(new Vector2Int(x, y));
 
         //Init state of ground
-        which.GetComponent<GroundStateManager>().InitState(state);
+        ground.InitState(state);
 
         // Update _mapGrid
         _mapGrid[x, y] = which;
@@ -216,6 +228,18 @@ public class MapManager : MonoBehaviour
         }
 
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
+        
+        // Init if is Force Swap
+        var coord = new Vector2Int(x, y);
+
+        if (_isForceSwap)
+        {
+            ground.IsForceSwapBlocked = coord != _stockForceSwap[0];
+            ground.UpdatePrevisuArrow(!(coord != _stockForceSwap[0]));
+            // ground.UpdatePrevisuArrow(true);
+        }
+        else
+            ground.UpdatePrevisuArrow(false);
     }
 
     private void Update()
@@ -256,7 +280,7 @@ public class MapManager : MonoBehaviour
             //SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
         }
         //else
-            //SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
+        //SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
 
         // Prevent to use an actual empty button
         if (button != null)
