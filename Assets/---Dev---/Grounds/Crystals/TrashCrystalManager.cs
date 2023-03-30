@@ -18,7 +18,7 @@ public class TrashCrystalManager : MonoBehaviour
 
     public void UpdateTrashCan(bool activateOrNot)
     {
-        _fBTrashCan.SetActive(false);
+        //_fBTrashCan.SetActive(false);
         _trashCan.SetActive(activateOrNot);
     }
 }

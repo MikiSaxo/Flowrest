@@ -19,7 +19,7 @@ public class CrystalsGround : MonoBehaviour
             
             if (isInit) return;
             
-            CrystalsManager.Instance.EarnEnergyByGround();
+            EnergyManager.Instance.EarnEnergyByGround();
         }
         else
             _crystals.SetActive(true);

@@ -112,7 +112,7 @@ public class MapManager : MonoBehaviour
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
         // Init Start energy
-        CrystalsManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
+        EnergyManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
         // Update if has inventory
         _hasInventory = currentLvl.HasInventory;
@@ -253,10 +253,10 @@ public class MapManager : MonoBehaviour
         {
             if (_hasTrashCan)
                 TrashCrystalManager.Instance.UpdateTrashCan(true);
-            SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
+            //SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
         }
-        else
-            SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
+        //else
+            //SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
 
         // Prevent to use an actual empty button
         if (button != null)
@@ -336,13 +336,13 @@ public class MapManager : MonoBehaviour
         {
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
-            SetupUIGround.Instance.AddNewGround((int)tileToAdd);
+            // SetupUIGround.Instance.AddNewGround((int)tileToAdd);
             ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),
-                String.Empty);
+                String.Empty, tileToAdd);
         }
 
         // Spend energy
-        CrystalsManager.Instance.ReduceEnergyBySwap();
+        EnergyManager.Instance.ReduceEnergyBySwap();
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
@@ -385,7 +385,7 @@ public class MapManager : MonoBehaviour
         if (LastObjButtonSelected == null) return;
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
-        CrystalsManager.Instance.EarnEnergyByRecycling();
+        EnergyManager.Instance.EarnEnergyByRecycling();
         SetupUIGround.Instance.FollowDndDeactivate();
         TrashCrystalManager.Instance.UpdateTrashCan(false);
         ResetButtonSelected();
@@ -425,9 +425,9 @@ public class MapManager : MonoBehaviour
     {
         if (IsVictory) return;
 
-        bool inven = CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
+        bool inven = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
 
-        if (CrystalsManager.Instance.IsEnergyInferiorToCostSwap()
+        if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
             && inven
             && !SetupUIGround.Instance.CheckIfGround())
         {

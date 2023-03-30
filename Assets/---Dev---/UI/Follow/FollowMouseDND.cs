@@ -40,7 +40,7 @@ public class FollowMouseDND : MonoBehaviour
 
     public void AnimDeactivateObject()
     {
-        SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
+        //SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
         _iconButton.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear).OnComplete(DeactivateObject);
         _text.transform.DOScale(Vector2.zero, .15f).SetEase(Ease.Linear);
     }

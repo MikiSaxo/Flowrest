@@ -19,17 +19,18 @@ public class FB_GroundCollected : MonoBehaviour
     [SerializeField] private float _durationDispawn;
 
     private Transform[] _tpPoints;
+    private AllStates _state;
 
-    public void Init(Sprite icon, string text, Transform[] tpPoints)//, float durSpawn, float durWait, float durDispawn)
+    public void Init(Sprite icon, string text, Transform[] tpPoints, AllStates state)//, float durSpawn, float durWait, float durDispawn)
     {
         _icon.sprite = icon;
         _text.text = text;
+        _tpPoints = tpPoints;
+        _state = state;
 
         // _durationSpawn = durSpawn;
         // _durationWait = durWait;
         // _durationDispawn = durDispawn;
-
-        _tpPoints = tpPoints;
 
         ResetAll();
         SpawnAnim();
@@ -65,11 +66,12 @@ public class FB_GroundCollected : MonoBehaviour
         _objToMove.transform.DOMove(_tpPoints[2].position, _durationDispawn);
         _objToMove.transform.DOScale(0, _durationDispawn).OnComplete(DeleteObj);
 
-        SetupUIGround.Instance.GroundStockage.OnMouseEntered();
+        //SetupUIGround.Instance.GroundStockage.OnMouseEntered();
     }
 
     private void DeleteObj()
     {
+        SetupUIGround.Instance.AddNewGround((int)_state);
         Destroy(gameObject);
     }
 }

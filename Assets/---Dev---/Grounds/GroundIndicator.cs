@@ -61,11 +61,11 @@ public class GroundIndicator : MonoBehaviour
             if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
         }
 
-        if (MapManager.Instance.LastObjButtonSelected == null && CrystalsManager.Instance.IsEnergyInferiorToCostSwap())
+        if (MapManager.Instance.LastObjButtonSelected == null && EnergyManager.Instance.IsEnergyInferiorToCostSwap())
             return;
 
         if (MapManager.Instance.LastObjButtonSelected != null &&
-            CrystalsManager.Instance.IsEnergyInferiorToCostLandingGround())
+            EnergyManager.Instance.IsEnergyInferiorToCostLandingGround())
             return;
 
         if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null)
@@ -161,7 +161,7 @@ public class GroundIndicator : MonoBehaviour
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
 
         // Spend energy
-        CrystalsManager.Instance.ReduceEnergyByLandingGround();
+        EnergyManager.Instance.ReduceEnergyByLandingGround();
 
         // Disable Trash
         TrashCrystalManager.Instance.UpdateTrashCan(false);

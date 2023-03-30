@@ -35,14 +35,14 @@ public class ItemCollectedManager : MonoBehaviour
         // StartAnim();
     }
 
-    public void SpawnFBGroundCollected(Sprite icon, string text)
+    public void SpawnFBGroundCollected(Sprite icon, string text, AllStates state)
     {
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
-        go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround);
+        go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
         //,_durationSpawn[index], _durationWait[index], _durationDispawn[index]);
     }
 
-    public void SpawnFBCrystalCollected(int value)
+    public void SpawnFBEnergyCollected(int value)
     {
         if (value == 0) return;
         

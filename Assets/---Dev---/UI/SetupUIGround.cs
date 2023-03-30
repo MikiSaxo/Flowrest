@@ -9,7 +9,7 @@ public class SetupUIGround : MonoBehaviour
     public static SetupUIGround Instance;
 
     [Header("Setup")] [SerializeField] private GameObject _fBDnd;
-    public OpenCloseMenu GroundStockage;
+    // public OpenCloseMenu GroundStockage;
 
     [Header("Ground Buttons")] [SerializeField]
     private GameObject[] _groundButtons;
@@ -68,7 +68,7 @@ public class SetupUIGround : MonoBehaviour
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         MapManager.Instance.LastStateButtonSelected = state;
         MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
-        GroundStockage.ForcedOpen = true;
+        //GroundStockage.ForcedOpen = true;
     }
     public void EndFb() // Use by Ground buttons
     {
@@ -95,7 +95,7 @@ public class SetupUIGround : MonoBehaviour
 
     public void UpdateInventory(bool state)
     {
-        GroundStockage.gameObject.SetActive(state);
+        //GroundStockage.gameObject.SetActive(state);
     }
 
     public bool CheckIfGround()

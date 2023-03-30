@@ -7,9 +7,9 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro;
 
-public class CrystalsManager : MonoBehaviour
+public class EnergyManager : MonoBehaviour
 {
-    public static CrystalsManager Instance;
+    public static EnergyManager Instance;
 
     [Header("Setup")][SerializeField] private Slider _energyBar;
     [SerializeField] private Slider _hitEnergyBar;
@@ -71,7 +71,7 @@ public class CrystalsManager : MonoBehaviour
     {
         _tempValue += value;
         yield return new WaitForSeconds(.01f);
-        ItemCollectedManager.Instance.SpawnFBCrystalCollected((int)_tempValue);
+        ItemCollectedManager.Instance.SpawnFBEnergyCollected((int)_tempValue);
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }
