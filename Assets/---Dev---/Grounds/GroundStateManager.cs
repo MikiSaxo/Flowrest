@@ -40,6 +40,7 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("Feedbacks")] [SerializeField] private GroundPrevisu _fbPrevisu;
     [SerializeField] private GameObject _fbReloadEnergy;
+    [SerializeField] private FBArrow _fbArrow;
 
     [Header("Anim values")] [SerializeField]
     private float _bottomBounceValue;
@@ -223,7 +224,7 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdatePrevisuArrow(bool state)
     {
-        _fbPrevisu.UpdateArrow(state);
+        _fbArrow.UpdateArrow(state);
     }
 
     public void UpdateGroundsAround()
@@ -306,6 +307,11 @@ public class GroundStateManager : MonoBehaviour
     public Vector2Int GetCoords()
     {
         return _coords;
+    }
+
+    public FBArrow GetFbArrow()
+    {
+        return _fbArrow;
     }
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager

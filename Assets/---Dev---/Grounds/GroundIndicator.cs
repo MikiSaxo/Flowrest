@@ -55,7 +55,7 @@ public class GroundIndicator : MonoBehaviour
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
-        
+
         if (_parent.IsForceSwapBlocked) return;
 
         if (MapManager.Instance.LastObjButtonSelected != null)
@@ -81,6 +81,7 @@ public class GroundIndicator : MonoBehaviour
 
         //CheckHasWaterMesh();
 
+
         //CallAroundPrevisu();
         //CallSelectedPrevisu();
 
@@ -95,6 +96,7 @@ public class GroundIndicator : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //ResetAllAroundPrevisu();
+
         _parent.UpdateFbNoSwap(false);
 
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
@@ -117,10 +119,11 @@ public class GroundIndicator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Right click to reset
+        if (Input.GetMouseButtonDown(1) && MapManager.Instance.GetHasFirstSwap()) // Right click to reset
         {
             ResetIndicator();
             MapManager.Instance.ResetGroundSelected();
+
             // ResetAllAroundPrevisu();
         }
 
@@ -137,6 +140,14 @@ public class GroundIndicator : MonoBehaviour
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
             _parent.OnSelected(); // Call its parent to tell which one was selected to MapManager
+
+            if (!_parent.IsForceSwapBlocked)
+            {
+                MapManager.Instance.UpdateSecondBlocForce();
+
+                if (!MapManager.Instance.GetHasFirstSwap())
+                    _parent.GetFbArrow().UpdateArrow(false);
+            }
         }
         else // Second case: Change state of pose with a new one
             PoseBloc();

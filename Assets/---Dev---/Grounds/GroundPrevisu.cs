@@ -8,14 +8,13 @@ public class GroundPrevisu : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprRnd;
     [SerializeField] private Sprite _noSwap;
-    [SerializeField] private Sprite _arrow;
     [SerializeField] private Sprite[] _iconTile;
 
     private int _indexIcon;
     
     private void Start()
     {
-        //DeactivateIcon();
+        DeactivateIcon();
     }
 
     public void ActivateIcon(int indexTile)
@@ -44,13 +43,6 @@ public class GroundPrevisu : MonoBehaviour
     {
         _sprRnd.enabled = state;
         _sprRnd.sprite = _noSwap;
-    }
-
-    public void UpdateArrow(bool state)
-    {
-        _sprRnd.enabled = state;
-        _sprRnd.sprite = _arrow;
-        _sprRnd.color = state ? Color.red : Color.white;
     }
 
     public Sprite GetIconTile(int index)

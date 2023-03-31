@@ -35,6 +35,7 @@ public class MapManager : MonoBehaviour
     private bool _hasInventory;
     private bool _blockLastGroundsSwapped;
     private bool _isForceSwap;
+    private bool _hasFirstSwap;
     private List<Vector2Int> _stockForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
     private int _currentLevel;
@@ -258,6 +259,13 @@ public class MapManager : MonoBehaviour
         UpdateGround?.Invoke();
     }
 
+    public void UpdateSecondBlocForce()
+    {
+        var secondGround = _mapGrid[_stockForceSwap[1].x, _stockForceSwap[1].y].GetComponent<GroundStateManager>();
+        secondGround.UpdatePrevisuArrow(true);
+        secondGround.IsForceSwapBlocked = false;
+    }
+
     private void ChangeLevel(bool nextlevel)
     {
         if (_currentLevel < _levelData.Length - 1 && nextlevel)
@@ -329,6 +337,11 @@ public class MapManager : MonoBehaviour
 
     private void GroundSwap(GameObject which, Vector2Int newCoords)
     {
+        if (!_hasFirstSwap)
+        {
+            _hasFirstSwap = true;
+            ResetAllForceSwaped();
+        }
         // Update map
         _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
@@ -481,6 +494,11 @@ public class MapManager : MonoBehaviour
         return _currentLevel;
     }
 
+    public bool GetHasFirstSwap()
+    {
+        return _hasFirstSwap;
+    }
+
     public string[] GetDialogAtVictory()
     {
         return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
@@ -541,6 +559,22 @@ public class MapManager : MonoBehaviour
 
         _lastGroundSwaped[0] = null;
         _lastGroundSwaped[1] = null;
+    }
+
+    private void ResetAllForceSwaped()
+    {
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                if(_mapGrid[x, y] == null) continue;
+                if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
+
+                var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
+                ground.IsForceSwapBlocked = false;
+                ground.GetFbArrow().gameObject.SetActive(false);
+            }
+        }
     }
 
     // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
