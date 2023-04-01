@@ -434,7 +434,7 @@ public class MapManager : MonoBehaviour
 
     public void GroundSwapPrevisu(GameObject which)
     {
-        print("GroundSwapPrevisu");
+        // print("GroundSwapPrevisu");
         
         // Reset old ground entered
         ResetPrevisu();
@@ -445,16 +445,20 @@ public class MapManager : MonoBehaviour
         _lastGroundPrevisuEntered = gWhich;
 
         // Protect these blocs a transformation
-        gLastGroundSelected.IsProtected = true;
-        gWhich.IsProtected = true;
+        gLastGroundSelected.IsProtectedPrevisu = true;
+        gWhich.IsProtectedPrevisu = true;
 
         // Update Ground Around
-        gLastGroundSelected.UpdateGroundsAroundPrevisu();
-        gWhich.UpdateGroundsAroundPrevisu();
+        gWhich.UpdateGroundsAroundPrevisu(gLastGroundSelected.GetCurrentStateEnum());
+        gLastGroundSelected.UpdateGroundsAroundPrevisu(gWhich.GetCurrentStateEnum());
         
         // Reset protect
-        gLastGroundSelected.IsProtected = false;
-        gWhich.IsProtected = false;
+        gLastGroundSelected.IsProtectedPrevisu = false;
+        gWhich.IsProtectedPrevisu = false;
+        
+        // Update their previsu
+        gWhich.ChangeStatePrevisu(gLastGroundSelected.GetCurrentStateEnum());
+        gLastGroundSelected.ChangeStatePrevisu(gWhich.GetCurrentStateEnum());
     }
 
     public void UseTrashCan()
@@ -623,7 +627,7 @@ public class MapManager : MonoBehaviour
                 if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
 
                 var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
-                ground.ResetPrevisu();
+                ground.ResetStockPrevisu();
             }
         }
     }

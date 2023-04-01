@@ -82,7 +82,7 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.GetHasGroundSelected())
         {
-            print("call ground swap previsu");
+            // print("call ground swap previsu");
             MapManager.Instance.GroundSwapPrevisu(_parent.gameObject);
         }
 

@@ -31,8 +31,11 @@ public class GroundStateManager : MonoBehaviour
     public bool JustBeenSwaped { get; set; }
 
     public bool IsTreated { get; set; }
-    
+
     public bool IsPlayerForceSwapBlocked { get; set; }
+    
+    public AllStates StockStatePrevisu  { get; set; }
+
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -73,6 +76,7 @@ public class GroundStateManager : MonoBehaviour
     private GroundTundraState _tundraState = new GroundTundraState();
     private GroundSwampState _swampState = new GroundSwampState();
     private GroundMountainState _mountainState = new GroundMountainState();
+
     #endregion
 
     private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
@@ -125,30 +129,16 @@ public class GroundStateManager : MonoBehaviour
         currentState = _allState[(int)state];
         // print(currentState);
         currentState.EnterState(this);
+        StockStatePrevisu = _statesEnum;
     }
 
     public void ChangeStatePrevisu(AllStates state)
     {
+        if (IsProtectedPrevisu) return;
+
         _fbPrevisu.ActivateIcon((int)state);
-    }
-
-    public void ResetPrevisu()
-    {
-        ResetStockPrevisu();
-            
-        if(_stockGroundPrevisu.Count == 0) return;
-        
-        foreach (var grnd in _stockGroundPrevisu)
-        {
-            grnd.ResetStockPrevisu();
-        }
-        
-        _stockGroundPrevisu.Clear();
-    }
-
-    private void ResetStockPrevisu()
-    {
-        _fbPrevisu.DeactivateIcon();
+        if(state == _statesEnum)
+            _fbPrevisu.DeactivateIcon();
     }
 
     public void ChangeMesh(int meshNb)
@@ -220,7 +210,7 @@ public class GroundStateManager : MonoBehaviour
             // It's good 
             _countTileChain++;
             mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
-            _stockTileChain.Add( mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>());
+            _stockTileChain.Add(mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>());
             // Restart the recursive
             CountSameTileConnected(mapGrid, newPos, state);
         }
@@ -265,7 +255,8 @@ public class GroundStateManager : MonoBehaviour
             grnd.ChangeState(newState);
         }
     }
-    public void UpdateGroundsAroundPrevisu()
+
+    public void UpdateGroundsAroundPrevisu(AllStates otherState)
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
@@ -292,10 +283,16 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
-            
+            var newState = ConditionManager.Instance.GetState(otherState, grnd.GetCurrentStateEnumPrevisu());
+
             grnd.ChangeStatePrevisu(newState);
+            
             _stockGroundPrevisu.Add(grnd);
+
+            // if (grnd._coords == new Vector2Int(4, 2))
+                // print($"other : {otherState} / mine : {grnd.StockStatePrevisu} -> new mine : {newState}");
+            
+            grnd.StockStatePrevisu = newState;
         }
     }
 
@@ -332,6 +329,11 @@ public class GroundStateManager : MonoBehaviour
         return _statesEnum;
     }
 
+    public AllStates GetCurrentStateEnumPrevisu()
+    {
+        return StockStatePrevisu;
+    }
+
     private void GetBackMeshParentYPos()
     {
         _meshParent.transform.DOKill();
@@ -366,10 +368,32 @@ public class GroundStateManager : MonoBehaviour
         {
             grn.IsTreated = false;
         }
+
         _stockTileChain.Clear();
         _countTileChain = 0;
         IsTreated = false;
     }
+    
+    public void ResetStockPrevisu()
+    {
+        ResetPrevisu();
+
+        if (_stockGroundPrevisu.Count == 0) return;
+
+        foreach (var grnd in _stockGroundPrevisu)
+        {
+            grnd.ResetPrevisu();
+        }
+
+        _stockGroundPrevisu.Clear();
+    }
+
+    private void ResetPrevisu()
+    {
+        _fbPrevisu.DeactivateIcon();
+        StockStatePrevisu = _statesEnum;
+    }
+
     private void OnDisable()
     {
         // MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
