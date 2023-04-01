@@ -134,7 +134,7 @@ public class MapManager : MonoBehaviour
         _hasPrevisu = currentLvl.HasPrevisu;
         
         // Update if bloc last grounds swapped
-        _blockLastGroundsSwapped = currentLvl.BlockLastGroundsSwapped;
+        _blockLastGroundsSwapped = currentLvl.BlockLastSwap;
 
         // Update if force 2 first bloc swap
         if (currentLvl.PlayerForceChangeThese2Tiles.Length != 0)
@@ -152,33 +152,33 @@ public class MapManager : MonoBehaviour
         QuestsManager.ResetQuestNumbers();
 
         // Update if full floor quest
-        if (currentLvl.WhichStateFloor.Length > 0)
-            QuestsManager.InitQuestFullFloor(currentLvl.WhichStateFloor[0]);
+        if (currentLvl.QuestFloor.Length > 0)
+            QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
 
         // Update if flower quest
-        if (_levelData[_currentLevel].WhichStateFlower.Length > 0)
-            QuestsManager.InitQuestFlower(currentLvl.WhichStateFlower);
+        if (_levelData[_currentLevel].QuestFlower.Length > 0)
+            QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
 
         // Update if No Specific Tile quest
-        if (currentLvl.WhichStateNoSpecificTiles.Length > 0)
-            QuestsManager.InitQuestNoSpecificTiles(currentLvl.WhichStateNoSpecificTiles);
+        if (currentLvl.QuestNoSpecificTiles.Length > 0)
+            QuestsManager.InitQuestNoSpecificTiles(currentLvl.QuestNoSpecificTiles);
 
         // Update if Tile Chain quest
-        if (currentLvl.WhichTileChain != null)
+        if (currentLvl.QuestTileChain != null)
         {
-            if (currentLvl.WhichTileChain.Length > 0)
-                QuestsManager.InitQuestTileChain(currentLvl.WhichTileChain[0], currentLvl.NumberTileChain);
+            if (currentLvl.QuestTileChain.Length > 0)
+                QuestsManager.InitQuestTileChain(currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
         }
 
         // Update if Tile Count
-        if (currentLvl.WhichTileCount != null)
+        if (currentLvl.QuestTileCount != null)
         {
-            if (currentLvl.WhichTileCount.Length > 0)
-                QuestsManager.InitQuestTileCount(currentLvl.WhichTileCount[0], currentLvl.NumberTileCount);
+            if (currentLvl.QuestTileCount.Length > 0)
+                QuestsManager.InitQuestTileCount(currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
         }
 
         // Update Dialogs
-        ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogToDisplayAtTheBeginning, true);
+        ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogBeginning, true);
         ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
             _levelData[_currentLevel].QuestImage);
@@ -555,7 +555,7 @@ public class MapManager : MonoBehaviour
 
     public string[] GetDialogAtVictory()
     {
-        return _levelData[_currentLevel].DialogToDisplayAtTheEnd;
+        return _levelData[_currentLevel].DialogEnd;
     }
 
     public void ResetAllMap(bool nextLevel)

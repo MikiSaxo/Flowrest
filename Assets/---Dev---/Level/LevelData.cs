@@ -5,33 +5,29 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Crystal", menuName = "Flowrest/Crystals Level Datas")]
 public class LevelData : ScriptableObject
 {
-   [Header("Level")] public string LevelName;
+   public string LevelName;
    public string LevelFolder;
    
-   [Header("Crystal Data")]
    [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
-   public Vector2Int[] Coords;
 
-   [Header("Mechanics")] 
    public bool HasInventory;
    public bool HasTrashCan;
    public bool HasPrevisu;
-   public bool BlockLastGroundsSwapped;
+   public bool BlockLastSwap;
    public Vector2Int[] PlayerForceChangeThese2Tiles;
 
-   [Header("Quests Info")]
    public string QuestDescription;
    public Sprite QuestImage;
-   [Header("Quests Choose")]
-   public AllStates[] WhichStateFloor;
-   public AllStates[] WhichStateFlower;
-   public AllStates[] WhichStateNoSpecificTiles;
-   public AllStates[] WhichTileChain;
+   
+   public AllStates[] QuestFloor;
+   public AllStates[] QuestFlower;
+   public AllStates[] QuestNoSpecificTiles;
+   public AllStates[] QuestTileChain;
    public int NumberTileChain;
-   public AllStates[] WhichTileCount;
+   public AllStates[] QuestTileCount;
    public int NumberTileCount;
 
-   [Header("Dialogs")] public string CharacterName;
-   public string[] DialogToDisplayAtTheBeginning;
-   public string[] DialogToDisplayAtTheEnd;
+   public string CharacterName;
+   public string[] DialogBeginning;
+   public string[] DialogEnd;
 }
