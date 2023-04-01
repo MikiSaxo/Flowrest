@@ -33,6 +33,7 @@ public class MapManager : MonoBehaviour
 
     private bool _hasTrashCan;
     private bool _hasInventory;
+    private bool _hasPrevisu;
     private bool _blockLastGroundsSwapped;
     private bool _isPlayerForceSwap;
     private bool _hasFirstSwap;
@@ -45,7 +46,6 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
-    private GroundStateManager _lastGroundPrevisuEntered;
 
     private MapConstructData _mapConstructData;
 
@@ -129,7 +129,10 @@ public class MapManager : MonoBehaviour
         // Update if has trash can
         _hasTrashCan = currentLvl.HasTrashCan;
         SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
-
+        
+        // update if has Previsu
+        _hasPrevisu = currentLvl.HasPrevisu;
+        
         // Update if bloc last grounds swapped
         _blockLastGroundsSwapped = currentLvl.BlockLastGroundsSwapped;
 
@@ -435,6 +438,7 @@ public class MapManager : MonoBehaviour
     public void GroundSwapPrevisu(GameObject which)
     {
         // print("GroundSwapPrevisu");
+        if (!_hasPrevisu) return;
         
         // Reset old ground entered
         ResetPrevisu();
@@ -442,7 +446,6 @@ public class MapManager : MonoBehaviour
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
-        _lastGroundPrevisuEntered = gWhich;
 
         // Protect these blocs a transformation
         gLastGroundSelected.IsProtectedPrevisu = true;

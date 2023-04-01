@@ -15,6 +15,7 @@ public class LevelData : ScriptableObject
    [Header("Mechanics")] 
    public bool HasInventory;
    public bool HasTrashCan;
+   public bool HasPrevisu;
    public bool BlockLastGroundsSwapped;
    public Vector2Int[] PlayerForceChangeThese2Tiles;
 
