@@ -32,7 +32,7 @@ public class GroundStateManager : MonoBehaviour
 
     public bool IsTreated { get; set; }
     
-    public bool IsForceSwapBlocked { get; set; }
+    public bool IsPlayerForceSwapBlocked { get; set; }
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -50,17 +50,13 @@ public class GroundStateManager : MonoBehaviour
     [Header("Temp coords just to see it")] [SerializeField]
     private Vector2Int _coords;
 
-
-    // private AllStates _statePrevisu;
-    // private bool _isTreated;
-    // private bool _isBiome;
-
     private AllStates _statesEnum;
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private int _countTileChain;
     private List<GroundStateManager> _stockTileChain = new List<GroundStateManager>();
+    private List<GroundStateManager> _stockGroundPrevisu = new List<GroundStateManager>();
 
 
     #region AllState
@@ -77,20 +73,7 @@ public class GroundStateManager : MonoBehaviour
     private GroundTundraState _tundraState = new GroundTundraState();
     private GroundSwampState _swampState = new GroundSwampState();
     private GroundMountainState _mountainState = new GroundMountainState();
-
     #endregion
-
-    // [Tooltip("This is the minimum number to have a biome after verified a square of 3x3")] [SerializeField]
-    // private int _minNbAroundBiome;
-
-    // private float _temperatureAround;
-    // private float _humidityAround;
-    // private float _countBlocAround;
-    // private float _countSameBlocAround;
-    // private float _countIfEnoughBloc;
-    // private bool _isUpdating;
-
-    // private List<GameObject> _groundInBiome = new List<GameObject>();
 
     private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
@@ -98,7 +81,6 @@ public class GroundStateManager : MonoBehaviour
     private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
         { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
-    private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
 
     private void Awake()
     {
@@ -143,6 +125,30 @@ public class GroundStateManager : MonoBehaviour
         currentState = _allState[(int)state];
         // print(currentState);
         currentState.EnterState(this);
+    }
+
+    public void ChangeStatePrevisu(AllStates state)
+    {
+        _fbPrevisu.ActivateIcon((int)state);
+    }
+
+    public void ResetPrevisu()
+    {
+        ResetStockPrevisu();
+            
+        if(_stockGroundPrevisu.Count == 0) return;
+        
+        foreach (var grnd in _stockGroundPrevisu)
+        {
+            grnd.ResetStockPrevisu();
+        }
+        
+        _stockGroundPrevisu.Clear();
+    }
+
+    private void ResetStockPrevisu()
+    {
+        _fbPrevisu.DeactivateIcon();
     }
 
     public void ChangeMesh(int meshNb)
@@ -257,6 +263,39 @@ public class GroundStateManager : MonoBehaviour
             // grnd.currentState.CheckUpdate(grnd, currentState);
             var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
             grnd.ChangeState(newState);
+        }
+    }
+    public void UpdateGroundsAroundPrevisu()
+    {
+        Vector2Int[] hexDirections = new Vector2Int[6];
+        // Important for the offset with hex coords
+        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
+        foreach (var hexPos in hexDirections)
+        {
+            Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+            var mapGrid = MapManager.Instance.GetMapGrid();
+
+            // Check if inside of array
+            if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
+                newPos.y >= mapGrid.GetLength(1)) continue;
+
+            // Check if something exist
+            if (mapGrid[newPos.x, newPos.y] == null) continue;
+
+            // Check if has GroundManager
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+
+            // Check if not a Mountain
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
+                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
+
+
+            var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
+            var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
+            
+            grnd.ChangeStatePrevisu(newState);
+            _stockGroundPrevisu.Add(grnd);
         }
     }
 

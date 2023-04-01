@@ -34,9 +34,9 @@ public class MapManager : MonoBehaviour
     private bool _hasTrashCan;
     private bool _hasInventory;
     private bool _blockLastGroundsSwapped;
-    private bool _isForceSwap;
+    private bool _isPlayerForceSwap;
     private bool _hasFirstSwap;
-    private List<Vector2Int> _stockForceSwap = new List<Vector2Int>();
+    private List<Vector2Int> _stockPlayerForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
     private int _currentLevel;
     private string[] _mapInfo;
@@ -45,12 +45,15 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
+    private GroundStateManager _lastGroundPrevisuEntered;
 
     private MapConstructData _mapConstructData;
 
     private GroundStateManager[] _lastGroundSwaped = new GroundStateManager[2];
 
     private Dictionary<char, AllStates> dico = new Dictionary<char, AllStates>();
+
+    #region AllStateConst
 
     private const char NONE = 'N';
     private const char PLAIN = 'P';
@@ -64,6 +67,8 @@ public class MapManager : MonoBehaviour
     private const char TUNDRA = 'U';
     private const char SWAMP = 'A';
     private const char MOUNTAIN = 'M';
+    
+    #endregion
 
     private const float QUARTER_OFFSET = .85f;
     private const float HALF_OFFSET = .5f;
@@ -129,11 +134,15 @@ public class MapManager : MonoBehaviour
         _blockLastGroundsSwapped = currentLvl.BlockLastGroundsSwapped;
 
         // Update if force 2 first bloc swap
-        if (currentLvl.ForceChangeThese2Tiles.Length != 0)
+        if (currentLvl.PlayerForceChangeThese2Tiles.Length != 0)
         {
-            _isForceSwap = true;
-            _stockForceSwap.Add(currentLvl.ForceChangeThese2Tiles[0]);
-            _stockForceSwap.Add(currentLvl.ForceChangeThese2Tiles[1]);
+            _isPlayerForceSwap = true;
+            _stockPlayerForceSwap.Add(currentLvl.PlayerForceChangeThese2Tiles[0]);
+            _stockPlayerForceSwap.Add(currentLvl.PlayerForceChangeThese2Tiles[1]);
+        }
+        else
+        {
+            _hasFirstSwap = true;
         }
 
         // Reset Quest Number
@@ -230,13 +239,13 @@ public class MapManager : MonoBehaviour
 
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
         
-        // Init if is Force Swap
+        // Init if is Player Force Swap
         var coord = new Vector2Int(x, y);
 
-        if (_isForceSwap)
+        if (_isPlayerForceSwap)
         {
-            ground.IsForceSwapBlocked = coord != _stockForceSwap[0];
-            ground.UpdatePrevisuArrow(!(coord != _stockForceSwap[0]));
+            ground.IsPlayerForceSwapBlocked = coord != _stockPlayerForceSwap[0];
+            ground.UpdatePrevisuArrow(!(coord != _stockPlayerForceSwap[0]));
             // ground.UpdatePrevisuArrow(true);
         }
         else
@@ -251,6 +260,8 @@ public class MapManager : MonoBehaviour
             ResetButtonSelected();
             // ResetAroundSelectedPrevisu();
             TrashCrystalManager.Instance.UpdateTrashCan(false);
+            
+            ResetPrevisu();
         }
     }
 
@@ -261,9 +272,11 @@ public class MapManager : MonoBehaviour
 
     public void UpdateSecondBlocForce()
     {
-        var secondGround = _mapGrid[_stockForceSwap[1].x, _stockForceSwap[1].y].GetComponent<GroundStateManager>();
+        if (_stockPlayerForceSwap.Count == 0) return;
+        
+        var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>();
         secondGround.UpdatePrevisuArrow(true);
-        secondGround.IsForceSwapBlocked = false;
+        secondGround.IsPlayerForceSwapBlocked = false;
     }
 
     private void ChangeLevel(bool nextlevel)
@@ -337,10 +350,11 @@ public class MapManager : MonoBehaviour
 
     private void GroundSwap(GameObject which, Vector2Int newCoords)
     {
+        // Update if first swap
         if (!_hasFirstSwap)
         {
             _hasFirstSwap = true;
-            ResetAllForceSwaped();
+            ResetAllPlayerForceSwaped();
         }
         // Update map
         _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
@@ -365,6 +379,8 @@ public class MapManager : MonoBehaviour
         // Reset selection's color of the two Grounds
         gLastGroundSelected.ResetIndicator();
         gWhich.ResetIndicator();
+        
+        // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround();
         gWhich.UpdateGroundsAround();
 
@@ -406,10 +422,36 @@ public class MapManager : MonoBehaviour
         IsGroundFirstSelected = false;
         // ResetAroundSelectedPrevisu();
         ResetGroundSelected();
+        ResetPrevisu();
         // CheckForBiome();
 
         QuestsManager.CheckQuest();
 
+        // Reset protect
+        gLastGroundSelected.IsProtected = false;
+        gWhich.IsProtected = false;
+    }
+
+    public void GroundSwapPrevisu(GameObject which)
+    {
+        print("GroundSwapPrevisu");
+        
+        // Reset old ground entered
+        ResetPrevisu();
+        
+        // Get GroundStateManager 
+        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
+        var gWhich = which.GetComponent<GroundStateManager>();
+        _lastGroundPrevisuEntered = gWhich;
+
+        // Protect these blocs a transformation
+        gLastGroundSelected.IsProtected = true;
+        gWhich.IsProtected = true;
+
+        // Update Ground Around
+        gLastGroundSelected.UpdateGroundsAroundPrevisu();
+        gWhich.UpdateGroundsAroundPrevisu();
+        
         // Reset protect
         gLastGroundSelected.IsProtected = false;
         gWhich.IsProtected = false;
@@ -494,6 +536,11 @@ public class MapManager : MonoBehaviour
         return _currentLevel;
     }
 
+    public bool GetHasGroundSelected()
+    {
+        return _lastGroundSelected;
+    }
+
     public bool GetHasFirstSwap()
     {
         return _hasFirstSwap;
@@ -561,7 +608,27 @@ public class MapManager : MonoBehaviour
         _lastGroundSwaped[1] = null;
     }
 
-    private void ResetAllForceSwaped()
+    private void ResetPrevisu()
+    {
+        // if(_lastGroundPrevisuEntered != null)
+        //     _lastGroundPrevisuEntered.ResetPrevisu();
+        // if(_lastGroundSelected != null)
+        //     _lastGroundSelected.GetComponent<GroundStateManager>().ResetPrevisu();
+        
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                if(_mapGrid[x, y] == null) continue;
+                if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
+
+                var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
+                ground.ResetPrevisu();
+            }
+        }
+    }
+
+    private void ResetAllPlayerForceSwaped()
     {
         for (int x = 0; x < _mapSize.x; x++)
         {
@@ -571,7 +638,7 @@ public class MapManager : MonoBehaviour
                 if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
 
                 var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
-                ground.IsForceSwapBlocked = false;
+                ground.IsPlayerForceSwapBlocked = false;
                 ground.GetFbArrow().gameObject.SetActive(false);
             }
         }

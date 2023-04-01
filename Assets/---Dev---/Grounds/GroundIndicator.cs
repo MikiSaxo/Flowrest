@@ -56,7 +56,7 @@ public class GroundIndicator : MonoBehaviour
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
 
-        if (_parent.IsForceSwapBlocked) return;
+        if (_parent.IsPlayerForceSwapBlocked) return;
 
         if (MapManager.Instance.LastObjButtonSelected != null)
         {
@@ -79,9 +79,15 @@ public class GroundIndicator : MonoBehaviour
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
+
+        if (MapManager.Instance.GetHasGroundSelected())
+        {
+            print("call ground swap previsu");
+            MapManager.Instance.GroundSwapPrevisu(_parent.gameObject);
+        }
+
+
         //CheckHasWaterMesh();
-
-
         //CallAroundPrevisu();
         //CallSelectedPrevisu();
 
@@ -106,6 +112,7 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = false;
         _parent.IsProtectedPrevisu = false;
 
+        // _parent.ResetPrevisu();
         // ValuesSignForGround.Instance.NoValue();
         //CheckHasWaterMesh();
 
@@ -132,16 +139,21 @@ public class GroundIndicator : MonoBehaviour
         // print(MapManager.Instance.LastObjButtonSelected);
         if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
-            if (_isSelected) return; // Block if click again on it
+            // Block if click again on it
+            if (_isSelected) return; 
 
-            _isSelected = true; // Useful to block Trigger enter and exit
+            // Useful to block Trigger enter and exit
+            _isSelected = true; 
+           
             // Make animation
             MoveYMesh(_selectedYPos, .3f);
+            
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
             _parent.OnSelected(); // Call its parent to tell which one was selected to MapManager
 
-            if (!_parent.IsForceSwapBlocked)
+            // If Player forced swap
+            if (!_parent.IsPlayerForceSwapBlocked)
             {
                 MapManager.Instance.UpdateSecondBlocForce();
 
