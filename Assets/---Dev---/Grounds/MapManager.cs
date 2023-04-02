@@ -262,7 +262,7 @@ public class MapManager : MonoBehaviour
         {
             ResetButtonSelected();
             // ResetAroundSelectedPrevisu();
-            TrashCrystalManager.Instance.UpdateTrashCan(false);
+            RecyclingManager.Instance.UpdateRecycling(false);
             
             ResetPrevisu();
         }
@@ -300,11 +300,8 @@ public class MapManager : MonoBehaviour
         if (button != null)
         {
             if (_hasTrashCan)
-                TrashCrystalManager.Instance.UpdateTrashCan(true);
-            //SetupUIGround.Instance.GroundStockage.ForcedOpen = true;
+                RecyclingManager.Instance.UpdateRecycling(true);
         }
-        //else
-        //SetupUIGround.Instance.GroundStockage.ForcedOpen = false;
 
         // Prevent to use an actual empty button
         if (button != null)
@@ -316,6 +313,7 @@ public class MapManager : MonoBehaviour
         // Deactivate the last one selected
         if (LastObjButtonSelected != null)
             LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+        
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
 
@@ -324,20 +322,11 @@ public class MapManager : MonoBehaviour
             _isDragNDrop = false;
             LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
             LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
-
-            // TemperatureSelected = 0;
-            // if (!LastObjButtonSelected.GetComponent<UIButton>().GetIsTemperature())
-            // {
-            // }
-            // else
-            //     TemperatureSelected = LastObjButtonSelected.GetComponent<UIButton>().GetHisTemperature();
-            //FollowMouseDND.Instance.CanMove = true;
         }
         else
         {
             _isDragNDrop = true;
             LastStateButtonSelected = AllStates.None;
-            // TemperatureSelected = 0;
         }
     }
 
@@ -464,7 +453,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.ChangeStatePrevisu(gWhich.GetCurrentStateEnum());
     }
 
-    public void UseTrashCan()
+    public void UseRecycling()
     {
         // print("hello trash");
 
@@ -473,7 +462,7 @@ public class MapManager : MonoBehaviour
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         EnergyManager.Instance.EarnEnergyByRecycling();
         SetupUIGround.Instance.FollowDndDeactivate();
-        TrashCrystalManager.Instance.UpdateTrashCan(false);
+        RecyclingManager.Instance.UpdateRecycling(false);
         ResetButtonSelected();
     }
 

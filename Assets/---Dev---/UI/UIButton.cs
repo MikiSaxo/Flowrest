@@ -12,10 +12,6 @@ public class UIButton : MonoBehaviour
     [SerializeField] private Image _iconButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
-    
-    // [Header("Setup for Hot n Cold")]
-    // [SerializeField] private bool _isTemperature;
-    // [SerializeField] private int _temperature;
 
     private int _numberGroundLeft;
 

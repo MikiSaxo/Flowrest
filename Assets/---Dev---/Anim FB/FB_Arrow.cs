@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class FBArrow : MonoBehaviour
+public class FB_Arrow : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprRnd;
     [SerializeField] private float _baseYPos;

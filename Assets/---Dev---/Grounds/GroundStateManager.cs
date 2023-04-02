@@ -43,7 +43,7 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("Feedbacks")] [SerializeField] private GroundPrevisu _fbPrevisu;
     [SerializeField] private GameObject _fbReloadEnergy;
-    [SerializeField] private FBArrow _fbArrow;
+    [SerializeField] private FB_Arrow _fbArrow;
 
     [Header("Anim values")] [SerializeField]
     private float _bottomBounceValue;
@@ -350,7 +350,7 @@ public class GroundStateManager : MonoBehaviour
         return _coords;
     }
 
-    public FBArrow GetFbArrow()
+    public FB_Arrow GetFbArrow()
     {
         return _fbArrow;
     }

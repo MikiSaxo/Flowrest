@@ -53,7 +53,7 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ResetGroundSelected();
         
         if(_hasInventory)
-            TrashCrystalManager.Instance.UpdateTrashCan(true);
+            RecyclingManager.Instance.UpdateRecycling(true);
 
         _fBDnd.GetComponent<FollowMouseDND>()
             .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
@@ -77,7 +77,7 @@ public class SetupUIGround : MonoBehaviour
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
         
-        TrashCrystalManager.Instance.UpdateTrashCan(false);
+        RecyclingManager.Instance.UpdateRecycling(false);
 
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();
