@@ -13,19 +13,22 @@ MonoBehaviour:
   m_Name: Niveau 6
   m_EditorClassIdentifier: 
   LevelName: Niveau 6
-  EnergyAtStart: 80
-  Coords: []
+  LevelFolder: Level Editor
+  EnergyAtStart: 100
   HasInventory: 1
   HasTrashCan: 0
-  BlockLastGroundsSwapped: 1
+  HasPrevisu: 1
+  BlockLastSwap: 1
+  PlayerForceChangeThese2Tiles: []
   QuestDescription: "Faire en sorte d'avoir 6 tiles de mar\xE9cages adjacentes"
   QuestImage: {fileID: 0}
-  WhichStateFloor: 
-  WhichStateFlower: 
-  WhichStateNoSpecificTiles: 
-  WhichTileChain: 09000000
+  QuestFloor: 
+  QuestFlower: 
+  QuestNoSpecificTiles: 
+  QuestTileChain: 09000000
   NumberTileChain: 6
-  WhichTileCount: 
+  QuestTileCount: 
   NumberTileCount: 0
-  DialogToDisplayAtTheBeginning: []
-  DialogToDisplayAtTheEnd: []
+  CharacterName: 
+  DialogBeginning: []
+  DialogEnd: []
