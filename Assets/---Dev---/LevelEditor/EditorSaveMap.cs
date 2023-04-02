@@ -92,10 +92,18 @@ public class EditorSaveMap : MonoBehaviour
             _currentMapConstructData.Map = map;
     }
 
+    private void GetMap()
+    {
+        string map = ConvertMapGridToString(EditorMapManager.Instance.GetMapGrid());
+        if (map != null)
+            _currentMapConstructData.Map = map;
+    }
+
     public void SaveMap()
     {
         UpdateMapName(EditorMapManager.Instance.GetMapGrid());
         // UpdateEnergyAtStart();
+        GetMap();
 
         if (_mapName == "") return;
         
