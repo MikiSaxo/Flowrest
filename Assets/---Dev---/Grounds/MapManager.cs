@@ -146,6 +146,8 @@ public class MapManager : MonoBehaviour
         else
         {
             _hasFirstSwap = true;
+            _isPlayerForceSwap = false;
+            _stockPlayerForceSwap.Clear();
         }
 
         // Reset Quest Number

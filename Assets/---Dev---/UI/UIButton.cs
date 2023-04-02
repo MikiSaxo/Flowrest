@@ -34,16 +34,21 @@ public class UIButton : MonoBehaviour
         _selectedIcon.SetActive(which);
     }
 
-    public AllStates GetStateButton()
+    public void ChangeActivatedButton()
     {
-        return _stateButton;
+        MapManager.Instance.ChangeActivatedButton(gameObject);
     }
 
-    public int GetNumberLeft()
+    public void UpdateFbGround(int whichState)
     {
-        return _numberGroundLeft;
+        SetupUIGround.Instance.UpdateFbGround(whichState);
     }
 
+    public void EndFb()
+    {
+        SetupUIGround.Instance.EndFb();
+    }
+    
     public void UpdateNumberLeft(int numberToAdd)
     {
         _numberGroundLeft += numberToAdd;
@@ -52,6 +57,16 @@ public class UIButton : MonoBehaviour
 
         if (_numberGroundLeft <= 0)
             SetupUIGround.Instance.GroundEmpty((int)_stateButton);
+    }
+
+    public AllStates GetStateButton()
+    {
+        return _stateButton;
+    }
+
+    public int GetNumberLeft()
+    {
+        return _numberGroundLeft;
     }
 
     public void ResetToEmpty()
