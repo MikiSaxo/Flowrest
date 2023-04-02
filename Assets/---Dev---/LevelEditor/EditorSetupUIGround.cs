@@ -60,10 +60,10 @@ public class EditorSetupUIGround : MonoBehaviour
 
     public void ResetAllButtons()
     {
-        foreach (var but in _groundButtons)
-        {
-            but.GetComponent<UIButton>().ResetToEmpty();
-        }
+        // foreach (var but in _groundButtons)
+        // {
+        //     but.GetComponent<UIButton>().ResetToEmpty();
+        // }
     }
 
     public void FollowDndDeactivate()

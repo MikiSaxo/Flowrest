@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Xml;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,14 +13,17 @@ public class SetupUIGround : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _fBDnd;
     // public OpenCloseMenu GroundStockage;
 
-    [Header("Ground Buttons")] [SerializeField]
-    private GameObject[] _groundButtons;
-    [SerializeField] private float _timeSpawnButton;
+    [Header("Ground Buttons")]
+    [SerializeField] private GameObject _gridParent;
+    [SerializeField] private GameObject _prefabTileButton;
+    [SerializeField] private GameObject[] _groundButtons;
+    // [SerializeField] private float _timeSpawnButton;
     // [SerializeField] private GameObject[] _UITemperature;
 
     [Header("Ground Data")] [SerializeField] private GroundUIData[] _groundData;
 
     private bool _hasInventory;
+    private List<GameObject> _stockTileButton = new List<GameObject>();
     
     private void Awake()
     {
@@ -27,25 +32,25 @@ public class SetupUIGround : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < _groundButtons.Length; i++)
-        {
-            var getData = _groundData[i];
-            _groundButtons[i].GetComponent<UIButton>().Setup(getData.Name, getData.ColorIcon, getData.Icon,
-                getData.NbLeft, getData.GroundState);
-            GroundEmpty(i);
-        }
+        // for (int i = 0; i < _groundButtons.Length; i++)
+        // {
+        //     var getData = _groundData[i];
+        //     _groundButtons[i].GetComponent<UIButton>().Setup(getData.ColorIcon, getData.Icon,
+        //         getData.NbLeft, getData.GroundState);
+        //     GroundEmpty(i);
+        // }
     }
 
     public void SetIfHasInvetory(bool state)
     {
         _hasInventory = state;
     }
-    public void UpdateFbGround(int whichState) // Use by Ground buttons
+    public void UpdateFbGround(int whichState, GameObject button) // Use by Ground buttons
     {
-        UpdateFB((AllStates)whichState);
+        UpdateFB((AllStates)whichState, button);
     }
 
-    private void UpdateFB(AllStates state)
+    private void UpdateFB(AllStates state, GameObject button)
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
@@ -55,9 +60,8 @@ public class SetupUIGround : MonoBehaviour
         if(_hasInventory)
             RecyclingManager.Instance.UpdateRecycling(true);
 
-        _fBDnd.GetComponent<FollowMouseDND>()
-            .UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
-        MapManager.Instance.LastObjButtonSelected = _groundButtons[(int)state];
+        _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
+        MapManager.Instance.LastObjButtonSelected = button;
 
         if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
         {
@@ -68,7 +72,7 @@ public class SetupUIGround : MonoBehaviour
         _fBDnd.SetActive(true);
         _fBDnd.GetComponent<FollowMouseDND>().CanMove = true;
         MapManager.Instance.LastStateButtonSelected = state;
-        MapManager.Instance.ChangeActivatedButton(_groundButtons[(int)state]);
+        MapManager.Instance.ChangeActivatedButton(button);
         //GroundStockage.ForcedOpen = true;
     }
     public void EndFb() // Use by Ground buttons
@@ -83,13 +87,30 @@ public class SetupUIGround : MonoBehaviour
         // n_MapManager.Instance.ResetGroundSelected();
     }
 
-    public void AddNewGround(int which)
+    public void AddNewGround(int stateNb)
     {
-        var button = _groundButtons[which];
-        
-        button.SetActive(true);
-        button.GetComponent<UIButton>().UpdateNumberLeft(1);
+        // var button = _groundButtons[which];
+        //
+        // button.SetActive(true);
+        // button.GetComponent<UIButton>().UpdateNumberLeft(1);
 
+        foreach (var tile in _stockTileButton)
+        {
+            var currentTile = tile.GetComponent<UIButton>();
+
+            if ((int)currentTile.GetStateButton() == stateNb)
+            {
+                 currentTile.UpdateNumberLeft(1);
+                 currentTile.GetComponent<PointerMotion>().OnLeave();
+                 
+                 return;
+            }
+        }
+
+        GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
+        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon, _groundData[stateNb].NbLeft + 1, _groundData[stateNb].GroundState);
+        go.GetComponent<PointerMotion>().OnLeave();
+        _stockTileButton.Add(go);
         // Need to remove Animator component to avoid using a parent
         // var parent = button.transform.parent;
         // parent.gameObject.transform.DOScale(0, 0);
@@ -97,9 +118,10 @@ public class SetupUIGround : MonoBehaviour
         // parent.gameObject.transform.DOPunchScale(Vector3.one, _timeSpawnButton, 5, .5f);
     }
 
-    public void GroundEmpty(int which)
+    public void GroundEmpty(GameObject button)
     {
-        _groundButtons[which].SetActive(false);
+        _stockTileButton.Remove(button);
+        Destroy(button);
     }
 
     public void UpdateInventory(bool state)
@@ -120,10 +142,11 @@ public class SetupUIGround : MonoBehaviour
 
     public void ResetAllButtons()
     {
-        foreach (var but in _groundButtons)
+        foreach (var but in _stockTileButton)
         {
-            but.GetComponent<UIButton>().ResetToEmpty();
+            Destroy(but);
         }
+        _stockTileButton.Clear();
     }
 
     public void FollowDndDeactivate()

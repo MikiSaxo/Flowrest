@@ -13,20 +13,19 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
 
-    private int _numberGroundLeft;
+    [SerializeField] private int _numberGroundLeft;
 
     private void Start()
     {
         ActivateSelectedIcon(false);
     }
 
-    public void Setup(string text, Color color, Sprite icon, int nbLeft, AllStates stat)
+    public void Setup(Color color, Sprite icon, int nbLeft, AllStates state)
     {
         _iconButton.sprite = icon;
         _iconButton.color = color;
-        _textButton.text = text;
         UpdateNumberLeft(nbLeft);
-        _stateButton = stat;
+        _stateButton = state;
     }
 
     public void ActivateSelectedIcon(bool which)
@@ -39,9 +38,9 @@ public class UIButton : MonoBehaviour
         MapManager.Instance.ChangeActivatedButton(gameObject);
     }
 
-    public void UpdateFbGround(int whichState)
+    public void UpdateFbGround()
     {
-        SetupUIGround.Instance.UpdateFbGround(whichState);
+        SetupUIGround.Instance.UpdateFbGround((int)_stateButton, gameObject);
     }
 
     public void EndFb()
@@ -56,7 +55,7 @@ public class UIButton : MonoBehaviour
         _textNumber.text = $"{_numberGroundLeft}";
 
         if (_numberGroundLeft <= 0)
-            SetupUIGround.Instance.GroundEmpty((int)_stateButton);
+            SetupUIGround.Instance.GroundEmpty(gameObject);
     }
 
     public AllStates GetStateButton()
@@ -73,6 +72,6 @@ public class UIButton : MonoBehaviour
     {
         ActivateSelectedIcon(false);
         _numberGroundLeft = 0;
-        SetupUIGround.Instance.GroundEmpty((int)_stateButton);
+        // SetupUIGround.Instance.GroundEmpty((int)_stateButton);
     }
 }
