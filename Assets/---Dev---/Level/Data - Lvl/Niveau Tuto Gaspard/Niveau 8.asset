@@ -13,19 +13,22 @@ MonoBehaviour:
   m_Name: Niveau 8
   m_EditorClassIdentifier: 
   LevelName: Niveau 8
-  EnergyAtStart: 100
-  Coords: []
+  LevelFolder: Level Editor
+  EnergyAtStart: 50
   HasInventory: 1
   HasTrashCan: 1
-  BlockLastGroundsSwapped: 1
-  QuestDescription: "Cr\xE9er une fleur de savane, d'eau et de mar\xE9cage collectivement"
+  HasPrevisu: 1
+  BlockLastSwap: 1
+  PlayerForceChangeThese2Tiles: []
+  QuestDescription: "Cr\xE9er 1 fleur d'eau, 1 de plaine, 1 de savanne collectivement"
   QuestImage: {fileID: 0}
-  WhichStateFloor: 
-  WhichStateFlower: 040000000200000009000000
-  WhichStateNoSpecificTiles: 
-  WhichTileChain: 
+  QuestFloor: 
+  QuestFlower: 040000000400000002000000
+  QuestNoSpecificTiles: 
+  QuestTileChain: 
   NumberTileChain: 0
-  WhichTileCount: 
+  QuestTileCount: 
   NumberTileCount: 0
-  DialogToDisplayAtTheBeginning: []
-  DialogToDisplayAtTheEnd: []
+  CharacterName: 
+  DialogBeginning: []
+  DialogEnd: []

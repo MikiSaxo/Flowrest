@@ -13,21 +13,23 @@ MonoBehaviour:
   m_Name: Niveau 1
   m_EditorClassIdentifier: 
   LevelName: Niveau 1
+  LevelFolder: Level Editor
   EnergyAtStart: 50
-  Coords: []
   HasInventory: 0
   HasTrashCan: 0
-  BlockLastGroundsSwapped: 0
-  QuestDescription: Faire en sorte d'avoir 6 tiles de plaines adjacententes
+  HasPrevisu: 1
+  BlockLastSwap: 0
+  PlayerForceChangeThese2Tiles:
+  - {x: 0, y: 0}
+  QuestDescription: Faire en sorte d'avoir 12 tiles de plaine.
   QuestImage: {fileID: 0}
-  WhichStateFloor: 
-  WhichStateFlower: 
-  WhichStateNoSpecificTiles: 
-  WhichTileChain: 00000000
+  QuestFloor: 
+  QuestFlower: 
+  QuestNoSpecificTiles: 
+  QuestTileChain: 
   NumberTileChain: 6
-  WhichTileCount: 
-  NumberTileCount: 0
-  DialogToDisplayAtTheBeginning:
-  - hqshssh
-  DialogToDisplayAtTheEnd:
-  - qgrqg
+  QuestTileCount: 00000000
+  NumberTileCount: 12
+  CharacterName: 
+  DialogBeginning: []
+  DialogEnd: []
