@@ -12,7 +12,7 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
     public event Action UpdateGround;
-    public event Action CheckBiome;
+    // public event Action CheckBiome;
     public event Action ResetSelection;
 
     public AllStates LastStateButtonSelected { get; set; }

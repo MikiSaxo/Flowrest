@@ -41,9 +41,6 @@ public class ItemCollectedManager : MonoBehaviour
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
         go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
 
-        
-        print("spawn fb collected");
-
         _stockFB.Add(go);
     }
 
@@ -55,7 +52,6 @@ public class ItemCollectedManager : MonoBehaviour
         go.transform.position = Input.mousePosition;
         go.GetComponent<FB_CrystalCollected>().Init(value, _tpPointsCrystals[2]);
         
-        print("spawn energy");
         _stockFB.Add(go);
     }
 

@@ -116,6 +116,8 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = false;
         _parent.IsProtectedPrevisu = false;
 
+        MapManager.Instance.ResetPrevisu();
+        
         OnLeaveAnim(.75f);
     }
 

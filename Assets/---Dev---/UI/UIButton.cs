@@ -20,11 +20,11 @@ public class UIButton : MonoBehaviour
         ActivateSelectedIcon(false);
     }
 
-    public void Setup(Color color, Sprite icon, int nbLeft, AllStates state)
+    public void Setup(Color color, Sprite icon, AllStates state)
     {
         _iconButton.sprite = icon;
         _iconButton.color = color;
-        UpdateNumberLeft(nbLeft);
+        UpdateNumberLeft(1);
         _stateButton = state;
     }
 

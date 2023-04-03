@@ -113,8 +113,7 @@ public class SetupUIGround : MonoBehaviour
         }
 
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
-        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon,
-            _groundData[stateNb].NbLeft + 1, _groundData[stateNb].GroundState);
+        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon, _groundData[stateNb].GroundState);
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
     }

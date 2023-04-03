@@ -8,6 +8,6 @@ public class GroundUIData : ScriptableObject
    public string Name;
    public Sprite Icon;
    public Color ColorIcon;
-   public int NbLeft;
+   // public int NbLeft;
    public AllStates GroundState;
 }
