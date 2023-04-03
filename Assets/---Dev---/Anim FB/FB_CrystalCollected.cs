@@ -55,7 +55,8 @@ public class FB_CrystalCollected : MonoBehaviour
 
     private void DeleteObj()
     {
-        Destroy(gameObject);
+        KillTween();
+        ItemCollectedManager.Instance.DeleteFB(gameObject);
     }
 
     public void KillTween()

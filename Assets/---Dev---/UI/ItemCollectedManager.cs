@@ -55,9 +55,10 @@ public class ItemCollectedManager : MonoBehaviour
         _stockFB.Add(go);
     }
 
-    private void DeleteFB(GameObject fb)
+    public void DeleteFB(GameObject fb)
     {
         _stockFB.Remove(fb);
+        Destroy(fb);
     }
 
     public void DeleteAllFB()
