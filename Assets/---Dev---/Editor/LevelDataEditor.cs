@@ -38,6 +38,18 @@ public class LevelDataEditor : Editor
     private SerializedProperty DialogBeginning;
     private SerializedProperty DialogEnd;
 
+    private SerializedProperty StartNbState;
+    private SerializedProperty StartNbPlain;
+    private SerializedProperty StartNbDesert;
+    private SerializedProperty StartNbWater;
+    private SerializedProperty StartNbTropical;
+    private SerializedProperty StartNbSavanna;
+    private SerializedProperty StartNbGeyser;
+    private SerializedProperty StartNbSnow;
+    private SerializedProperty StartNbPolarDesert;
+    private SerializedProperty StartNbTundra;
+    private SerializedProperty StartNbSwamp;
+
     void OnEnable()
     {
         LevelName = serializedObject.FindProperty("LevelName");
@@ -65,6 +77,18 @@ public class LevelDataEditor : Editor
         CharacterName = serializedObject.FindProperty("CharacterName");
         DialogBeginning = serializedObject.FindProperty("DialogBeginning");
         DialogEnd = serializedObject.FindProperty("DialogEnd");
+
+        StartNbState = serializedObject.FindProperty("StartNbState");
+        StartNbPlain = serializedObject.FindProperty("StartNbPlain");
+        StartNbDesert = serializedObject.FindProperty("StartNbDesert");
+        StartNbWater = serializedObject.FindProperty("StartNbWater");
+        StartNbTropical = serializedObject.FindProperty("StartNbTropical");
+        StartNbSavanna = serializedObject.FindProperty("StartNbSavanna");
+        StartNbGeyser = serializedObject.FindProperty("StartNbGeyser");
+        StartNbSnow = serializedObject.FindProperty("StartNbSnow");
+        StartNbPolarDesert = serializedObject.FindProperty("StartNbPolarDesert");
+        StartNbTundra = serializedObject.FindProperty("StartNbTundra");
+        StartNbSwamp = serializedObject.FindProperty("StartNbSwamp");
     }
 
     public override void OnInspectorGUI()
@@ -114,6 +138,8 @@ public class LevelDataEditor : Editor
         if (mechanics)
         {
             EditorGUILayout.PropertyField(HasInventory);
+            if (HasInventory.boolValue)
+                DisplayChooseStartNbState();
             EditorGUILayout.PropertyField(HasRecycling);
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
@@ -127,7 +153,48 @@ public class LevelDataEditor : Editor
             EditorGUILayout.Space(10);
         }
     }
-    
+
+    private void DisplayChooseStartNbState()
+    {
+        LevelData _levelData = (LevelData)target;
+        
+        EditorGUILayout.PropertyField(StartNbState);
+
+        switch (_levelData.StartNbState)
+        {
+            case AllStates.Plain:
+                EditorGUILayout.PropertyField(StartNbPlain);
+                break;
+            case AllStates.Desert:
+                EditorGUILayout.PropertyField(StartNbDesert);
+                break;
+            case AllStates.Water:
+                EditorGUILayout.PropertyField(StartNbWater);
+                break;
+            case AllStates.Tropical:
+                EditorGUILayout.PropertyField(StartNbTropical);
+                break;
+            case AllStates.Savanna:
+                EditorGUILayout.PropertyField(StartNbSavanna);
+                break;
+            case AllStates.Geyser:
+                EditorGUILayout.PropertyField(StartNbGeyser);
+                break;
+            case AllStates.Snow:
+                EditorGUILayout.PropertyField(StartNbSnow);
+                break;
+            case AllStates.PolarDesert:
+                EditorGUILayout.PropertyField(StartNbPolarDesert);
+                break;
+            case AllStates.Tundra:
+                EditorGUILayout.PropertyField(StartNbTundra);
+                break;
+            case AllStates.Swamp:
+                EditorGUILayout.PropertyField(StartNbSwamp);
+                break;
+        }
+    }
+
     private void DisplayQuestInfo()
     {
         questsInfo = EditorGUILayout.BeginFoldoutHeaderGroup(questsInfo, "-  Quest(s) Infos  -");
@@ -155,11 +222,11 @@ public class LevelDataEditor : Editor
             EditorGUILayout.PropertyField(QuestFlower);
             EditorGUILayout.PropertyField(QuestNoSpecificTiles);
             EditorGUILayout.PropertyField(QuestTileChain);
-            
-            if(QuestTileChain.isExpanded)
+
+            if (QuestTileChain.isExpanded)
                 EditorGUILayout.PropertyField(NumberTileChain);
             EditorGUILayout.PropertyField(QuestTileCount);
-            if(QuestTileCount.isExpanded)
+            if (QuestTileCount.isExpanded)
                 EditorGUILayout.PropertyField(NumberTileCount);
 
             EditorGUILayout.Space(10);
