@@ -63,10 +63,15 @@ public class ItemCollectedManager : MonoBehaviour
 
     public void DeleteAllFB()
     {
+        if (_stockFB.Count == 0) return;
+
         foreach (var fb in _stockFB)
         {
+            if (_stockFB.Count == 0) return;
+
             if(fb.GetComponent<FB_GroundCollected>() != null)
                 fb.GetComponent<FB_GroundCollected>().KillTween();
+            
             if(fb.GetComponent<FB_CrystalCollected>() != null)
                 fb.GetComponent<FB_CrystalCollected>().KillTween();
             

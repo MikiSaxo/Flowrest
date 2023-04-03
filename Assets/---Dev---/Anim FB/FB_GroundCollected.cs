@@ -72,8 +72,10 @@ public class FB_GroundCollected : MonoBehaviour
 
     private void DeleteObj()
     {
+        KillTween();
         SetupUIGround.Instance.AddNewGround((int)_state);
-        Destroy(gameObject);
+
+        ItemCollectedManager.Instance.DeleteFB(gameObject);
     }
 
     public void KillTween()
