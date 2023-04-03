@@ -219,7 +219,6 @@ public class QuestManager : MonoBehaviour
     private bool CheckTileCountQuest()
     {
         _tileCount = 0;
-        print("launch count quest");
 
         GameObject[,] map = MapManager.Instance.GetMapGrid();
 
@@ -241,7 +240,6 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        print(_tileCount + " / " + _tileCountNumber);
         return _tileCount >= _tileCountNumber;
     }
 

@@ -81,7 +81,6 @@ public class ScreensManager : MonoBehaviour
     public void VictoryScreen()
     {
         MapManager.Instance.IsVictory = true;
-        
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 

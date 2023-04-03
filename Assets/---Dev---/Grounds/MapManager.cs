@@ -411,9 +411,6 @@ public class MapManager : MonoBehaviour
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
 
-        // Check Game Over is no recycling
-        if (!_hasRecycling)
-            CheckIfGameOver();
 
 
         //ResetLastSelected
@@ -424,6 +421,10 @@ public class MapManager : MonoBehaviour
         // CheckForBiome();
 
         QuestsManager.CheckQuest();
+      
+        // Check Game Over is no recycling
+        if (!_hasRecycling)
+            CheckIfGameOver();
 
         // Reset protect
         gLastGroundSelected.IsProtected = false;

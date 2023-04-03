@@ -52,6 +52,16 @@ public class GroundIndicator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        OnEnterPointer(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        OnExitPointer(other);
+    }
+
+    private void OnEnterPointer(Collider other)
+    {
         if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
@@ -88,13 +98,11 @@ public class GroundIndicator : MonoBehaviour
 
         if (_isSelected) return;
 
-        OnEnter(.2f);
+        OnEnterAnim(.2f);
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnExitPointer(Collider other)
     {
-        //ResetAllAroundPrevisu();
-
         _parent.UpdateFbNoSwap(false);
 
         if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
@@ -104,7 +112,7 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = false;
         _parent.IsProtectedPrevisu = false;
 
-        OnLeave(.75f);
+        OnLeaveAnim(.75f);
     }
 
     private void Update()
@@ -155,13 +163,13 @@ public class GroundIndicator : MonoBehaviour
         _meshParent.transform.DOMoveY(height, duration);
     }
 
-    private void OnEnter(float duration)
+    private void OnEnterAnim(float duration)
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_hoveredYPos, duration);
     }
 
-    private void OnLeave(float duration)
+    private void OnLeaveAnim(float duration)
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutElastic);
@@ -208,7 +216,7 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = false;
         //CheckHasWaterMesh();
         // MoveYMesh(_startYPos, .1f);
-        OnLeave(.75f);
+        OnLeaveAnim(.75f);
         MapManager.Instance.IsGroundFirstSelected = false;
     }
 
