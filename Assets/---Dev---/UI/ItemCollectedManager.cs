@@ -39,6 +39,7 @@ public class ItemCollectedManager : MonoBehaviour
     {
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
         go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
+        // SetupUIGround.Instance.AddTempGround();
         //,_durationSpawn[index], _durationWait[index], _durationDispawn[index]);
     }
 

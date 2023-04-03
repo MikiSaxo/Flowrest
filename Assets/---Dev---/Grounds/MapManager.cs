@@ -31,7 +31,7 @@ public class MapManager : MonoBehaviour
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
-    private bool _hasTrashCan;
+    private bool _hasRecycling;
     private bool _hasInventory;
     private bool _hasPrevisu;
     private bool _blockLastGroundsSwapped;
@@ -67,7 +67,7 @@ public class MapManager : MonoBehaviour
     private const char TUNDRA = 'U';
     private const char SWAMP = 'A';
     private const char MOUNTAIN = 'M';
-    
+
     #endregion
 
     private const float QUARTER_OFFSET = .85f;
@@ -126,13 +126,13 @@ public class MapManager : MonoBehaviour
         _hasInventory = currentLvl.HasInventory;
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
 
-        // Update if has trash can
-        _hasTrashCan = currentLvl.HasTrashCan;
-        SetupUIGround.Instance.SetIfHasInvetory(_hasTrashCan);
-        
+        // Update if has recycling
+        _hasRecycling = currentLvl.HasRecycling;
+        SetupUIGround.Instance.SetIfHasInvetory(_hasRecycling);
+
         // update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
-        
+
         // Update if bloc last grounds swapped
         _blockLastGroundsSwapped = currentLvl.BlockLastSwap;
 
@@ -243,7 +243,7 @@ public class MapManager : MonoBehaviour
         }
 
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
-        
+
         // Init if is Player Force Swap
         var coord = new Vector2Int(x, y);
 
@@ -265,7 +265,7 @@ public class MapManager : MonoBehaviour
             ResetButtonSelected();
             // ResetAroundSelectedPrevisu();
             RecyclingManager.Instance.UpdateRecycling(false);
-            
+
             ResetPrevisu();
         }
     }
@@ -278,8 +278,9 @@ public class MapManager : MonoBehaviour
     public void UpdateSecondBlocForce()
     {
         if (_stockPlayerForceSwap.Count == 0) return;
-        
-        var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>();
+
+        var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
+            .GetComponent<GroundStateManager>();
         secondGround.UpdatePrevisuArrow(true);
         secondGround.IsPlayerForceSwapBlocked = false;
     }
@@ -301,7 +302,7 @@ public class MapManager : MonoBehaviour
         // Activate Trash can
         if (button != null)
         {
-            if (_hasTrashCan)
+            if (_hasRecycling)
                 RecyclingManager.Instance.UpdateRecycling(true);
         }
 
@@ -315,7 +316,7 @@ public class MapManager : MonoBehaviour
         // Deactivate the last one selected
         if (LastObjButtonSelected != null)
             LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
-        
+
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
 
@@ -350,6 +351,7 @@ public class MapManager : MonoBehaviour
             _hasFirstSwap = true;
             ResetAllPlayerForceSwaped();
         }
+
         // Update map
         _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
@@ -373,7 +375,7 @@ public class MapManager : MonoBehaviour
         // Reset selection's color of the two Grounds
         gLastGroundSelected.ResetIndicator();
         gWhich.ResetIndicator();
-        
+
         // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround();
         gWhich.UpdateGroundsAround();
@@ -403,14 +405,16 @@ public class MapManager : MonoBehaviour
             gWhich.UpdateFBReloadEnergy(true);
             gLastGroundSelected.UpdateFBReloadEnergy(true);
 
-            if (_lastGroundSwaped[0] != null)
-                _lastGroundSwaped[0].UpdateNoSwap(false);
-            if (_lastGroundSwaped[1] != null)
-                _lastGroundSwaped[1].UpdateNoSwap(false);
+            ResetTwoLastSwapped();
 
             _lastGroundSwaped[0] = gWhich;
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
+
+        // Check Game Over is no recycling
+        if (!_hasRecycling)
+            CheckIfGameOver();
+
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
@@ -430,10 +434,10 @@ public class MapManager : MonoBehaviour
     {
         // print("GroundSwapPrevisu");
         if (!_hasPrevisu) return;
-        
+
         // Reset old ground entered
         ResetPrevisu();
-        
+
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
@@ -445,11 +449,11 @@ public class MapManager : MonoBehaviour
         // Update Ground Around
         gWhich.UpdateGroundsAroundPrevisu(gLastGroundSelected.GetCurrentStateEnum());
         gLastGroundSelected.UpdateGroundsAroundPrevisu(gWhich.GetCurrentStateEnum());
-        
+
         // Reset protect
         gLastGroundSelected.IsProtectedPrevisu = false;
         gWhich.IsProtectedPrevisu = false;
-        
+
         // Update their previsu
         gWhich.ChangeStatePrevisu(gLastGroundSelected.GetCurrentStateEnum());
         gLastGroundSelected.ChangeStatePrevisu(gWhich.GetCurrentStateEnum());
@@ -457,8 +461,6 @@ public class MapManager : MonoBehaviour
 
     public void UseRecycling()
     {
-        // print("hello trash");
-
         if (LastObjButtonSelected == null) return;
 
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
@@ -466,6 +468,7 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.FollowDndDeactivate();
         RecyclingManager.Instance.UpdateRecycling(false);
         ResetButtonSelected();
+        ResetTwoLastSwapped();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -493,20 +496,22 @@ public class MapManager : MonoBehaviour
             CheckAroundGroundSelected(which, newCoords);
     }
 
-    public void CheckForBiome()
-    {
-        CheckBiome?.Invoke();
-    }
-
     public void CheckIfGameOver()
     {
         if (IsVictory) return;
 
-        bool inven = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
+        StartCoroutine(WaitLittleToCheck());
+    }
+
+    IEnumerator WaitLittleToCheck()
+    {
+        yield return new WaitForSeconds(.02f);
+        
+        bool inventory = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
 
         if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
-            && inven
-            && !SetupUIGround.Instance.CheckIfGround())
+            && inventory
+            && !SetupUIGround.Instance.CheckIfStillGround())
         {
             ScreensManager.Instance.GameOver();
         }
@@ -527,11 +532,6 @@ public class MapManager : MonoBehaviour
     public bool GetIsDragNDrop()
     {
         return _isDragNDrop;
-    }
-
-    public int GetCurrentLevel()
-    {
-        return _currentLevel;
     }
 
     public bool GetHasGroundSelected()
@@ -612,13 +612,13 @@ public class MapManager : MonoBehaviour
         //     _lastGroundPrevisuEntered.ResetPrevisu();
         // if(_lastGroundSelected != null)
         //     _lastGroundSelected.GetComponent<GroundStateManager>().ResetPrevisu();
-        
+
         for (int x = 0; x < _mapSize.x; x++)
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                if(_mapGrid[x, y] == null) continue;
-                if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
+                if (_mapGrid[x, y] == null) continue;
+                if (_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
 
                 var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
                 ground.ResetStockPrevisu();
@@ -632,8 +632,8 @@ public class MapManager : MonoBehaviour
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                if(_mapGrid[x, y] == null) continue;
-                if(_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
+                if (_mapGrid[x, y] == null) continue;
+                if (_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
 
                 var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
                 ground.IsPlayerForceSwapBlocked = false;

@@ -106,7 +106,7 @@ public class EnergyManager : MonoBehaviour
         _numberToDisplay.text = $"{number}";
         _currentEnergy = number;
 
-        MapManager.Instance.CheckIfGameOver();
+        // MapManager.Instance.CheckIfGameOver();
     }
     private void Update()
     {

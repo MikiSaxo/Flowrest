@@ -191,6 +191,9 @@ public class GroundIndicator : MonoBehaviour
 
         // Reset Two lst grounds swapped
         MapManager.Instance.ResetTwoLastSwapped();
+        
+        // Check if Game Over
+        MapManager.Instance.CheckIfGameOver();
 
         // Reset
         // ResetAllAroundPrevisu();

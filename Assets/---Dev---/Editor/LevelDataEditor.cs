@@ -18,7 +18,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty EnergyAtStart;
 
     private SerializedProperty HasInventory;
-    private SerializedProperty HasTrashCan;
+    private SerializedProperty HasRecycling;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
     private SerializedProperty PlayerForceChangeThese2Tiles;
@@ -46,7 +46,7 @@ public class LevelDataEditor : Editor
         EnergyAtStart = serializedObject.FindProperty("EnergyAtStart");
 
         HasInventory = serializedObject.FindProperty("HasInventory");
-        HasTrashCan = serializedObject.FindProperty("HasTrashCan");
+        HasRecycling = serializedObject.FindProperty("HasRecycling");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
         PlayerForceChangeThese2Tiles = serializedObject.FindProperty("PlayerForceChangeThese2Tiles");
@@ -114,7 +114,7 @@ public class LevelDataEditor : Editor
         if (mechanics)
         {
             EditorGUILayout.PropertyField(HasInventory);
-            EditorGUILayout.PropertyField(HasTrashCan);
+            EditorGUILayout.PropertyField(HasRecycling);
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
         }

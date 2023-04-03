@@ -13,18 +13,21 @@ public class SetupUIGround : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _fBDnd;
     // public OpenCloseMenu GroundStockage;
 
-    [Header("Ground Buttons")]
-    [SerializeField] private GameObject _gridParent;
+    [Header("Ground Buttons")] [SerializeField]
+    private GameObject _gridParent;
+
     [SerializeField] private GameObject _prefabTileButton;
-    [SerializeField] private GameObject[] _groundButtons;
+
+    // [SerializeField] private GameObject[] _groundButtons;
     // [SerializeField] private float _timeSpawnButton;
     // [SerializeField] private GameObject[] _UITemperature;
 
-    [Header("Ground Data")] [SerializeField] private GroundUIData[] _groundData;
+    [Header("Ground Data")] [SerializeField]
+    private GroundUIData[] _groundData;
 
     private bool _hasInventory;
     private List<GameObject> _stockTileButton = new List<GameObject>();
-    
+
     private void Awake()
     {
         Instance = this;
@@ -45,6 +48,7 @@ public class SetupUIGround : MonoBehaviour
     {
         _hasInventory = state;
     }
+
     public void UpdateFbGround(int whichState, GameObject button) // Use by Ground buttons
     {
         UpdateFB((AllStates)whichState, button);
@@ -56,8 +60,8 @@ public class SetupUIGround : MonoBehaviour
 
         MapManager.Instance.ResetButtonSelected();
         MapManager.Instance.ResetGroundSelected();
-        
-        if(_hasInventory)
+
+        if (_hasInventory)
             RecyclingManager.Instance.UpdateRecycling(true);
 
         _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
@@ -75,12 +79,13 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ChangeActivatedButton(button);
         //GroundStockage.ForcedOpen = true;
     }
+
     public void EndFb() // Use by Ground buttons
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
-        
+
         RecyclingManager.Instance.UpdateRecycling(false);
 
         // n_MapManager.Instance.ResetButtonSelected();
@@ -100,22 +105,26 @@ public class SetupUIGround : MonoBehaviour
 
             if ((int)currentTile.GetStateButton() == stateNb)
             {
-                 currentTile.UpdateNumberLeft(1);
-                 currentTile.GetComponent<PointerMotion>().OnLeave();
-                 
-                 return;
+                currentTile.UpdateNumberLeft(1);
+                currentTile.GetComponent<PointerMotion>().OnLeave();
+
+                return;
             }
         }
 
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
-        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon, _groundData[stateNb].NbLeft + 1, _groundData[stateNb].GroundState);
+        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon,
+            _groundData[stateNb].NbLeft + 1, _groundData[stateNb].GroundState);
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
-        // Need to remove Animator component to avoid using a parent
-        // var parent = button.transform.parent;
-        // parent.gameObject.transform.DOScale(0, 0);
-        // parent.gameObject.transform.DOScale(1, _timeSpawnButton).SetEase(Ease.OutBounce);
-        // parent.gameObject.transform.DOPunchScale(Vector3.one, _timeSpawnButton, 5, .5f);
+    }
+
+    public void AddTempGround()
+    {
+        GameObject go = Instantiate(_fBDnd, gameObject.transform);
+        go.transform.DOMove(Vector3.one * 10000, 0);
+        _stockTileButton.Add(go);
+        Destroy(go, .1f);
     }
 
     public void GroundEmpty(GameObject button)
@@ -129,15 +138,16 @@ public class SetupUIGround : MonoBehaviour
         //GroundStockage.gameObject.SetActive(state);
     }
 
-    public bool CheckIfGround()
+    public bool CheckIfStillGround()
     {
-        foreach (var button in _groundButtons)
-        {
-            if (button.gameObject.activeSelf)
-                return true;
-        }
-
-        return false;
+        // foreach (var tileButton in _stockTileButton)
+        // {
+        //     if (tileButton.gameObject.activeSelf)
+        //         return true;
+        // }
+        //
+        // return false;
+        return _stockTileButton.Count != 0;
     }
 
     public void ResetAllButtons()
@@ -146,6 +156,7 @@ public class SetupUIGround : MonoBehaviour
         {
             Destroy(but);
         }
+
         _stockTileButton.Clear();
     }
 
