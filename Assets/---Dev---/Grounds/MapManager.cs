@@ -562,6 +562,7 @@ public class MapManager : MonoBehaviour
         }
 
         SetupUIGround.Instance.ResetAllButtons();
+        ItemCollectedManager.Instance.DeleteAllFB();
         IsVictory = false;
 
         ChangeLevel(nextLevel);

@@ -32,7 +32,7 @@ public class ItemCollectedManager : MonoBehaviour
 
     private void Update()
     {
-        // if(Input.GetKeyDown(KeyCode.Space))
+        // if(Input.GetKeyDown(KeyCode.H))
         // StartAnim();
     }
 
@@ -40,6 +40,9 @@ public class ItemCollectedManager : MonoBehaviour
     {
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
         go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
+
+        
+        print("spawn fb collected");
 
         _stockFB.Add(go);
     }
@@ -52,12 +55,12 @@ public class ItemCollectedManager : MonoBehaviour
         go.transform.position = Input.mousePosition;
         go.GetComponent<FB_CrystalCollected>().Init(value, _tpPointsCrystals[2]);
         
+        print("spawn energy");
         _stockFB.Add(go);
     }
 
     public void DeleteFB(GameObject fb)
     {
-        _stockFB.Remove(fb);
         Destroy(fb);
     }
 
@@ -67,13 +70,16 @@ public class ItemCollectedManager : MonoBehaviour
 
         foreach (var fb in _stockFB)
         {
-            if (_stockFB.Count == 0) return;
-
+            if(fb == null) continue;
+            
             if(fb.GetComponent<FB_GroundCollected>() != null)
                 fb.GetComponent<FB_GroundCollected>().KillTween();
             
-            if(fb.GetComponent<FB_CrystalCollected>() != null)
+            else if(fb.GetComponent<FB_CrystalCollected>() != null)
                 fb.GetComponent<FB_CrystalCollected>().KillTween();
+            
+            else continue;
+            
             
             DeleteFB(fb);
         }
