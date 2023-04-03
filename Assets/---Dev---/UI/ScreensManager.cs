@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
@@ -81,6 +82,7 @@ public class ScreensManager : MonoBehaviour
     public void VictoryScreen()
     {
         MapManager.Instance.IsVictory = true;
+        ItemCollectedManager.Instance.DeleteAllFB();
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 

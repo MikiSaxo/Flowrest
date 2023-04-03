@@ -90,13 +90,17 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = true;
 
 
+        if (_isSelected)
+        {
+            MapManager.Instance.ResetPrevisu();
+            return;
+        }
+
         if (MapManager.Instance.GetHasGroundSelected())
         {
             // print("call ground swap previsu");
             MapManager.Instance.GroundSwapPrevisu(_parent.gameObject);
         }
-
-        if (_isSelected) return;
 
         OnEnterAnim(.2f);
     }
@@ -131,14 +135,14 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
         {
             // Block if click again on it
-            if (_isSelected) return; 
+            if (_isSelected) return;
 
             // Useful to block Trigger enter and exit
-            _isSelected = true; 
-           
+            _isSelected = true;
+
             // Make animation
             MoveYMesh(_selectedYPos, .3f);
-            
+
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
             _parent.OnSelected(); // Call its parent to tell which one was selected to MapManager
@@ -199,7 +203,7 @@ public class GroundIndicator : MonoBehaviour
 
         // Reset Two lst grounds swapped
         MapManager.Instance.ResetTwoLastSwapped();
-        
+
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
 

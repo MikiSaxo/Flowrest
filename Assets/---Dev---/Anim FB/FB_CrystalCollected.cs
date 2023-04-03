@@ -57,4 +57,9 @@ public class FB_CrystalCollected : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void KillTween()
+    {
+        _objToMove.transform.DOKill();
+    }
 }

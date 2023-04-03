@@ -607,7 +607,7 @@ public class MapManager : MonoBehaviour
         _lastGroundSwaped[1] = null;
     }
 
-    private void ResetPrevisu()
+    public void ResetPrevisu()
     {
         // if(_lastGroundPrevisuEntered != null)
         //     _lastGroundPrevisuEntered.ResetPrevisu();

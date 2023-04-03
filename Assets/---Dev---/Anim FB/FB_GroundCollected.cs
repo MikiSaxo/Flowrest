@@ -75,4 +75,9 @@ public class FB_GroundCollected : MonoBehaviour
         SetupUIGround.Instance.AddNewGround((int)_state);
         Destroy(gameObject);
     }
+
+    public void KillTween()
+    {
+        _objToMove.transform.DOKill();
+    }
 }

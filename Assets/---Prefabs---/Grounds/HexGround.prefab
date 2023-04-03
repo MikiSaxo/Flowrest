@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2073194735628377732}
   - component: {fileID: 6776018865989401812}
-  - component: {fileID: 1127095955137154699}
+  - component: {fileID: 7647496206535253539}
   m_Layer: 0
   m_Name: Indicator
   m_TagString: Untagged
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2202029719449191839}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000028976, y: 1.07, z: -0.000000057952}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 7614459207405979693}
   _meshParent: {fileID: 7994009417085831957}
---- !u!65 &1127095955137154699
-BoxCollider:
+--- !u!136 &7647496206535253539
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -57,9 +57,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.0463524, y: 4.888909, z: 7.9520664}
-  m_Center: {x: 0, y: 1.9444544, z: 0}
+  m_Radius: 4.2
+  m_Height: 11.23
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2407001091993214221
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +444,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7614459207405979692}
     m_Modifications:
+    - target: {fileID: 5743977473924593476, guid: ae50e6fe40ff35b4195db981309e68d8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7614459207405979688, guid: ae50e6fe40ff35b4195db981309e68d8, type: 3}
       propertyPath: m_Name
       value: HexDesertMesh

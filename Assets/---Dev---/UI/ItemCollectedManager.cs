@@ -16,6 +16,7 @@ public class ItemCollectedManager : MonoBehaviour
     [SerializeField] private GameObject _prefabCrystalCollected;
     [SerializeField] private GameObject _feedbacksParent;
 
+    private List<GameObject> _stockFB = new List<GameObject>();
     // [Header("Durations, 0:Ground, 1:Crystal")] 
     // [SerializeField]
     // private float[] _durationSpawn;
@@ -39,8 +40,8 @@ public class ItemCollectedManager : MonoBehaviour
     {
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
         go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
-        // SetupUIGround.Instance.AddTempGround();
-        //,_durationSpawn[index], _durationWait[index], _durationDispawn[index]);
+
+        _stockFB.Add(go);
     }
 
     public void SpawnFBEnergyCollected(int value)
@@ -50,5 +51,26 @@ public class ItemCollectedManager : MonoBehaviour
         GameObject go = Instantiate(_prefabCrystalCollected, _feedbacksParent.transform);
         go.transform.position = Input.mousePosition;
         go.GetComponent<FB_CrystalCollected>().Init(value, _tpPointsCrystals[2]);
+        
+        _stockFB.Add(go);
+    }
+
+    private void DeleteFB(GameObject fb)
+    {
+        _stockFB.Remove(fb);
+    }
+
+    public void DeleteAllFB()
+    {
+        foreach (var fb in _stockFB)
+        {
+            if(fb.GetComponent<FB_GroundCollected>() != null)
+                fb.GetComponent<FB_GroundCollected>().KillTween();
+            if(fb.GetComponent<FB_CrystalCollected>() != null)
+                fb.GetComponent<FB_CrystalCollected>().KillTween();
+            
+            DeleteFB(fb);
+        }
+        _stockFB.Clear();
     }
 }
