@@ -18,10 +18,13 @@ public class LevelDataEditor : Editor
     private SerializedProperty EnergyAtStart;
 
     private SerializedProperty HasInventory;
+    private SerializedProperty StartNbState;
+    private SerializedProperty StartNbAllState;
     private SerializedProperty HasRecycling;
+    private SerializedProperty NbOfRecycling;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
-    private SerializedProperty PlayerForceChangeThese2Tiles;
+    private SerializedProperty PlayerForceSwap;
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestImage;
@@ -38,18 +41,6 @@ public class LevelDataEditor : Editor
     private SerializedProperty DialogBeginning;
     private SerializedProperty DialogEnd;
 
-    private SerializedProperty StartNbState;
-    private SerializedProperty StartNbPlain;
-    private SerializedProperty StartNbDesert;
-    private SerializedProperty StartNbWater;
-    private SerializedProperty StartNbTropical;
-    private SerializedProperty StartNbSavanna;
-    private SerializedProperty StartNbGeyser;
-    private SerializedProperty StartNbSnow;
-    private SerializedProperty StartNbPolarDesert;
-    private SerializedProperty StartNbTundra;
-    private SerializedProperty StartNbSwamp;
-    private SerializedProperty StartNbAllState;
 
     void OnEnable()
     {
@@ -59,10 +50,13 @@ public class LevelDataEditor : Editor
         EnergyAtStart = serializedObject.FindProperty("EnergyAtStart");
 
         HasInventory = serializedObject.FindProperty("HasInventory");
+        StartNbState = serializedObject.FindProperty("StartNbState");
+        StartNbAllState = serializedObject.FindProperty("StartNbAllState");
         HasRecycling = serializedObject.FindProperty("HasRecycling");
+        NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
-        PlayerForceChangeThese2Tiles = serializedObject.FindProperty("PlayerForceChangeThese2Tiles");
+        PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestImage = serializedObject.FindProperty("QuestImage");
@@ -78,19 +72,6 @@ public class LevelDataEditor : Editor
         CharacterName = serializedObject.FindProperty("CharacterName");
         DialogBeginning = serializedObject.FindProperty("DialogBeginning");
         DialogEnd = serializedObject.FindProperty("DialogEnd");
-
-        StartNbState = serializedObject.FindProperty("StartNbState");
-        // StartNbPlain = serializedObject.FindProperty("StartNbPlain");
-        // StartNbDesert = serializedObject.FindProperty("StartNbDesert");
-        // StartNbWater = serializedObject.FindProperty("StartNbWater");
-        // StartNbTropical = serializedObject.FindProperty("StartNbTropical");
-        // StartNbSavanna = serializedObject.FindProperty("StartNbSavanna");
-        // StartNbGeyser = serializedObject.FindProperty("StartNbGeyser");
-        // StartNbSnow = serializedObject.FindProperty("StartNbSnow");
-        // StartNbPolarDesert = serializedObject.FindProperty("StartNbPolarDesert");
-        // StartNbTundra = serializedObject.FindProperty("StartNbTundra");
-        // StartNbSwamp = serializedObject.FindProperty("StartNbSwamp");
-        StartNbAllState = serializedObject.FindProperty("StartNbAllState");
     }
 
     public override void OnInspectorGUI()
@@ -143,6 +124,10 @@ public class LevelDataEditor : Editor
             if (HasInventory.boolValue)
                 DisplayChooseStartNbState();
             EditorGUILayout.PropertyField(HasRecycling);
+            
+            if (HasRecycling.boolValue)
+                EditorGUILayout.PropertyField(NbOfRecycling);
+            
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
         }
@@ -150,7 +135,7 @@ public class LevelDataEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
         if (mechanics)
         {
-            EditorGUILayout.PropertyField(PlayerForceChangeThese2Tiles, true);
+            EditorGUILayout.PropertyField(PlayerForceSwap, true);
 
             EditorGUILayout.Space(10);
         }
