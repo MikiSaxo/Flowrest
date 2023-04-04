@@ -11,7 +11,9 @@ using UnityEngine.SceneManagement;
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
+
     public event Action UpdateGround;
+
     // public event Action CheckBiome;
     public event Action ResetSelection;
 
@@ -126,13 +128,16 @@ public class MapManager : MonoBehaviour
         // Update if has inventory
         _hasInventory = currentLvl.HasInventory;
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
-        
+
         // Update if tile at start
-        for (int i = 0; i < currentLvl.StartNbAllState.Length; i++)
+        if (currentLvl.StartNbAllState != null)
         {
-            for (int j = 0; j < currentLvl.StartNbAllState[i]; j++)
+            for (int i = 0; i < currentLvl.StartNbAllState.Length; i++)
             {
-                SetupUIGround.Instance.AddNewGround(i);
+                for (int j = 0; j < currentLvl.StartNbAllState[i]; j++)
+                {
+                    SetupUIGround.Instance.AddNewGround(i);
+                }
             }
         }
 
@@ -253,7 +258,7 @@ public class MapManager : MonoBehaviour
         }
         else
             ground.UpdatePrevisuArrow(false);
-        
+
         // Init Crystal or not
         Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
         foreach (var crystalsCoords in coordsByCurrentLvl)
@@ -422,7 +427,6 @@ public class MapManager : MonoBehaviour
         }
 
 
-
         //ResetLastSelected
         IsGroundFirstSelected = false;
         // ResetAroundSelectedPrevisu();
@@ -431,7 +435,7 @@ public class MapManager : MonoBehaviour
         // CheckForBiome();
 
         QuestsManager.CheckQuest();
-      
+
         // Check Game Over is no recycling
         if (!_hasRecycling)
             CheckIfGameOver();
@@ -518,7 +522,7 @@ public class MapManager : MonoBehaviour
     IEnumerator WaitLittleToCheck()
     {
         yield return new WaitForSeconds(.02f);
-        
+
         bool inventory = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
 
         if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
