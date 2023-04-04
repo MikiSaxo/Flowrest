@@ -21,6 +21,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty StartNbState;
     private SerializedProperty StartNbAllState;
     private SerializedProperty HasRecycling;
+    private SerializedProperty HasInfinitRecycling;
     private SerializedProperty NbOfRecycling;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
@@ -53,6 +54,7 @@ public class LevelDataEditor : Editor
         StartNbState = serializedObject.FindProperty("StartNbState");
         StartNbAllState = serializedObject.FindProperty("StartNbAllState");
         HasRecycling = serializedObject.FindProperty("HasRecycling");
+        HasInfinitRecycling = serializedObject.FindProperty("HasInfinitRecycling");
         NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
@@ -121,12 +123,18 @@ public class LevelDataEditor : Editor
         if (mechanics)
         {
             EditorGUILayout.PropertyField(HasInventory);
+            
             if (HasInventory.boolValue)
                 DisplayChooseStartNbState();
-            EditorGUILayout.PropertyField(HasRecycling);
             
+            EditorGUILayout.PropertyField(HasRecycling);
+
             if (HasRecycling.boolValue)
+            {
+                EditorGUILayout.PropertyField(HasInfinitRecycling);
                 EditorGUILayout.PropertyField(NbOfRecycling);
+                EditorGUILayout.Space(10);
+            }
             
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
@@ -155,6 +163,8 @@ public class LevelDataEditor : Editor
         
         var stateNb = (int)_levelData.StartNbState;
         EditorGUILayout.PropertyField(StartNbAllState.GetArrayElementAtIndex(stateNb));
+        
+        EditorGUILayout.Space(10);
     }
 
     private void DisplayQuestInfo()

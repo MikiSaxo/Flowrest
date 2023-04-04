@@ -101,6 +101,10 @@ public class GroundIndicator : MonoBehaviour
             // print("call ground swap previsu");
             MapManager.Instance.GroundSwapPrevisu(_parent.gameObject);
         }
+        else if (MapManager.Instance.LastObjButtonSelected)
+        {
+            MapManager.Instance.GroundSwapPrevisuButton(_parent.gameObject, MapManager.Instance.LastStateButtonSelected);
+        }
 
         OnEnterAnim(.2f);
     }

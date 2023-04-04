@@ -17,6 +17,7 @@ public class LevelData : ScriptableObject
    public int[] StartNbAllState;
    
    public bool HasRecycling;
+   public bool HasInfinitRecycling;
    public int NbOfRecycling;
    
    public bool HasPrevisu;

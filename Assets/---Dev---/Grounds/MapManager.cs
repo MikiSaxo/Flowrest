@@ -36,6 +36,7 @@ public class MapManager : MonoBehaviour
 
     private bool _hasInventory;
     private bool _hasRecycling;
+    private bool _hasInfinitRecycling;
     private bool _hasPrevisu;
     private bool _blockLastGroundsSwapped;
     private bool _isPlayerForceSwap;
@@ -144,7 +145,9 @@ public class MapManager : MonoBehaviour
         // Update if has recycling
         _hasRecycling = currentLvl.HasRecycling;
         NbOfRecycling = currentLvl.NbOfRecycling;
+        _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
         SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
+        RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
 
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
@@ -447,7 +450,6 @@ public class MapManager : MonoBehaviour
 
     public void GroundSwapPrevisu(GameObject which)
     {
-        // print("GroundSwapPrevisu");
         if (!_hasPrevisu) return;
 
         // Reset old ground entered
@@ -474,15 +476,33 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.ChangeStatePrevisu(gWhich.GetCurrentStateEnum());
     }
 
+    public void GroundSwapPrevisuButton(GameObject which, AllStates buttonState)
+    {
+        if (!_hasPrevisu) return;
+
+        // Reset old ground entered
+        ResetPrevisu();
+        
+        var gWhich = which.GetComponent<GroundStateManager>();
+
+        gWhich.IsProtectedPrevisu = true;
+        gWhich.UpdateGroundsAroundPrevisu(buttonState);
+        gWhich.IsProtectedPrevisu = false;
+
+        gWhich.ChangeStatePrevisu(buttonState);
+    }
+
     public void UseRecycling()
     {
         if (LastObjButtonSelected == null) return;
 
-        NbOfRecycling--;
+        if(!_hasInfinitRecycling)
+            NbOfRecycling--;
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         EnergyManager.Instance.EarnEnergyByRecycling();
         SetupUIGround.Instance.FollowDndDeactivate();
         RecyclingManager.Instance.UpdateRecycling(false);
+        RecyclingManager.Instance.UpdateNbRecyclingLeft();
         ResetButtonSelected();
         ResetTwoLastSwapped();
     }
