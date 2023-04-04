@@ -32,14 +32,15 @@ public class LevelData : ScriptableObject
    public string[] DialogEnd;
 
    public AllStates StartNbState;
-   public int StartNbPlain;
-   public int StartNbDesert;
-   public int StartNbWater;
-   public int StartNbTropical;
-   public int StartNbSavanna;
-   public int StartNbGeyser;
-   public int StartNbSnow;
-   public int StartNbPolarDesert;
-   public int StartNbTundra;
-   public int StartNbSwamp;
+   // public int StartNbPlain;
+   // public int StartNbDesert;
+   // public int StartNbWater;
+   // public int StartNbTropical;
+   // public int StartNbSavanna;
+   // public int StartNbGeyser;
+   // public int StartNbSnow;
+   // public int StartNbPolarDesert;
+   // public int StartNbTundra;
+   // public int StartNbSwamp;
+   public int[] StartNbAllState;
 }

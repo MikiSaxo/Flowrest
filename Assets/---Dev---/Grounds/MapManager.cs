@@ -125,12 +125,21 @@ public class MapManager : MonoBehaviour
         // Update if has inventory
         _hasInventory = currentLvl.HasInventory;
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
+        
+        // Update if tile at start
+        for (int i = 0; i < currentLvl.StartNbAllState.Length; i++)
+        {
+            for (int j = 0; j < currentLvl.StartNbAllState[i]; j++)
+            {
+                SetupUIGround.Instance.AddNewGround(i);
+            }
+        }
 
         // Update if has recycling
         _hasRecycling = currentLvl.HasRecycling;
         SetupUIGround.Instance.SetIfHasInvetory(_hasRecycling);
 
-        // update if has Previsu
+        // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
 
         // Update if bloc last grounds swapped
@@ -231,19 +240,6 @@ public class MapManager : MonoBehaviour
         // Update _mapGrid
         _mapGrid[x, y] = which;
 
-        // Init Crystal or not
-        Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
-
-        foreach (var crystalsCoords in coordsByCurrentLvl)
-        {
-            if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
-
-            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
-            return;
-        }
-
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
-
         // Init if is Player Force Swap
         var coord = new Vector2Int(x, y);
 
@@ -255,6 +251,18 @@ public class MapManager : MonoBehaviour
         }
         else
             ground.UpdatePrevisuArrow(false);
+        
+        // Init Crystal or not
+        Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
+        foreach (var crystalsCoords in coordsByCurrentLvl)
+        {
+            if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
+
+            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
+            return;
+        }
+
+        which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
     }
 
     private void Update()

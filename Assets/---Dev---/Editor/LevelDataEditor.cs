@@ -49,6 +49,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty StartNbPolarDesert;
     private SerializedProperty StartNbTundra;
     private SerializedProperty StartNbSwamp;
+    private SerializedProperty StartNbAllState;
 
     void OnEnable()
     {
@@ -79,16 +80,17 @@ public class LevelDataEditor : Editor
         DialogEnd = serializedObject.FindProperty("DialogEnd");
 
         StartNbState = serializedObject.FindProperty("StartNbState");
-        StartNbPlain = serializedObject.FindProperty("StartNbPlain");
-        StartNbDesert = serializedObject.FindProperty("StartNbDesert");
-        StartNbWater = serializedObject.FindProperty("StartNbWater");
-        StartNbTropical = serializedObject.FindProperty("StartNbTropical");
-        StartNbSavanna = serializedObject.FindProperty("StartNbSavanna");
-        StartNbGeyser = serializedObject.FindProperty("StartNbGeyser");
-        StartNbSnow = serializedObject.FindProperty("StartNbSnow");
-        StartNbPolarDesert = serializedObject.FindProperty("StartNbPolarDesert");
-        StartNbTundra = serializedObject.FindProperty("StartNbTundra");
-        StartNbSwamp = serializedObject.FindProperty("StartNbSwamp");
+        // StartNbPlain = serializedObject.FindProperty("StartNbPlain");
+        // StartNbDesert = serializedObject.FindProperty("StartNbDesert");
+        // StartNbWater = serializedObject.FindProperty("StartNbWater");
+        // StartNbTropical = serializedObject.FindProperty("StartNbTropical");
+        // StartNbSavanna = serializedObject.FindProperty("StartNbSavanna");
+        // StartNbGeyser = serializedObject.FindProperty("StartNbGeyser");
+        // StartNbSnow = serializedObject.FindProperty("StartNbSnow");
+        // StartNbPolarDesert = serializedObject.FindProperty("StartNbPolarDesert");
+        // StartNbTundra = serializedObject.FindProperty("StartNbTundra");
+        // StartNbSwamp = serializedObject.FindProperty("StartNbSwamp");
+        StartNbAllState = serializedObject.FindProperty("StartNbAllState");
     }
 
     public override void OnInspectorGUI()
@@ -156,43 +158,18 @@ public class LevelDataEditor : Editor
 
     private void DisplayChooseStartNbState()
     {
+        StartNbAllState.arraySize = 10;
         LevelData _levelData = (LevelData)target;
+
+        if (_levelData.StartNbState == AllStates.None)
+            _levelData.StartNbState = AllStates.Plain;
+        if (_levelData.StartNbState == AllStates.Mountain)
+            _levelData.StartNbState = AllStates.Swamp;
         
         EditorGUILayout.PropertyField(StartNbState);
-
-        switch (_levelData.StartNbState)
-        {
-            case AllStates.Plain:
-                EditorGUILayout.PropertyField(StartNbPlain);
-                break;
-            case AllStates.Desert:
-                EditorGUILayout.PropertyField(StartNbDesert);
-                break;
-            case AllStates.Water:
-                EditorGUILayout.PropertyField(StartNbWater);
-                break;
-            case AllStates.Tropical:
-                EditorGUILayout.PropertyField(StartNbTropical);
-                break;
-            case AllStates.Savanna:
-                EditorGUILayout.PropertyField(StartNbSavanna);
-                break;
-            case AllStates.Geyser:
-                EditorGUILayout.PropertyField(StartNbGeyser);
-                break;
-            case AllStates.Snow:
-                EditorGUILayout.PropertyField(StartNbSnow);
-                break;
-            case AllStates.PolarDesert:
-                EditorGUILayout.PropertyField(StartNbPolarDesert);
-                break;
-            case AllStates.Tundra:
-                EditorGUILayout.PropertyField(StartNbTundra);
-                break;
-            case AllStates.Swamp:
-                EditorGUILayout.PropertyField(StartNbSwamp);
-                break;
-        }
+        
+        var stateNb = (int)_levelData.StartNbState;
+        EditorGUILayout.PropertyField(StartNbAllState.GetArrayElementAtIndex(stateNb));
     }
 
     private void DisplayQuestInfo()
