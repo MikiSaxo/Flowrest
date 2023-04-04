@@ -10,23 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 9
+  m_Name: Niveau 11
   m_EditorClassIdentifier: 
-  LevelName: Niveau 9
+  LevelName: Niveau 11
   LevelFolder: Level Editor
-  EnergyAtStart: 0
+  EnergyAtStart: 50
   HasInventory: 1
-  StartNbState: 9
-  StartNbAllState: 00000000000000000000000000000000010000000000000000000000000000000000000001000000
   HasRecycling: 1
-  NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  PlayerForceSwap: []
-  QuestDescription: "Cr\xE9er 2  fleurs de savane et  1 d'eau collectivement"
-  QuestImage: {fileID: 21300000, guid: 643eca4ec2bd993499f3052bc9e264ab, type: 3}
-  QuestFloor: 
-  QuestFlower: 040000000400000002000000
+  PlayerForceChangeThese2Tiles: []
+  QuestDescription: "R\xE9alisez une fleur de plaine et une fleur de mar\xE9cage"
+  QuestImage: {fileID: 21300000, guid: 6bf7e6aab31fcbb43a0eaa22af9bb6b9, type: 3}
+  QuestFloor: 00000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
@@ -37,3 +34,14 @@ MonoBehaviour:
   - 
   DialogEnd:
   - 
+  StartNbState: 0
+  StartNbPlain: 0
+  StartNbDesert: 0
+  StartNbWater: 0
+  StartNbTropical: 0
+  StartNbSavanna: 0
+  StartNbGeyser: 0
+  StartNbSnow: 0
+  StartNbPolarDesert: 0
+  StartNbTundra: 0
+  StartNbSwamp: 0
