@@ -44,7 +44,7 @@ public class SetupUIGround : MonoBehaviour
         // }
     }
 
-    public void SetIfHasInvetory(bool state)
+    public void SetIfHasInventory(bool state)
     {
         _hasInventory = state;
     }
@@ -61,7 +61,7 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ResetButtonSelected();
         MapManager.Instance.ResetGroundSelected();
 
-        if (_hasInventory)
+        if (_hasInventory && MapManager.Instance.NbOfRecycling > 0)
             RecyclingManager.Instance.UpdateRecycling(true);
 
         _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);

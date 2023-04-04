@@ -22,6 +22,7 @@ public class MapManager : MonoBehaviour
     public bool IsGroundFirstSelected { get; set; }
     public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }
+    public int NbOfRecycling { get; private set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
@@ -35,7 +36,6 @@ public class MapManager : MonoBehaviour
 
     private bool _hasInventory;
     private bool _hasRecycling;
-    private int _nbOfRecycling;
     private bool _hasPrevisu;
     private bool _blockLastGroundsSwapped;
     private bool _isPlayerForceSwap;
@@ -143,8 +143,8 @@ public class MapManager : MonoBehaviour
 
         // Update if has recycling
         _hasRecycling = currentLvl.HasRecycling;
-        _nbOfRecycling = currentLvl.NbOfRecycling;
-        SetupUIGround.Instance.SetIfHasInvetory(_hasRecycling);
+        NbOfRecycling = currentLvl.NbOfRecycling;
+        SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
 
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
@@ -317,7 +317,7 @@ public class MapManager : MonoBehaviour
         // Activate Trash can
         if (button != null)
         {
-            if (_hasRecycling && _nbOfRecycling > 0)
+            if (_hasRecycling && NbOfRecycling > 0)
                 RecyclingManager.Instance.UpdateRecycling(true);
         }
 
@@ -478,7 +478,7 @@ public class MapManager : MonoBehaviour
     {
         if (LastObjButtonSelected == null) return;
 
-        _nbOfRecycling--;
+        NbOfRecycling--;
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         EnergyManager.Instance.EarnEnergyByRecycling();
         SetupUIGround.Instance.FollowDndDeactivate();
