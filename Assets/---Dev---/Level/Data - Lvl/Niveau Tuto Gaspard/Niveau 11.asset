@@ -16,14 +16,18 @@ MonoBehaviour:
   LevelFolder: Level Editor
   EnergyAtStart: 50
   HasInventory: 1
+  StartNbState: 0
+  StartNbAllState: 
   HasRecycling: 1
+  HasInfinitRecycling: 0
+  NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  PlayerForceChangeThese2Tiles: []
+  PlayerForceSwap: []
   QuestDescription: "R\xE9alisez une fleur de plaine et une fleur de mar\xE9cage"
   QuestImage: {fileID: 21300000, guid: 6bf7e6aab31fcbb43a0eaa22af9bb6b9, type: 3}
-  QuestFloor: 00000000
-  QuestFlower: 
+  QuestFloor: 
+  QuestFlower: 0000000009000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
@@ -34,14 +38,3 @@ MonoBehaviour:
   - 
   DialogEnd:
   - 
-  StartNbState: 0
-  StartNbPlain: 0
-  StartNbDesert: 0
-  StartNbWater: 0
-  StartNbTropical: 0
-  StartNbSavanna: 0
-  StartNbGeyser: 0
-  StartNbSnow: 0
-  StartNbPolarDesert: 0
-  StartNbTundra: 0
-  StartNbSwamp: 0
