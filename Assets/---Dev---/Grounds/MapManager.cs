@@ -287,11 +287,7 @@ public class MapManager : MonoBehaviour
         // Right click to Reset
         if (Input.GetMouseButtonDown(1))
         {
-            ResetButtonSelected();
-            // ResetAroundSelectedPrevisu();
-            RecyclingManager.Instance.UpdateRecycling(false);
-
-            ResetPreview();
+            ResetBig();
         }
     }
 
@@ -630,6 +626,14 @@ public class MapManager : MonoBehaviour
         return _levelData[_currentLevel].DialogEnd;
     }
 
+    public void ResetBig()
+    {
+        ResetButtonSelected();
+        RecyclingManager.Instance.UpdateRecycling(false);
+        ResetPreview();
+        ResetGroundSelected();
+    }
+    
     public void ResetAllMap(bool nextLevel)
     {
         for (int x = 0; x < _mapSize.x; x++)
@@ -668,6 +672,8 @@ public class MapManager : MonoBehaviour
 
     public void ResetGroundSelected()
     {
+        if(_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
     }
