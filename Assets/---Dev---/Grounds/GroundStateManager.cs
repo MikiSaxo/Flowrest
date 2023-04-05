@@ -321,7 +321,8 @@ public class GroundStateManager : MonoBehaviour
 
     public void OnSelected() // When bloc is Selected by the player
     {
-        MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
+        if(!MapManager.Instance.IsSwapping)
+            MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
     }
 
     public AllStates GetCurrentStateEnum()
@@ -353,6 +354,14 @@ public class GroundStateManager : MonoBehaviour
     public FB_Arrow GetFbArrow()
     {
         return _fbArrow;
+    }
+
+    public void UpdateIsSwapping(bool state)
+    {
+        _indicator.GetComponent<GroundIndicator>().IsSwapping = state;
+        
+        if(!state)
+            ResetIndicator();
     }
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager

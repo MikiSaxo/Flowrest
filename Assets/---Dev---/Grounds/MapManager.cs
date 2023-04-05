@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using System.IO;
+using DG.Tweening;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
@@ -22,12 +23,15 @@ public class MapManager : MonoBehaviour
     public bool IsGroundFirstSelected { get; set; }
     public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }
-    public int NbOfRecycling { get; private set; }
+    public int NbOfRecycling { get; private set; } 
+    public bool IsSwapping { get; private set; } 
+
 
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
+    [SerializeField] private float _timeToSwap;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -287,7 +291,7 @@ public class MapManager : MonoBehaviour
             // ResetAroundSelectedPrevisu();
             RecyclingManager.Instance.UpdateRecycling(false);
 
-            ResetPrevisu();
+            ResetPreview();
         }
     }
 
@@ -324,7 +328,12 @@ public class MapManager : MonoBehaviour
         if (button != null)
         {
             if (_hasRecycling && NbOfRecycling > 0)
-                RecyclingManager.Instance.UpdateRecycling(true);
+            {
+                if (NbOfRecycling > 0)
+                    RecyclingManager.Instance.UpdateRecycling(true);
+                else
+                    RecyclingManager.Instance.UpdateDisplayNoRecyclingLeft(true);
+            }
         }
 
         // Prevent to use an actual empty button
@@ -366,6 +375,20 @@ public class MapManager : MonoBehaviour
 
     private void GroundSwap(GameObject which, Vector2Int newCoords)
     {
+        if (IsSwapping)
+        {
+            ResetGroundSelected();
+            return;
+        }
+
+        // Bloc other Swap before it finished
+        IsSwapping = true;
+
+        StartCoroutine(GroundSwapCorou(which, newCoords));
+    }
+
+    private IEnumerator GroundSwapCorou(GameObject which, Vector2Int newCoords)
+    {
         // Update if first swap
         if (!_hasFirstSwap)
         {
@@ -378,13 +401,35 @@ public class MapManager : MonoBehaviour
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
 
         // Change position
-        (_lastGroundSelected.transform.position, which.transform.position) =
-            (which.transform.position, _lastGroundSelected.transform.position);
-
+        var lastSelecPos = _lastGroundSelected.transform.position;
+        var whichPos = which.transform.position;
+        // (_lastGroundSelected.transform.position, which.transform.position) =
+        //     (which.transform.position, _lastGroundSelected.transform.position);
+        
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
+        
+        gLastGroundSelected.UpdateIsSwapping(true);
+        gWhich.UpdateIsSwapping(true);
+        
+        _lastGroundSelected.transform.DOKill();
+        which.transform.DOKill();
 
+        _lastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
+        which.transform.DOJump(lastSelecPos, 15, 1, _timeToSwap);
+
+        ResetPreview();
+
+        
+        
+        yield return new WaitForSeconds(_timeToSwap);
+
+        
+        
+        gLastGroundSelected.UpdateIsSwapping(false);
+        gWhich.UpdateIsSwapping(false);
+        
         // Protect these blocs a transformation
         gLastGroundSelected.IsProtected = true;
         gWhich.IsProtected = true;
@@ -392,10 +437,6 @@ public class MapManager : MonoBehaviour
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
-
-        // Reset selection's color of the two Grounds
-        gLastGroundSelected.ResetIndicator();
-        gWhich.ResetIndicator();
 
         // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround();
@@ -432,23 +473,24 @@ public class MapManager : MonoBehaviour
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
 
+        // Reset protect
+        gLastGroundSelected.IsProtected = false;
+        gWhich.IsProtected = false;
 
         //ResetLastSelected
         IsGroundFirstSelected = false;
-        // ResetAroundSelectedPrevisu();
         ResetGroundSelected();
-        ResetPrevisu();
-        // CheckForBiome();
 
+        // Check Quest
         QuestsManager.CheckQuest();
 
         // Check Game Over is no recycling
         if (!_hasRecycling)
             CheckIfGameOver();
+        
 
-        // Reset protect
-        gLastGroundSelected.IsProtected = false;
-        gWhich.IsProtected = false;
+        // Allow next Swap
+        IsSwapping = false;
     }
 
     public void GroundSwapPrevisu(GameObject which)
@@ -456,7 +498,7 @@ public class MapManager : MonoBehaviour
         if (!_hasPrevisu) return;
 
         // Reset old ground entered
-        ResetPrevisu();
+        ResetPreview();
 
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
@@ -484,7 +526,7 @@ public class MapManager : MonoBehaviour
         if (!_hasPrevisu) return;
 
         // Reset old ground entered
-        ResetPrevisu();
+        ResetPreview();
 
         var gWhich = which.GetComponent<GroundStateManager>();
 
@@ -646,7 +688,7 @@ public class MapManager : MonoBehaviour
         _lastGroundSwaped[1] = null;
     }
 
-    public void ResetPrevisu()
+    public void ResetPreview()
     {
         // if(_lastGroundPrevisuEntered != null)
         //     _lastGroundPrevisuEntered.ResetPrevisu();

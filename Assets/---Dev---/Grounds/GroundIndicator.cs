@@ -13,7 +13,9 @@ public class GroundIndicator : MonoBehaviour
     // [SerializeField] private MeshRenderer _mesh;
     // [SerializeField] private Material[] _mats;
     [SerializeField] private GameObject _meshParent;
-
+    
+    public bool IsSwapping { get; set; }
+    
     private float _startYPos;
     private float _hoveredYPos;
     private float _selectedYPos;
@@ -44,11 +46,11 @@ public class GroundIndicator : MonoBehaviour
         _selectedYPos = _startYPos + SELECTED_Y_POS;
     }
 
-    public void ForceEntered()
-    {
-        _isEntered = true;
-        MoveYMesh(_hoveredYPos, .3f);
-    }
+    // public void ForceEntered()
+    // {
+    //     _isEntered = true;
+    //     MoveYMesh(_hoveredYPos, .3f);
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -85,14 +87,16 @@ public class GroundIndicator : MonoBehaviour
             _parent.UpdateNoSwap(true);
             return;
         }
+        
+        if (MapManager.Instance.IsSwapping) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
 
-        if (_isSelected)
+        if (_isSelected || IsSwapping)
         {
-            MapManager.Instance.ResetPrevisu();
+            MapManager.Instance.ResetPreview();
             return;
         }
 
@@ -113,14 +117,14 @@ public class GroundIndicator : MonoBehaviour
     {
         _parent.UpdateFbNoSwap(false);
 
-        if (_isSelected || !other.gameObject.GetComponentInParent<FollowMouse>()) return;
+        if (_isSelected ||IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() || MapManager.Instance.IsSwapping) return;
 
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         _isEntered = false;
         _parent.IsProtectedPrevisu = false;
 
-        MapManager.Instance.ResetPrevisu();
+        MapManager.Instance.ResetPreview();
         
         OnLeaveAnim(.75f);
     }
@@ -134,24 +138,28 @@ public class GroundIndicator : MonoBehaviour
 
             // ResetAllAroundPrevisu();
         }
+        
+        // Block if not mouseEnter or not click up
+        if (!_isEntered || !Input.GetMouseButtonUp(0)) return; 
 
-        if (!_isEntered || !Input.GetMouseButtonUp(0)) return; // Block if not mouseEnter or not click up
-
-        // print(MapManager.Instance.LastObjButtonSelected);
-        if (MapManager.Instance.LastObjButtonSelected == null) // First case: select bloc for swap
+        
+        // First case: select bloc for swap
+        if (MapManager.Instance.LastObjButtonSelected == null) 
         {
             // Block if click again on it
-            if (_isSelected) return;
+            if (_isSelected || MapManager.Instance.IsSwapping) return;
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
 
             // Make animation
-            MoveYMesh(_selectedYPos, .3f);
+            if (!MapManager.Instance.IsGroundFirstSelected)
+                MoveYMesh(_selectedYPos, .3f);
 
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
-            _parent.OnSelected(); // Call its parent to tell which one was selected to MapManager
+            // Call its parent to tell which one was selected to MapManager
+            _parent.OnSelected(); 
 
             // If Player forced swap
             if (!_parent.IsPlayerForceSwapBlocked)
@@ -164,7 +172,6 @@ public class GroundIndicator : MonoBehaviour
         }
         else // Second case: Change state of pose with a new one
             PoseBloc();
-        // ChangeBlocOrTemperature(); // Transform the bloc with new state
     }
 
     private void MoveYMesh(float height, float duration)
@@ -207,14 +214,20 @@ public class GroundIndicator : MonoBehaviour
         // Launch Quest
         MapManager.Instance.QuestsManager.CheckQuest();
 
-        // Reset Two lst grounds swapped
+        // Reset Two last grounds swapped
         MapManager.Instance.ResetTwoLastSwapped();
 
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
 
+        // Make Anim
+        // MoveYMesh(15, 0);
+        _meshParent.transform.DOKill();
+        _meshParent.transform.DOMoveY(15, 0).OnComplete(() => { OnLeaveAnim(.75f); });
+        // OnLeaveAnim(2);
+        
         // Reset
-        // ResetAllAroundPrevisu();
+        MapManager.Instance.ResetPreview();
         ResetForNextChange();
     }
 
