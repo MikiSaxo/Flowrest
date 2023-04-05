@@ -163,4 +163,9 @@ public class SetupUIGround : MonoBehaviour
     {
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
     }
+
+    public GroundUIData GetGroundUIData(int index)
+    {
+        return _groundData[index];
+    }
 }

@@ -17,11 +17,13 @@ public class GroundPrevisu : MonoBehaviour
         DeactivateIcon();
     }
 
-    public void ActivateIcon(int indexTile)
+    public void ActivateIcon(int index)
     {
-        _sprRnd.sprite = _iconTile[indexTile];
+        // _sprRnd.sprite = _iconTile[indexTile];
+        _sprRnd.sprite = SetupUIGround.Instance.GetGroundUIData(index).Icon;
+        _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIcon;
         _sprRnd.enabled = true;
-        _indexIcon = indexTile;
+        _indexIcon = index;
     }
 
     public void DeactivateIcon()
@@ -47,6 +49,6 @@ public class GroundPrevisu : MonoBehaviour
 
     public Sprite GetIconTile(int index)
     {
-        return _iconTile[index];
+        return SetupUIGround.Instance.GetGroundUIData(index).Icon;
     }
 }

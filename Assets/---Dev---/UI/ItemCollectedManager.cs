@@ -36,10 +36,10 @@ public class ItemCollectedManager : MonoBehaviour
         // StartAnim();
     }
 
-    public void SpawnFBGroundCollected(Sprite icon, string text, AllStates state)
+    public void SpawnFBGroundCollected(Sprite icon, Color color, string text, AllStates state)
     {
         GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
-        go.GetComponent<FB_GroundCollected>().Init(icon, text, _tpPointsGround, state);
+        go.GetComponent<FB_GroundCollected>().Init(icon, color, text, _tpPointsGround, state);
 
         _stockFB.Add(go);
     }

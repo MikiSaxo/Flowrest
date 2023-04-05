@@ -448,8 +448,8 @@ public class MapManager : MonoBehaviour
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
             // SetupUIGround.Instance.AddNewGround((int)tileToAdd);
-            ItemCollectedManager.Instance.SpawnFBGroundCollected(gLastGroundSelected.GetGroundPrevisu((int)tileToAdd),
-                String.Empty, tileToAdd);
+            var infoGrndData = SetupUIGround.Instance.GetGroundUIData((int)tileToAdd);
+            ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon, String.Empty, tileToAdd);
         }
 
         // Spend energy

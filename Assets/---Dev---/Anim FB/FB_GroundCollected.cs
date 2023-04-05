@@ -22,9 +22,10 @@ public class FB_GroundCollected : MonoBehaviour
     private Transform[] _tpPoints;
     private AllStates _state;
 
-    public void Init(Sprite icon, string text, Transform[] tpPoints, AllStates state)//, float durSpawn, float durWait, float durDispawn)
+    public void Init(Sprite icon, Color color, string text, Transform[] tpPoints, AllStates state)//, float durSpawn, float durWait, float durDispawn)
     {
         _icon.sprite = icon;
+        _icon.color = color;
         _text.text = text;
         _tpPoints = tpPoints;
         _state = state;
