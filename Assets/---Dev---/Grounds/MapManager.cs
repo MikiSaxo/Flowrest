@@ -156,17 +156,20 @@ public class MapManager : MonoBehaviour
         _blockLastGroundsSwapped = currentLvl.BlockLastSwap;
 
         // Update if force 2 first bloc swap
-        if (currentLvl.PlayerForceSwap.Length != 0)
+        if (currentLvl.PlayerForceSwap != null)
         {
-            _isPlayerForceSwap = true;
-            _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
-            _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
-        }
-        else
-        {
-            _hasFirstSwap = true;
-            _isPlayerForceSwap = false;
-            _stockPlayerForceSwap.Clear();
+            if (currentLvl.PlayerForceSwap.Length != 0)
+            {
+                _isPlayerForceSwap = true;
+                _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
+                _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
+            }
+            else
+            {
+                _hasFirstSwap = true;
+                _isPlayerForceSwap = false;
+                _stockPlayerForceSwap.Clear();
+            }
         }
 
         // Reset Quest Number
@@ -482,7 +485,7 @@ public class MapManager : MonoBehaviour
 
         // Reset old ground entered
         ResetPrevisu();
-        
+
         var gWhich = which.GetComponent<GroundStateManager>();
 
         gWhich.IsProtectedPrevisu = true;
@@ -496,7 +499,7 @@ public class MapManager : MonoBehaviour
     {
         if (LastObjButtonSelected == null) return;
 
-        if(!_hasInfinitRecycling)
+        if (!_hasInfinitRecycling)
             NbOfRecycling--;
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         EnergyManager.Instance.EarnEnergyByRecycling();
