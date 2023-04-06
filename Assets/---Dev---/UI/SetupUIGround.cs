@@ -64,7 +64,7 @@ public class SetupUIGround : MonoBehaviour
         if (_hasInventory && MapManager.Instance.NbOfRecycling > 0)
             RecyclingManager.Instance.UpdateRecycling(true);
 
-        _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].Name);
+        _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].ColorIcon, _groundData[(int)state].Name);
         MapManager.Instance.LastObjButtonSelected = button;
 
         if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)

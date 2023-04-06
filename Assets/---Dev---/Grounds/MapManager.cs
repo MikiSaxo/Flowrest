@@ -23,9 +23,9 @@ public class MapManager : MonoBehaviour
     public bool IsGroundFirstSelected { get; set; }
     public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }
-    public int NbOfRecycling { get; private set; } 
-    public bool IsSwapping { get; private set; } 
-
+    public int NbOfRecycling { get; private set; }
+    public bool IsSwapping { get; private set; }
+    public bool IsOnUI { get; set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
@@ -401,14 +401,14 @@ public class MapManager : MonoBehaviour
         var whichPos = which.transform.position;
         // (_lastGroundSelected.transform.position, which.transform.position) =
         //     (which.transform.position, _lastGroundSelected.transform.position);
-        
+
         // Get GroundStateManager 
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
-        
+
         gLastGroundSelected.UpdateIsSwapping(true);
         gWhich.UpdateIsSwapping(true);
-        
+
         _lastGroundSelected.transform.DOKill();
         which.transform.DOKill();
 
@@ -417,15 +417,13 @@ public class MapManager : MonoBehaviour
 
         ResetPreview();
 
-        
-        
+
         yield return new WaitForSeconds(_timeToSwap);
 
-        
-        
+
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
-        
+
         // Protect these blocs a transformation
         gLastGroundSelected.IsProtected = true;
         gWhich.IsProtected = true;
@@ -445,7 +443,8 @@ public class MapManager : MonoBehaviour
                 gWhich.GetCurrentStateEnum());
             // SetupUIGround.Instance.AddNewGround((int)tileToAdd);
             var infoGrndData = SetupUIGround.Instance.GetGroundUIData((int)tileToAdd);
-            ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon, String.Empty, tileToAdd);
+            ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon,
+                String.Empty, tileToAdd);
         }
 
         // Spend energy
@@ -483,7 +482,7 @@ public class MapManager : MonoBehaviour
         // Check Game Over is no recycling
         if (!_hasRecycling)
             CheckIfGameOver();
-        
+
 
         // Allow next Swap
         IsSwapping = false;
@@ -628,12 +627,14 @@ public class MapManager : MonoBehaviour
 
     public void ResetBig()
     {
+        if (IsOnUI) return;
+
         ResetButtonSelected();
         RecyclingManager.Instance.UpdateRecycling(false);
         ResetPreview();
         ResetGroundSelected();
     }
-    
+
     public void ResetAllMap(bool nextLevel)
     {
         for (int x = 0; x < _mapSize.x; x++)
@@ -672,7 +673,7 @@ public class MapManager : MonoBehaviour
 
     public void ResetGroundSelected()
     {
-        if(_lastGroundSelected != null)
+        if (_lastGroundSelected != null)
             _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
