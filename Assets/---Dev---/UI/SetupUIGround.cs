@@ -86,7 +86,7 @@ public class SetupUIGround : MonoBehaviour
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
 
-        RecyclingManager.Instance.UpdateRecycling(false);
+        //RecyclingManager.Instance.UpdateRecycling(false);
 
         // n_MapManager.Instance.ResetButtonSelected();
         // n_MapManager.Instance.ResetGroundSelected();

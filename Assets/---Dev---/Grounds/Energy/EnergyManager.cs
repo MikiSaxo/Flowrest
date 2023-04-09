@@ -15,37 +15,37 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private Slider _hitEnergyBar;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
 
-    [Header("Energy Base")]
-    [Tooltip("If max energy = 1000, put 1000 - If 100, put 100")] [SerializeField] private int _howBase;
+    // [Header("Energy Base")]
+    // [SerializeField] private int _howBase;
     
     [Header("Energy Earn")]
-    [SerializeField] private float _earnedByGround;
-    [SerializeField] private float _earnedByRecycling;
+    [SerializeField] private int _earnedByCrystal;
+    [SerializeField] private int _earnedByRecycling;
 
     [Header("Energy Cost")]
-    [SerializeField] private float _costBySwap;
-    [SerializeField] private float _costByLandingGround;
+    [SerializeField] private int _costBySwap;
+    [SerializeField] private int _costByLandingGround;
 
-    private float _energyValue;
-    private float _baseInf;
+    private int _energyValue;
     private int _currentEnergy;
-    private float _tempValue;
+    private int _tempValue;
     private float _timerSpawnFBCrystal;
 
     private void Awake()
     {
         Instance = this;
         
-        _baseInf = 1 / (float)_howBase;
+        //_baseInf = 1 / (float)_howBase;
     }
 
     public void InitEnergy(int startEnergy)
     {
-        _energyValue = startEnergy * _baseInf;
+        _energyValue = startEnergy;
+        
         _energyBar.value = _energyValue;
         _hitEnergyBar.value = _energyValue;
-        _numberToDisplay.text = $"{startEnergy}";
-        _currentEnergy = startEnergy;
+        _numberToDisplay.text = $"{_energyValue}";
+        _currentEnergy = _energyValue;
     }
 
     public void ReduceEnergyBySwap()
@@ -58,26 +58,26 @@ public class EnergyManager : MonoBehaviour
         StartCoroutine(WaitToUpdate(-_costByLandingGround));
     }
 
-    public void EarnEnergyByGround()
+    public void EarnEnergyByCrystal()
     {
-        StartCoroutine(WaitToUpdate(_earnedByGround));
+        StartCoroutine(WaitToUpdate(_earnedByCrystal));
     }
 
     public void EarnEnergyByRecycling()
     {
         StartCoroutine(WaitToUpdate(_earnedByRecycling));
     }
-    IEnumerator WaitToUpdate(float value)
+    IEnumerator WaitToUpdate(int value)
     {
         _tempValue += value;
         yield return new WaitForSeconds(.01f);
-        ItemCollectedManager.Instance.SpawnFBEnergyCollected((int)_tempValue);
+        ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }
-    private void UpdateEnergy(float value)
+    private void UpdateEnergy(int value)
     {
-        value *= _baseInf;
+        // value *= _baseInf;
         _energyValue += value;
         
         _energyBar.DOKill();
@@ -93,18 +93,20 @@ public class EnergyManager : MonoBehaviour
         }
         else
         {
-            if (_energyValue >= 1)
-                _energyValue = 1;
-            
-            _hitEnergyBar.DOValue(_energyValue, .4f);
-            _energyBar.DOValue(_energyValue, .4f);
+            // var energyValue = 1;
+            //
+            // if (_energyValue < 1)
+            //     energyValue = 0;
+            //
+            _hitEnergyBar.DOValue(1, .4f);
+            _energyBar.DOValue(1, .4f);
         }
         
-        // Bad system to avoid 499 or 501 but 500 
-        float round = Mathf.Round(_energyValue * _howBase);
-        int number = int.Parse(round + "");
-        _numberToDisplay.text = $"{number}";
-        _currentEnergy = number;
+        // // Bad system to avoid 499 or 501 but 500 
+        // float round = Mathf.Round(_energyValue * _howBase);
+        // int number = int.Parse(round + "");
+        _numberToDisplay.text = $"{_energyValue}";
+        _currentEnergy = _energyValue;
 
         // MapManager.Instance.CheckIfGameOver();
     }
@@ -113,7 +115,7 @@ public class EnergyManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             ReduceEnergyBySwap();
         if (Input.GetKeyDown(KeyCode.R)) 
-            EarnEnergyByGround();
+            EarnEnergyByCrystal();
     }
 
     public bool IsEnergyInferiorToCostSwap()

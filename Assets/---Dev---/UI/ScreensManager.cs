@@ -87,7 +87,8 @@ public class ScreensManager : MonoBehaviour
 
         _isDialogTime = true;
 
-        _dialoguesParent.SetActive(true);
+        // _dialoguesParent.SetActive(true);
+        _dialoguesParent.GetComponent<OpenCloseMenu>().OpenAnim();
         // _dialoguesText.text = _dialogsToDisplay[_countScreen];
         _dialoguesText.text = String.Empty;
         StartCoroutine(UpdateText());
@@ -99,7 +100,8 @@ public class ScreensManager : MonoBehaviour
         _isDialogTime = true;
         _isBeginning = true;
 
-        _dialoguesParent.SetActive(true);
+        // _dialoguesParent.SetActive(true);
+        _dialoguesParent.GetComponent<OpenCloseMenu>().OpenAnim();
         // _dialoguesText.text = _dialogsToDisplay[_countScreen];
         _dialoguesText.text = String.Empty;
         StartCoroutine(UpdateText());
@@ -114,19 +116,14 @@ public class ScreensManager : MonoBehaviour
         _isDialogTime = false;
         _isBeginning = false;
 
-        _dialoguesParent.SetActive(false);
+        // _dialoguesParent.SetActive(false);
+        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
         FollowMouse.Instance.IsBlockMouse(false);
 
         // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
 
         InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
         _menuQuest.GetComponent<OpenCloseMenu>().OpenMenuQuest();
-    }
-
-    public void AlmanachScreen()
-    {
-        _dialoguesParent.SetActive(false);
-        _titlesText.text = _titlesString[1];
     }
 
     public void GameOver()
@@ -167,7 +164,8 @@ public class ScreensManager : MonoBehaviour
         _gameOverParent.SetActive(false);
         FollowMouse.Instance.IsBlockMouse(false);
         _menuPauseParent.SetActive(false);
-        _dialoguesParent.SetActive(false);
+        // _dialoguesParent.SetActive(false);
+        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _titlesParent.SetActive(false);
     }
 
@@ -177,7 +175,8 @@ public class ScreensManager : MonoBehaviour
         _countScreen = 0;
         _countDialog = 0;
 
-        _dialoguesParent.SetActive(false);
+        // _dialoguesParent.SetActive(false);
+        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
         MapManager.Instance.ResetAllMap(true);

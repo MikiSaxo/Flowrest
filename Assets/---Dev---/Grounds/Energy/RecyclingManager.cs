@@ -11,7 +11,6 @@ public class RecyclingManager : MonoBehaviour
 
     [SerializeField] private GameObject _recycling;
     [SerializeField] private TextMeshProUGUI _recyclingNbText;
-    [SerializeField] private GameObject _recyclingNoLeft;
 
     private bool _hasInfinitRecycling;
     private int _maxRecycling;
@@ -26,12 +25,6 @@ public class RecyclingManager : MonoBehaviour
     {
         _recycling.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
-        UpdateDisplayNoRecyclingLeft(false);
-    }
-
-    public void UpdateDisplayNoRecyclingLeft(bool state)
-    {
-        _recyclingNoLeft.SetActive(state);
     }
 
     public void InitNbRecycling(int number, bool hasInfinit)

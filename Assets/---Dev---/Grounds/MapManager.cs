@@ -151,7 +151,9 @@ public class MapManager : MonoBehaviour
         NbOfRecycling = currentLvl.NbOfRecycling;
         _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
         SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
-        RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
+        RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
+        if(_hasRecycling)
+            RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
 
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
@@ -317,19 +319,13 @@ public class MapManager : MonoBehaviour
     public void ChangeActivatedButton(GameObject button)
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
-
         if (IsGroundFirstSelected) return;
 
         // Activate Trash can
         if (button != null)
         {
             if (_hasRecycling && NbOfRecycling > 0)
-            {
-                if (NbOfRecycling > 0)
-                    RecyclingManager.Instance.UpdateRecycling(true);
-                else
-                    RecyclingManager.Instance.UpdateDisplayNoRecyclingLeft(true);
-            }
+                RecyclingManager.Instance.UpdateRecycling(true);
         }
 
         // Prevent to use an actual empty button
@@ -541,7 +537,7 @@ public class MapManager : MonoBehaviour
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         EnergyManager.Instance.EarnEnergyByRecycling();
         SetupUIGround.Instance.FollowDndDeactivate();
-        RecyclingManager.Instance.UpdateRecycling(false);
+        //RecyclingManager.Instance.UpdateRecycling(false);
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
         ResetButtonSelected();
         ResetTwoLastSwapped();
@@ -630,7 +626,7 @@ public class MapManager : MonoBehaviour
         if (IsOnUI) return;
 
         ResetButtonSelected();
-        RecyclingManager.Instance.UpdateRecycling(false);
+        //RecyclingManager.Instance.UpdateRecycling(false);
         ResetPreview();
         ResetGroundSelected();
     }

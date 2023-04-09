@@ -209,7 +209,7 @@ public class GroundIndicator : MonoBehaviour
         EnergyManager.Instance.ReduceEnergyByLandingGround();
 
         // Disable Trash
-        RecyclingManager.Instance.UpdateRecycling(false);
+        //RecyclingManager.Instance.UpdateRecycling(false);
 
         // Launch Quest
         MapManager.Instance.QuestsManager.CheckQuest();

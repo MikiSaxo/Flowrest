@@ -21,16 +21,20 @@ public class OpenCloseMenu : MonoBehaviour
     public bool ForcedOpen { get; set; }
     public bool IsMenuPauseOpen { get; set; }
 
-    private void OpenAnim()
+    public void OpenAnim()
     {
         _objToMove.transform.DOKill();
         _objToMove.transform.DOMove(_tpPoints[1].position, _openDuration);
+        
+        _isClosed = false;
     }
 
-    private void CloseAnim()
+    public void CloseAnim()
     {
         _objToMove.transform.DOKill();
         _objToMove.transform.DOMove(_tpPoints[0].position, _closeDuration);
+
+        _isClosed = true;
     }
 
     public void MoveMenu()
@@ -41,15 +45,9 @@ public class OpenCloseMenu : MonoBehaviour
         }
 
         if (_isClosed)
-        {
             OpenAnim();
-            _isClosed = false;
-        }
         else
-        {
             CloseAnim();
-            _isClosed = true;
-        }
     }
 
     public void OnMouseEntered()
