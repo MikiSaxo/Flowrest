@@ -26,6 +26,7 @@ public class MapManager : MonoBehaviour
     public int NbOfRecycling { get; private set; }
     public bool IsSwapping { get; private set; }
     public bool IsOnUI { get; set; }
+    public bool IsTuto { get; set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
@@ -49,6 +50,7 @@ public class MapManager : MonoBehaviour
     private bool _isDragNDrop;
     private int _currentLevel;
     private string[] _mapInfo;
+    private string[] _previewMessageTuto;
 
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
@@ -152,7 +154,7 @@ public class MapManager : MonoBehaviour
         _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
         SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
         RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
-        if(_hasRecycling)
+        if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
 
         // Update if has Previsu
@@ -161,21 +163,35 @@ public class MapManager : MonoBehaviour
         // Update if bloc last grounds swapped
         _blockLastGroundsSwapped = currentLvl.BlockLastSwap;
 
-        // Update if force 2 first bloc swap
-        if (currentLvl.PlayerForceSwap != null)
+        // Update if tuto
+        IsTuto = currentLvl.IsTuto;
+        if (IsTuto)
         {
-            if (currentLvl.PlayerForceSwap.Length != 0)
+            // Set Preview message
+            _previewMessageTuto = new []{currentLvl.PreviewMessage};
+            
+            // Update if force 2 first bloc swap
+            if (currentLvl.PlayerForceSwap != null)
             {
-                _isPlayerForceSwap = true;
-                _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
-                _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
+                if (currentLvl.PlayerForceSwap.Length != 0)
+                {
+                    _isPlayerForceSwap = true;
+                    _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
+                    _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
+                }
+                // else
+                // {
+                //     _hasFirstSwap = true;
+                //     _isPlayerForceSwap = false;
+                //     _stockPlayerForceSwap.Clear();
+                // }
             }
-            else
-            {
-                _hasFirstSwap = true;
-                _isPlayerForceSwap = false;
-                _stockPlayerForceSwap.Clear();
-            }
+        }
+        else
+        {
+            _hasFirstSwap = true;
+            _isPlayerForceSwap = false;
+            _stockPlayerForceSwap.Clear();
         }
 
         // Reset Quest Number
@@ -301,6 +317,10 @@ public class MapManager : MonoBehaviour
     public void UpdateSecondBlocForce()
     {
         if (_stockPlayerForceSwap.Count == 0) return;
+
+        if (!GetHasFirstSwap())
+            ScreensManager.Instance.SpawnDialog(_previewMessageTuto);
+        
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
@@ -623,7 +643,9 @@ public class MapManager : MonoBehaviour
 
     public void ResetBig()
     {
-        if (IsOnUI) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime()) return;
+
+        if (IsTuto && !_hasFirstSwap) return;
 
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);

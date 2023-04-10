@@ -12,13 +12,21 @@ public class DialogPrefab : MonoBehaviour
     
     [SerializeField] private Vector2 _padding;
 
+    private float _textSizeY;
+
     public void Init(string dialog)
     {
         DialogText.SetText(dialog);
         DialogText.ForceMeshUpdate();
 
         Vector2 textSize = DialogText.GetRenderedValues(false);
+        _textSizeY = textSize.y;
         DialogText.SetText(String.Empty);
         gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+    }
+
+    public float GetDialogSizeY()
+    {
+        return _textSizeY;
     }
 }

@@ -26,6 +26,8 @@ public class LevelDataEditor : Editor
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
     private SerializedProperty PlayerForceSwap;
+    private SerializedProperty IsTuto;
+    private SerializedProperty PreviewMessage;
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestImage;
@@ -59,6 +61,8 @@ public class LevelDataEditor : Editor
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
+        IsTuto = serializedObject.FindProperty("IsTuto");
+        PreviewMessage = serializedObject.FindProperty("PreviewMessage");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestImage = serializedObject.FindProperty("QuestImage");
@@ -123,10 +127,10 @@ public class LevelDataEditor : Editor
         if (mechanics)
         {
             EditorGUILayout.PropertyField(HasInventory);
-            
+
             if (HasInventory.boolValue)
                 DisplayChooseStartNbState();
-            
+
             EditorGUILayout.PropertyField(HasRecycling);
 
             if (HasRecycling.boolValue)
@@ -135,15 +139,22 @@ public class LevelDataEditor : Editor
                 EditorGUILayout.PropertyField(NbOfRecycling);
                 EditorGUILayout.Space(10);
             }
-            
+
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
+            EditorGUILayout.PropertyField(IsTuto);
+
+            if (IsTuto.boolValue)
+            {
+                EditorGUILayout.PropertyField(PreviewMessage);
+            }
         }
 
         EditorGUILayout.EndFoldoutHeaderGroup();
         if (mechanics)
         {
-            EditorGUILayout.PropertyField(PlayerForceSwap, true);
+            if (IsTuto.boolValue)
+                EditorGUILayout.PropertyField(PlayerForceSwap, true);
 
             EditorGUILayout.Space(10);
         }
@@ -158,12 +169,12 @@ public class LevelDataEditor : Editor
             _levelData.StartNbState = AllStates.Plain;
         if (_levelData.StartNbState == AllStates.Mountain)
             _levelData.StartNbState = AllStates.Swamp;
-        
+
         EditorGUILayout.PropertyField(StartNbState);
-        
+
         var stateNb = (int)_levelData.StartNbState;
         EditorGUILayout.PropertyField(StartNbAllState.GetArrayElementAtIndex(stateNb));
-        
+
         EditorGUILayout.Space(10);
     }
 

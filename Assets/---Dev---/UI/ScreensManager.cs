@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
@@ -23,7 +24,8 @@ public class ScreensManager : MonoBehaviour
     [Header("Dialogs")] 
     [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
-    [SerializeField] private GameObject _dialogGrid;
+    [SerializeField] private GameObject _dialogContent;
+    [SerializeField] private Scrollbar _dialogScrollBar;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private float _dialogSpeed = .01f;
     
@@ -107,7 +109,9 @@ public class ScreensManager : MonoBehaviour
         // _dialoguesText.text = _dialogsToDisplay[_countScreen];
         // _dialogText.text = String.Empty;
         StartCoroutine(UpdateText());
-        FollowMouse.Instance.IsBlockMouse(true);
+        
+        if(!MapManager.Instance.IsTuto)
+            FollowMouse.Instance.IsBlockMouse(true);
     }
 
     private void EndBeginningDialog()
@@ -119,13 +123,33 @@ public class ScreensManager : MonoBehaviour
         _isBeginning = false;
 
         // _dialoguesParent.SetActive(false);
-        _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        if(!MapManager.Instance.IsTuto)
+            _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        
         FollowMouse.Instance.IsBlockMouse(false);
 
         // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
 
         InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
         _menuQuest.GetComponent<OpenCloseMenu>().OpenMenuQuest();
+    }
+
+    public void SpawnDialog(string[] dialogs)
+    {
+        _isDialogTime = true;
+        _isBeginning = true;
+        
+        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
+
+        if (_dialogsToDisplay.Count != 0)
+            _dialogsToDisplay.Clear();
+
+        foreach (var dialog in dialogs)
+        {
+            _dialogsToDisplay.Add(dialog);
+        }
+        
+        StartCoroutine(UpdateText());
     }
 
     public void GameOver()
@@ -223,15 +247,23 @@ public class ScreensManager : MonoBehaviour
 
     }
 
+    private const float SPACING_BETWEEN_TWO_DIALOG = 18;
     IEnumerator UpdateText()
     {
-        GameObject go = Instantiate(_dialogPrefab, _dialogGrid.transform);
+        GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
         var goDialog = go.GetComponent<DialogPrefab>();
         
-        goDialog.Init(_dialogsToDisplay[_countDialog]);
-        _dialogText = goDialog.DialogText;
-
         var newDialog = _dialogsToDisplay[_countDialog];
+        
+        if (newDialog == String.Empty)
+            newDialog = " ";
+        
+        goDialog.Init(newDialog);
+        _dialogText = goDialog.DialogText;
+        
+        float textSize = goDialog.GetDialogSizeY();
+        _dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
+
         int charIndex = 0;
         
         foreach (char c in newDialog.ToCharArray())
@@ -241,6 +273,7 @@ public class ScreensManager : MonoBehaviour
                 _stopCorou = false;
                 yield break;
             }
+            _dialogScrollBar.value = 0;
 
             charIndex++;
 
