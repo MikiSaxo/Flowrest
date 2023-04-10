@@ -339,7 +339,7 @@ public class MapManager : MonoBehaviour
     public void ChangeActivatedButton(GameObject button)
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
-        if (IsGroundFirstSelected) return;
+        if (IsGroundFirstSelected || ScreensManager.Instance.GetIsDialogTime()) return;
 
         // Activate Trash can
         if (button != null)

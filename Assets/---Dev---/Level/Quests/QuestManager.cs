@@ -152,9 +152,9 @@ public class QuestManager : MonoBehaviour
 
                 foreach (var state in _flowerState)
                 {
-                    if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state &&
-                        map[x, y].GetComponent<GroundStateManager>().CheckIfFlower() &&
-                        !_flowerStateDone.Contains(state))
+                    if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state 
+                        && map[x, y].GetComponent<GroundStateManager>().CheckIfFlower() 
+                        )//&& !_flowerStateDone.Contains(state))
                     {
                         count++;
                         _flowerStateDone.Add(state);
