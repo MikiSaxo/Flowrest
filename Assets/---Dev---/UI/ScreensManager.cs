@@ -21,15 +21,17 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Dialogs")] 
-    [SerializeField] private GameObject _dialoguesParent;
+    [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
-    [SerializeField] private TMP_Text _dialoguesText;
+    [SerializeField] private GameObject _dialogGrid;
+    [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private float _dialogSpeed = .01f;
     
     [Header("Titles")]
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _titlesString;
 
+    private TMP_Text _dialogText;
     private List<string> _dialogsToDisplay = new List<string>();
     private bool _isDialogTime;
     private bool _isBeginning;
@@ -88,9 +90,9 @@ public class ScreensManager : MonoBehaviour
         _isDialogTime = true;
 
         // _dialoguesParent.SetActive(true);
-        _dialoguesParent.GetComponent<OpenCloseMenu>().OpenAnim();
+        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
         // _dialoguesText.text = _dialogsToDisplay[_countScreen];
-        _dialoguesText.text = String.Empty;
+        // _dialogText.text = String.Empty;
         StartCoroutine(UpdateText());
         FollowMouse.Instance.IsBlockMouse(true);
     }
@@ -101,9 +103,9 @@ public class ScreensManager : MonoBehaviour
         _isBeginning = true;
 
         // _dialoguesParent.SetActive(true);
-        _dialoguesParent.GetComponent<OpenCloseMenu>().OpenAnim();
+        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
         // _dialoguesText.text = _dialogsToDisplay[_countScreen];
-        _dialoguesText.text = String.Empty;
+        // _dialogText.text = String.Empty;
         StartCoroutine(UpdateText());
         FollowMouse.Instance.IsBlockMouse(true);
     }
@@ -117,7 +119,7 @@ public class ScreensManager : MonoBehaviour
         _isBeginning = false;
 
         // _dialoguesParent.SetActive(false);
-        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         FollowMouse.Instance.IsBlockMouse(false);
 
         // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
@@ -165,7 +167,7 @@ public class ScreensManager : MonoBehaviour
         FollowMouse.Instance.IsBlockMouse(false);
         _menuPauseParent.SetActive(false);
         // _dialoguesParent.SetActive(false);
-        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _titlesParent.SetActive(false);
     }
 
@@ -176,7 +178,7 @@ public class ScreensManager : MonoBehaviour
         _countDialog = 0;
 
         // _dialoguesParent.SetActive(false);
-        _dialoguesParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
         MapManager.Instance.ResetAllMap(true);
@@ -197,14 +199,14 @@ public class ScreensManager : MonoBehaviour
                 if (_countScreen % 2 == 0)
                 {
                     _stopCorou = true;
-                    _dialoguesText.text = _dialogsToDisplay[_countDialog];
+                    _dialogText.text = _dialogsToDisplay[_countDialog];
                     StopCoroutine(UpdateText());
                 }
                 else
                 {
                     // print("anim");
                     _countDialog++;
-                    _dialoguesText.text = String.Empty;
+                    //_dialogText.text = String.Empty;
                     StartCoroutine(UpdateText());
                 }
                 _countScreen++;
@@ -223,17 +225,32 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator UpdateText()
     {
-        foreach (char c in _dialogsToDisplay[_countDialog].ToCharArray())
+        GameObject go = Instantiate(_dialogPrefab, _dialogGrid.transform);
+        var goDialog = go.GetComponent<DialogPrefab>();
+        
+        goDialog.Init(_dialogsToDisplay[_countDialog]);
+        _dialogText = goDialog.DialogText;
+
+        var newDialog = _dialogsToDisplay[_countDialog];
+        int charIndex = 0;
+        
+        foreach (char c in newDialog.ToCharArray())
         {
             if (_stopCorou)
             {
-                // print("stop");
                 _stopCorou = false;
                 yield break;
             }
-            _dialoguesText.text += c;
+
+            charIndex++;
+
+            var firstText = newDialog.Substring(0, charIndex);
+            var secondText = $"<color=#00000000>{newDialog.Substring(charIndex)}";
+            _dialogText.text = firstText + secondText;
+            
             yield return new WaitForSeconds(_dialogSpeed);
         }
+
         _countScreen++;
     }
 
