@@ -23,16 +23,16 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void OpenAnim()
     {
-        _objToMove.transform.DOKill();
-        _objToMove.transform.DOMove(_tpPoints[1].position, _openDuration);
+        // _objToMove.transform.DOKill();
+        // _objToMove.transform.DOMove(_tpPoints[1].position, _openDuration);
         
         _isClosed = false;
     }
 
     public void CloseAnim()
     {
-        _objToMove.transform.DOKill();
-        _objToMove.transform.DOMove(_tpPoints[0].position, _closeDuration);
+        // _objToMove.transform.DOKill();
+        // _objToMove.transform.DOMove(_tpPoints[0].position, _closeDuration);
 
         _isClosed = true;
     }
@@ -82,11 +82,16 @@ public class OpenCloseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (!_isTriggered || ForcedOpen || IsMenuPauseOpen) return;
-
-        if (_cooldownToClose > 0)
-            _cooldownToClose -= Time.deltaTime;
+        // if (!_isTriggered || ForcedOpen || IsMenuPauseOpen) return;
+        //
+        // if (_cooldownToClose > 0)
+        //     _cooldownToClose -= Time.deltaTime;
+        // else
+        //     CloseAnim();
+        
+        if(!_isClosed)
+            _objToMove.transform.position = Vector3.Lerp(_objToMove.transform.position, _tpPoints[1].position, Time.deltaTime * _openDuration);
         else
-            CloseAnim();
+            _objToMove.transform.position = Vector3.Lerp(_objToMove.transform.position, _tpPoints[0].position, Time.deltaTime * _closeDuration);
     }
 }

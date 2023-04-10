@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7346216, g: 0.8412794, b: 0.90451986, a: 1}
+  m_IndirectSpecularColor: {r: 0.73473084, g: 0.84122396, b: 0.9045656, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -455,8 +455,8 @@ MonoBehaviour:
   _tpPoints:
   - {fileID: 636950184}
   - {fileID: 811110709}
-  _openDuration: 0.5
-  _closeDuration: 1
+  _openDuration: 3
+  _closeDuration: 2
   _objToMove: {fileID: 268922587}
   _isClosed: 1
   _isTriggered: 0
@@ -10289,6 +10289,7 @@ MonoBehaviour:
   _timeLeave: 0.5
   _punchForce: 0.05
   _scaleEnter: 1.05
+  _vibrato: 7
   _canEnter: 1
 --- !u!114 &752096297
 MonoBehaviour:
@@ -10962,6 +10963,7 @@ MonoBehaviour:
   _timeLeave: 0.5
   _punchForce: 0.05
   _scaleEnter: 1.05
+  _vibrato: 7
   _canEnter: 1
 --- !u!1001 &833336157
 PrefabInstance:
@@ -12911,7 +12913,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -15364,6 +15366,7 @@ MonoBehaviour:
   _timeLeave: 0.5
   _punchForce: 0.1
   _scaleEnter: 1.1
+  _vibrato: 0
   _canEnter: 1
 --- !u!1 &1404334576
 GameObject:
@@ -19622,6 +19625,8 @@ GameObject:
   - component: {fileID: 1902627634}
   - component: {fileID: 1902627633}
   - component: {fileID: 1902627632}
+  - component: {fileID: 1902627635}
+  - component: {fileID: 1902627636}
   m_Layer: 5
   m_Name: ButtonOpen
   m_TagString: Untagged
@@ -19663,7 +19668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -19672,7 +19677,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -19726,7 +19731,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 2f0ddf8f1699455448d60530bfc6b607, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19735,7 +19740,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 113.06
 --- !u!222 &1902627634
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19744,6 +19749,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902627630}
   m_CullTransparentMesh: 1
+--- !u!114 &1902627635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902627630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f30bdb8eed12664399d15ddcd3bf631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeEnter: 0.2
+  _timeLeave: 0.5
+  _punchForce: 0.1
+  _scaleEnter: 1.1
+  _vibrato: 7
+  _canEnter: 1
+--- !u!114 &1902627636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902627630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1902627635}
+          m_TargetAssemblyTypeName: PointerMotion, Assembly-CSharp
+          m_MethodName: OnEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1902627635}
+          m_TargetAssemblyTypeName: PointerMotion, Assembly-CSharp
+          m_MethodName: OnLeave
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &1911764267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20589,8 +20657,8 @@ MonoBehaviour:
   _tpPoints:
   - {fileID: 1686046940}
   - {fileID: 25695622}
-  _openDuration: 0.5
-  _closeDuration: 1
+  _openDuration: 4
+  _closeDuration: 2
   _objToMove: {fileID: 1249094831}
   _isClosed: 1
   _isTriggered: 0
@@ -20871,8 +20939,8 @@ MonoBehaviour:
   _tpPoints:
   - {fileID: 1882740546}
   - {fileID: 282747283}
-  _openDuration: 0.5
-  _closeDuration: 1
+  _openDuration: 3
+  _closeDuration: 2
   _objToMove: {fileID: 471654961}
   _isClosed: 1
   _isTriggered: 0
@@ -21211,6 +21279,7 @@ MonoBehaviour:
   _timeLeave: 0.5
   _punchForce: 0.1
   _scaleEnter: 1.1
+  _vibrato: 7
   _canEnter: 1
 --- !u!224 &2249213698256537541
 RectTransform:
@@ -21603,7 +21672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _timeToSwap
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: QuestsManager
@@ -21921,6 +21990,14 @@ PrefabInstance:
     - target: {fileID: 7432057007640093945, guid: 2a282bd81fc9de8459ecf7b4f457eb4d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432057007640093946, guid: 2a282bd81fc9de8459ecf7b4f457eb4d, type: 3}
+      propertyPath: _vibrato
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432057007640093946, guid: 2a282bd81fc9de8459ecf7b4f457eb4d, type: 3}
+      propertyPath: _timeLeave
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7432057007640093947, guid: 2a282bd81fc9de8459ecf7b4f457eb4d, type: 3}
       propertyPath: _recyclingNoLeft

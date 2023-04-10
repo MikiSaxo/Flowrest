@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class GroundPrevisu : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprRnd;
     [SerializeField] private Sprite _noSwap;
-    [SerializeField] private Sprite[] _iconTile;
+    [SerializeField] private float _timeSpawnPreview;
+    [SerializeField] private float _endScaleValue;
 
     private int _indexIcon;
     
@@ -24,11 +26,17 @@ public class GroundPrevisu : MonoBehaviour
         _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIcon;
         _sprRnd.enabled = true;
         _indexIcon = index;
+
+        _sprRnd.transform.DOKill();
+        _sprRnd.transform.DOScale(0, 0);
+        _sprRnd.transform.DOScale(_endScaleValue, _timeSpawnPreview).SetEase(Ease.InSine);
     }
 
     public void DeactivateIcon()
     {
-        _sprRnd.enabled = false;
+        _sprRnd.transform.DOKill();
+        _sprRnd.transform.DOScale(0, .1f).OnComplete(() => { _sprRnd.enabled = false; });
+        // _sprRnd.enabled = false;
     }
 
     public bool IsIconActivated()

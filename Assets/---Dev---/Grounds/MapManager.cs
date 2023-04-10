@@ -405,7 +405,7 @@ public class MapManager : MonoBehaviour
         if (!_hasFirstSwap)
         {
             _hasFirstSwap = true;
-            ResetAllPlayerForceSwaped();
+            ResetAllPlayerForceSwapped();
         }
 
         // Update map
@@ -504,7 +504,7 @@ public class MapManager : MonoBehaviour
         IsSwapping = false;
     }
 
-    public void GroundSwapPrevisu(GameObject which)
+    public void GroundSwapPreview(GameObject which)
     {
         if (!_hasPrevisu) return;
 
@@ -532,7 +532,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.ChangeStatePrevisu(gWhich.GetCurrentStateEnum());
     }
 
-    public void GroundSwapPrevisuButton(GameObject which, AllStates buttonState)
+    public void GroundSwapPreviewButton(GameObject which, AllStates buttonState)
     {
         if (!_hasPrevisu) return;
 
@@ -733,7 +733,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void ResetAllPlayerForceSwaped()
+    private void ResetAllPlayerForceSwapped()
     {
         for (int x = 0; x < _mapSize.x; x++)
         {

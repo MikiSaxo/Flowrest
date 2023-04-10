@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 7614459207405979693}
   _meshParent: {fileID: 7994009417085831957}
+  _timeEnter: 0.25
+  _timeExit: 1
 --- !u!136 &7647496206535253539
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -262,7 +264,7 @@ MonoBehaviour:
   _fbReloadEnergy: {fileID: 5240415541477913816}
   _fbArrow: {fileID: 3016351328970431617}
   _bottomBounceValue: 5
-  _timeBounceValue: 0.5
+  _timeBounceValue: 1
   _coords: {x: 0, y: 0}
 --- !u!114 &6691199198151141913
 MonoBehaviour:
@@ -426,17 +428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprRnd: {fileID: 2196656463699768497}
   _noSwap: {fileID: 21300000, guid: 76a45e342f37d8e4680474a499e6678f, type: 3}
-  _iconTile:
-  - {fileID: 21300000, guid: 96b728d0a4159b6488f400c78bbdebe8, type: 3}
-  - {fileID: 21300000, guid: b8a114f55ea9a6b48ad31112b4e6c835, type: 3}
-  - {fileID: 21300000, guid: 54cd9532c6800434b904a9f5f4a63ab5, type: 3}
-  - {fileID: 21300000, guid: ff53a6b5c2fcf5d46aa529fa35fd53da, type: 3}
-  - {fileID: 21300000, guid: 915c10fe4e5048c4e87a34da6a7643f6, type: 3}
-  - {fileID: 21300000, guid: 6c773a7bc3506c7469732114d83435fa, type: 3}
-  - {fileID: 21300000, guid: 8f26518843507f54593566601e618422, type: 3}
-  - {fileID: 21300000, guid: fb7817d656f41bc4e9c87333b0b91ffd, type: 3}
-  - {fileID: 21300000, guid: 2f42a1da4a530a54da23ba2d643cf6d0, type: 3}
-  - {fileID: 21300000, guid: 9cc63e13f754d114e98e89f98d657640, type: 3}
+  _timeSpawnPreview: 1
+  _endScaleValue: 3
 --- !u!1001 &69032544616079822
 PrefabInstance:
   m_ObjectHideFlags: 0

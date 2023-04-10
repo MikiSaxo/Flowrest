@@ -14,6 +14,10 @@ public class GroundIndicator : MonoBehaviour
     // [SerializeField] private Material[] _mats;
     [SerializeField] private GameObject _meshParent;
     
+    [Header("Anim Values")]
+    [SerializeField] private float _timeEnter;
+    [SerializeField] private float _timeExit;
+    
     public bool IsSwapping { get; set; }
     
     private float _startYPos;
@@ -103,14 +107,14 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.GetHasGroundSelected())
         {
             // print("call ground swap previsu");
-            MapManager.Instance.GroundSwapPrevisu(_parent.gameObject);
+            MapManager.Instance.GroundSwapPreview(_parent.gameObject);
         }
         else if (MapManager.Instance.LastObjButtonSelected)
         {
-            MapManager.Instance.GroundSwapPrevisuButton(_parent.gameObject, MapManager.Instance.LastStateButtonSelected);
+            MapManager.Instance.GroundSwapPreviewButton(_parent.gameObject, MapManager.Instance.LastStateButtonSelected);
         }
 
-        OnEnterAnim(.2f);
+        OnEnterAnim(_timeEnter);
     }
 
     private void OnExitPointer(Collider other)
@@ -126,7 +130,7 @@ public class GroundIndicator : MonoBehaviour
 
         MapManager.Instance.ResetPreview();
         
-        OnLeaveAnim(.75f);
+        OnLeaveAnim(_timeExit);
     }
 
     private void Update()
@@ -189,7 +193,7 @@ public class GroundIndicator : MonoBehaviour
     private void OnLeaveAnim(float duration)
     {
         _meshParent.transform.DOKill();
-        _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutElastic);
+        _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutSine);
     }
 
     private void PoseBloc()
@@ -201,15 +205,30 @@ public class GroundIndicator : MonoBehaviour
         if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
             (int)MapManager.Instance.LastStateButtonSelected) return;
 
+        
+        
+        StartCoroutine(PoseBlocTime());
+    }
+
+    IEnumerator PoseBlocTime()
+    {
+        // Reset Preview
+        MapManager.Instance.ResetPreview();
+        
         // Init the new State
         gameObject.GetComponentInParent<GroundStateManager>().InitState(MapManager.Instance.LastStateButtonSelected);
+       
+        // Make Anim
+        _meshParent.transform.DOKill();
+        _meshParent.transform.DOMoveY(15, 0).OnComplete(() => { OnLeaveAnim(_timeExit); });
+        
+        yield return new WaitForSeconds(_timeExit);
+        
+        // Change State around
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyByLandingGround();
-
-        // Disable Trash
-        //RecyclingManager.Instance.UpdateRecycling(false);
 
         // Launch Quest
         MapManager.Instance.QuestsManager.CheckQuest();
@@ -220,14 +239,7 @@ public class GroundIndicator : MonoBehaviour
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
 
-        // Make Anim
-        // MoveYMesh(15, 0);
-        _meshParent.transform.DOKill();
-        _meshParent.transform.DOMoveY(15, 0).OnComplete(() => { OnLeaveAnim(.75f); });
-        // OnLeaveAnim(2);
-        
         // Reset
-        MapManager.Instance.ResetPreview();
         ResetForNextChange();
     }
 
@@ -239,7 +251,7 @@ public class GroundIndicator : MonoBehaviour
         _isEntered = false;
         //CheckHasWaterMesh();
         // MoveYMesh(_startYPos, .1f);
-        OnLeaveAnim(.75f);
+        OnLeaveAnim(_timeExit);
         MapManager.Instance.IsGroundFirstSelected = false;
     }
 
