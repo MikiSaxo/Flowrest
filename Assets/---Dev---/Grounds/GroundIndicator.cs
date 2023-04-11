@@ -73,6 +73,8 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
 
         if (_parent.IsPlayerForceSwapBlocked) return;
+        
+        if (_parent.IsPlayerNotForcePose && MapManager.Instance.LastObjButtonSelected != null) return;
 
         if (MapManager.Instance.LastObjButtonSelected != null)
         {
@@ -198,6 +200,8 @@ public class GroundIndicator : MonoBehaviour
 
     private void PoseBloc()
     {
+        if(MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
+            MapManager.Instance.UpdateAllGroundTutoForcePose(false);
         // Idk if really helpful but security
         if (!MapManager.Instance.CanPoseBloc()) return;
 
@@ -205,7 +209,7 @@ public class GroundIndicator : MonoBehaviour
         if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
             (int)MapManager.Instance.LastStateButtonSelected) return;
 
-        
+        MapManager.Instance.IsPosing = true;
         
         StartCoroutine(PoseBlocTime());
     }
@@ -241,6 +245,8 @@ public class GroundIndicator : MonoBehaviour
 
         // Reset
         ResetForNextChange();
+        
+        MapManager.Instance.IsPosing = false;
     }
 
     public void ResetIndicator()

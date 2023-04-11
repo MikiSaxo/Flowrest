@@ -25,8 +25,10 @@ public class MapManager : MonoBehaviour
     public QuestManager QuestsManager { get; private set; }
     public int NbOfRecycling { get; private set; }
     public bool IsSwapping { get; private set; }
+    public bool IsPosing { get; set; }
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
+    public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
@@ -54,6 +56,7 @@ public class MapManager : MonoBehaviour
 
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
+    private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
 
@@ -168,29 +171,36 @@ public class MapManager : MonoBehaviour
         if (IsTuto)
         {
             // Set Preview message
-            _previewMessageTuto = new []{currentLvl.PreviewMessage};
-            
+            _previewMessageTuto = new[] { currentLvl.PreviewMessage };
+
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
             {
                 if (currentLvl.PlayerForceSwap.Length != 0)
                 {
+                    _hasFirstSwap = false;
                     _isPlayerForceSwap = true;
+                    _stockPlayerForceSwap.Clear();
                     _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
                     _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
                 }
-                // else
-                // {
-                //     _hasFirstSwap = true;
-                //     _isPlayerForceSwap = false;
-                //     _stockPlayerForceSwap.Clear();
-                // }
+
+                if (_hasInventory)
+                {
+                    IsPlayerForcePoseBlocAfterSwap = currentLvl.HasForcePoseBlocAfterSwap;
+                    _coordsForcePoseBloc = currentLvl.ForcePoseBlocCoord;
+                }
+                else
+                {
+                    IsPlayerForcePoseBlocAfterSwap = false;
+                }
             }
         }
         else
         {
             _hasFirstSwap = true;
             _isPlayerForceSwap = false;
+            IsPlayerForcePoseBlocAfterSwap = false;
             _stockPlayerForceSwap.Clear();
         }
 
@@ -320,7 +330,7 @@ public class MapManager : MonoBehaviour
 
         if (!GetHasFirstSwap())
             ScreensManager.Instance.SpawnDialog(_previewMessageTuto);
-        
+
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
@@ -340,6 +350,12 @@ public class MapManager : MonoBehaviour
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
         if (IsGroundFirstSelected || ScreensManager.Instance.GetIsDialogTime()) return;
+
+        if (IsPlayerForcePoseBlocAfterSwap)
+        {
+            if (button != null)
+                UpdateAllGroundTutoForcePose(true);
+        }
 
         // Activate Trash can
         if (button != null)
@@ -405,7 +421,14 @@ public class MapManager : MonoBehaviour
         if (!_hasFirstSwap)
         {
             _hasFirstSwap = true;
-            ResetAllPlayerForceSwapped();
+
+            if (!IsPlayerForcePoseBlocAfterSwap)
+                ResetAllPlayerForceSwapped(true);
+            else
+            {
+                ResetAllPlayerForceSwapped(false);
+                ScreensManager.Instance.UpdateTutoArrow(true);
+            }
         }
 
         // Update map
@@ -457,8 +480,8 @@ public class MapManager : MonoBehaviour
         {
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
-            // SetupUIGround.Instance.AddNewGround((int)tileToAdd);
             var infoGrndData = SetupUIGround.Instance.GetGroundUIData((int)tileToAdd);
+
             ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon,
                 String.Empty, tileToAdd);
         }
@@ -643,7 +666,7 @@ public class MapManager : MonoBehaviour
 
     public void ResetBig()
     {
-        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime()) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
 
         if (IsTuto && !_hasFirstSwap) return;
 
@@ -733,7 +756,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void ResetAllPlayerForceSwapped()
+    private void ResetAllPlayerForceSwapped(bool isTutoEnded)
     {
         for (int x = 0; x < _mapSize.x; x++)
         {
@@ -743,8 +766,47 @@ public class MapManager : MonoBehaviour
                 if (_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
 
                 var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
-                ground.IsPlayerForceSwapBlocked = false;
+                if (isTutoEnded)
+                    ground.IsPlayerForceSwapBlocked = false;
                 ground.GetFbArrow().gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void UpdateAllGroundTutoForcePose(bool blockAll)
+    {
+        ResetAllPlayerForceSwapped(true);
+
+        ScreensManager.Instance.UpdateTutoArrow(false);
+
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                if (_mapGrid[x, y] == null) continue;
+                if (_mapGrid[x, y].GetComponent<GroundStateManager>() == null) continue;
+
+                var ground = _mapGrid[x, y].GetComponent<GroundStateManager>();
+
+                if (blockAll)
+                {
+                    if (_coordsForcePoseBloc.x == x && _coordsForcePoseBloc.y == y)
+                    {
+                        ground.IsPlayerNotForcePose = false;
+                        ground.GetFbArrow().gameObject.SetActive(true);
+                        ground.GetFbArrow().UpdateArrow(true);
+                    }
+                    else
+                    {
+                        ground.IsPlayerNotForcePose = true;
+                        ground.GetFbArrow().gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    ground.IsPlayerNotForcePose = false;
+                    ground.GetFbArrow().gameObject.SetActive(false);
+                }
             }
         }
     }

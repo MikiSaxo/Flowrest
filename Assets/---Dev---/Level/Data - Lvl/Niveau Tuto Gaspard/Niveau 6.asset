@@ -23,7 +23,13 @@ MonoBehaviour:
   NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  PlayerForceSwap: []
+  IsTuto: 1
+  PreviewMessage: preview message
+  PlayerForceSwap:
+  - {x: 2, y: 0}
+  - {x: 6, y: 4}
+  HasForcePoseBlocAfterSwap: 1
+  ForcePoseBlocCoord: {x: 4, y: 2}
   QuestDescription: "Faire en sorte d'avoir 6 tiles de mar\xE9cages adjacentes"
   QuestImage: {fileID: 21300000, guid: 6bf7e6aab31fcbb43a0eaa22af9bb6b9, type: 3}
   QuestFloor: 

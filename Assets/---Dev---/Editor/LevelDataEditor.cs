@@ -25,9 +25,11 @@ public class LevelDataEditor : Editor
     private SerializedProperty NbOfRecycling;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
-    private SerializedProperty PlayerForceSwap;
     private SerializedProperty IsTuto;
+    private SerializedProperty PlayerForceSwap;
     private SerializedProperty PreviewMessage;
+    private SerializedProperty HasForcePoseBlocAfterSwap;
+    private SerializedProperty ForcePoseBlocCoord;
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestImage;
@@ -60,9 +62,11 @@ public class LevelDataEditor : Editor
         NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
-        PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
         IsTuto = serializedObject.FindProperty("IsTuto");
+        PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
         PreviewMessage = serializedObject.FindProperty("PreviewMessage");
+        HasForcePoseBlocAfterSwap = serializedObject.FindProperty("HasForcePoseBlocAfterSwap");
+        ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestImage = serializedObject.FindProperty("QuestImage");
@@ -147,6 +151,12 @@ public class LevelDataEditor : Editor
             if (IsTuto.boolValue)
             {
                 EditorGUILayout.PropertyField(PreviewMessage);
+                if (HasInventory.boolValue)
+                {
+                    EditorGUILayout.PropertyField(HasForcePoseBlocAfterSwap);
+                    if(HasForcePoseBlocAfterSwap.boolValue)
+                        EditorGUILayout.PropertyField(ForcePoseBlocCoord);
+                }
             }
         }
 

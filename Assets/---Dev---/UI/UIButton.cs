@@ -13,7 +13,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
 
-    [SerializeField] private int _numberGroundLeft;
+    private int _numberGroundLeft;
 
     private void Start()
     {

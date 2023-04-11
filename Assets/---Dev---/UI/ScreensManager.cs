@@ -32,6 +32,9 @@ public class ScreensManager : MonoBehaviour
     [Header("Titles")]
     [SerializeField] private TextMeshProUGUI _titlesText;
     [SerializeField] private string[] _titlesString;
+    
+    [Header("Tuto")]
+    [SerializeField] private FB_Arrow _tutoArrow;
 
     private TMP_Text _dialogText;
     private List<string> _dialogsToDisplay = new List<string>();
@@ -285,6 +288,11 @@ public class ScreensManager : MonoBehaviour
         }
 
         _countScreen++;
+    }
+
+    public void UpdateTutoArrow(bool state)
+    {
+        _tutoArrow.UpdateArrow(state);
     }
 
     public bool GetIsDialogTime()

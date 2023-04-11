@@ -26,6 +26,8 @@ public class LevelData : ScriptableObject
    public bool IsTuto;
    public string PreviewMessage;
    public Vector2Int[] PlayerForceSwap;
+   public bool HasForcePoseBlocAfterSwap;
+   public Vector2Int ForcePoseBlocCoord;
 
    
    public string QuestDescription;

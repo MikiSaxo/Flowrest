@@ -33,6 +33,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsTreated { get; set; }
 
     public bool IsPlayerForceSwapBlocked { get; set; }
+    public bool IsPlayerNotForcePose { get; set; }
     
     public AllStates StockStatePrevisu  { get; set; }
 

@@ -25,6 +25,7 @@ public class QuestManager : MonoBehaviour
     private int _countQuestNumber;
 
     private List<AllStates> _flowerStateDone = new List<AllStates>();
+    private List<AllStates> _flowerStateVerified = new List<AllStates>();
 
     public void InitQuestFullFloor(AllStates whichState)
     {
