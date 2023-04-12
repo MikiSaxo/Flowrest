@@ -522,8 +522,8 @@ public class MapManager : MonoBehaviour
         QuestsManager.CheckQuest();
 
         // Check Game Over is no recycling
-        //if (!_hasRecycling)
-        CheckIfGameOver();
+        if (!_hasRecycling)
+            CheckIfGameOver();
 
 
         // Allow next Swap
@@ -600,6 +600,8 @@ public class MapManager : MonoBehaviour
 
     public bool CheckIfButtonIsEmpty()
     {
+        if (LastObjButtonSelected == null) return true;
+        
         return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
     }
 
@@ -672,8 +674,6 @@ public class MapManager : MonoBehaviour
         if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
 
         if (IsTuto) return;
-
-        print("reset big");
 
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);
