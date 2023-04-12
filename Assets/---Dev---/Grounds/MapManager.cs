@@ -573,7 +573,7 @@ public class MapManager : MonoBehaviour
 
     public void UseRecycling()
     {
-        if (LastObjButtonSelected == null) return;
+        if (LastObjButtonSelected == null || NbOfRecycling <= 0) return;
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;

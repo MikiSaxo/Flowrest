@@ -113,7 +113,7 @@ public class ScreensManager : MonoBehaviour
         // _dialogText.text = String.Empty;
         StartCoroutine(UpdateText());
         
-        if(!MapManager.Instance.IsTuto)
+        //if(!MapManager.Instance.IsTuto)
             FollowMouse.Instance.IsBlockMouse(true);
     }
 
