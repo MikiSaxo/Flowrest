@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Niveau 5
   LevelFolder: Level Editor
-  EnergyAtStart: 100
+  EnergyAtStart: 2
   HasInventory: 0
-  HasTrashCan: 0
+  StartNbState: 0
+  StartNbAllState: 
+  HasRecycling: 0
+  HasInfinitRecycling: 0
+  NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  PlayerForceChangeThese2Tiles: []
+  IsTuto: 0
+  PreviewMessage: 
+  PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   QuestDescription: "Cr\xE9er 12 tiles de mar\xE9cage"
-  QuestImage: {fileID: 21300000, guid: d049f2f4771e62541a34a816ae99f5a0, type: 3}
+  QuestImage: {fileID: 21300000, guid: 72011e71eac6429458645682f59dcc06, type: 3}
   QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 

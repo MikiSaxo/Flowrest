@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Niveau 2
   LevelFolder: Level Editor
-  EnergyAtStart: 100
+  EnergyAtStart: 2
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -23,9 +23,13 @@ MonoBehaviour:
   NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
+  IsTuto: 0
+  PreviewMessage: 
   PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   QuestDescription: Faire une fleur de plaine
-  QuestImage: {fileID: 21300000, guid: 8335a323303f9b946b5e53898dbf5d1c, type: 3}
+  QuestImage: {fileID: 21300000, guid: eff09da8ded9eb14d8220a21df81516f, type: 3}
   QuestFloor: 
   QuestFlower: 00000000
   QuestNoSpecificTiles: 
