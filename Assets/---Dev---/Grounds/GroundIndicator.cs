@@ -200,8 +200,7 @@ public class GroundIndicator : MonoBehaviour
 
     private void PoseBloc()
     {
-        if(MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
-            MapManager.Instance.UpdateAllGroundTutoForcePose(false);
+        
         // Idk if really helpful but security
         if (!MapManager.Instance.CanPoseBloc()) return;
 
@@ -247,6 +246,9 @@ public class GroundIndicator : MonoBehaviour
         ResetForNextChange();
         
         MapManager.Instance.IsPosing = false;
+        
+        if(MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
+            MapManager.Instance.UpdateAllGroundTutoForcePose(false);
     }
 
     public void ResetIndicator()

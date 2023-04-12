@@ -423,7 +423,10 @@ public class MapManager : MonoBehaviour
             _hasFirstSwap = true;
 
             if (!IsPlayerForcePoseBlocAfterSwap)
+            {
+                // IsTuto = false;
                 ResetAllPlayerForceSwapped(true);
+            }
             else
             {
                 ResetAllPlayerForceSwapped(false);
@@ -519,7 +522,7 @@ public class MapManager : MonoBehaviour
         QuestsManager.CheckQuest();
 
         // Check Game Over is no recycling
-        if (!_hasRecycling)
+        //if (!_hasRecycling)
             CheckIfGameOver();
 
 
@@ -615,10 +618,10 @@ public class MapManager : MonoBehaviour
     {
         if (IsVictory) return;
 
-        StartCoroutine(WaitLittleToCheck());
+        StartCoroutine(WaitLittleToCheckGameOver());
     }
 
-    IEnumerator WaitLittleToCheck()
+    IEnumerator WaitLittleToCheckGameOver()
     {
         yield return new WaitForSeconds(.02f);
 
@@ -668,7 +671,9 @@ public class MapManager : MonoBehaviour
     {
         if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
 
-        if (IsTuto && !_hasFirstSwap) return;
+        if (IsTuto) return;
+        
+        print("reset big");
 
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);
