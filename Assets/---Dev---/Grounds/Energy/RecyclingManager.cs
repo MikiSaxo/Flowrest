@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
 
 public class RecyclingManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class RecyclingManager : MonoBehaviour
     {
         _recycling.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
+        gameObject.GetComponentInChildren<Button>().interactable = activateOrNot;
     }
 
     public void InitNbRecycling(int number, bool hasInfinit)
@@ -41,6 +43,13 @@ public class RecyclingManager : MonoBehaviour
         if (_hasInfinitRecycling) return;
 
         _currentLeftRecycling--;
+
+        if (_currentLeftRecycling <= 0)
+        {
+            gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
+            gameObject.GetComponentInChildren<Button>().interactable = false;
+        }
+        
         UpdateDisplayRecyclingNbLeft();
     }
 
