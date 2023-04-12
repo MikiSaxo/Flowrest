@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sprRnd: {fileID: 3009709222348554583}
+  _imgRnd: {fileID: 0}
   _baseYPos: 7
   _timeCycle: 0.5
 --- !u!1 &2485909896580585050
@@ -295,6 +296,7 @@ MonoBehaviour:
   _timeLeave: 0.5
   _punchForce: 0.1
   _scaleEnter: 1.1
+  _vibrato: 0
   _canEnter: 1
 --- !u!1 &7994009417085831957
 GameObject:
@@ -356,7 +358,7 @@ Transform:
   m_GameObject: {fileID: 8087794409853988145}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 7.1, z: -0.73}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5405163273678759655}
@@ -428,7 +430,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sprRnd: {fileID: 2196656463699768497}
   _noSwap: {fileID: 21300000, guid: 76a45e342f37d8e4680474a499e6678f, type: 3}
-  _timeSpawnPreview: 1
+  _timeWaitPreview: 0
+  _timeSpawnPreview: 0.5
   _endScaleValue: 3
 --- !u!1001 &69032544616079822
 PrefabInstance:

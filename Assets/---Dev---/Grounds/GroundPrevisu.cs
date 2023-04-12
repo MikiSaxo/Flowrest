@@ -9,11 +9,12 @@ public class GroundPrevisu : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sprRnd;
     [SerializeField] private Sprite _noSwap;
+    [SerializeField] private float _timeWaitPreview;
     [SerializeField] private float _timeSpawnPreview;
     [SerializeField] private float _endScaleValue;
 
     private int _indexIcon;
-    
+
     private void Start()
     {
         DeactivateIcon();
@@ -27,15 +28,20 @@ public class GroundPrevisu : MonoBehaviour
         _sprRnd.enabled = true;
         _indexIcon = index;
 
-        _sprRnd.transform.DOKill();
-        _sprRnd.transform.DOScale(0, 0);
-        _sprRnd.transform.DOScale(_endScaleValue, _timeSpawnPreview).SetEase(Ease.InSine);
+        _sprRnd.DOKill();
+        // _sprRnd.transform.DOScale(0, 0);
+        _sprRnd.DOFade(0, 0);
+        _sprRnd.DOFade(0, _timeWaitPreview).OnComplete(() =>
+        {
+            _sprRnd.DOFade(1, _timeSpawnPreview).SetEase(Ease.InSine);
+        });
     }
 
     public void DeactivateIcon()
     {
-        _sprRnd.transform.DOKill();
-        _sprRnd.transform.DOScale(0, .1f).OnComplete(() => { _sprRnd.enabled = false; });
+        _sprRnd.DOKill();
+        _sprRnd.DOFade(0, 0).OnComplete(() => { _sprRnd.enabled = false; });
+        // _sprRnd.transform.DOScale(0, .1f).OnComplete(() => { _sprRnd.enabled = false; });
         // _sprRnd.enabled = false;
     }
 
