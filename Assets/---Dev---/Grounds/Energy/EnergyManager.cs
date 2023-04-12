@@ -70,6 +70,8 @@ public class EnergyManager : MonoBehaviour
     IEnumerator WaitToUpdate(int value)
     {
         _tempValue += value;
+        if (_tempValue == 0)
+            _tempValue = 1;
         yield return new WaitForSeconds(.01f);
         ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
         UpdateEnergy(_tempValue);
