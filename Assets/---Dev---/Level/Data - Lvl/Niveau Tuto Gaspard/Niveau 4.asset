@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Niveau 4
   LevelFolder: Level Editor
-  EnergyAtStart: 300
+  EnergyAtStart: 6
   HasInventory: 0
-  HasTrashCan: 0
+  StartNbState: 0
+  StartNbAllState: 
+  HasRecycling: 0
+  HasInfinitRecycling: 0
+  NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  PlayerForceChangeThese2Tiles: []
+  IsTuto: 0
+  PreviewMessage: 
+  PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   QuestDescription: Entourer de plaine toutes les montagnes
-  QuestImage: {fileID: 21300000, guid: f3340185dea8fea4498d053f9aa76894, type: 3}
+  QuestImage: {fileID: 21300000, guid: b655375b1f3651e4a99c8644ad1cd2ed, type: 3}
   QuestFloor: 00000000
   QuestFlower: 
   QuestNoSpecificTiles: 
