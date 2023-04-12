@@ -25,9 +25,9 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 1
   PreviewMessage: "D\xE9sormais, lorsque tu feras un \xE9change, tu r\xE9cup\xE8reras
-    l'association de ces deux tiles. Tu peux placer directement sur ton terrain les
-    tiles que tu vas avoir dans ton inventaire diff\xE9rent (de l'eau ne peut pas
-    remplacer de l'eau d\xE9j\xE0 existant, \xE7a fait des co\xFBts non pris en charge)."
+    l'association de ces deux tiles. Tu peux ensuite la placer sur le terrain en
+    faisant attention \xE0 ce que la tile en dessous soit diff\xE9rente (sinon ce
+    n'est pas possible de la placer)."
   PlayerForceSwap:
   - {x: 2, y: 0}
   - {x: 6, y: 4}
@@ -46,6 +46,6 @@ MonoBehaviour:
   CharacterName: Profess.io
   DialogBeginning:
   - "Maintenant que tu es \xE0 l'aise avec les technologies de base que nous utilisons,
-    je vais te donner acc\xE8s \xE0 ton inventaire."
+    je vais te donner acc\xE8s \xE0 un inventaire."
   DialogEnd:
   - Je te laisse te familiariser avec ce nouvel outil, on se retrouve demain.
