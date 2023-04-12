@@ -9,9 +9,9 @@ public class MapConstructData
     [Header("Map")] public string Map;
    
     [Header("Crystal Data")]
-    // [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
     public List<Vector2Int> Coords;
     
+    // [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
     // [Header("Mechanics")] 
     // public bool HasInventory;
     // public bool HasTrashCan;

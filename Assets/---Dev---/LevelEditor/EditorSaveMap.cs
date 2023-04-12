@@ -98,21 +98,6 @@ public class EditorSaveMap : MonoBehaviour
         if (map != null)
             _currentMapConstructData.Map = map;
     }
-
-    public void SaveMap()
-    {
-        UpdateMapName(EditorMapManager.Instance.GetMapGrid());
-        // UpdateEnergyAtStart();
-        GetMap();
-
-        if (_mapName == "") return;
-        
-        SaveJson();
-        
-        SpawnFbText($"{_hexColorGood}{_mapName} {_saveSucceed} in {_folderDestination} folder!");
-        RefreshEditorProjectWindow();
-    }
-
     private string ConvertMapGridToString(char[,] mapGrid)
     {
         var str = String.Empty;
@@ -131,6 +116,19 @@ public class EditorSaveMap : MonoBehaviour
         }
 
         return str;
+    }
+    
+    public void SaveMap()
+    {
+        UpdateMapName(EditorMapManager.Instance.GetMapGrid());
+        GetMap();
+
+        if (_mapName == "") return;
+        
+        SaveJson();
+        
+        SpawnFbText($"{_hexColorGood}{_mapName} {_saveSucceed} in {_folderDestination} folder!");
+        RefreshEditorProjectWindow();
     }
 
     private void RefreshEditorProjectWindow()
@@ -154,11 +152,6 @@ public class EditorSaveMap : MonoBehaviour
 
     private void SaveJson()
     {
-        // var mapgrid = EditorMapManager.Instance.GetMapGrid(); 
-        // string map = ConvertMapGridToString(mapgrid);
-        // _currentLvlData.Map = map;
-
-
         MapConstructData mapConstructData = new MapConstructData();
         mapConstructData = _currentMapConstructData;
 

@@ -10768,8 +10768,7 @@ MonoBehaviour:
   _energyBar: {fileID: 1089502438}
   _hitEnergyBar: {fileID: 101532696}
   _numberToDisplay: {fileID: 1321497134}
-  _howBase: 1000
-  _earnedByGround: 200
+  _earnedByCrystal: 0
   _earnedByRecycling: 100
   _costBySwap: 60
   _costByLandingGround: 40
@@ -10785,8 +10784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fdae0c706bf984cb7363252bc9f6bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trashCan: {fileID: 936176974}
-  _fBTrashCan: {fileID: 445229345}
+  _recycling: {fileID: 0}
+  _recyclingNbText: {fileID: 0}
 --- !u!1 &805048251
 GameObject:
   m_ObjectHideFlags: 0
@@ -15354,7 +15353,7 @@ MonoBehaviour:
   _tpPoints:
   - {fileID: 1221779596}
   - {fileID: 2056037684}
-  _openDuration: 0.25
+  _openDuration: 5
   _closeDuration: 0.4
   _objToMove: {fileID: 44414454}
   _isClosed: 1
@@ -19262,14 +19261,17 @@ MonoBehaviour:
   _descriptionQuest: {fileID: 0}
   _imageQuest: {fileID: 0}
   _menuPauseTriggered: {fileID: 94625345}
-  _dialoguesParent: {fileID: 1943999468}
+  _dialogParent: {fileID: 0}
   _characterName: {fileID: 0}
-  _dialoguesText: {fileID: 1199444735}
+  _dialogContent: {fileID: 0}
+  _dialogScrollBar: {fileID: 0}
+  _dialogPrefab: {fileID: 0}
   _dialogSpeed: 0.01
   _titlesText: {fileID: 523940195}
   _titlesString:
   - <rainb>Victory !
   - "Nouvelle d\xE9couverte dans l'almanach :"
+  _tutoArrow: {fileID: 0}
 --- !u!114 &1764261891
 MonoBehaviour:
   m_ObjectHideFlags: 0

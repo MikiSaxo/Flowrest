@@ -274,7 +274,7 @@ public class MapManager : MonoBehaviour
         // Tp ground to its position
         which.transform.position = new Vector3(x * _distance * QUARTER_OFFSET, 0, (y + hexOffset) * _distance);
 
-        // Get Groudn State Manager
+        // Get Ground State Manager
         var ground = which.GetComponent<GroundStateManager>();
         // Change coords of the ground
         ground.ChangeCoords(new Vector2Int(x, y));
@@ -817,91 +817,4 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
-    // private void OldInitializeLevel(Vector2Int sizeMap) //Map creation
-    // {
-    //     for (int x = 0; x < sizeMap.x; x++)
-    //     {
-    //         for (int y = 0; y < sizeMap.y; y++)
-    //         {
-    //             // Get the string of the actual line
-    //             string line = _mapInfo[y];
-    //             // Get the actual char of the string of the actual line
-    //             char whichEnvironment = line[x];
-    //
-    //             switch (whichEnvironment)
-    //             {
-    //                 case PLAIN:
-    //                     GameObject plains = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(plains, x, y, AllStates.Plain);
-    //                     break;
-    //                 case DESERT:
-    //                     GameObject desert = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(desert, x, y, AllStates.Desert);
-    //                     break;
-    //                 case WATER:
-    //                     GameObject water = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(water, x, y, AllStates.Water);
-    //                     break;
-    //                 case TROPICAL:
-    //                     GameObject tropical = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(tropical, x, y, AllStates.Tropical);
-    //                     break;
-    //                 case SAVANNA:
-    //                     GameObject savanna = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(savanna, x, y, AllStates.Savanna);
-    //                     break;
-    //                 case GEYSER:
-    //                     GameObject geyser = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(geyser, x, y, AllStates.Geyser);
-    //                     break;
-    //                 case SNOW:
-    //                     GameObject snow = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(snow, x, y, AllStates.Snow);
-    //                     break;
-    //                 case POLAR_DESERT:
-    //                     GameObject polar = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(polar, x, y, AllStates.PolarDesert);
-    //                     break;
-    //                 case TUNDRA:
-    //                     GameObject tundra = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(tundra, x, y, AllStates.Tundra);
-    //                     break;
-    //                 case SWAMP:
-    //                     GameObject swamp = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(swamp, x, y, AllStates.Swamp);
-    //                     break;
-    //                 case MOUNTAIN:
-    //                     GameObject mountain = Instantiate(_groundPrefab, _map.transform);
-    //                     InitObj(mountain, x, y, AllStates.Mountain);
-    //                     break;
-    //                 case NONE:
-    //                     break;
-    //             }
-    //         }
-    //     }
-    // }
-
-    // public void PrevisuAroundSelected(AllStates state)
-    // {
-    //     if (_lastGroundSelected != null)
-    //         _lastGroundSelected.GetComponent<GroundStateManager>().SelectedLaunchAroundPrevisu(state);
-    // }
-
-    // public void ResetCurrentEntered()
-    // {
-    //     _currentEntered = null;
-    // }
-
-    // public void ResetCurrentAroundSelectedPrevisu()
-    // {
-    //     if (_currentEntered != null)
-    //         _currentEntered.ResetAroundSelectedPrevisu();
-    // }
-
-    // public void ResetAroundSelectedPrevisu()
-    // {
-    //     if (_lastGroundSelected != null)
-    //         _lastGroundSelected.GetComponent<GroundStateManager>().ResetAroundSelectedPrevisu();
-    // }
 }
