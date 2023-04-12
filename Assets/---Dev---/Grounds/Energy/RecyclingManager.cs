@@ -16,7 +16,7 @@ public class RecyclingManager : MonoBehaviour
     private bool _hasInfinitRecycling;
     private int _maxRecycling;
     private int _currentLeftRecycling;
-    
+
     private void Awake()
     {
         Instance = this;
@@ -26,6 +26,9 @@ public class RecyclingManager : MonoBehaviour
     {
         _recycling.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
+
+        if (!activateOrNot)
+            return;
         gameObject.GetComponentInChildren<Button>().interactable = activateOrNot;
     }
 
@@ -37,7 +40,7 @@ public class RecyclingManager : MonoBehaviour
         _recyclingNbText.gameObject.SetActive(!_hasInfinitRecycling);
         UpdateDisplayRecyclingNbLeft();
     }
-    
+
     public void UpdateNbRecyclingLeft()
     {
         if (_hasInfinitRecycling) return;
@@ -49,13 +52,13 @@ public class RecyclingManager : MonoBehaviour
             gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
             gameObject.GetComponentInChildren<Button>().interactable = false;
         }
-        
+
         UpdateDisplayRecyclingNbLeft();
     }
 
     private void UpdateDisplayRecyclingNbLeft()
     {
-        if(!_hasInfinitRecycling)
+        if (!_hasInfinitRecycling)
             _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
     }
 }
