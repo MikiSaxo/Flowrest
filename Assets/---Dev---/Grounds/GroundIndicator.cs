@@ -209,7 +209,7 @@ public class GroundIndicator : MonoBehaviour
             (int)MapManager.Instance.LastStateButtonSelected) return;
 
         MapManager.Instance.IsPosing = true;
-        
+
         StartCoroutine(PoseBlocTime());
     }
 
@@ -224,6 +224,9 @@ public class GroundIndicator : MonoBehaviour
         // Make Anim
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(15, 0).OnComplete(() => { OnLeaveAnim(_timeExit); });
+        
+        // Decrease number on selected UI Button 
+        MapManager.Instance.DecreaseNumberButton(); 
         
         yield return new WaitForSeconds(_timeExit);
         
@@ -265,7 +268,7 @@ public class GroundIndicator : MonoBehaviour
 
     private void ResetForNextChange()
     {
-        MapManager.Instance.DecreaseNumberButton(); // Decrease number on selected UI Button 
+        
         //MapManager.Instance.CheckForBiome();
 
         // Block if was not drag n drop or if the button is empty
