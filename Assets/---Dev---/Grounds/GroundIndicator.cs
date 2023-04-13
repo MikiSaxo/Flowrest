@@ -257,27 +257,22 @@ public class GroundIndicator : MonoBehaviour
     public void ResetIndicator()
     {
         _isSelected = false;
-        // _mesh.material = _mats[0];
-        // _mesh.enabled = false;
         _isEntered = false;
-        //CheckHasWaterMesh();
-        // MoveYMesh(_startYPos, .1f);
+
         OnLeaveAnim(_timeExit);
         MapManager.Instance.IsGroundFirstSelected = false;
     }
 
     private void ResetForNextChange()
     {
-        
-        //MapManager.Instance.CheckForBiome();
-
         // Block if was not drag n drop or if the button is empty
         if (MapManager.Instance.CheckIfButtonIsEmpty())
             MapManager.Instance.ResetAllSelection();
 
         if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
 
-        MapManager.Instance.ResetGroundSelected(); // Reset to avoid problem with dnd
+        // Reset to avoid problem with dnd
+        MapManager.Instance.ResetGroundSelected(); 
         MapManager.Instance.ResetButtonSelected();
     }
 }

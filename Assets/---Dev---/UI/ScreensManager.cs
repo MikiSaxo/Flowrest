@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEditor;
 using UnityEngine.Playables;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 public class ScreensManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private TMP_Text _descriptionQuest;
     [SerializeField] private Image _imageQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
+    [SerializeField] private GameObject _nextLevel;
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -33,10 +35,11 @@ public class ScreensManager : MonoBehaviour
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
 
-    private TMP_Text _dialogText;
-    private List<string> _dialogsToDisplay = new List<string>();
+    // private TMP_Text _dialogText;
+    private List<string> _dialogsList = new List<string>();
+    private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
     private bool _isDialogTime;
-    private bool _isBeginning;
+    private bool _isTheEnd;
     private bool _isFirstScreen;
     private bool _isPaused;
     private int _countScreen;
@@ -54,21 +57,6 @@ public class ScreensManager : MonoBehaviour
     private void Start()
     {
         //FirstScreenOfLevel();
-    }
-
-    public void InitDialogs(string[] dialogs, bool isBeginning)
-    {
-        // print("Init Dialog length = " + dialogs.Length);
-        if (_dialogsToDisplay.Count != 0)
-            _dialogsToDisplay.Clear();
-
-        foreach (var dialog in dialogs)
-        {
-            _dialogsToDisplay.Add(dialog);
-        }
-
-        if (isBeginning)
-            BeginningDialog();
     }
 
     public void InitCharaName(string charaName)
@@ -92,88 +80,112 @@ public class ScreensManager : MonoBehaviour
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 
-        _isDialogTime = true;
-
-        // _dialoguesParent.SetActive(true);
-        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
-        // _dialoguesText.text = _dialogsToDisplay[_countScreen];
-        // _dialogText.text = String.Empty;
-        //
-        // _stopCorou = true;
-        // _dialogText.text = _dialogsToDisplay[_countDialog];
-        // StopCoroutine(UpdateText());
-        //
-        // if (_dialogsToDisplay.Count != 0)
-        //     _dialogsToDisplay.Clear();
-        if (_isCorouRunning && _hasSpawnDialog)
-        {
-            _dialogText.text = _saveSpawnDialog;
-            _hasSpawnDialog = false;
-        }
-
-        // InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
-
-        StartCoroutine(UpdateText());
         FollowMouse.Instance.IsBlockMouse(true);
+
+        SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
     }
 
-    private void BeginningDialog()
+    private void StartDialog()
     {
-        _isDialogTime = true;
-        _isBeginning = true;
-
-        // _dialoguesParent.SetActive(true);
-        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
-        // _dialoguesText.text = _dialogsToDisplay[_countScreen];
-        // _dialogText.text = String.Empty;
-        StartCoroutine(UpdateText());
-
-        //if(!MapManager.Instance.IsTuto)
-        FollowMouse.Instance.IsBlockMouse(true);
     }
 
-    private void EndBeginningDialog()
+    private void EndDialog()
     {
-        _countScreen = 0;
-        _countDialog = 0;
+        // if (!MapManager.Instance.IsTuto)
+        // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
 
-        _isDialogTime = false;
-        _isBeginning = false;
-
-        // _dialoguesParent.SetActive(false);
-        if (!MapManager.Instance.IsTuto)
-            _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        // RemoveLastDialog();
 
         FollowMouse.Instance.IsBlockMouse(false);
 
-        // if(MapManager.Instance.GetDialogAtVictory().Length == 0) return;
+        _dialogParent.SetActive(false);
 
-        InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
         _menuQuest.GetComponent<OpenCloseMenu>().OpenMenuQuest();
     }
 
-    public void SpawnDialog(string[] dialogs)
+    public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool isMiddleDialog)
     {
-        // _isDialogTime = true;
-        // _isBeginning = true;
-        _hasSpawnDialog = true;
+        RemoveLastDialog();
         
-        _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
+        // Set isDialoging and Reset count old dialog
+        _isDialogTime = true;
+        _countDialog = 0;
 
-        if (_dialogsToDisplay.Count != 0)
-            _dialogsToDisplay.Clear();
+        // Open Dialog Menu
+        // _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
+        _dialogParent.SetActive(true);
 
+        // Block mouse
+        // if (!isMiddleDialog)
+            FollowMouse.Instance.IsBlockMouse(true);
+
+        // Clear two list of old dialogs
+        if (_dialogsList.Count != 0)
+            _dialogsList.Clear();
+
+        if (_dialogsPrefabList.Count != 0)
+            _dialogsPrefabList.Clear();
+
+        // Add new string dialog
         foreach (var dialog in dialogs)
         {
-            _dialogsToDisplay.Add(dialog);
+            _dialogsList.Add(dialog);
         }
 
-        _saveSpawnDialog = _dialogsToDisplay[0];
+        // set if it's victory dialog
+        _isTheEnd = isTheEnd;
 
-        StartCoroutine(UpdateText());
+        if (!isTheEnd)
+            UpdateButtonGoLevelSupp(false);
 
-        _countScreen--;
-        InitDialogs(MapManager.Instance.GetDialogAtVictory(), false);
+
+        SpawnAllDialog();
+    }
+
+    private void SpawnAllDialog()
+    {
+        if (_dialogsPrefabList.Count != _dialogsList.Count)
+            SpawnDialog();
+        else
+            print("all dialogs have spawned");
+    }
+
+    private void SpawnDialog()
+    {
+        if (_dialogsPrefabList.Count > 0)
+            Destroy(_dialogsPrefabList[^1].gameObject);
+
+        // Instantiate new dialog
+        GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
+        go.transform.localPosition = Vector3.zero;
+
+        var goDialog = go.GetComponent<DialogPrefab>();
+
+        // Add it to the dialog prefab list
+        _dialogsPrefabList.Add(goDialog);
+
+        // Get the text 
+        var newDialog = _dialogsList[_countDialog];
+        // Security if no text
+        if (newDialog == String.Empty)
+            newDialog = " ";
+
+        // Init to the dialog prefab with the speed spawn
+        goDialog.Init(newDialog, _dialogSpeed);
+
+        // Get Size of dialog prefab
+        //float textSize = goDialog.GetDialogSizeY();
+        // Increase Dialog size content
+        //_dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
+
+        //GoToBottomScrollBar();
+
+        _countDialog++;
+    }
+
+    public void GoToBottomScrollBar()
+    {
+        _dialogScrollBar.value = 0;
     }
 
     public void GameOver()
@@ -181,6 +193,60 @@ public class ScreensManager : MonoBehaviour
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
         FollowMouse.Instance.IsBlockMouse(true);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            UpdatePause(!_isPaused);
+
+
+        if (!_isDialogTime) return;
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (CheckIfDialogEnded())
+                return;
+
+            if (_dialogsPrefabList[^1].IsFinish)
+            {
+                print("spawn new");
+                SpawnAllDialog();
+            }
+            else
+            {
+                print("end dialog");
+                _dialogsPrefabList[^1].EndAnimationText();
+            }
+
+
+            // if (_countScreen < _dialogsList.Count * 2 - 1)
+            // {
+            //     if (_countScreen % 2 == 0)
+            //     {
+            //         _stopCorou = true;
+            //         _dialogText.text = _dialogsList[_countDialog];
+            //         StopCoroutine(UpdateText());
+            //     }
+            //     else
+            //     {
+            //         // print("anim");
+            //         _countDialog++;
+            //         //_dialogText.text = String.Empty;
+            //         StartCoroutine(UpdateText());
+            //     }
+            //
+            //     _countScreen++;
+            // }
+            // else
+            // {
+            //     if (_isBeginning)
+            //         EndBeginningDialog();
+            //     else
+            //         ChangeToLevelSupp();
+            // }
+        }
     }
 
     public void UpdatePause(bool state)
@@ -204,6 +270,24 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
+    public bool CheckIfDialogEnded()
+    {
+        if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinish)
+        {
+            _isDialogTime = false;
+            GoToBottomScrollBar();
+
+            if (_isTheEnd)
+                UpdateButtonGoLevelSupp(true);
+            else
+                EndDialog();
+
+            return true;
+        }
+
+        return false;
+    }
+
     public void RestartSceneOrLevel()
     {
         _isDialogTime = false;
@@ -219,101 +303,69 @@ public class ScreensManager : MonoBehaviour
         _titlesParent.SetActive(false);
     }
 
-    public void ChangeToLevelSupp()
+    public void GoLevelSupp()
     {
         _isDialogTime = false;
         _countScreen = 0;
         _countDialog = 0;
 
         // _dialoguesParent.SetActive(false);
-        _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
+        // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
         MapManager.Instance.ResetAllMap(true);
         // StartCoroutine(UnlockMouse());
     }
 
-    private void Update()
+    public void UpdateButtonGoLevelSupp(bool state)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UpdatePause(!_isPaused);
-
-        if (!_isDialogTime) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (_countScreen < _dialogsToDisplay.Count * 2 - 1)
-            {
-                if (_countScreen % 2 == 0)
-                {
-                    _stopCorou = true;
-                    _dialogText.text = _dialogsToDisplay[_countDialog];
-                    StopCoroutine(UpdateText());
-                }
-                else
-                {
-                    // print("anim");
-                    _countDialog++;
-                    //_dialogText.text = String.Empty;
-                    StartCoroutine(UpdateText());
-                }
-
-                _countScreen++;
-            }
-            else
-            {
-                if (_isBeginning)
-                    EndBeginningDialog();
-                else
-                    ChangeToLevelSupp();
-            }
-        }
+        _nextLevel.SetActive(state);
     }
 
     private const float SPACING_BETWEEN_TWO_DIALOG = 18;
 
-    IEnumerator UpdateText()
-    {
-        _isCorouRunning = true; 
-        
-        GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
-        var goDialog = go.GetComponent<DialogPrefab>();
-
-        var newDialog = _dialogsToDisplay[_countDialog];
-
-        if (newDialog == String.Empty)
-            newDialog = " ";
-
-        goDialog.Init(newDialog);
-        _dialogText = goDialog.DialogText;
-
-        float textSize = goDialog.GetDialogSizeY();
-        _dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
-
-        int charIndex = 0;
-
-        foreach (char c in newDialog.ToCharArray())
-        {
-            if (_stopCorou)
-            {
-                _stopCorou = false;
-                yield break;
-            }
-
-            _dialogScrollBar.value = 0;
-
-            charIndex++;
-
-            var firstText = newDialog.Substring(0, charIndex);
-            var secondText = $"<color=#00000000>{newDialog.Substring(charIndex)}";
-            _dialogText.text = firstText + secondText;
-
-            yield return new WaitForSeconds(_dialogSpeed);
-        }
-
-        _countScreen++;
-        _isCorouRunning = false;
-    }
+    // IEnumerator UpdateText()
+    // {
+    //     _isCorouRunning = true; 
+    //     
+    //     GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
+    //     var goDialog = go.GetComponent<DialogPrefab>();
+    //
+    //     var newDialog = _dialogsToDisplay[_countDialog];
+    //
+    //     if (newDialog == String.Empty)
+    //         newDialog = " ";
+    //
+    //     goDialog.Init(newDialog, _dialogSpeed);
+    //     _dialogText = goDialog.DialogText;
+    //
+    //     float textSize = goDialog.GetDialogSizeY();
+    //     _dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
+    //
+    //     int charIndex = 0;
+    //
+    //     foreach (char c in newDialog.ToCharArray())
+    //     {
+    //         if (_stopCorou)
+    //         {
+    //             _stopCorou = false;
+    //             yield break;
+    //         }
+    //
+    //         _dialogScrollBar.value = 0;
+    //
+    //         charIndex++;
+    //
+    //         var firstText = newDialog.Substring(0, charIndex);
+    //         var secondText = $"<color=#00000000>{newDialog.Substring(charIndex)}";
+    //         _dialogText.text = firstText + secondText;
+    //
+    //         yield return new WaitForSeconds(_dialogSpeed);
+    //     }
+    //
+    //     _countScreen++;
+    //     _isCorouRunning = false;
+    // }
 
     public void UpdateTutoArrow(bool state)
     {
@@ -323,5 +375,17 @@ public class ScreensManager : MonoBehaviour
     public bool GetIsDialogTime()
     {
         return _isDialogTime;
+    }
+
+    private void RemoveLastDialog()
+    {
+        if (_dialogsPrefabList.Count > 0)
+        {
+            var txt = _dialogsPrefabList[^1];
+            _dialogsPrefabList.Remove(txt);
+            
+            if(txt.gameObject != null)
+                Destroy(txt.gameObject);
+        }
     }
 }

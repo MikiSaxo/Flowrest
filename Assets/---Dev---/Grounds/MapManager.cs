@@ -234,8 +234,9 @@ public class MapManager : MonoBehaviour
         }
 
         // Update Dialogs
-        ScreensManager.Instance.InitDialogs(_levelData[_currentLevel].DialogBeginning, true);
-        ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
+        ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, false);
+        if(_levelData[_currentLevel].CharacterName != String.Empty)
+            ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
             _levelData[_currentLevel].QuestImage);
 
@@ -329,9 +330,10 @@ public class MapManager : MonoBehaviour
         if (_stockPlayerForceSwap.Count == 0) return;
 
         if (!GetHasFirstSwap())
-            ScreensManager.Instance.SpawnDialog(_previewMessageTuto);
+            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, true);
 
-
+        print("UpdateSecondBlocForce");
+        
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
         secondGround.UpdatePrevisuArrow(true);
@@ -674,6 +676,8 @@ public class MapManager : MonoBehaviour
         if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
 
         if (IsTuto) return;
+        
+        print("reset big");
 
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);
