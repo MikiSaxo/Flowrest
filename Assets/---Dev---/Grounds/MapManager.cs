@@ -332,8 +332,6 @@ public class MapManager : MonoBehaviour
         if (!GetHasFirstSwap())
             ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, true);
 
-        print("UpdateSecondBlocForce");
-        
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
         secondGround.UpdatePrevisuArrow(true);
@@ -456,6 +454,11 @@ public class MapManager : MonoBehaviour
         _lastGroundSelected.transform.DOKill();
         which.transform.DOKill();
 
+        gLastGroundSelected.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
+        gWhich.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
+        // _lastGroundSelected.transform.DOMoveY(3,0);
+        // which.transform.DOMoveY(3,0);
+        
         _lastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
         which.transform.DOJump(lastSelecPos, 15, 1, _timeToSwap);
 
@@ -629,13 +632,23 @@ public class MapManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.02f);
 
-        bool inventory = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
+        // bool inventory = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
+        //
+        // if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
+        //     && inventory
+        //     && !SetupUIGround.Instance.CheckIfStillGround())
+        // {
+        //     ScreensManager.Instance.GameOver();
+        // }
 
-        if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
-            && inventory
-            && !SetupUIGround.Instance.CheckIfStillGround())
+        if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
-            ScreensManager.Instance.GameOver();
+            if(!_hasInventory)
+                ScreensManager.Instance.GameOver();
+            else if(_hasInventory && !_hasRecycling)            
+                ScreensManager.Instance.GameOver();
+            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0)
+                ScreensManager.Instance.GameOver();
         }
     }
 

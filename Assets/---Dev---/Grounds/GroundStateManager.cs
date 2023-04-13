@@ -347,6 +347,11 @@ public class GroundStateManager : MonoBehaviour
         return _fbPrevisu.GetIconTile(index);
     }
 
+    public GameObject GetIndicator()
+    {
+        return _indicator;
+    }
+
     public Vector2Int GetCoords()
     {
         return _coords;

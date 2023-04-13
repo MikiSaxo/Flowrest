@@ -129,4 +129,9 @@ public class EnergyManager : MonoBehaviour
     {
         return _currentEnergy < _costByLandingGround;
     }
+
+    public int GetCurrentEnergy()
+    {
+        return _currentEnergy;
+    }
 }

@@ -186,7 +186,7 @@ public class GroundIndicator : MonoBehaviour
         _meshParent.transform.DOMoveY(height, duration);
     }
 
-    private void OnEnterAnim(float duration)
+    public void OnEnterAnim(float duration)
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_hoveredYPos, duration);
