@@ -42,7 +42,7 @@ public class ScreensManager : MonoBehaviour
     private bool _isTheEnd;
     private bool _isFirstScreen;
     private bool _isPaused;
-    private int _countScreen;
+    // private int _countScreen;
     private int _countDialog;
     private bool _stopCorou;
     private bool _isCorouRunning;
@@ -211,12 +211,10 @@ public class ScreensManager : MonoBehaviour
 
             if (_dialogsPrefabList[^1].IsFinish)
             {
-                print("spawn new");
                 SpawnAllDialog();
             }
             else
             {
-                print("end dialog");
                 _dialogsPrefabList[^1].EndAnimationText();
             }
 
@@ -291,7 +289,7 @@ public class ScreensManager : MonoBehaviour
     public void RestartSceneOrLevel()
     {
         _isDialogTime = false;
-        _countScreen = 0;
+        // _countScreen = 0;
         _countDialog = 0;
 
         _bg.SetActive(false);
@@ -306,7 +304,7 @@ public class ScreensManager : MonoBehaviour
     public void GoLevelSupp()
     {
         _isDialogTime = false;
-        _countScreen = 0;
+        // _countScreen = 0;
         _countDialog = 0;
 
         // _dialoguesParent.SetActive(false);
