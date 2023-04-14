@@ -57,19 +57,21 @@ public class GroundStateManager : MonoBehaviour
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
 
-
-    private AllStates _statesEnum;
+    public AllStates TempCurrentState { get; set; }
+    
+    private AllStates _currentState;
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
     private int _countTileChain;
     private List<GroundStateManager> _stockTileChain = new List<GroundStateManager>();
     private List<GroundStateManager> _stockGroundPrevisu = new List<GroundStateManager>();
+    private Dictionary<GroundStateManager, int> _saveGrndToUpdate = new Dictionary<GroundStateManager, int>();
 
 
     #region AllState
 
-    private GroundBaseState currentState;
+    private GroundBaseState currentGroundBase;
     private GroundPlainState _plainState = new GroundPlainState();
     private GroundDesertState _desertState = new GroundDesertState();
     private GroundWaterState _waterState = new GroundWaterState();
@@ -85,12 +87,12 @@ public class GroundStateManager : MonoBehaviour
     #endregion
 
     private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
-        { new(0,1), new(1, 1), new(1, 0), new(0, -1), new(-1, 0), new(-1, 1) };
-        //old { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
+        { new(0, 1), new(1, 1), new(1, 0), new(0, -1), new(-1, 0), new(-1, 1) }; //new
+    // { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) }; //old
 
     private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
-        { new(0, 1), new(1, 0), new(1, -1), new(0, -1), new(-1, -1), new(-1, 0) };
-        //old { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
+        { new(0, 1), new(1, 0), new(1, -1), new(0, -1), new(-1, -1), new(-1, 0) }; //new
+    // { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) }; //old
 
 
     private void Awake()
@@ -129,14 +131,14 @@ public class GroundStateManager : MonoBehaviour
     {
         if (IsProtected) return;
 
-        if (state != _statesEnum)
+        if (state != _currentState)
             BounceAnim();
 
-        _statesEnum = state;
-        currentState = _allState[(int)state];
-        // print(currentState);
-        currentState.EnterState(this);
-        StockStatePrevisu = _statesEnum;
+        _currentState = state;
+        currentGroundBase = _allState[(int)state];
+        currentGroundBase.EnterState(this);
+        StockStatePrevisu = _currentState;
+        TempCurrentState = _currentState;
     }
 
     public void ChangeStatePrevisu(AllStates state)
@@ -144,7 +146,7 @@ public class GroundStateManager : MonoBehaviour
         if (IsProtectedPrevisu) return;
 
         _fbPrevisu.ActivateIcon((int)state);
-        if (state == _statesEnum)
+        if (state == _currentState)
             _fbPrevisu.DeactivateIcon();
     }
 
@@ -237,6 +239,7 @@ public class GroundStateManager : MonoBehaviour
         hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
 
         var angle = 0;
+        _saveGrndToUpdate.Clear();
 
         foreach (var hexPos in hexDirections)
         {
@@ -276,41 +279,42 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
+            var newState = ConditionManager.Instance.GetState(TempCurrentState, grnd.GetCurrentTempStateEnum());
+            grnd.TempCurrentState = newState;
 
-            StartCoroutine(LaunchDropFX(grnd, newState, angle));
+            _saveGrndToUpdate.Add(grnd, angle);
 
             angle += 60;
         }
     }
-
-    IEnumerator LaunchDropFX(GroundStateManager grnd, AllStates newState, float angle)
+    
+    public void LaunchDropFX()
     {
-        if (grnd.GetCurrentStateEnum() == newState) yield break;
+        foreach (var grnd in _saveGrndToUpdate)
+        {
+            grnd.Key.LaunchCorouDropFX(grnd.Key.TempCurrentState, grnd.Value, transform);
+        }
+    }
 
-        GameObject go = Instantiate(_fXDrop, transform);
+    public void LaunchCorouDropFX(AllStates newState, float angle, Transform parent)
+    {
+        StartCoroutine(CorouDropFX(newState, angle, parent));
+    }
+    
+    IEnumerator CorouDropFX(AllStates newState, float angle, Transform parent)
+    {
+        if (_currentState == newState) yield break;
+
+        GameObject go = Instantiate(_fXDrop, parent);
 
         var rotation = go.transform.rotation;
         go.transform.DOMoveY(go.transform.position.y + _paddingFXDrop, 0);
         go.transform.DORotate(new Vector3(-60, angle, rotation.z), 0);
 
+        float oui = .0003f;
+        yield return new WaitForSeconds(1 + oui*angle);
 
-        yield return new WaitForSeconds(1);
-
-        grnd.ChangeState(newState);
-    }
-
-    Vector3 RotateTowardsUp(Vector3 start, float angle)
-    {
-        // if you know start will always be normalized, can skip this step
-        start.Normalize();
-
-        Vector3 axis = Vector3.Cross(start, Vector3.up);
-
-        // handle case where start is colinear with up
-        if (axis == Vector3.zero) axis = Vector3.right;
-
-        return Quaternion.AngleAxis(angle, axis) * start;
+        ChangeState(newState);
     }
 
     public void UpdateGroundsAroundPrevisu(AllStates otherState)
@@ -385,7 +389,11 @@ public class GroundStateManager : MonoBehaviour
 
     public AllStates GetCurrentStateEnum()
     {
-        return _statesEnum;
+        return _currentState;
+    }
+    public AllStates GetCurrentTempStateEnum()
+    {
+        return TempCurrentState;
     }
 
     public AllStates GetCurrentStateEnumPrevisu()
@@ -429,7 +437,7 @@ public class GroundStateManager : MonoBehaviour
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
-        print("reset");
+        print("reset indicator");
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
 
         // StartCoroutine(WaitToCheckForBiome());
@@ -464,7 +472,7 @@ public class GroundStateManager : MonoBehaviour
     private void ResetPrevisu()
     {
         _fbPrevisu.DeactivateIcon();
-        StockStatePrevisu = _statesEnum;
+        StockStatePrevisu = _currentState;
     }
 
     private void OnDisable()

@@ -232,6 +232,10 @@ public class GroundIndicator : MonoBehaviour
         
         // Change State around
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
+        
+        gameObject.GetComponentInParent<GroundStateManager>().LaunchDropFX();
+        
+        yield return new WaitForSeconds(1.5f);
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyByLandingGround();

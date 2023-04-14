@@ -464,10 +464,10 @@ public class MapManager : MonoBehaviour
 
         ResetPreview();
 
+       
 
         yield return new WaitForSeconds(_timeToSwap);
-
-
+        
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
 
@@ -478,12 +478,16 @@ public class MapManager : MonoBehaviour
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
-
+        
         // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround();
         gWhich.UpdateGroundsAround();
-        
 
+        gLastGroundSelected.LaunchDropFX();
+        gWhich.LaunchDropFX();
+        
+        yield return new WaitForSeconds(1.5f);
+        
         // Get Bloc to UI
         if (_hasInventory)
         {
