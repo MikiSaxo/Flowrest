@@ -235,7 +235,7 @@ public class MapManager : MonoBehaviour
 
         // Update Dialogs
         ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, false);
-        if(_levelData[_currentLevel].CharacterName != String.Empty)
+        if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
         ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
             _levelData[_currentLevel].QuestImage);
@@ -458,7 +458,7 @@ public class MapManager : MonoBehaviour
         gWhich.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
         // _lastGroundSelected.transform.DOMoveY(3,0);
         // which.transform.DOMoveY(3,0);
-        
+
         _lastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
         which.transform.DOJump(lastSelecPos, 15, 1, _timeToSwap);
 
@@ -482,6 +482,7 @@ public class MapManager : MonoBehaviour
         // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround();
         gWhich.UpdateGroundsAround();
+        
 
         // Get Bloc to UI
         if (_hasInventory)
@@ -606,7 +607,7 @@ public class MapManager : MonoBehaviour
     public bool CheckIfButtonIsEmpty()
     {
         if (LastObjButtonSelected == null) return true;
-        
+
         return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
     }
 
@@ -643,9 +644,9 @@ public class MapManager : MonoBehaviour
 
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
-            if(!_hasInventory)
+            if (!_hasInventory)
                 ScreensManager.Instance.GameOver();
-            else if(_hasInventory && !_hasRecycling)            
+            else if (_hasInventory && !_hasRecycling)
                 ScreensManager.Instance.GameOver();
             else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0)
                 ScreensManager.Instance.GameOver();
@@ -689,7 +690,7 @@ public class MapManager : MonoBehaviour
         if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
 
         if (IsTuto) return;
-        
+
         print("reset big");
 
         ResetButtonSelected();
@@ -719,7 +720,7 @@ public class MapManager : MonoBehaviour
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-        
+
         //ResetAllMap(false);
         ResetAllSelection();
         ResetButtonSelected();

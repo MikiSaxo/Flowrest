@@ -34,8 +34,8 @@ public class GroundStateManager : MonoBehaviour
 
     public bool IsPlayerForceSwapBlocked { get; set; }
     public bool IsPlayerNotForcePose { get; set; }
-    
-    public AllStates StockStatePrevisu  { get; set; }
+
+    public AllStates StockStatePrevisu { get; set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
@@ -53,6 +53,10 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("Temp coords just to see it")] [SerializeField]
     private Vector2Int _coords;
+
+    [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
+    [SerializeField] private float _paddingFXDrop;
+
 
     private AllStates _statesEnum;
     private float _startYPosMeshParent;
@@ -138,7 +142,7 @@ public class GroundStateManager : MonoBehaviour
         if (IsProtectedPrevisu) return;
 
         _fbPrevisu.ActivateIcon((int)state);
-        if(state == _statesEnum)
+        if (state == _statesEnum)
             _fbPrevisu.DeactivateIcon();
     }
 
@@ -230,10 +234,14 @@ public class GroundStateManager : MonoBehaviour
         // Important for the offset with hex coords
         hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
 
+        var angle = 0;
+
         foreach (var hexPos in hexDirections)
         {
             Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
             var mapGrid = MapManager.Instance.GetMapGrid();
+
+            angle += 60;
 
             // Check if inside of array
             if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
@@ -251,10 +259,46 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            // grnd.currentState.CheckUpdate(grnd, currentState);
             var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
-            grnd.ChangeState(newState);
+
+            StartCoroutine(LaunchDropFX(grnd, newState, angle));
         }
+    }
+
+    IEnumerator LaunchDropFX(GroundStateManager grnd, AllStates newState, float angle)
+    {
+        if(grnd.GetCurrentStateEnum() == newState) yield break;
+
+        var otherPos = grnd.gameObject.transform.position;
+        var myPos = gameObject.transform.position;
+
+        // Vector3 angleVector = new Vector3(otherPos.x - myPos.x, 0,
+        //     otherPos.z - myPos.z).normalized;
+        
+        GameObject go = Instantiate(_fXDrop, transform);
+
+        var rotation = go.transform.rotation;
+        go.transform.DOMoveY(go.transform.position.y + _paddingFXDrop, 0);
+        go.transform.DORotate(new Vector3(-60, angle, rotation.z), 0);
+        
+        
+
+        yield return new WaitForSeconds(1);
+        
+        grnd.ChangeState(newState);
+    }
+    
+    Vector3 RotateTowardsUp(Vector3 start, float angle)
+    {
+        // if you know start will always be normalized, can skip this step
+        start.Normalize();
+
+        Vector3 axis = Vector3.Cross(start, Vector3.up);
+
+        // handle case where start is colinear with up
+        if (axis == Vector3.zero) axis = Vector3.right;
+
+        return Quaternion.AngleAxis(angle, axis) * start;
     }
 
     public void UpdateGroundsAroundPrevisu(AllStates otherState)
@@ -287,12 +331,12 @@ public class GroundStateManager : MonoBehaviour
             var newState = ConditionManager.Instance.GetState(otherState, grnd.GetCurrentStateEnumPrevisu());
 
             grnd.ChangeStatePrevisu(newState);
-            
+
             _stockGroundPrevisu.Add(grnd);
 
             // if (grnd._coords == new Vector2Int(4, 2))
-                // print($"other : {otherState} / mine : {grnd.StockStatePrevisu} -> new mine : {newState}");
-            
+            // print($"other : {otherState} / mine : {grnd.StockStatePrevisu} -> new mine : {newState}");
+
             grnd.StockStatePrevisu = newState;
         }
     }
@@ -318,11 +362,12 @@ public class GroundStateManager : MonoBehaviour
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPosMeshParent - _bottomBounceValue, 0).OnComplete(GetBackMeshParentYPos);
+        print("bounce");
     }
 
     public void OnSelected() // When bloc is Selected by the player
     {
-        if(!MapManager.Instance.IsSwapping)
+        if (!MapManager.Instance.IsSwapping)
             MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
     }
 
@@ -365,13 +410,14 @@ public class GroundStateManager : MonoBehaviour
     public void UpdateIsSwapping(bool state)
     {
         _indicator.GetComponent<GroundIndicator>().IsSwapping = state;
-        
-        if(!state)
+
+        if (!state)
             ResetIndicator();
     }
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
+        print("reset");
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
 
         // StartCoroutine(WaitToCheckForBiome());
@@ -388,7 +434,7 @@ public class GroundStateManager : MonoBehaviour
         _countTileChain = 0;
         IsTreated = false;
     }
-    
+
     public void ResetStockPrevisu()
     {
         ResetPrevisu();
