@@ -85,10 +85,12 @@ public class GroundStateManager : MonoBehaviour
     #endregion
 
     private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
-        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
+        { new(0,1), new(1, 1), new(1, 0), new(0, -1), new(-1, 0), new(-1, 1) };
+        //old { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
 
     private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
-        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
+        { new(0, 1), new(1, 0), new(1, -1), new(0, -1), new(-1, -1), new(-1, 0) };
+        //old { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
 
     private void Awake()
@@ -241,53 +243,63 @@ public class GroundStateManager : MonoBehaviour
             Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
             var mapGrid = MapManager.Instance.GetMapGrid();
 
-            angle += 60;
 
             // Check if inside of array
             if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
-                newPos.y >= mapGrid.GetLength(1)) continue;
+                newPos.y >= mapGrid.GetLength(1))
+            {
+                angle += 60;
+                continue;
+            }
 
             // Check if something exist
-            if (mapGrid[newPos.x, newPos.y] == null) continue;
+            if (mapGrid[newPos.x, newPos.y] == null)
+            {
+                angle += 60;
+                continue;
+            }
 
             // Check if has GroundManager
-            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
+            if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
+            {
+                angle += 60;
+                continue;
+            }
 
             // Check if not a Mountain
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
+                    .GetCurrentStateEnum() == AllStates.Mountain)
+            {
+                angle += 60;
+                continue;
+            }
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
             var newState = ConditionManager.Instance.GetState(_statesEnum, grnd.GetCurrentStateEnum());
 
             StartCoroutine(LaunchDropFX(grnd, newState, angle));
+
+            angle += 60;
         }
     }
 
     IEnumerator LaunchDropFX(GroundStateManager grnd, AllStates newState, float angle)
     {
-        if(grnd.GetCurrentStateEnum() == newState) yield break;
+        if (grnd.GetCurrentStateEnum() == newState) yield break;
 
-        var otherPos = grnd.gameObject.transform.position;
-        var myPos = gameObject.transform.position;
-
-        // Vector3 angleVector = new Vector3(otherPos.x - myPos.x, 0,
-        //     otherPos.z - myPos.z).normalized;
-        
         GameObject go = Instantiate(_fXDrop, transform);
 
         var rotation = go.transform.rotation;
         go.transform.DOMoveY(go.transform.position.y + _paddingFXDrop, 0);
         go.transform.DORotate(new Vector3(-60, angle, rotation.z), 0);
-        
-        
+
 
         yield return new WaitForSeconds(1);
-        
+
         grnd.ChangeState(newState);
     }
-    
+
     Vector3 RotateTowardsUp(Vector3 start, float angle)
     {
         // if you know start will always be normalized, can skip this step
