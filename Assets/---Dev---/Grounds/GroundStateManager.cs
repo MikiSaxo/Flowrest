@@ -57,9 +57,9 @@ public class GroundStateManager : MonoBehaviour
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
 
-    public AllStates TempCurrentState { get; set; }
-    
+
     private AllStates _currentState;
+    private AllStates _tempCurrentState;
     private float _startYPosMeshParent;
     private GameObject _meshCurrent;
     private readonly List<GroundBaseState> _allState = new List<GroundBaseState>();
@@ -94,6 +94,7 @@ public class GroundStateManager : MonoBehaviour
         { new(0, 1), new(1, 0), new(1, -1), new(0, -1), new(-1, -1), new(-1, 0) }; //new
     // { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) }; //old
 
+    const float OFFSET_TIMING = .0003f;
 
     private void Awake()
     {
@@ -138,7 +139,7 @@ public class GroundStateManager : MonoBehaviour
         currentGroundBase = _allState[(int)state];
         currentGroundBase.EnterState(this);
         StockStatePrevisu = _currentState;
-        TempCurrentState = _currentState;
+        _tempCurrentState = _currentState;
     }
 
     public void ChangeStatePrevisu(AllStates state)
@@ -279,28 +280,28 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(TempCurrentState, grnd.GetCurrentTempStateEnum());
-            grnd.TempCurrentState = newState;
+            var newState = ConditionManager.Instance.GetState(_tempCurrentState, grnd.GetCurrentTempStateEnum());
+            grnd._tempCurrentState = newState;
 
             _saveGrndToUpdate.Add(grnd, angle);
 
             angle += 60;
         }
     }
-    
+
     public void LaunchDropFX()
     {
         foreach (var grnd in _saveGrndToUpdate)
         {
-            grnd.Key.LaunchCorouDropFX(grnd.Key.TempCurrentState, grnd.Value, transform);
+            grnd.Key.LaunchCorouDropFX(grnd.Key.GetCurrentTempStateEnum(), grnd.Value, transform);
         }
     }
 
-    public void LaunchCorouDropFX(AllStates newState, float angle, Transform parent)
+    private void LaunchCorouDropFX(AllStates newState, float angle, Transform parent)
     {
         StartCoroutine(CorouDropFX(newState, angle, parent));
     }
-    
+
     IEnumerator CorouDropFX(AllStates newState, float angle, Transform parent)
     {
         if (_currentState == newState) yield break;
@@ -311,8 +312,7 @@ public class GroundStateManager : MonoBehaviour
         go.transform.DOMoveY(go.transform.position.y + _paddingFXDrop, 0);
         go.transform.DORotate(new Vector3(-60, angle, rotation.z), 0);
 
-        float oui = .0003f;
-        yield return new WaitForSeconds(1 + oui*angle);
+        yield return new WaitForSeconds(1 + OFFSET_TIMING * angle);
 
         ChangeState(newState);
     }
@@ -344,16 +344,12 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(otherState, grnd.GetCurrentStateEnumPrevisu());
+            var newState = ConditionManager.Instance.GetState(otherState, grnd.StockStatePrevisu);
 
             grnd.ChangeStatePrevisu(newState);
+            grnd.StockStatePrevisu = newState;
 
             _stockGroundPrevisu.Add(grnd);
-
-            // if (grnd._coords == new Vector2Int(4, 2))
-            // print($"other : {otherState} / mine : {grnd.StockStatePrevisu} -> new mine : {newState}");
-
-            grnd.StockStatePrevisu = newState;
         }
     }
 
@@ -374,11 +370,17 @@ public class GroundStateManager : MonoBehaviour
         _fbReloadEnergy.SetActive(state);
     }
 
+    public void UpdateIsSwapping(bool state)
+    {
+        _indicator.GetComponent<GroundIndicator>().IsSwapping = state;
+
+        if (!state)
+            ResetIndicator();
+    }
     private void BounceAnim()
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPosMeshParent - _bottomBounceValue, 0).OnComplete(GetBackMeshParentYPos);
-        print("bounce");
     }
 
     public void OnSelected() // When bloc is Selected by the player
@@ -391,14 +393,10 @@ public class GroundStateManager : MonoBehaviour
     {
         return _currentState;
     }
+
     public AllStates GetCurrentTempStateEnum()
     {
-        return TempCurrentState;
-    }
-
-    public AllStates GetCurrentStateEnumPrevisu()
-    {
-        return StockStatePrevisu;
+        return _tempCurrentState;
     }
 
     private void GetBackMeshParentYPos()
@@ -427,20 +425,9 @@ public class GroundStateManager : MonoBehaviour
         return _fbArrow;
     }
 
-    public void UpdateIsSwapping(bool state)
-    {
-        _indicator.GetComponent<GroundIndicator>().IsSwapping = state;
-
-        if (!state)
-            ResetIndicator();
-    }
-
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
-        print("reset indicator");
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
-
-        // StartCoroutine(WaitToCheckForBiome());
     }
 
     public void ResetCountTileChain()
@@ -480,229 +467,4 @@ public class GroundStateManager : MonoBehaviour
         // MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
         MapManager.Instance.ResetSelection -= ResetIndicator;
     }
-
-    // IEnumerator WaitToCheckForBiome()
-    // {
-    //     yield return new WaitForSeconds(.01f);
-    //     ResetBiome();
-    // }
-
-    // private void LaunchCheckForBiome()
-    // {
-    //     //StartCoroutine(WaitToCheckForBiome());
-    // }
-
-    // public GroundBaseState GetCurrentState()
-    // {
-    //     return currentState;
-    // }
-
-    // private void ResetBiome()
-    // {
-    //     // print("reseet biome");
-    //     _isBiome = false;
-    //
-    //     foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
-    //     {
-    //         getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(false);
-    //
-    //         getScript.GetComponent<GroundStateManager>()._isBiome = false;
-    //         getScript.GetComponent<GroundStateManager>()._isTreated = false;
-    //     }
-    //
-    //     _groundInBiome.Clear();
-    //     _countSameBlocAround = 0;
-
-    //     _countIfEnoughBloc = 0;
-    //
-    //     FirstCheckIfBiome();
-    // }
-
-    // private void FirstCheckIfBiome()
-    // {
-    //     return;
-    //     for (int i = -1; i < 2; i++)
-    //     {
-    //         for (int j = -1; j < 2; j++)
-    //         {
-    //             Vector2Int newPos = new Vector2Int(_coords.x + i, _coords.y + j);
-    //             // No need to count the actual
-    //             if (i == 0 && j == 0) continue;
-    //             // Check if inside of array
-    //             if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-    //                 newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
-    //             // Check if something exist
-    //             if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-    //             // Check if has GroundManager
-    //             if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-    //             // Check if same state
-    //             if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
-    //                 IdOfBloc) continue;
-    //             // It's good
-    //             _countSameBlocAround++;
-    //         }
-    //     }
-    //     // print("_countSameBlocAround " + _countSameBlocAround);
-    //
-    //     if (_countSameBlocAround > 7)
-    //         CheckAllSameBlocConnected(MapManager.Instance.MapGrid, _coords);
-    // }
-
-    // private void CheckAllSameBlocConnected(GameObject[,] mapGrid, Vector2Int coords)
-    // {
-    //     foreach (var dir in _crossDirections)
-    //     {
-    //         Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
-    //         // Check if inside of array
-    //         if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
-    //             newPos.y >= mapGrid.GetLength(1)) continue;
-    //         // Check if not null
-    //         if (mapGrid[newPos.x, newPos.y] == null) continue;
-    //         // Check if has GroundStateManager
-    //         if (!mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()) continue;
-    //         // Check if same state
-    //         if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IdOfBloc !=
-    //             IdOfBloc) continue;
-    //         // Check if has been already treated
-    //         if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()._isTreated) continue;
-    //         var canContinue = true;
-    //         foreach (var ground in _groundInBiome)
-    //         {
-    //             if (ground != MapManager.Instance.MapGrid[newPos.x, newPos.y]) continue;
-    //             canContinue = false;
-    //             break;
-    //         }
-    //
-    //         if (!canContinue)
-    //             continue;
-    //
-    //         // It's good 
-    //         _countIfEnoughBloc++;
-    //
-    //         mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()._isTreated = true;
-    //         // Add it to the list to reboot it for a future test
-    //         _groundInBiome.Add(mapGrid[newPos.x, newPos.y]);
-    //         // Restart the recursive
-    //         CheckAllSameBlocConnected(mapGrid, newPos);
-    //     }
-    //     // print("_countIfEnoughBloc " + _countIfEnoughBloc);
-    //
-    //     if (_countIfEnoughBloc > _countSameBlocAround + _minNbAroundBiome)
-    //         StartCoroutine(TransformToBiome());
-    //     // print(_coords + " / " + _countIfEnoughBloc);
-    // }
-
-    // private IEnumerator TransformToBiome()
-    // {
-    //     if (_isBiome) yield break;
-    //
-    //     yield return new WaitForSeconds(.01f);
-    //     // print("salam les khyoa : " + _groundInBiome.Count);
-    //     _isBiome = true;
-    //     foreach (var getScript in _groundInBiome.Select(ground => ground.GetComponent<GroundStateManager>()))
-    //     {
-    //         getScript.GetMeshParent().GetComponentInChildren<MeshBiomeManager>().TransformTo(true);
-    //
-    //         getScript.GetComponent<GroundStateManager>()._isTreated = false;
-    //         getScript.GetComponent<GroundStateManager>()._isBiome = true;
-    //     }
-    // }
-
-    // public void ForceEnteredIndicator()
-    // {
-    //     _indicator.GetComponent<GroundIndicator>().ForceEntered();
-    // }
-
-    // public GameObject GetMeshParent()
-    // {
-    //     return _meshParent;
-    // }
-
-    // public void EnabledWaterCubes(bool which)
-    // {
-    //     gameObject.GetComponentInChildren<WaterMesh>().IsEnabled(which);
-    // }
-
-    // Called when entered second indicator and it's around the one selected
-    // public void LookingNewPrevisu()
-    // {
-    //     var getState = MapManager.Instance.GetLastStateSelected();
-    //     if (getState == AllStates.None) return;
-    //
-    //     GetNewPrevisu(getState);
-    // }
-
-    // Called when this bloc is selected
-    // public void SelectedLaunchAroundPrevisu(AllStates state)
-    // {
-    //     Vector2Int[] hexDirections = new Vector2Int[6];
-    //     // Important for the offset with hex coords
-    //     hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
-    //
-    //     foreach (var hexPos in hexDirections)
-    //     {
-    //         Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
-    //         // Check if inside of array
-    //         if (newPos.x < 0 || newPos.x >= MapManager.Instance.MapGrid.GetLength(0) || newPos.y < 0 ||
-    //             newPos.y >= MapManager.Instance.MapGrid.GetLength(1)) continue;
-    //         // Check if something exist
-    //         if (MapManager.Instance.MapGrid[newPos.x, newPos.y] == null) continue;
-    //         // Check if has GroundManager
-    //         if (!MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>())
-    //             continue;
-    //         // Check if not a Mountain
-    //         if (MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-    //                 .GetCurrentStateEnum() == AllStates.Mountain) continue;
-    //
-    //         var ground = MapManager.Instance.MapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-    //         ground.GetNewPrevisu(state);
-    //
-    //         _stockPrevisu.Add(ground);
-    //     }
-    //
-    //     ActivatePrevisu((int)state);
-    //     _stockPrevisu.Add(this);
-    // }
-
-    // public void ActivatePrevisu(int resultStateNumber)
-    // {
-    //     if (resultStateNumber == (int)GetCurrentStateEnum())
-    //         return;
-    //     // print("result = " + resultStateNumber);
-    //     _fB_Previsu.ActivateIcon(resultStateNumber);
-    // }
-
-    // public void DeactivatePrevisu()
-    // {
-    //     _fB_Previsu.DeactivateIcon();
-    // }
-
-    // public void ResetAroundSelectedPrevisu()
-    // {
-    //     foreach (var previsu in _stockPrevisu)
-    //     {
-    //         previsu.DeactivatePrevisu();
-    //     }
-    //
-    //     _stockPrevisu.Clear();
-    // }
-
-    //
-    // public void GetNewPrevisu(AllStates state)
-    // {
-    //     int resultStateNumber = (int)ConditionManager.Instance.GetState(state, GetCurrentStateEnum());
-    //
-    //     if (_fB_Previsu.IsIconActivated())
-    //     {
-    //         int currentPrevisuState = _fB_Previsu.GetIndexActualIcon();
-    //         resultStateNumber = (int)ConditionManager.Instance.GetState((AllStates)currentPrevisuState, state);
-    //         // print("old = " + currentPrevisuState + " new = " + resultState);
-    //     }
-    //
-    //     if (resultStateNumber == (int)GetCurrentStateEnum())
-    //         return;
-    //
-    //     if (!IsProtectedPrevisu)
-    //         ActivatePrevisu(resultStateNumber);
-    // }
 }

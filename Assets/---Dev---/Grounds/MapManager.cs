@@ -486,7 +486,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
         
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.25f);
         
         // Get Bloc to UI
         if (_hasInventory)
