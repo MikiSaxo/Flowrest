@@ -725,7 +725,7 @@ public class MapManager : MonoBehaviour
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-
+        if (IsSwapping) return;
         //ResetAllMap(false);
         ResetAllSelection();
         ResetButtonSelected();

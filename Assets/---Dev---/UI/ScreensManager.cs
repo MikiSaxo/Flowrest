@@ -28,6 +28,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private Scrollbar _dialogScrollBar;
     [SerializeField] private GameObject _dialogPrefab;
+    [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
 
     [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
@@ -154,6 +155,8 @@ public class ScreensManager : MonoBehaviour
     {
         if (_dialogsPrefabList.Count > 0)
             Destroy(_dialogsPrefabList[^1].gameObject);
+        
+        UpdateDialogFB(false);
 
         // Instantiate new dialog
         GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
@@ -216,6 +219,7 @@ public class ScreensManager : MonoBehaviour
             else
             {
                 _dialogsPrefabList[^1].EndAnimationText();
+                UpdateDialogFB(true);
             }
 
 
@@ -268,6 +272,11 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
+    public void UpdateDialogFB(bool state)
+    {
+        _dialogFBEnd.SetActive(state);
+    }
+
     public bool CheckIfDialogEnded()
     {
         if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinish)
@@ -284,6 +293,18 @@ public class ScreensManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SkipDialog()
+    {
+        _dialogsPrefabList[^1].EndAnimationText();
+        _isDialogTime = false;
+        
+        if (_isTheEnd)
+            UpdateButtonGoLevelSupp(true);
+        else
+            EndDialog();
+
     }
 
     public void RestartSceneOrLevel()

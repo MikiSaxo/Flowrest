@@ -73,6 +73,7 @@ public class DialogPrefab : MonoBehaviour
         StopCoroutine(AnimationText());
         IsFinish = true;
 
+        ScreensManager.Instance.UpdateDialogFB(true);
         // ScreensManager.Instance.CheckIfDialogEnded();
         // ScreensManager.Instance.SpawnAllDialog();
     }

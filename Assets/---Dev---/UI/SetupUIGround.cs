@@ -28,8 +28,9 @@ public class SetupUIGround : MonoBehaviour
 
     private bool _hasRecycling;
     private List<GameObject> _stockTileButton = new List<GameObject>();
-    private Vector2 widthBG;
-    private Vector2 widthIcon;
+    private Vector2 _widthBG;
+    private Vector2 _widthBGsaveStart;
+    private Vector2 _widthIcon;
     
     private void Awake()
     {
@@ -38,6 +39,8 @@ public class SetupUIGround : MonoBehaviour
 
     private void Start()
     {
+        var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
+        _widthBGsaveStart = new Vector2( bgSize.width, bgSize.height);
     }
 
     public void SetIfHasRecycling(bool state)
@@ -114,10 +117,10 @@ public class SetupUIGround : MonoBehaviour
         _stockTileButton.Add(go);
 
         
-        widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
+        _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
-        widthBG = new Vector2( bgSize.width, bgSize.height);
-        ReSizeBgInventory(widthIcon + widthBG,_durationCloseOpen);
+        _widthBG = new Vector2( bgSize.width, bgSize.height);
+        ReSizeBgInventory(_widthIcon + _widthBG,_durationCloseOpen);
     }
 
     public void AddTempGround()
@@ -133,8 +136,8 @@ public class SetupUIGround : MonoBehaviour
         _stockTileButton.Remove(button);
         
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
-        widthBG = new Vector2( bgSize.width, bgSize.height);
-        ReSizeBgInventory(widthBG - widthIcon,_durationCloseOpen);
+        _widthBG = new Vector2( bgSize.width, bgSize.height);
+        ReSizeBgInventory(_widthBG - _widthIcon,_durationCloseOpen);
         
         Destroy(button);
     }
@@ -171,6 +174,8 @@ public class SetupUIGround : MonoBehaviour
         }
 
         _stockTileButton.Clear();
+        
+        ReSizeBgInventory(_widthBGsaveStart, 0);
     }
 
     public void FollowDndDeactivate()
