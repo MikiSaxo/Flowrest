@@ -123,11 +123,13 @@ public class GroundIndicator : MonoBehaviour
     {
         _parent.UpdateFbNoSwap(false);
 
+        _isEntered = false;
+        
         if (_isSelected ||IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() || MapManager.Instance.IsSwapping) return;
 
 
         // other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
-        _isEntered = false;
+        
         _parent.IsProtectedPrevisu = false;
 
         MapManager.Instance.ResetPreview();
@@ -154,7 +156,7 @@ public class GroundIndicator : MonoBehaviour
         {
             if(MapManager.Instance.IsSwapping) return;
             
-            // Block if click again on it
+            // Reset if click again on it
             if (_isSelected && _isEntered)
             {
                 // _parent.IsProtectedPrevisu = false;
@@ -162,7 +164,6 @@ public class GroundIndicator : MonoBehaviour
                 // MapManager.Instance.ResetPreview();
                 //
                 // OnLeaveAnim(_timeExit);
-                
                 ResetIndicator();
                 StartCoroutine(WaitALittleToReset());
                 return;
