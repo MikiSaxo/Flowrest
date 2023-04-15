@@ -68,6 +68,11 @@ public class UIButton : MonoBehaviour
         return _numberGroundLeft;
     }
 
+    public float GetWidthIcon()
+    {
+        return _iconButton.sprite.textureRect.width;
+    }
+
     public void ResetToEmpty()
     {
         ActivateSelectedIcon(false);

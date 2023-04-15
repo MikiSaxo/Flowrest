@@ -155,7 +155,7 @@ public class MapManager : MonoBehaviour
         _hasRecycling = currentLvl.HasRecycling;
         NbOfRecycling = currentLvl.NbOfRecycling;
         _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
-        SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
+        SetupUIGround.Instance.SetIfHasRecycling(_hasRecycling);
         RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
@@ -486,8 +486,6 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
         
-        yield return new WaitForSeconds(1.25f);
-        
         // Get Bloc to UI
         if (_hasInventory)
         {
@@ -498,6 +496,8 @@ public class MapManager : MonoBehaviour
             ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon,
                 String.Empty, tileToAdd);
         }
+        
+        yield return new WaitForSeconds(1.25f);
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();

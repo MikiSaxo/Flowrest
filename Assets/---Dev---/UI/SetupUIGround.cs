@@ -13,10 +13,11 @@ public class SetupUIGround : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _fBDnd;
     // public OpenCloseMenu GroundStockage;
 
-    [Header("Ground Buttons")] [SerializeField]
+    [Header("Inventory")] [SerializeField]
     private GameObject _gridParent;
-
     [SerializeField] private GameObject _prefabTileButton;
+    [SerializeField] private GameObject _bgInventory;
+    [SerializeField] private float _durationCloseOpen;
 
     // [SerializeField] private GameObject[] _groundButtons;
     // [SerializeField] private float _timeSpawnButton;
@@ -25,9 +26,11 @@ public class SetupUIGround : MonoBehaviour
     [Header("Ground Data")] [SerializeField]
     private GroundUIData[] _groundData;
 
-    private bool _hasInventory;
+    private bool _hasRecycling;
     private List<GameObject> _stockTileButton = new List<GameObject>();
-
+    private Vector2 widthBG;
+    private Vector2 widthIcon;
+    
     private void Awake()
     {
         Instance = this;
@@ -35,18 +38,11 @@ public class SetupUIGround : MonoBehaviour
 
     private void Start()
     {
-        // for (int i = 0; i < _groundButtons.Length; i++)
-        // {
-        //     var getData = _groundData[i];
-        //     _groundButtons[i].GetComponent<UIButton>().Setup(getData.ColorIcon, getData.Icon,
-        //         getData.NbLeft, getData.GroundState);
-        //     GroundEmpty(i);
-        // }
     }
 
-    public void SetIfHasInventory(bool state)
+    public void SetIfHasRecycling(bool state)
     {
-        _hasInventory = state;
+        _hasRecycling = state;
     }
 
     public void UpdateFbGround(int whichState, GameObject button) // Use by Ground buttons
@@ -61,7 +57,7 @@ public class SetupUIGround : MonoBehaviour
         MapManager.Instance.ResetButtonSelected();
         MapManager.Instance.ResetGroundSelected();
 
-        if (_hasInventory && MapManager.Instance.NbOfRecycling > 0)
+        if (_hasRecycling && MapManager.Instance.NbOfRecycling > 0)
             RecyclingManager.Instance.UpdateRecycling(true);
 
         _fBDnd.GetComponent<FollowMouseDND>().UpdateObject(_groundData[(int)state].Icon, _groundData[(int)state].ColorIcon, _groundData[(int)state].Name);
@@ -116,6 +112,12 @@ public class SetupUIGround : MonoBehaviour
         go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon, _groundData[stateNb].GroundState);
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
+
+        
+        widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
+        var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
+        widthBG = new Vector2( bgSize.width, bgSize.height);
+        ReSizeBgInventory(widthIcon + widthBG,_durationCloseOpen);
     }
 
     public void AddTempGround()
@@ -129,12 +131,24 @@ public class SetupUIGround : MonoBehaviour
     public void GroundEmpty(GameObject button)
     {
         _stockTileButton.Remove(button);
+        
+        var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
+        widthBG = new Vector2( bgSize.width, bgSize.height);
+        ReSizeBgInventory(widthBG - widthIcon,_durationCloseOpen);
+        
         Destroy(button);
+    }
+
+    private void ReSizeBgInventory(Vector2 newSize, float duration)
+    {
+        _bgInventory.GetComponent<RectTransform>().DOKill();
+        _bgInventory.GetComponent<RectTransform>().DOSizeDelta(newSize,duration).SetEase(Ease.OutSine);
     }
 
     public void UpdateInventory(bool state)
     {
         //GroundStockage.gameObject.SetActive(state);
+        _bgInventory.SetActive(state);
     }
 
     public bool CheckIfStillGround()
