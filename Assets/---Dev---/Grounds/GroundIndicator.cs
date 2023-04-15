@@ -126,7 +126,7 @@ public class GroundIndicator : MonoBehaviour
         if (_isSelected ||IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() || MapManager.Instance.IsSwapping) return;
 
 
-        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
+        // other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
         _isEntered = false;
         _parent.IsProtectedPrevisu = false;
 
@@ -152,8 +152,21 @@ public class GroundIndicator : MonoBehaviour
         // First case: select bloc for swap
         if (MapManager.Instance.LastObjButtonSelected == null) 
         {
+            if(MapManager.Instance.IsSwapping) return;
+            
             // Block if click again on it
-            if (_isSelected || MapManager.Instance.IsSwapping) return;
+            if (_isSelected && _isEntered)
+            {
+                // _parent.IsProtectedPrevisu = false;
+                //
+                // MapManager.Instance.ResetPreview();
+                //
+                // OnLeaveAnim(_timeExit);
+                
+                ResetIndicator();
+                StartCoroutine(WaitALittleToReset());
+                return;
+            }
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
@@ -178,6 +191,12 @@ public class GroundIndicator : MonoBehaviour
         }
         else // Second case: Change state of pose with a new one
             PoseBloc();
+    }
+
+    IEnumerator WaitALittleToReset()
+    {
+        yield return new WaitForSeconds(.01f);
+        MapManager.Instance.ResetBig();
     }
 
     private void MoveYMesh(float height, float duration)
