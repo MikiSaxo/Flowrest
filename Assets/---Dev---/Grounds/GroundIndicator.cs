@@ -76,10 +76,10 @@ public class GroundIndicator : MonoBehaviour
         
         if (_parent.IsPlayerNotForcePose && MapManager.Instance.LastObjButtonSelected != null) return;
 
-        if (MapManager.Instance.LastObjButtonSelected != null)
-        {
-            if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
-        }
+        // if (MapManager.Instance.LastObjButtonSelected != null)
+        // {
+        //     if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
+        // }
 
         if (MapManager.Instance.LastObjButtonSelected == null && EnergyManager.Instance.IsEnergyInferiorToCostSwap())
             return;
@@ -205,8 +205,8 @@ public class GroundIndicator : MonoBehaviour
         if (!MapManager.Instance.CanPoseBloc()) return;
 
         // Avoid to update by same ground
-        if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
-            (int)MapManager.Instance.LastStateButtonSelected) return;
+        // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
+        //     (int)MapManager.Instance.LastStateButtonSelected) return;
 
         MapManager.Instance.IsPosing = true;
 
