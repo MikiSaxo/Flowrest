@@ -64,6 +64,8 @@ public class FB_GroundCollected : MonoBehaviour
 
     private void DispawnAnim()
     {
+        SetupUIGround.Instance.ChangeSizeBGBeforeNewGround((int)_state, false);
+        
         _objToMove.transform.DOMove(_tpPoints[2].position, _durationDispawn);
         _objToMove.transform.DOScale(0, _durationDispawn).OnComplete(DeleteObj);
 

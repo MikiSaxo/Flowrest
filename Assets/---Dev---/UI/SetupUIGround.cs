@@ -35,10 +35,14 @@ public class SetupUIGround : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        
+
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
         _widthBGsaveStart = new Vector2(bgSize.width, bgSize.height);
         _widthBGTest = new Vector2(bgSize.width, bgSize.height);
+
+        GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
+        _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
+        Destroy(go);
     }
 
     private void Start()
@@ -115,12 +119,29 @@ public class SetupUIGround : MonoBehaviour
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
 
+        if (isStart)
+            ChangeSizeBGBeforeNewGround(stateNb, isStart);
+    }
 
-        _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
+    public void ChangeSizeBGBeforeNewGround(int stateNb, bool isStart)
+    {
+        if (!isStart)
+        {
+            foreach (var tile in _stockTileButton)
+            {
+                var currentTile = tile.GetComponent<UIButton>();
+
+                if ((int)currentTile.GetStateButton() == stateNb)
+                {
+                    return;
+                }
+            }
+        }
+
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
         _widthBG = new Vector2(bgSize.width, bgSize.height);
         _widthBGTest += _widthIcon;
-        
+
         if (isStart)
             ReSizeBgInventory(_widthBGTest, 0);
         else
