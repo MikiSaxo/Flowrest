@@ -147,7 +147,7 @@ public class MapManager : MonoBehaviour
             {
                 for (int j = 0; j < currentLvl.StartNbAllState[i]; j++)
                 {
-                    SetupUIGround.Instance.AddNewGround(i);
+                    SetupUIGround.Instance.AddNewGround(i, true);
                 }
             }
         }

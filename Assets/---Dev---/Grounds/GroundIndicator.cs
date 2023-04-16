@@ -13,13 +13,14 @@ public class GroundIndicator : MonoBehaviour
     // [SerializeField] private MeshRenderer _mesh;
     // [SerializeField] private Material[] _mats;
     [SerializeField] private GameObject _meshParent;
-    
-    [Header("Anim Values")]
-    [SerializeField] private float _timeEnter;
+
+    [Header("Anim Values")] [SerializeField]
+    private float _timeEnter;
+
     [SerializeField] private float _timeExit;
-    
+
     public bool IsSwapping { get; set; }
-    
+
     private float _startYPos;
     private float _hoveredYPos;
     private float _selectedYPos;
@@ -74,6 +75,8 @@ public class GroundIndicator : MonoBehaviour
 
         if (_parent.IsPlayerForceSwapBlocked) return;
         
+        if(MapManager.Instance.IsPosing) return;
+
         if (_parent.IsPlayerNotForcePose && MapManager.Instance.LastObjButtonSelected != null) return;
 
         // if (MapManager.Instance.LastObjButtonSelected != null)
@@ -93,7 +96,7 @@ public class GroundIndicator : MonoBehaviour
             _parent.UpdateNoSwap(true);
             return;
         }
-        
+
         if (MapManager.Instance.IsSwapping) return;
 
         other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
@@ -113,7 +116,8 @@ public class GroundIndicator : MonoBehaviour
         }
         else if (MapManager.Instance.LastObjButtonSelected)
         {
-            MapManager.Instance.GroundSwapPreviewButton(_parent.gameObject, MapManager.Instance.LastStateButtonSelected);
+            MapManager.Instance.GroundSwapPreviewButton(_parent.gameObject,
+                MapManager.Instance.LastStateButtonSelected);
         }
 
         OnEnterAnim(_timeEnter);
@@ -124,16 +128,17 @@ public class GroundIndicator : MonoBehaviour
         _parent.UpdateFbNoSwap(false);
 
         _isEntered = false;
-        
-        if (_isSelected ||IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() || MapManager.Instance.IsSwapping) return;
+
+        if (_isSelected || IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() ||
+            MapManager.Instance.IsSwapping) return;
 
 
         // other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
-        
+
         _parent.IsProtectedPrevisu = false;
 
         MapManager.Instance.ResetPreview();
-        
+
         OnLeaveAnim(_timeExit);
     }
 
@@ -146,16 +151,16 @@ public class GroundIndicator : MonoBehaviour
 
             // ResetAllAroundPrevisu();
         }
-        
-        // Block if not mouseEnter or not click up
-        if (!_isEntered || !Input.GetMouseButtonUp(0)) return; 
 
-        
+        // Block if not mouseEnter or not click up
+        if (!_isEntered || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
+
+
         // First case: select bloc for swap
-        if (MapManager.Instance.LastObjButtonSelected == null) 
+        if (MapManager.Instance.LastObjButtonSelected == null)
         {
-            if(MapManager.Instance.IsSwapping) return;
-            
+            if (MapManager.Instance.IsSwapping) return;
+
             // Reset if click again on it
             if (_isSelected && _isEntered)
             {
@@ -179,7 +184,7 @@ public class GroundIndicator : MonoBehaviour
             // Avoid to transform the bloc by clicking on UI Ground Button after selected first
             MapManager.Instance.IsGroundFirstSelected = true;
             // Call its parent to tell which one was selected to MapManager
-            _parent.OnSelected(); 
+            _parent.OnSelected();
 
             // If Player forced swap
             if (!_parent.IsPlayerForceSwapBlocked)
@@ -220,13 +225,13 @@ public class GroundIndicator : MonoBehaviour
 
     private void PoseBloc()
     {
-        
         // Idk if really helpful but security
         if (!MapManager.Instance.CanPoseBloc()) return;
 
         // Avoid to update by same ground
         // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
         //     (int)MapManager.Instance.LastStateButtonSelected) return;
+
 
         MapManager.Instance.IsPosing = true;
 
@@ -237,24 +242,24 @@ public class GroundIndicator : MonoBehaviour
     {
         // Reset Preview
         MapManager.Instance.ResetPreview();
-        
+
         // Init the new State
         gameObject.GetComponentInParent<GroundStateManager>().InitState(MapManager.Instance.LastStateButtonSelected);
-       
+
         // Make Anim
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(15, 0).OnComplete(() => { OnLeaveAnim(_timeExit); });
-        
+
         // Decrease number on selected UI Button 
-        MapManager.Instance.DecreaseNumberButton(); 
-        
+        MapManager.Instance.DecreaseNumberButton();
+
         yield return new WaitForSeconds(_timeExit);
-        
+
         // Change State around
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(_parent.GetCurrentStateEnum());
-        
+
         gameObject.GetComponentInParent<GroundStateManager>().LaunchDropFX();
-        
+
         yield return new WaitForSeconds(1.5f);
 
         // Spend energy
@@ -271,10 +276,10 @@ public class GroundIndicator : MonoBehaviour
 
         // Reset
         ResetForNextChange();
-        
+
         MapManager.Instance.IsPosing = false;
-        
-        if(MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
+
+        if (MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
             MapManager.Instance.UpdateAllGroundTutoForcePose(false);
     }
 
@@ -296,7 +301,7 @@ public class GroundIndicator : MonoBehaviour
         if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
 
         // Reset to avoid problem with dnd
-        MapManager.Instance.ResetGroundSelected(); 
+        MapManager.Instance.ResetGroundSelected();
         MapManager.Instance.ResetButtonSelected();
     }
 }
