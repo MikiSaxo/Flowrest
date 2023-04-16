@@ -251,7 +251,7 @@ public class GroundIndicator : MonoBehaviour
         yield return new WaitForSeconds(_timeExit);
         
         // Change State around
-        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround();
+        gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(_parent.GetCurrentStateEnum());
         
         gameObject.GetComponentInParent<GroundStateManager>().LaunchDropFX();
         

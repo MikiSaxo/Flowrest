@@ -481,8 +481,9 @@ public class MapManager : MonoBehaviour
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
         
         // Update Ground Around
-        gLastGroundSelected.UpdateGroundsAround();
-        gWhich.UpdateGroundsAround();
+        gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
+        gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
+
 
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();

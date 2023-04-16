@@ -233,7 +233,7 @@ public class GroundStateManager : MonoBehaviour
         _fbArrow.UpdateArrow(state);
     }
 
-    public void UpdateGroundsAround()
+    public void UpdateGroundsAround(AllStates otherState)
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
@@ -280,7 +280,8 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(_tempCurrentState, grnd.GetCurrentTempStateEnum());
+            var newState = ConditionManager.Instance.GetState(otherState, grnd.GetCurrentTempStateEnum());
+
             grnd._tempCurrentState = newState;
 
             _saveGrndToUpdate.Add(grnd, angle);
@@ -293,6 +294,8 @@ public class GroundStateManager : MonoBehaviour
     {
         foreach (var grnd in _saveGrndToUpdate)
         {
+            if(grnd.Key.IsProtected) continue;
+            
             grnd.Key.LaunchCorouDropFX(grnd.Key.GetCurrentTempStateEnum(), grnd.Value, transform);
         }
     }
@@ -351,6 +354,11 @@ public class GroundStateManager : MonoBehaviour
 
             _stockGroundPrevisu.Add(grnd);
         }
+
+        // foreach (var grnd in _stockGroundPrevisu)
+        // {
+        //     _saveGrndToUpdate.Add(grnd, 30);
+        // }
     }
 
     public void UpdateNoSwap(bool state)
