@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -38,6 +39,7 @@ public class QuestManager : MonoBehaviour
     {
         _isFlower = true;
         _flowerState = whichState;
+        Array.Sort(_flowerState);
         _countQuestNumber++;
 
         WarnFullFloorQuest();
@@ -153,9 +155,9 @@ public class QuestManager : MonoBehaviour
 
                 foreach (var state in _flowerState)
                 {
-                    if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state 
-                        && map[x, y].GetComponent<GroundStateManager>().CheckIfFlower() 
-                        )//&& !_flowerStateDone.Contains(state))
+                    if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state
+                        && map[x, y].GetComponent<GroundStateManager>().CheckIfFlower()
+                       ) //&& !_flowerStateDone.Contains(state))
                     {
                         count++;
                         _flowerStateDone.Add(state);
@@ -165,7 +167,17 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        return count >= _flowerState.Length;
+        if (_flowerStateDone.Count != _flowerState.Length) return false;
+
+        _flowerStateDone.Sort();
+
+        for (int i = 0; i < _flowerState.Length; i++)
+        {
+            if (_flowerStateDone[i] != _flowerState[i])
+                return false;
+        }
+
+        return true;
     }
 
     private bool CheckNoSpecificTileQuest()
