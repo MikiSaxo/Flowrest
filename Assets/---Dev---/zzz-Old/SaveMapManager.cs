@@ -208,8 +208,8 @@ public class SaveMapManager : MonoBehaviour
         // Reset selection's color of the two Grounds
         _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         which.GetComponent<GroundStateManager>().ResetIndicator();
-        _lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
-        which.GetComponent<GroundStateManager>().UpdateGroundsAround();
+        //_lastGroundSelected.GetComponent<GroundStateManager>().UpdateGroundsAround();
+        //which.GetComponent<GroundStateManager>().UpdateGroundsAround();
         //ResetLastSelected
         IsGroundFirstSelected = false;
         ResetGroundSelected();

@@ -16,6 +16,9 @@ public class OpenCloseMenu : MonoBehaviour
     [SerializeField] private bool _isTriggered;
 
     [SerializeField] private float _cooldownReset;
+    [Header("Aroow FB")]
+    [SerializeField] private GameObject _arrowIcon;
+    [SerializeField] private float _timeRotateArrow;
     private float _cooldownToClose;
 
     public bool ForcedOpen { get; set; }
@@ -25,6 +28,9 @@ public class OpenCloseMenu : MonoBehaviour
     {
         // _objToMove.transform.DOKill();
         // _objToMove.transform.DOMove(_tpPoints[1].position, _openDuration);
+
+        if (_arrowIcon != null)
+            _arrowIcon.transform.DORotate(new Vector3(0, 0, 180), _timeRotateArrow);
         
         _isClosed = false;
     }
@@ -34,6 +40,9 @@ public class OpenCloseMenu : MonoBehaviour
         // _objToMove.transform.DOKill();
         // _objToMove.transform.DOMove(_tpPoints[0].position, _closeDuration);
 
+        if (_arrowIcon != null)
+            _arrowIcon.transform.DORotate(new Vector3(0, 0, 0), _timeRotateArrow);
+        
         _isClosed = true;
     }
 

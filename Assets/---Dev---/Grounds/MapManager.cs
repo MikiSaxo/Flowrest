@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using DG.Tweening;
-using UnityEngine.AI;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 
 public class MapManager : MonoBehaviour
@@ -50,6 +49,7 @@ public class MapManager : MonoBehaviour
     private bool _hasFirstSwap;
     private List<Vector2Int> _stockPlayerForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
+    private bool _wantToRecycle;
     private int _currentLevel;
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
@@ -59,6 +59,8 @@ public class MapManager : MonoBehaviour
     private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
+    private Image _recycleImg;
+    private AllStates _secondLastGroundSelected;
 
     private MapConstructData _mapConstructData;
 
@@ -146,7 +148,7 @@ public class MapManager : MonoBehaviour
             {
                 for (int j = 0; j < currentLvl.StartNbAllState[i]; j++)
                 {
-                    SetupUIGround.Instance.AddNewGround(i);
+                    SetupUIGround.Instance.AddNewGround(i, true);
                 }
             }
         }
@@ -155,7 +157,7 @@ public class MapManager : MonoBehaviour
         _hasRecycling = currentLvl.HasRecycling;
         NbOfRecycling = currentLvl.NbOfRecycling;
         _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
-        SetupUIGround.Instance.SetIfHasInventory(_hasRecycling);
+        SetupUIGround.Instance.SetIfHasRecycling(_hasRecycling);
         RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
@@ -480,13 +482,12 @@ public class MapManager : MonoBehaviour
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
         
         // Update Ground Around
-        gLastGroundSelected.UpdateGroundsAround();
-        gWhich.UpdateGroundsAround();
+        gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
+        gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
+
 
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
-        
-        yield return new WaitForSeconds(1.25f);
         
         // Get Bloc to UI
         if (_hasInventory)
@@ -498,6 +499,8 @@ public class MapManager : MonoBehaviour
             ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon,
                 String.Empty, tileToAdd);
         }
+        
+        yield return new WaitForSeconds(1.25f);
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();
@@ -586,17 +589,44 @@ public class MapManager : MonoBehaviour
 
     public void UseRecycling()
     {
-        if (LastObjButtonSelected == null || NbOfRecycling <= 0) return;
+        if (LastObjButtonSelected == null || NbOfRecycling <= 0)
+        {
+            WantToRecycle();
+            return;
+        }
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
+        
+        // Remove 1 from button
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        // Add 1 to number of interaction
         EnergyManager.Instance.EarnEnergyByRecycling();
+        // Deactivate Follow Dnd
         SetupUIGround.Instance.FollowDndDeactivate();
-        //RecyclingManager.Instance.UpdateRecycling(false);
+        // Update Nb of Recycling Left
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
+        
+        // Reset
         ResetButtonSelected();
         ResetTwoLastSwapped();
+        _wantToRecycle = false;
+
+        RecyclingManager.Instance.DeactivateButton();
+    }
+
+    private void WantToRecycle()
+    {
+        _wantToRecycle = true;
+    }
+
+    public void CheckIfWantToRecycle(GameObject which)
+    {
+        if (!_wantToRecycle) return;
+        
+        LastObjButtonSelected = which;
+       
+        UseRecycling();
     }
 
     private void CheckAroundGroundSelected(GameObject which, Vector2Int coords)
@@ -664,6 +694,11 @@ public class MapManager : MonoBehaviour
             : LastStateButtonSelected;
     }
 
+    public AllStates GetSecondtateSelected()
+    {
+        return AllStates.Desert;
+    }
+
     public GameObject[,] GetMapGrid()
     {
         return _mapGrid;
@@ -691,12 +726,13 @@ public class MapManager : MonoBehaviour
 
     public void ResetBig()
     {
-        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI) return;
 
         if (IsTuto) return;
 
         print("reset big");
 
+        RecyclingManager.Instance.DeactivateButton();
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);
         ResetPreview();
@@ -724,7 +760,7 @@ public class MapManager : MonoBehaviour
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-
+        if (IsSwapping) return;
         //ResetAllMap(false);
         ResetAllSelection();
         ResetButtonSelected();

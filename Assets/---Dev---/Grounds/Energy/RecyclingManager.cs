@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class RecyclingManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class RecyclingManager : MonoBehaviour
     private bool _hasInfinitRecycling;
     private int _maxRecycling;
     private int _currentLeftRecycling;
+    private bool _isSelected;
 
     private void Awake()
     {
@@ -29,7 +31,8 @@ public class RecyclingManager : MonoBehaviour
 
         if (!activateOrNot)
             return;
-        gameObject.GetComponentInChildren<Button>().interactable = activateOrNot;
+
+        //gameObject.GetComponentInChildren<Button>().interactable = true;
     }
 
     public void InitNbRecycling(int number, bool hasInfinit)
@@ -59,6 +62,31 @@ public class RecyclingManager : MonoBehaviour
     private void UpdateDisplayRecyclingNbLeft()
     {
         if (!_hasInfinitRecycling)
-            _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
+            _recyclingNbText.text = $"{_currentLeftRecycling} restant(s)";
+        // _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
+    }
+
+    public void ActivateButton()
+    {
+        _isSelected = true;
+        OnEnter();
+    }
+
+    public void OnEnter()
+    {
+        GetComponentInChildren<Image>().color = Color.yellow;
+    }
+
+    public void OnExit()
+    {
+        if (_isSelected) return;
+        
+        GetComponentInChildren<Image>().color = Color.white;
+    }
+
+    public void DeactivateButton()
+    {
+        _isSelected = false;
+        OnExit();
     }
 }

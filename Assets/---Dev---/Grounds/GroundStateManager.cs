@@ -233,11 +233,12 @@ public class GroundStateManager : MonoBehaviour
         _fbArrow.UpdateArrow(state);
     }
 
-    public void UpdateGroundsAround()
+    public void UpdateGroundsAround(AllStates otherState)
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
         hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+
 
         var angle = 0;
         _saveGrndToUpdate.Clear();
@@ -280,7 +281,8 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(_tempCurrentState, grnd.GetCurrentTempStateEnum());
+            var newState = ConditionManager.Instance.GetState(otherState, grnd.GetCurrentTempStateEnum());
+
             grnd._tempCurrentState = newState;
 
             _saveGrndToUpdate.Add(grnd, angle);
@@ -289,22 +291,33 @@ public class GroundStateManager : MonoBehaviour
         }
     }
 
+    private Color _colorOtherSwap;
+
     public void LaunchDropFX()
     {
+        _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
+        _colorOtherSwap = Color.white;
+        // _colorOtherSwap.r -= .1f;
+        // _colorOtherSwap.g -= .1f;
+        // _colorOtherSwap.b -= .1f;
         foreach (var grnd in _saveGrndToUpdate)
         {
-            grnd.Key.LaunchCorouDropFX(grnd.Key.GetCurrentTempStateEnum(), grnd.Value, transform);
+            if (grnd.Key.IsProtected) continue;
+
+            grnd.Key.LaunchCorouDropFX(grnd.Key.GetCurrentTempStateEnum(), grnd.Value, transform, _colorOtherSwap);
         }
     }
 
-    private void LaunchCorouDropFX(AllStates newState, float angle, Transform parent)
+    private void LaunchCorouDropFX(AllStates newState, float angle, Transform parent, Color color)
     {
-        StartCoroutine(CorouDropFX(newState, angle, parent));
+        StartCoroutine(CorouDropFX(newState, angle, parent, color));
     }
 
-    IEnumerator CorouDropFX(AllStates newState, float angle, Transform parent)
+    IEnumerator CorouDropFX(AllStates newState, float angle, Transform parent, Color color)
     {
         if (_currentState == newState) yield break;
+
+        yield return new WaitForSeconds(OFFSET_TIMING * angle);
 
         GameObject go = Instantiate(_fXDrop, parent);
 
@@ -312,7 +325,16 @@ public class GroundStateManager : MonoBehaviour
         go.transform.DOMoveY(go.transform.position.y + _paddingFXDrop, 0);
         go.transform.DORotate(new Vector3(-60, angle, rotation.z), 0);
 
-        yield return new WaitForSeconds(1 + OFFSET_TIMING * angle);
+        // _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)MapManager.Instance.GetLastStateSelected()).ColorIcon;
+        _colorOtherSwap = color;
+        print(_colorOtherSwap + " : " + _coords);
+
+        var main = go.GetComponent<ParticleSystem>().main;
+        main.startColor = _colorOtherSwap;
+        // print("=aller lens : " + main.startColor.color + " : " + _coords);
+        // print("=aller kyky : " + _colorOtherSwap);
+
+        yield return new WaitForSeconds(1);
 
         ChangeState(newState);
     }
@@ -351,6 +373,11 @@ public class GroundStateManager : MonoBehaviour
 
             _stockGroundPrevisu.Add(grnd);
         }
+
+        // foreach (var grnd in _stockGroundPrevisu)
+        // {
+        //     _saveGrndToUpdate.Add(grnd, 30);
+        // }
     }
 
     public void UpdateNoSwap(bool state)
@@ -377,6 +404,7 @@ public class GroundStateManager : MonoBehaviour
         if (!state)
             ResetIndicator();
     }
+
     private void BounceAnim()
     {
         _meshParent.transform.DOKill();
