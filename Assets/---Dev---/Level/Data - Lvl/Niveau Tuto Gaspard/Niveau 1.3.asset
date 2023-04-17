@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 1
+  m_Name: Niveau 1.3
   m_EditorClassIdentifier: 
-  LevelName: Niveau 1
+  LevelName: Niveau 1.3
   LevelFolder: Level Editor
-  EnergyAtStart: 1
+  EnergyAtStart: 3
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 
@@ -30,25 +30,18 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  QuestDescription: 'Niveau 1 : Faire 1 fleur de <color=#8bdb76>Grassias</color>
-    et 1 fleur de <color=#f19156>Calcid</color>.'
+  QuestDescription: "Niveau 1.1 : R\xE9aliser au moins une tile de <color=#8bdb76>Grassias</color>"
   QuestImage: {fileID: 21300000, guid: 4f3f231f3da48f0479b6c639f348aa83, type: 3}
   QuestFloor: 
-  QuestFlower: 0000000004000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
-  QuestTileCount: 
-  NumberTileCount: 12
+  QuestTileCount: 00000000
+  NumberTileCount: 1
   CharacterName: Profess.io
   DialogBeginning:
   - "Bonjour Petri ! Les Ressources Aliens m'ont pr\xE9venues de ton arriv\xE9e sur
     site."
-  - "Ton travail lors de ce stage sera de terraformer des environnements pour r\xE9pondre
-    aux commandes que l\u2019on re\xE7oit. "
-  - "Cependant, je ne sais pas si tu es \xE0 l 'aise avec toutes les technologies
-    de l'entreprise."
-  - "Essaie d'\xE9changer les deux tiles au centre. Tu verras ce qu'il se passe."
   DialogEnd:
   - "Parfait ! Pour l\u2019instant essaie surtout de te familiariser avec ces techniques."
-  - "Demain on augmentera l\xE9g\xE8rement la difficult\xE9."
