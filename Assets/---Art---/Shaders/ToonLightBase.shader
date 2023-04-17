@@ -22,6 +22,12 @@ Shader "Lpk/LightModel/ToonLightBase"
         [Space]   
         //_OutlineWidth      ("OutlineWidth", Range(0.0, 1.0))      = 0.15
          _OutlineColor      ("OutlineColor", Color)                = (0.0, 0.0, 0.0, 1)
+
+        [Space]
+        _NoiseMap("Wind Texture", 2D) = "white" {}
+        _NoiseControl ("xy tile / zw speed", vector) = (1,1,0,0)
+        _DirectionDeformation ("Direction Deformation", vector) = (1,0,0,0)
+        _OffsetVertex ("Offset Vertex", float) = 0
     }
     SubShader
     {
@@ -56,6 +62,11 @@ Shader "Lpk/LightModel/ToonLightBase"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
+            TEXTURE2D(_NoiseMap); SAMPLER(sampler_NoiseMap);
+
+            float4 _NoiseControl;
+            float4 _DirectionDeformation;
+            float _OffsetVertex;
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseColor;
@@ -75,6 +86,7 @@ Shader "Lpk/LightModel/ToonLightBase"
                 float3 normalOS     : NORMAL;
                 float4 tangentOS    : TANGENT;
                 float2 uv           : TEXCOORD0;
+                float4 color        : COLOR;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             }; 
 
@@ -88,7 +100,7 @@ Shader "Lpk/LightModel/ToonLightBase"
 				float4 shadowCoord	 : TEXCOORD5;	// shadow receive 
 				float4 fogCoord	     : TEXCOORD6;	
 				float3 positionWS	 : TEXCOORD7;	
-                float4 positionCS    : SV_POSITION;
+                float4 positionCS    : SV_POSITION;                
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -104,7 +116,18 @@ Shader "Lpk/LightModel/ToonLightBase"
                 float3 viewDirWS = GetCameraPositionWS() - vertexInput.positionWS;
                 float3 vertexLight = VertexLighting(vertexInput.positionWS, normalInput.normalWS);
 
-                output.positionCS = vertexInput.positionCS;
+                float2 world_uv = vertexInput.positionWS.xz;
+                world_uv.x *= _NoiseControl.x;
+                world_uv.y *= _NoiseControl.y;
+                world_uv.x += _NoiseControl.z * _Time;
+                world_uv.y += _NoiseControl.w * _Time;
+                float noise = (SAMPLE_TEXTURE2D_LOD(_NoiseMap, sampler_NoiseMap, world_uv, 0).r * 2) - 1;
+
+                _OffsetVertex *= .01;
+                float4 pos = vertexInput.positionCS;
+                pos += noise * _OffsetVertex * input.color.r * normalize(_DirectionDeformation);
+
+                output.positionCS = pos;
                 output.positionWS = vertexInput.positionWS;
                 output.uv = input.uv;
                 output.normalWS = float4(normalInput.normalWS, viewDirWS.x);
