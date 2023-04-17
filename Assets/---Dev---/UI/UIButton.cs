@@ -36,6 +36,7 @@ public class UIButton : MonoBehaviour
     public void ChangeActivatedButton()
     {
         MapManager.Instance.ChangeActivatedButton(gameObject);
+        MapManager.Instance.CheckIfWantToRecycle(gameObject);
     }
 
     public void UpdateFbGround()
