@@ -115,17 +115,26 @@ Shader "Lpk/LightModel/ToonLightBase"
                 VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS, input.tangentOS);
                 float3 viewDirWS = GetCameraPositionWS() - vertexInput.positionWS;
                 float3 vertexLight = VertexLighting(vertexInput.positionWS, normalInput.normalWS);
-
+                
+                ////////////
+                // Use world pos xz to project texture
                 float2 world_uv = vertexInput.positionWS.xz;
+                // Scale texture
                 world_uv.x *= _NoiseControl.x;
                 world_uv.y *= _NoiseControl.y;
+                // Offset texture
                 world_uv.x += _NoiseControl.z * _Time;
                 world_uv.y += _NoiseControl.w * _Time;
+                // Unwrap texture : We need to use the SAMPLE_TEXTURE_2D_LOD in vert pass
                 float noise = (SAMPLE_TEXTURE2D_LOD(_NoiseMap, sampler_NoiseMap, world_uv, 0).r * 2) - 1;
 
+                // Multiply offset for confort
                 _OffsetVertex *= .01;
+
                 float4 pos = vertexInput.positionCS;
+                // Add offset to the position based on noise, vertex color R for masking, and we normalize the direction
                 pos += noise * _OffsetVertex * input.color.r * normalize(_DirectionDeformation);
+                /////////////
 
                 output.positionCS = pos;
                 output.positionWS = vertexInput.positionWS;
