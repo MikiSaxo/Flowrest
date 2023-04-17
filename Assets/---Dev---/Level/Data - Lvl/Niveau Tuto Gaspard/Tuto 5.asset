@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 2
+  m_Name: Tuto 5
   m_EditorClassIdentifier: 
-  LevelName: Niveau 2
+  LevelName: Niveau 0.5
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 1
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -28,8 +28,8 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  QuestDescription: 'Niveau 2: Faire 2 fleurs de <color=#8bdb76>Grassias</color>'
-  QuestImage: {fileID: 21300000, guid: e70e6e8c2974cc2478d09c5e0d40d762, type: 3}
+  QuestDescription: 'Tuto 5 : Faire une fleur de <color=#8bdb76>Grassias</color>'
+  QuestImage: {fileID: 21300000, guid: b41d321166dd937408860af39381fb2e, type: 3}
   QuestFloor: 
   QuestFlower: 00000000
   QuestNoSpecificTiles: 
@@ -37,11 +37,10 @@ MonoBehaviour:
   NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
-  CharacterName: Profess.io
+  CharacterName: Profess.Io
   DialogBeginning:
-  - Aujourd'hui je te laisse travailler en autonomie sur ce projet en employant ce
-    qu'on a vu hier.
+  - "Aujourd'hui, c'est ta derni\xE8re mission avant que l'on te donne un peu plus
+    de libert\xE9."
+  - "J'esp\xE8re que tu es pr\xEAt."
   DialogEnd:
-  - "Bien jou\xE9 !"
-  - "Tu l'auras remarqu\xE9 mais une fois d\xE9plac\xE9e, une tiles n'est plus utilisable
-    pendant un temps alors fais attention."
+  - Bravo, je te retrouve demain pour ton premier jour en autonomie.
