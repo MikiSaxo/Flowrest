@@ -60,6 +60,7 @@ public class MapManager : MonoBehaviour
     private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
     private GameObject _lastGroundSelected;
+    private AllStates _secondLastGroundSelected;
 
     private MapConstructData _mapConstructData;
 
@@ -664,6 +665,11 @@ public class MapManager : MonoBehaviour
         return _lastGroundSelected != null
             ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
             : LastStateButtonSelected;
+    }
+
+    public AllStates GetSecondtateSelected()
+    {
+        return AllStates.Desert;
     }
 
     public GameObject[,] GetMapGrid()
