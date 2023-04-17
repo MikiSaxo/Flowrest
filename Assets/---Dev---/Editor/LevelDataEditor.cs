@@ -91,8 +91,8 @@ public class LevelDataEditor : Editor
         DisplayLevel();
         DisplayEnergy();
         DisplayMechanics();
-        DisplayQuestInfo();
         DisplayQuestChoose();
+        DisplayQuestInfo();
         DisplayDialogs();
 
         serializedObject.ApplyModifiedProperties();
@@ -118,6 +118,15 @@ public class LevelDataEditor : Editor
         if (energy)
         {
             EditorGUILayout.PropertyField(EnergyAtStart);
+            
+            EditorGUILayout.PropertyField(HasRecycling);
+
+            if (HasRecycling.boolValue)
+            {
+                EditorGUILayout.PropertyField(HasInfinitRecycling);
+                EditorGUILayout.PropertyField(NbOfRecycling);
+                EditorGUILayout.Space(10);
+            }
 
             EditorGUILayout.Space(10);
         }
@@ -135,14 +144,7 @@ public class LevelDataEditor : Editor
             if (HasInventory.boolValue)
                 DisplayChooseStartNbState();
 
-            EditorGUILayout.PropertyField(HasRecycling);
-
-            if (HasRecycling.boolValue)
-            {
-                EditorGUILayout.PropertyField(HasInfinitRecycling);
-                EditorGUILayout.PropertyField(NbOfRecycling);
-                EditorGUILayout.Space(10);
-            }
+            
 
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
@@ -207,7 +209,7 @@ public class LevelDataEditor : Editor
         if (questsChoose)
             EditorGUILayout.Space(!questsInfo ? 10 : 5);
 
-        questsChoose = EditorGUILayout.BeginFoldoutHeaderGroup(questsChoose, "-  Choose Quest(s)  -");
+        questsChoose = EditorGUILayout.BeginFoldoutHeaderGroup(questsChoose, "-  Quest(s) Choose  -");
         EditorGUILayout.EndFoldoutHeaderGroup();
         if (questsChoose)
         {
