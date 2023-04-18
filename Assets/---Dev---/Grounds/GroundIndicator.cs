@@ -152,7 +152,7 @@ public class GroundIndicator : MonoBehaviour
             // ResetAllAroundPrevisu();
         }
 
-        // Block if not mouseEnter or not click up
+        // Block
         if (!_isEntered || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
 
 
@@ -162,7 +162,7 @@ public class GroundIndicator : MonoBehaviour
             if (MapManager.Instance.IsSwapping) return;
 
             // Reset if click again on it
-            if (_isSelected && _isEntered)
+            if (_isSelected && _isEntered && !MapManager.Instance.IsTuto)
             {
                 // _parent.IsProtectedPrevisu = false;
                 //
@@ -173,6 +173,9 @@ public class GroundIndicator : MonoBehaviour
                 StartCoroutine(WaitALittleToReset());
                 return;
             }
+            
+            if (_isSelected && _isEntered && MapManager.Instance.IsTuto)
+                return;
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
