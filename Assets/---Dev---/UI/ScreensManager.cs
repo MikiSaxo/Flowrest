@@ -42,7 +42,9 @@ public class ScreensManager : MonoBehaviour
     private bool _isDialogTime;
     private bool _isTheEnd;
     private bool _isFirstScreen;
+
     private bool _isPaused;
+
     // private int _countScreen;
     private int _countDialog;
     private bool _stopCorou;
@@ -107,7 +109,7 @@ public class ScreensManager : MonoBehaviour
     public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool isMiddleDialog)
     {
         RemoveLastDialog();
-        
+
         // Set isDialoging and Reset count old dialog
         _isDialogTime = true;
         _countDialog = 0;
@@ -118,7 +120,7 @@ public class ScreensManager : MonoBehaviour
 
         // Block mouse
         // if (!isMiddleDialog)
-            FollowMouse.Instance.IsBlockMouse(true);
+        FollowMouse.Instance.IsBlockMouse(true);
 
         // Clear two list of old dialogs
         if (_dialogsList.Count != 0)
@@ -139,6 +141,12 @@ public class ScreensManager : MonoBehaviour
         if (!isTheEnd)
             UpdateButtonGoLevelSupp(false);
 
+        if (_dialogsList.Count == 0)
+        {
+            _isDialogTime = false;
+            CheckIfEnd();
+            return;
+        }
 
         SpawnAllDialog();
     }
@@ -155,7 +163,7 @@ public class ScreensManager : MonoBehaviour
     {
         if (_dialogsPrefabList.Count > 0)
             Destroy(_dialogsPrefabList[^1].gameObject);
-        
+
         UpdateDialogFB(false);
 
         // Instantiate new dialog
@@ -253,23 +261,14 @@ public class ScreensManager : MonoBehaviour
 
     public void UpdatePause(bool state)
     {
-        if (state)
-        {
-            _isPaused = true;
-            _bg.SetActive(true);
-            _menuPauseParent.SetActive(true);
-            FollowMouse.Instance.IsBlockMouse(true);
-            _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = true;
-        }
-        else
-        {
-            _isPaused = false;
-            _bg.SetActive(false);
-            _menuPauseParent.SetActive(false);
-            FollowMouse.Instance.IsBlockMouse(false);
-            _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = false;
+        _isPaused = state;
+        _bg.SetActive(state);
+        _menuPauseParent.SetActive(state);
+        FollowMouse.Instance.IsBlockMouse(state);
+        _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = state;
+
+        if (!state)
             _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
-        }
     }
 
     public void UpdateDialogFB(bool state)
@@ -282,12 +281,9 @@ public class ScreensManager : MonoBehaviour
         if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinish)
         {
             _isDialogTime = false;
-            GoToBottomScrollBar();
+            //GoToBottomScrollBar();
 
-            if (_isTheEnd)
-                UpdateButtonGoLevelSupp(true);
-            else
-                EndDialog();
+            CheckIfEnd();
 
             return true;
         }
@@ -299,12 +295,8 @@ public class ScreensManager : MonoBehaviour
     {
         _dialogsPrefabList[^1].EndAnimationText();
         _isDialogTime = false;
-        
-        if (_isTheEnd)
-            UpdateButtonGoLevelSupp(true);
-        else
-            EndDialog();
 
+        CheckIfEnd();
     }
 
     public void RestartSceneOrLevel()
@@ -339,6 +331,15 @@ public class ScreensManager : MonoBehaviour
     public void UpdateButtonGoLevelSupp(bool state)
     {
         _nextLevel.SetActive(state);
+        _dialogParent.SetActive(!state);
+    }
+
+    public void CheckIfEnd()
+    {
+        if (_isTheEnd)
+            UpdateButtonGoLevelSupp(true);
+        else
+            EndDialog();
     }
 
     private const float SPACING_BETWEEN_TWO_DIALOG = 18;
@@ -402,8 +403,8 @@ public class ScreensManager : MonoBehaviour
         {
             var txt = _dialogsPrefabList[^1];
             _dialogsPrefabList.Remove(txt);
-            
-            if(txt.gameObject != null)
+
+            if (txt.gameObject != null)
                 Destroy(txt.gameObject);
         }
     }
