@@ -160,7 +160,7 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.SetIfHasRecycling(_hasRecycling);
         RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
         if (_hasRecycling)
-            RecyclingManager.Instance.InitNbRecycling(NbOfRecycling, _hasInfinitRecycling);
+            RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
 
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;

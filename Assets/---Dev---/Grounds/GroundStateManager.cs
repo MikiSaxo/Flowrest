@@ -327,7 +327,7 @@ public class GroundStateManager : MonoBehaviour
 
         // _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)MapManager.Instance.GetLastStateSelected()).ColorIcon;
         _colorOtherSwap = color;
-        print(_colorOtherSwap + " : " + _coords);
+        // print(_colorOtherSwap + " : " + _coords);
 
         var main = go.GetComponent<ParticleSystem>().main;
         main.startColor = _colorOtherSwap;
