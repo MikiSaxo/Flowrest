@@ -68,6 +68,8 @@ public class RecyclingManager : MonoBehaviour
 
     public void ActivateButton()
     {
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        
         _isSelected = true;
         OnEnter();
     }

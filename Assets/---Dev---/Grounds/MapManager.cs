@@ -589,6 +589,8 @@ public class MapManager : MonoBehaviour
 
     public void UseRecycling()
     {
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        
         if (LastObjButtonSelected == null || NbOfRecycling <= 0)
         {
             WantToRecycle();
