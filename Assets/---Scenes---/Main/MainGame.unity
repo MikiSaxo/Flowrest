@@ -438,8 +438,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 518.56, y: -98.5}
-  m_SizeDelta: {x: 35.7913, y: 35.7913}
+  m_AnchoredPosition: {x: 533.18, y: -101.5}
+  m_SizeDelta: {x: 6.5696, y: 30.0178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &67852416
 MonoBehaviour:
@@ -453,9 +453,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83455d7dd50701447998d71b1c0083e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeFlickering: 0.5
-  _timeWaitFadeOut: 0.5
-  _timeWaitFadeIn: 0.5
+  _timeFlickering: 0.4
+  _timeWaitFadeOut: 0.2
+  _timeWaitFadeIn: 0.2
 --- !u!114 &67852417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,14 +469,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98d88dcf80017134c90d8c53882872e6, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7191,6 +7191,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1764261890}
+          m_TargetAssemblyTypeName: ScreensManager, Assembly-CSharp
+          m_MethodName: OnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &720501541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11250,7 +11266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -11501,7 +11517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1092695893
 RectTransform:
   m_ObjectHideFlags: 0

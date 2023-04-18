@@ -215,20 +215,20 @@ public class ScreensManager : MonoBehaviour
         if (!_isDialogTime) return;
 
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (CheckIfDialogEnded())
-                return;
-
-            if (_dialogsPrefabList[^1].IsFinish)
-            {
-                SpawnAllDialog();
-            }
-            else
-            {
-                _dialogsPrefabList[^1].EndAnimationText();
-                UpdateDialogFB(true);
-            }
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     if (CheckIfDialogEnded())
+        //         return;
+        //
+        //     if (_dialogsPrefabList[^1].IsFinish)
+        //     {
+        //         SpawnAllDialog();
+        //     }
+        //     else
+        //     {
+        //         _dialogsPrefabList[^1].EndAnimationText();
+        //         UpdateDialogFB(true);
+        //     }
 
 
             // if (_countScreen < _dialogsList.Count * 2 - 1)
@@ -256,6 +256,22 @@ public class ScreensManager : MonoBehaviour
             //     else
             //         ChangeToLevelSupp();
             // }
+        //}
+    }
+
+    public void OnClick()
+    {
+        if (CheckIfDialogEnded())
+            return;
+
+        if (_dialogsPrefabList[^1].IsFinish)
+        {
+            SpawnAllDialog();
+        }
+        else
+        {
+            _dialogsPrefabList[^1].EndAnimationText();
+            UpdateDialogFB(true);
         }
     }
 
