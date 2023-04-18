@@ -15,17 +15,19 @@ MonoBehaviour:
   LevelName: Tuto 9
   LevelFolder: Level Editor
   EnergyAtStart: 1
-  HasInventory: 1
+  HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 1
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  IsTuto: 0
+  IsTuto: 1
   PreviewMessage: 
-  PlayerForceSwap: []
+  PlayerForceSwap:
+  - {x: 2, y: 2}
+  - {x: 5, y: 2}
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   QuestDescription: "Tuto 9 : Cr\xE9er une suite de 9  <color=#8bdb76>Grassias</color>"
@@ -34,7 +36,7 @@ MonoBehaviour:
   QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 00000000
-  NumberTileChain: 6
+  NumberTileChain: 5
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.Io
