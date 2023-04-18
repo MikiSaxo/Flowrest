@@ -728,6 +728,8 @@ public class MapManager : MonoBehaviour
     {
         if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI) return;
 
+        ScreensManager.Instance.UpdateTutoArrow(false);
+        
         if (IsTuto) return;
 
         print("reset big");
