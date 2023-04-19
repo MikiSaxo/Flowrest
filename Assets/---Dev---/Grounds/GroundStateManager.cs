@@ -414,7 +414,9 @@ public class GroundStateManager : MonoBehaviour
     public void OnSelected() // When bloc is Selected by the player
     {
         if (!MapManager.Instance.IsSwapping)
+        {
             MapManager.Instance.CheckIfGroundSelected(gameObject, _coords);
+        }
     }
 
     public AllStates GetCurrentStateEnum()

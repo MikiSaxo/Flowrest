@@ -59,17 +59,17 @@ public class GroundIndicator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnEnterPointer(other);
+        // OnEnterPointer(other);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        OnExitPointer(other);
+        // OnExitPointer(other);
     }
 
-    private void OnEnterPointer(Collider other)
+    public void OnEnterPointer()
     {
-        if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
+        // if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
 
@@ -99,7 +99,7 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.IsSwapping) return;
 
-        other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
+        //other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEntered = true;
 
 
@@ -108,7 +108,7 @@ public class GroundIndicator : MonoBehaviour
             MapManager.Instance.ResetPreview();
             return;
         }
-
+        
         if (MapManager.Instance.GetHasGroundSelected())
         {
             // print("call ground swap previsu");
@@ -123,13 +123,13 @@ public class GroundIndicator : MonoBehaviour
         OnEnterAnim(_timeEnter);
     }
 
-    private void OnExitPointer(Collider other)
+    public void OnExitPointer()
     {
         _parent.UpdateFbNoSwap(false);
 
         _isEntered = false;
 
-        if (_isSelected || IsSwapping || !other.gameObject.GetComponentInParent<FollowMouse>() ||
+        if (_isSelected || IsSwapping ||
             MapManager.Instance.IsSwapping) return;
 
 
@@ -205,7 +205,7 @@ public class GroundIndicator : MonoBehaviour
     IEnumerator WaitALittleToReset()
     {
         yield return new WaitForSeconds(.01f);
-        MapManager.Instance.ResetBig();
+        MapManager.Instance.ForceResetBig();
     }
 
     private void MoveYMesh(float height, float duration)
@@ -306,5 +306,10 @@ public class GroundIndicator : MonoBehaviour
         // Reset to avoid problem with dnd
         MapManager.Instance.ResetGroundSelected();
         MapManager.Instance.ResetButtonSelected();
+    }
+
+    public Vector2Int GetParentCoords()
+    {
+        return _parent.GetCoords();
     }
 }

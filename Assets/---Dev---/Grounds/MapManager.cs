@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using DG.Tweening;
+using UnityEditor.Rendering;
 using UnityEngine.EventSystems;
 
 
@@ -651,7 +652,6 @@ public class MapManager : MonoBehaviour
     {
         if (LastObjButtonSelected != null) return;
 
-        // If was checkAround -> go swap
         if (_lastGroundSelected != null)
             GroundSwap(which, newCoords);
         else
@@ -726,9 +726,16 @@ public class MapManager : MonoBehaviour
         return _levelData[_currentLevel].DialogEnd;
     }
 
+    public void ForceResetBig()
+    {
+        print("force reset all");
+        
+        AllReset();
+    }
+    
     public void ResetBig()
     {
-        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || FollowMouse.Instance.IsOnGround) return;
 
         ScreensManager.Instance.UpdateTutoArrow(false);
         
@@ -736,6 +743,11 @@ public class MapManager : MonoBehaviour
 
         print("reset big");
 
+        AllReset();
+    }
+
+    private void AllReset()
+    {
         RecyclingManager.Instance.DeactivateButton();
         ResetButtonSelected();
         //RecyclingManager.Instance.UpdateRecycling(false);
