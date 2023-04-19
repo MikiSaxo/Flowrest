@@ -24,8 +24,13 @@ Material:
         m_Texture: {fileID: 2800000, guid: 81521d3e6497ef244a146d08dd0209fa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _OffsetVertex: 0
     - _RimStep: 0.592
     - _RimStepSmooth: 1
     - _ShadowStep: 0.633
@@ -34,6 +39,8 @@ Material:
     - _SpecularStepSmooth: 0
     m_Colors:
     - _BaseColor: {r: 0.49056602, g: 0.33552864, b: 0.40385118, a: 1}
+    - _DirectionDeformation: {r: 1, g: 0, b: 0, a: 0}
+    - _NoiseControl: {r: 1, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 0, b: 0, a: 1}
