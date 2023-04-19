@@ -929,6 +929,8 @@ MonoBehaviour:
   _isClosed: 1
   _isTriggered: 0
   _cooldownReset: 0
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!1001 &69473288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1428,6 +1430,8 @@ MonoBehaviour:
   _isClosed: 1
   _isTriggered: 1
   _cooldownReset: 1
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!4 &98707808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5277270da4d38f43bcdce214ce3559b, type: 3}
@@ -7530,6 +7534,8 @@ MonoBehaviour:
   _fBDnd: {fileID: 1588833879}
   _gridParent: {fileID: 943956878}
   _prefabTileButton: {fileID: 4758558417778980639, guid: 8efb05f5f89d514468f4e9f5379a99d5, type: 3}
+  _bgInventory: {fileID: 0}
+  _durationCloseOpen: 0
   _groundData:
   - {fileID: 11400000, guid: 7230ad23d566ee848a9ec40996cffd30, type: 2}
   - {fileID: 11400000, guid: a4d29f184aa9e244f8f827fb7f95b00c, type: 2}
@@ -9651,7 +9657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592198217}
   m_LocalRotation: {x: -0.000000029802322, y: 0.000000010225085, z: -0.2414045, w: 0.97042465}
-  m_LocalPosition: {x: -0.69000256, y: 18.47, z: -0.5300007}
+  m_LocalPosition: {x: -0.66, y: 18.51, z: -0.53}
   m_LocalScale: {x: 527.3667, y: 527.36707, z: 291.00525}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13835,6 +13841,8 @@ MonoBehaviour:
   _isClosed: 1
   _isTriggered: 0
   _cooldownReset: 0
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!1 &794890776
 GameObject:
   m_ObjectHideFlags: 0
@@ -16161,6 +16169,8 @@ MonoBehaviour:
   _isClosed: 1
   _isTriggered: 1
   _cooldownReset: 2
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!1 &943956878
 GameObject:
   m_ObjectHideFlags: 0
@@ -30826,6 +30836,7 @@ MonoBehaviour:
   _dialogContent: {fileID: 7050394040245848421}
   _dialogScrollBar: {fileID: 1286909591}
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
+  _dialogFBEnd: {fileID: 0}
   _dialogSpeed: 0.01
   _titlesText: {fileID: 523940195}
   _titlesString:
@@ -40958,6 +40969,8 @@ MonoBehaviour:
   _isClosed: 0
   _isTriggered: 0
   _cooldownReset: 0
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!1 &2077631851
 GameObject:
   m_ObjectHideFlags: 0
@@ -46802,6 +46815,8 @@ MonoBehaviour:
   _isClosed: 1
   _isTriggered: 0
   _cooldownReset: 0
+  _arrowIcon: {fileID: 0}
+  _timeRotateArrow: 0
 --- !u!1 &2125585167
 GameObject:
   m_ObjectHideFlags: 0
