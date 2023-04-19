@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 
 public class RecyclingManager : MonoBehaviour
@@ -15,7 +16,8 @@ public class RecyclingManager : MonoBehaviour
 
     private bool _hasInfinitRecycling;
     private int _maxRecycling;
-    private int _currentLeftRecycling;
+    // private int _currentLeftRecycling;
+    private bool _isSelected;
 
     private void Awake()
     {
@@ -27,16 +29,17 @@ public class RecyclingManager : MonoBehaviour
         _recycling.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
 
-        if (!activateOrNot)
-            return;
-        gameObject.GetComponentInChildren<Button>().interactable = activateOrNot;
+        // if (!activateOrNot)
+        //     return;
+
+        //gameObject.GetComponentInChildren<Button>().interactable = true;
     }
 
-    public void InitNbRecycling(int number, bool hasInfinit)
+    public void InitNbRecycling(bool hasInfinit)
     {
         _hasInfinitRecycling = hasInfinit;
-        _maxRecycling = number;
-        _currentLeftRecycling = _maxRecycling;
+        // _maxRecycling = number;
+        // _currentLeftRecycling = _maxRecycling;
         _recyclingNbText.gameObject.SetActive(!_hasInfinitRecycling);
         UpdateDisplayRecyclingNbLeft();
     }
@@ -45,12 +48,12 @@ public class RecyclingManager : MonoBehaviour
     {
         if (_hasInfinitRecycling) return;
 
-        _currentLeftRecycling--;
+        // _currentLeftRecycling--;
 
-        if (_currentLeftRecycling <= 0)
+        if (MapManager.Instance.NbOfRecycling <= 0)
         {
             gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
-            gameObject.GetComponentInChildren<Button>().interactable = false;
+            // gameObject.GetComponentInChildren<Button>().interactable = false;
         }
 
         UpdateDisplayRecyclingNbLeft();
@@ -59,6 +62,33 @@ public class RecyclingManager : MonoBehaviour
     private void UpdateDisplayRecyclingNbLeft()
     {
         if (!_hasInfinitRecycling)
-            _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
+            _recyclingNbText.text = $"{MapManager.Instance.NbOfRecycling} restant(s)";
+        // _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
+    }
+
+    public void ActivateButton()
+    {
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        
+        _isSelected = true;
+        OnEnter();
+    }
+
+    public void OnEnter()
+    {
+        GetComponentInChildren<Image>().color = Color.yellow;
+    }
+
+    public void OnExit()
+    {
+        if (_isSelected) return;
+        
+        GetComponentInChildren<Image>().color = Color.white;
+    }
+
+    public void DeactivateButton()
+    {
+        _isSelected = false;
+        OnExit();
     }
 }

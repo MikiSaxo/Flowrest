@@ -18,9 +18,9 @@ MonoBehaviour:
   HasInventory: 1
   StartNbState: 9
   StartNbAllState: 01000000000000000200000000000000050000000000000000000000000000000000000005000000
-  HasRecycling: 0
+  HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 2
+  NbOfRecycling: 5
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -31,14 +31,13 @@ MonoBehaviour:
   QuestDescription: 2 fleur de savanne + 1 fleur d'eau
   QuestImage: {fileID: 21300000, guid: 8335a323303f9b946b5e53898dbf5d1c, type: 3}
   QuestFloor: 
-  QuestFlower: 020000000400000004000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 
-  NumberTileChain: 13
+  QuestTileChain: 00000000
+  NumberTileChain: 2
   QuestTileCount: 
   NumberTileCount: 5
   CharacterName: Michel
   DialogBeginning:
   - Je mange des cailloux
-  DialogEnd:
-  - 
+  DialogEnd: []
