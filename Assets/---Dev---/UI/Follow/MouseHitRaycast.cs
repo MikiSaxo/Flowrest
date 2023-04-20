@@ -28,7 +28,7 @@ public class MouseHitRaycast : MonoBehaviour
 
     void Update()
     {
-        if(_isBlocked) return;
+        if(_isBlocked || MapManager.Instance.IsPosing) return;
         
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -41,6 +41,9 @@ public class MouseHitRaycast : MonoBehaviour
                 if(_lastGroundHit != null)
                     _lastGroundHit.OnExitPointer();
 
+                if(Input.GetMouseButtonDown(0))
+                    MapManager.Instance.ResetBig();
+                
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
                 IsOnGround = false;
                 

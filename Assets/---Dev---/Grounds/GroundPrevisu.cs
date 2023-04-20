@@ -23,8 +23,8 @@ public class GroundPrevisu : MonoBehaviour
     public void ActivateIcon(int index)
     {
         // _sprRnd.sprite = _iconTile[indexTile];
-        _sprRnd.sprite = SetupUIGround.Instance.GetGroundUIData(index).Icon;
-        _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIcon;
+        // _sprRnd.sprite = SetupUIGround.Instance.GetGroundUIData(index).Icon;
+        _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIconWhiter;
         _sprRnd.enabled = true;
         _indexIcon = index;
 
@@ -58,7 +58,7 @@ public class GroundPrevisu : MonoBehaviour
     public void UpdateSwap(bool state)
     {
         _sprRnd.enabled = state;
-        _sprRnd.sprite = _noSwap;
+        // _sprRnd.sprite = _noSwap;
     }
 
     public Sprite GetIconTile(int index)

@@ -147,8 +147,11 @@ public class GroundStateManager : MonoBehaviour
         if (IsProtectedPrevisu) return;
 
         _fbPrevisu.ActivateIcon((int)state);
-        if (state == _currentState)
-            _fbPrevisu.DeactivateIcon();
+        // if (state == _currentState)
+        //     _fbPrevisu.transform.DOScale(2, 0);
+        // else
+        //     _fbPrevisu.transform.DOScale(3, 0);
+        //     _fbPrevisu.DeactivateIcon();
     }
 
     public void ChangeMesh(int meshNb)
@@ -295,11 +298,12 @@ public class GroundStateManager : MonoBehaviour
 
     public void LaunchDropFX()
     {
-        _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
-        _colorOtherSwap = Color.white;
+        _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIconWhiter;
+        // _colorOtherSwap = Color.white;
         // _colorOtherSwap.r -= .1f;
         // _colorOtherSwap.g -= .1f;
         // _colorOtherSwap.b -= .1f;
+        
         foreach (var grnd in _saveGrndToUpdate)
         {
             if (grnd.Key.IsProtected) continue;
@@ -315,7 +319,7 @@ public class GroundStateManager : MonoBehaviour
 
     IEnumerator CorouDropFX(AllStates newState, float angle, Transform parent, Color color)
     {
-        if (_currentState == newState) yield break;
+        // if (_currentState == newState) yield break;
 
         yield return new WaitForSeconds(OFFSET_TIMING * angle);
 
