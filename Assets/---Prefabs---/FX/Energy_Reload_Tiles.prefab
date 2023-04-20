@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 6619219405252576780}
   - component: {fileID: 8624772113205974465}
   - component: {fileID: 7606758736659369457}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Energy_Reload_Tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6619219405252576780
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7259152830963122489}
   m_LocalRotation: {x: -0.13352393, y: 0.69492286, z: -0.69531745, w: -0.1256478}
-  m_LocalPosition: {x: 0.4783002, y: 18, z: -0.22}
+  m_LocalPosition: {x: 0.66, y: 2.31, z: -0.24}
   m_LocalScale: {x: 1.0743123, y: 1.1171949, z: 0.72559255}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,8 +169,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 3
+      scalar: 3
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -985,20 +985,20 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
-          outSlope: 1
+          inSlope: 0.56249994
+          outSlope: 0.56249994
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.16816816
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
+          value: 0.7297287
+          inSlope: 0.34974098
+          outSlope: 0.34974098
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.5795796
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2

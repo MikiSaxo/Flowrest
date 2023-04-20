@@ -14,6 +14,7 @@ public class EnergyManager : MonoBehaviour
     [Header("Setup")][SerializeField] private Slider _energyBar;
     [SerializeField] private Slider _hitEnergyBar;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
+    [SerializeField] private WaveEffect _waveEffect;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -46,6 +47,9 @@ public class EnergyManager : MonoBehaviour
         _hitEnergyBar.value = _energyValue;
         _numberToDisplay.text = $"{_energyValue}";
         _currentEnergy = _energyValue;
+        
+        if(startEnergy == 0)
+            _waveEffect.StartGrowOnAlways();
     }
 
     public void ReduceEnergyBySwap()
@@ -90,6 +94,7 @@ public class EnergyManager : MonoBehaviour
             if (_energyValue <= 0)
                 _energyValue = 0;
             
+            _waveEffect.StartGrowOnAlways();
             _energyBar.value = _energyValue;
             _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
         }
@@ -100,6 +105,7 @@ public class EnergyManager : MonoBehaviour
             // if (_energyValue < 1)
             //     energyValue = 0;
             //
+            _waveEffect.StopGrownOn();
             _hitEnergyBar.DOValue(1, .4f);
             _energyBar.DOValue(1, .4f);
         }
