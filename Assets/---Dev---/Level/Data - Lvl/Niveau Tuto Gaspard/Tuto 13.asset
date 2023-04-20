@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Tuto 13
   LevelFolder: Level Editor
-  EnergyAtStart: 5
-  HasInventory: 1
+  EnergyAtStart: 4
+  HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 1
   HasInfinitRecycling: 0
   NbOfRecycling: 0
@@ -28,19 +28,19 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  QuestDescription: 'Niveau Bonus : Remplir de <color=#8bdb76>Grassias</color>'
-  QuestImage: {fileID: 21300000, guid: 008359f04b6a3044b8945e229e8bc124, type: 3}
-  QuestFloor: 
+  QuestDescription: 'Tuto 13  : Remplir de Grassias'
+  QuestImage: {fileID: 21300000, guid: 9fd8e852e3917a34fa7f293802f4e21c, type: 3}
+  QuestFloor: 00000000
   QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 00000000
-  NumberTileChain: 2
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.Io
   DialogBeginning:
-  - "Aujourd'hui, c'est ta derni\xE8re mission avant que l'on te donne un peu plus
-    de libert\xE9."
-  - "J'esp\xE8re que tu es pr\xEAt."
+  - "Comme promis hier, essaye d'utiliser tes nouvelles comp\xE9tences pour r\xE9ussir
+    \xE0 r\xE9pondre \xE0 cette commande."
+  - "Si tu r\xE9ussis, je te laisserais plus de libert\xE9s."
   DialogEnd:
-  - Bravo, je te retrouve demain pour ton premier jour en autonomie.
+  - "Je savais que tu pouvais le faire, bien jou\xE9 \xE0 toi."
