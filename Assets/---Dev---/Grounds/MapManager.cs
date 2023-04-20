@@ -163,6 +163,9 @@ public class MapManager : MonoBehaviour
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
 
+        // Reset Wave Energy
+        EnergyManager.Instance.StopWaveEffect();
+
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
 
@@ -467,10 +470,9 @@ public class MapManager : MonoBehaviour
 
         ResetPreview();
 
-       
 
         yield return new WaitForSeconds(_timeToSwap);
-        
+
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
 
@@ -481,7 +483,7 @@ public class MapManager : MonoBehaviour
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
-        
+
         // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
@@ -489,7 +491,7 @@ public class MapManager : MonoBehaviour
 
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
-        
+
         // Get Bloc to UI
         if (_hasInventory)
         {
@@ -500,7 +502,7 @@ public class MapManager : MonoBehaviour
             ItemCollectedManager.Instance.SpawnFBGroundCollected(infoGrndData.Icon, infoGrndData.ColorIcon,
                 String.Empty, tileToAdd);
         }
-        
+
         yield return new WaitForSeconds(1.25f);
 
         // Spend energy
@@ -508,7 +510,7 @@ public class MapManager : MonoBehaviour
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-        if(_lastGroundSelected != null)
+        if (_lastGroundSelected != null)
             _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
 
         // Bloc for Next Swap
@@ -592,7 +594,7 @@ public class MapManager : MonoBehaviour
     public void UseRecycling()
     {
         if (ScreensManager.Instance.GetIsDialogTime()) return;
-        
+
         if (LastObjButtonSelected == null || NbOfRecycling <= 0)
         {
             WantToRecycle();
@@ -601,7 +603,7 @@ public class MapManager : MonoBehaviour
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
-        
+
         // Remove 1 from button
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
         // Add 1 to number of interaction
@@ -610,7 +612,7 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.FollowDndDeactivate();
         // Update Nb of Recycling Left
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
-        
+
         // Reset
         ResetButtonSelected();
         ResetTwoLastSwapped();
@@ -627,9 +629,9 @@ public class MapManager : MonoBehaviour
     public void CheckIfWantToRecycle(GameObject which)
     {
         if (!_wantToRecycle) return;
-        
+
         LastObjButtonSelected = which;
-       
+
         UseRecycling();
     }
 
@@ -730,16 +732,17 @@ public class MapManager : MonoBehaviour
     public void ForceResetBig()
     {
         print("force reset all");
-        
+
         AllReset();
     }
-    
+
     public void ResetBig()
     {
-        if (ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || MouseHitRaycast.Instance.IsOnGround) return;
+        if (ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI ||
+            MouseHitRaycast.Instance.IsOnGround) return;
 
         ScreensManager.Instance.UpdateTutoArrow(false);
-        
+
         if (IsTuto) return;
 
         print("reset big");

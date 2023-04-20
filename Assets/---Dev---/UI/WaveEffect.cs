@@ -34,6 +34,7 @@ public class WaveEffect : MonoBehaviour
         _canMove = false;
         _img.DOKill();
         _img.DOFade(0, 0);
+        _canMove = true;
     }
     
     private void GrowOn()
