@@ -15,6 +15,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private Slider _hitEnergyBar;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
     [SerializeField] private WaveEffect _waveEffect;
+    [SerializeField] private Image _vignettage;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -30,6 +31,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private int _costByLandingGround;
 
     [Header("Timing")] [SerializeField] private float _timeInitAnim;
+    [Header("Timing")] [SerializeField] private float _timeVignettage;
 
     private int _energyValue;
     private int _currentEnergy;
@@ -134,6 +136,8 @@ public class EnergyManager : MonoBehaviour
             //     energyValue = 0;
             //
             BounceEnergy();
+
+            _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage);});
 
             _waveEffect.StopGrownOn();
             _hitEnergyBar.DOValue(1, .4f);
