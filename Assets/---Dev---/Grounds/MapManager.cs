@@ -736,7 +736,7 @@ public class MapManager : MonoBehaviour
     
     public void ResetBig()
     {
-        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || FollowMouse.Instance.IsOnGround) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || MouseHitRaycast.Instance.IsOnGround) return;
 
         ScreensManager.Instance.UpdateTutoArrow(false);
         

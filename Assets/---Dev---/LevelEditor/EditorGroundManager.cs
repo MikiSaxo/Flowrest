@@ -30,7 +30,7 @@ public class EditorGroundManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
+        if (!other.gameObject.GetComponentInParent<MouseHitRaycast>()) return;
 
         _isEntered = true;
 
@@ -40,7 +40,7 @@ public class EditorGroundManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
+        if (!other.gameObject.GetComponentInParent<MouseHitRaycast>()) return;
 
         _isEntered = false;
 

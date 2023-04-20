@@ -24,6 +24,10 @@ public class WaveEffect : MonoBehaviour
     {
         GrowOn();
     }
+    public void StartGrowOneTime()
+    {
+        GrowOneTime();
+    }
 
     public void StopGrownOn()
     {
@@ -43,6 +47,12 @@ public class WaveEffect : MonoBehaviour
         _img.DOFade(1, 0);
         _img.DOFade(0, _timeGrowOn);
         gameObject.transform.DOScale(_scaleMax, _timeGrowOn).OnComplete(Reset);
+    }
+    private void GrowOneTime()
+    {
+        _img.DOFade(1, 0);
+        _img.DOFade(0, _timeGrowOn);
+        gameObject.transform.DOScale(_scaleMax, _timeGrowOn);
     }
 
     private void Reset()
