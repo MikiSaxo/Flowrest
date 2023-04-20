@@ -24,7 +24,7 @@ public class GroundPrevisu : MonoBehaviour
     {
         // _sprRnd.sprite = _iconTile[indexTile];
         // _sprRnd.sprite = SetupUIGround.Instance.GetGroundUIData(index).Icon;
-        _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIconWhiter;
+        _sprRnd.color = SetupUIGround.Instance.GetGroundUIData(index).ColorIcon;
         _sprRnd.enabled = true;
         _indexIcon = index;
 

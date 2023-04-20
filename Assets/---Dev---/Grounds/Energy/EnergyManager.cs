@@ -15,6 +15,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private Slider _hitEnergyBar;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
     [SerializeField] private WaveEffect _waveEffect;
+    [SerializeField] private Image _vignettage;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -29,12 +30,17 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] private int _costByLandingGround;
 
+    [Header("Timing")] [SerializeField] private float _timeInitAnim;
+    [Header("Timing")] [SerializeField] private float _timeVignettage;
+
     private int _energyValue;
     private int _currentEnergy;
     private int _tempValue;
     private float _timerSpawnFBCrystal;
+    private bool _isInit;
+    private float _lerpTiming;
 
-    private void Awake()
+        private void Awake()
     {
         Instance = this;
 
@@ -44,14 +50,28 @@ public class EnergyManager : MonoBehaviour
     public void InitEnergy(int startEnergy)
     {
         _energyValue = startEnergy;
-
-        _energyBar.value = _energyValue;
-        _hitEnergyBar.value = _energyValue;
-        _numberToDisplay.text = $"{_energyValue}";
+        StartCoroutine(AnimInitEnergy(startEnergy));
+        _energyBar.value = 0;
+        _hitEnergyBar.value = 0;
+        _numberToDisplay.text = $"{0}";
         _currentEnergy = _energyValue;
+        _lerpTiming = 0;
 
         if (startEnergy == 0)
             _waveEffect.StartGrowOnAlways();
+    }
+
+    IEnumerator AnimInitEnergy(int energy)
+    {
+        for (int i = 0; i <= energy; i++)
+        {
+            yield return new WaitForSeconds(_timeInitAnim);
+            _isInit = true;
+            _numberToDisplay.text = $"{i}";
+        }
+
+        _isInit = false;
+        BounceEnergy();
     }
 
     public void ReduceEnergyBySwap()
@@ -115,6 +135,10 @@ public class EnergyManager : MonoBehaviour
             // if (_energyValue < 1)
             //     energyValue = 0;
             //
+            BounceEnergy();
+
+            _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage);});
+
             _waveEffect.StopGrownOn();
             _hitEnergyBar.DOValue(1, .4f);
             _energyBar.DOValue(1, .4f);
@@ -135,6 +159,21 @@ public class EnergyManager : MonoBehaviour
             ReduceEnergyBySwap();
         if (Input.GetKeyDown(KeyCode.R))
             EarnEnergyByCrystal();
+
+        if (_isInit)
+        {
+            _lerpTiming += Time.deltaTime / (_currentEnergy * _timeInitAnim);
+            
+            float newValue = Mathf.Lerp(0, 1, _lerpTiming);
+            
+            _energyBar.value = newValue;
+            _hitEnergyBar.value = newValue;
+        }
+    }
+
+    private void BounceEnergy()
+    {
+        gameObject.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
     }
 
     public bool IsEnergyInferiorToCostSwap()
