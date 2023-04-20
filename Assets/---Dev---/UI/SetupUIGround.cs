@@ -29,7 +29,7 @@ public class SetupUIGround : MonoBehaviour
     private List<GameObject> _stockTileButton = new List<GameObject>();
     private Vector2 _widthBG;
     private Vector2 _widthBGsaveStart;
-    private Vector2 _widthBGTest;
+    private Vector2 _widthBGCurrent;
     private Vector2 _widthIcon;
 
     private void Awake()
@@ -38,7 +38,7 @@ public class SetupUIGround : MonoBehaviour
 
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
         _widthBGsaveStart = new Vector2(bgSize.width, bgSize.height);
-        _widthBGTest = new Vector2(bgSize.width, bgSize.height);
+        _widthBGCurrent = new Vector2(bgSize.width, bgSize.height);
 
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
         _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
@@ -140,10 +140,10 @@ public class SetupUIGround : MonoBehaviour
 
         var bgSize = _bgInventory.GetComponent<RectTransform>().rect;
         _widthBG = new Vector2(bgSize.width, bgSize.height);
-        _widthBGTest += _widthIcon;
+        _widthBGCurrent += _widthIcon;
 
         if (isStart)
-            ReSizeBgInventory(_widthBGTest, 0);
+            ReSizeBgInventory(_widthBGCurrent, 0);
         else
             ReSizeBgInventory(_widthIcon + _widthBG, _durationCloseOpen);
     }
@@ -169,6 +169,7 @@ public class SetupUIGround : MonoBehaviour
 
     private void ReSizeBgInventory(Vector2 newSize, float duration)
     {
+        print("resize");
         _bgInventory.GetComponent<RectTransform>().DOKill();
         _bgInventory.GetComponent<RectTransform>().DOSizeDelta(newSize, duration).SetEase(Ease.OutSine);
     }
@@ -200,6 +201,7 @@ public class SetupUIGround : MonoBehaviour
 
         _stockTileButton.Clear();
 
+        _widthBGCurrent = _widthBGsaveStart;
         ReSizeBgInventory(_widthBGsaveStart, 0);
     }
 
