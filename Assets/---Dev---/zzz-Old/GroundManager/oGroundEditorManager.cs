@@ -30,14 +30,14 @@ public class oGroundEditorManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Detect if the trigger has entered
-        if (other.gameObject.GetComponentInParent<FollowMouse>())
+        if (other.gameObject.GetComponentInParent<MouseHitRaycast>())
             OnEntered();
     }
 
     private void OnTriggerExit(Collider other)
     {
         // Detect if the trigger has quit
-        if (other.gameObject.GetComponentInParent<FollowMouse>())
+        if (other.gameObject.GetComponentInParent<MouseHitRaycast>())
             OnLeaved();
     }
 

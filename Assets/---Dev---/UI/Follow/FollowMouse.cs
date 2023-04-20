@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +14,6 @@ public class FollowMouse : MonoBehaviour
     private bool _isOnUI;
     private bool _isBlocked;
 
-    [SerializeField] private float _maxDistance = 1000;
-    [SerializeField] private LayerMask _layerToHit;
-
     private Vector2Int _lastCoordsHit;
     private GroundIndicator _lastGroundHit;
     
@@ -30,47 +26,16 @@ public class FollowMouse : MonoBehaviour
     {
         if(_isBlocked) return;
         
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _layerToHit))
-        {
-            var newBloc = hit.collider.gameObject.GetComponentInParent<GroundIndicator>();
-
-            if (newBloc == null)
-            {
-                if(_lastGroundHit != null)
-                    _lastGroundHit.OnExitPointer();
-
-                _lastCoordsHit = new Vector2Int(-1000, -1000);
-                IsOnGround = false;
-                
-                return;
-            }
-
-            if (newBloc.GetParentCoords() != _lastCoordsHit)
-            {
-                if(_lastGroundHit != null)
-                    _lastGroundHit.OnExitPointer();
-                
-                _lastCoordsHit = newBloc.GetParentCoords();
-                _lastGroundHit = newBloc;
-                _lastGroundHit.OnEnterPointer();
-                IsOnGround = true;
-            }
-        }
+         if (Camera.main != null)
+         {
+             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
-        //if(_isBlocked) return;
+             if (!_plane.Raycast(ray, out var distance)) return;
         
-        // if (Camera.main != null)
-        // {
-        //     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //
-        //     if (!_plane.Raycast(ray, out var distance)) return;
-        //
-        //     _worldPosition = ray.GetPoint(distance);
-        // }
-        //
-        // transform.position = _worldPosition;
+             _worldPosition = ray.GetPoint(distance);
+         }
+        
+         transform.position = _worldPosition;
     }
 
     public void IsBlockMouse(bool yesOrNot)

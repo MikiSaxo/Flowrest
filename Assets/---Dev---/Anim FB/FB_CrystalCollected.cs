@@ -17,6 +17,7 @@ public class FB_CrystalCollected : MonoBehaviour
     [SerializeField] private float _durationDispawn;
     
     private Transform _tpEndPoint;
+    private int _value;
 
     public void Init(int value, Transform tpEndPoint)//, float durSpawn, float durWait, float durDispawn)
     {
@@ -24,6 +25,7 @@ public class FB_CrystalCollected : MonoBehaviour
         _text.color = value <= 0 ? Color.red : Color.green;
         
         _tpEndPoint = tpEndPoint;
+        _value = value;
 
         ResetAll();
         SpawnAnim();
@@ -56,6 +58,7 @@ public class FB_CrystalCollected : MonoBehaviour
     private void DeleteObj()
     {
         KillTween();
+        // EnergyManager.Instance.UpdateEnergy(_value);
         ItemCollectedManager.Instance.DeleteFB(gameObject);
     }
 

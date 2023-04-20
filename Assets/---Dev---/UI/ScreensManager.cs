@@ -83,7 +83,7 @@ public class ScreensManager : MonoBehaviour
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 
-        FollowMouse.Instance.IsBlockMouse(true);
+        MouseHitRaycast.Instance.IsBlockMouse(true);
 
         SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
     }
@@ -99,7 +99,7 @@ public class ScreensManager : MonoBehaviour
 
         // RemoveLastDialog();
 
-        FollowMouse.Instance.IsBlockMouse(false);
+        MouseHitRaycast.Instance.IsBlockMouse(false);
 
         _dialogParent.SetActive(false);
 
@@ -120,7 +120,7 @@ public class ScreensManager : MonoBehaviour
 
         // Block mouse
         // if (!isMiddleDialog)
-        FollowMouse.Instance.IsBlockMouse(true);
+        MouseHitRaycast.Instance.IsBlockMouse(true);
 
         // Clear two list of old dialogs
         if (_dialogsList.Count != 0)
@@ -203,7 +203,7 @@ public class ScreensManager : MonoBehaviour
     {
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
-        FollowMouse.Instance.IsBlockMouse(true);
+        MouseHitRaycast.Instance.IsBlockMouse(true);
     }
 
     private void Update()
@@ -280,7 +280,7 @@ public class ScreensManager : MonoBehaviour
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
-        FollowMouse.Instance.IsBlockMouse(state);
+        MouseHitRaycast.Instance.IsBlockMouse(state);
         _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = state;
 
         if (!state)
@@ -323,7 +323,7 @@ public class ScreensManager : MonoBehaviour
 
         _bg.SetActive(false);
         _gameOverParent.SetActive(false);
-        FollowMouse.Instance.IsBlockMouse(false);
+        MouseHitRaycast.Instance.IsBlockMouse(false);
         _menuPauseParent.SetActive(false);
         // _dialoguesParent.SetActive(false);
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();

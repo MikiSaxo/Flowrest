@@ -508,7 +508,8 @@ public class MapManager : MonoBehaviour
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-        _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+        if(_lastGroundSelected != null)
+            _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
 
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)
@@ -735,7 +736,7 @@ public class MapManager : MonoBehaviour
     
     public void ResetBig()
     {
-        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || FollowMouse.Instance.IsOnGround) return;
+        if (IsOnUI || ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI || MouseHitRaycast.Instance.IsOnGround) return;
 
         ScreensManager.Instance.UpdateTutoArrow(false);
         

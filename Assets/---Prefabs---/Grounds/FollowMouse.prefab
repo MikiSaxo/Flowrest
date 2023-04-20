@@ -156,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 570002376980673861}
   - component: {fileID: 570002376980673860}
-  - component: {fileID: 570002376980673865}
+  - component: {fileID: 3341974292888781549}
   m_Layer: 0
   m_Name: FollowMouse
   m_TagString: Untagged
@@ -188,7 +188,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570002376980673864}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &570002376980673865
+--- !u!114 &3341974292888781549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,6 +197,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 570002376980673864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73e79e06a34fb654181301245ceb4ceb, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d8413c474935b2429dc7a5390084130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 1000
+  _layerToHit:
+    serializedVersion: 2
+    m_Bits: 0

@@ -169,7 +169,6 @@ public class SetupUIGround : MonoBehaviour
 
     private void ReSizeBgInventory(Vector2 newSize, float duration)
     {
-        print("resize");
         _bgInventory.GetComponent<RectTransform>().DOKill();
         _bgInventory.GetComponent<RectTransform>().DOSizeDelta(newSize, duration).SetEase(Ease.OutSine);
     }
