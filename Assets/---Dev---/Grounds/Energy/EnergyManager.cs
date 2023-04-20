@@ -16,6 +16,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
     [SerializeField] private WaveEffect _waveEffect;
     [SerializeField] private Image _vignettage;
+    [SerializeField] private GameObject _maskParent;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -173,7 +174,7 @@ public class EnergyManager : MonoBehaviour
 
     private void BounceEnergy()
     {
-        gameObject.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+        _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
     }
 
     public bool IsEnergyInferiorToCostSwap()
