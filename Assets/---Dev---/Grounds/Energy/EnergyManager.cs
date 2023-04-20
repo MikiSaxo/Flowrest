@@ -29,12 +29,16 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] private int _costByLandingGround;
 
+    [Header("Timing")] [SerializeField] private float _timeInitAnim;
+
     private int _energyValue;
     private int _currentEnergy;
     private int _tempValue;
     private float _timerSpawnFBCrystal;
+    private bool _isInit;
+    private float _lerpTiming;
 
-    private void Awake()
+        private void Awake()
     {
         Instance = this;
 
@@ -44,14 +48,28 @@ public class EnergyManager : MonoBehaviour
     public void InitEnergy(int startEnergy)
     {
         _energyValue = startEnergy;
-
-        _energyBar.value = _energyValue;
-        _hitEnergyBar.value = _energyValue;
-        _numberToDisplay.text = $"{_energyValue}";
+        StartCoroutine(AnimInitEnergy(startEnergy));
+        _energyBar.value = 0;
+        _hitEnergyBar.value = 0;
+        _numberToDisplay.text = $"{0}";
         _currentEnergy = _energyValue;
+        _lerpTiming = 0;
 
         if (startEnergy == 0)
             _waveEffect.StartGrowOnAlways();
+    }
+
+    IEnumerator AnimInitEnergy(int energy)
+    {
+        for (int i = 0; i <= energy; i++)
+        {
+            yield return new WaitForSeconds(_timeInitAnim);
+            _isInit = true;
+            _numberToDisplay.text = $"{i}";
+        }
+
+        _isInit = false;
+        BounceEnergy();
     }
 
     public void ReduceEnergyBySwap()
@@ -115,6 +133,8 @@ public class EnergyManager : MonoBehaviour
             // if (_energyValue < 1)
             //     energyValue = 0;
             //
+            BounceEnergy();
+
             _waveEffect.StopGrownOn();
             _hitEnergyBar.DOValue(1, .4f);
             _energyBar.DOValue(1, .4f);
@@ -135,6 +155,21 @@ public class EnergyManager : MonoBehaviour
             ReduceEnergyBySwap();
         if (Input.GetKeyDown(KeyCode.R))
             EarnEnergyByCrystal();
+
+        if (_isInit)
+        {
+            _lerpTiming += Time.deltaTime / (_currentEnergy * _timeInitAnim);
+            
+            float newValue = Mathf.Lerp(0, 1, _lerpTiming);
+            
+            _energyBar.value = newValue;
+            _hitEnergyBar.value = newValue;
+        }
+    }
+
+    private void BounceEnergy()
+    {
+        gameObject.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
     }
 
     public bool IsEnergyInferiorToCostSwap()
