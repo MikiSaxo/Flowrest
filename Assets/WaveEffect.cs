@@ -34,6 +34,12 @@ public class WaveEffect : MonoBehaviour
     
     private void GrowOn()
     {
+        if (!_canMove)
+        {
+            _canMove = true;
+            return;
+        }
+        
         _img.DOFade(1, 0);
         _img.DOFade(0, _timeGrowOn);
         gameObject.transform.DOScale(_scaleMax, _timeGrowOn).OnComplete(Reset);

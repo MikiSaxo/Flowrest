@@ -8968,26 +8968,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &901927441 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 499520350409423180, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-  m_PrefabInstance: {fileID: 8084888582564323721}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &901927443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 901927441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad90f5dc0c179754381aa795488b7ea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scaleMax: 2
-  _timeGrowOn: 1
-  _timeWaitReset: 0.5
 --- !u!1 &907749187
 GameObject:
   m_ObjectHideFlags: 0
@@ -27530,42 +27510,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480315729}
     m_Modifications:
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: afde936e739386f4390378967871141f, type: 3}
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_FillMethod
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3394477442539927090, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 7553441074848968457, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 218.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7553441074848968457, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 218.0964
-      objectReference: {fileID: 0}
-    - target: {fileID: 7553441074848968457, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8084888582363094881, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -27586,10 +27530,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: --EnergyManager--
       objectReference: {fileID: 0}
-    - target: {fileID: 8084888582913593004, guid: e7023709c89eae948a343f5d9311f110, type: 3}
-      propertyPath: _waveEffect
-      value: 
-      objectReference: {fileID: 901927443}
     - target: {fileID: 8084888582913593005, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

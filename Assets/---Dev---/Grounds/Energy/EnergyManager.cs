@@ -81,7 +81,7 @@ public class EnergyManager : MonoBehaviour
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }
-    private void UpdateEnergy(int value)
+    public void UpdateEnergy(int value)
     {
         // value *= _baseInf;
         _energyValue += value;
