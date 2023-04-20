@@ -140,7 +140,7 @@ public class EnergyManager : MonoBehaviour
 
             _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage);});
 
-            _waveEffect.StopGrownOn();
+            StopWaveEffect();
             _hitEnergyBar.DOValue(1, .4f);
             _energyBar.DOValue(1, .4f);
         }
@@ -175,6 +175,11 @@ public class EnergyManager : MonoBehaviour
     private void BounceEnergy()
     {
         _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+    }
+
+    public void StopWaveEffect()
+    {
+        _waveEffect.StopGrownOn();
     }
 
     public bool IsEnergyInferiorToCostSwap()

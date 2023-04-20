@@ -80,6 +80,10 @@ public class ScreensManager : MonoBehaviour
     public void VictoryScreen()
     {
         MapManager.Instance.IsVictory = true;
+        
+        // Reset Wave Energy
+        EnergyManager.Instance.StopWaveEffect();
+        
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 
@@ -324,6 +328,7 @@ public class ScreensManager : MonoBehaviour
         _bg.SetActive(false);
         _gameOverParent.SetActive(false);
         MouseHitRaycast.Instance.IsBlockMouse(false);
+
         _menuPauseParent.SetActive(false);
         // _dialoguesParent.SetActive(false);
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
