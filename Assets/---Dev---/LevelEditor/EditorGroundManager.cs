@@ -22,6 +22,7 @@ public class EditorGroundManager : MonoBehaviour
     private Vector2Int _coords;
 
     private const char NONE = 'N';
+    private const char MOUNTAIN = 'M';
 
     private void Start()
     {
@@ -105,6 +106,9 @@ public class EditorGroundManager : MonoBehaviour
         _currentCharState = EditorMapManager.Instance.GetCharSelectedButton();
 
         EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
+
+        if (_currentCharState == MOUNTAIN)
+            DestroyEnergy();
     }
 
     private void InstantiateEnergy()

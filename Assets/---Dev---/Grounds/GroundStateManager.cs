@@ -43,7 +43,6 @@ public class GroundStateManager : MonoBehaviour
     [SerializeField] private GameObject[] _meshes;
 
     [Header("Feedbacks")] [SerializeField] private GroundPrevisu _fbPrevisu;
-    [SerializeField] private GameObject _fbReloadEnergy;
     [SerializeField] private FB_Arrow _fbArrow;
 
     [Header("Anim values")] [SerializeField]
@@ -56,6 +55,8 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
+    [SerializeField] private GameObject _fxTileBlocked;
+    [SerializeField] private GameObject _fxTileFree;
 
 
     private AllStates _currentState;
@@ -398,7 +399,12 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateFBReloadEnergy(bool state)
     {
-        _fbReloadEnergy.SetActive(state);
+        _fxTileBlocked.SetActive(state);
+        
+        if (!state)
+        {
+            Instantiate(_fxTileFree, transform);
+        }
     }
 
     public void UpdateIsSwapping(bool state)
