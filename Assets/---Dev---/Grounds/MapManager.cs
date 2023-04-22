@@ -59,6 +59,7 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
+    private List<string[]> _mapGridAllMove = new List<string[]>();
     private GameObject _lastGroundSelected;
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
@@ -127,6 +128,7 @@ public class MapManager : MonoBehaviour
         var lineJson = File.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
         _mapInfo = _mapConstructData.Map.Split("\n");
+        _mapGridAllMove.Add(_mapInfo);
 
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
@@ -247,10 +249,10 @@ public class MapManager : MonoBehaviour
             _levelData[_currentLevel].QuestImage);
 
         // Init Level
-        InitializeLevel(_mapSize);
+        InitializeFloor(_mapSize);
     }
 
-    private void InitializeLevel(Vector2Int sizeMap)
+    private void InitializeFloor(Vector2Int sizeMap)
     {
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -268,6 +270,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+        // _mapGridAllMove.Add(_mapGrid);
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -443,6 +446,9 @@ public class MapManager : MonoBehaviour
         // Update map
         _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
+
+        // Update map All move
+        // _mapGridAllMove.Add(_mapGrid);
 
         // Change position
         var lastSelecPos = _lastGroundSelected.transform.position;
@@ -727,6 +733,30 @@ public class MapManager : MonoBehaviour
     public string[] GetDialogAtVictory()
     {
         return _levelData[_currentLevel].DialogEnd;
+    }
+
+    public void GoToLastMove()
+    {
+        // if (_mapGridAllMove.Count <= 1) return;
+
+        print("go to last move");
+
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                string line = _mapGridAllMove[^1][y];
+                // Get the actual char of the string of the actual line
+                char whichEnvironment = line[x];
+
+                if (dico[whichEnvironment] != AllStates.None)
+                {
+                    _mapGrid[x, y].GetComponent<GroundStateManager>().ForceChangeState(dico[whichEnvironment]);
+                }
+            }
+        }
+
+        // _mapGridAllMove.RemoveAt(_mapGridAllMove.Count - 1);
     }
 
     public void ForceResetBig()

@@ -143,6 +143,18 @@ public class GroundStateManager : MonoBehaviour
         _tempCurrentState = _currentState;
     }
 
+    public void ForceChangeState(AllStates state)
+    {
+        if (state != _currentState)
+            BounceAnim();
+
+        _currentState = state;
+        currentGroundBase = _allState[(int)state];
+        currentGroundBase.EnterState(this);
+        StockStatePrevisu = _currentState;
+        _tempCurrentState = _currentState;
+    }
+
     public void ChangeStatePrevisu(AllStates state)
     {
         if (IsProtectedPrevisu) return;
