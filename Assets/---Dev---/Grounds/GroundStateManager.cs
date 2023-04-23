@@ -69,6 +69,8 @@ public class GroundStateManager : MonoBehaviour
     private List<GroundStateManager> _stockGroundPrevisu = new List<GroundStateManager>();
     private Dictionary<GroundStateManager, int> _saveGrndToUpdate = new Dictionary<GroundStateManager, int>();
 
+    private Color _colorOtherSwap;
+
 
     #region AllState
 
@@ -133,21 +135,18 @@ public class GroundStateManager : MonoBehaviour
     {
         if (IsProtected) return;
 
-        if (state != _currentState)
-            BounceAnim();
-
-        _currentState = state;
-        currentGroundBase = _allState[(int)state];
-        currentGroundBase.EnterState(this);
-        StockStatePrevisu = _currentState;
-        _tempCurrentState = _currentState;
+        ForceChangeState(state);
     }
 
     public void ForceChangeState(AllStates state)
     {
         if (state != _currentState)
+        {
             BounceAnim();
+        }
 
+        MapManager.Instance.UpdateCurrentStateMap(_coords, state);
+        
         _currentState = state;
         currentGroundBase = _allState[(int)state];
         currentGroundBase.EnterState(this);
@@ -307,8 +306,6 @@ public class GroundStateManager : MonoBehaviour
         }
     }
 
-    private Color _colorOtherSwap;
-
     public void LaunchDropFX()
     {
         _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
@@ -316,7 +313,7 @@ public class GroundStateManager : MonoBehaviour
         // _colorOtherSwap.r -= .1f;
         // _colorOtherSwap.g -= .1f;
         // _colorOtherSwap.b -= .1f;
-        
+
         foreach (var grnd in _saveGrndToUpdate)
         {
             if (grnd.Key.IsProtected) continue;
@@ -412,7 +409,7 @@ public class GroundStateManager : MonoBehaviour
     public void UpdateFBReloadEnergy(bool state)
     {
         _fxTileBlocked.SetActive(state);
-        
+
         if (!state)
         {
             Instantiate(_fxTileFree, transform);

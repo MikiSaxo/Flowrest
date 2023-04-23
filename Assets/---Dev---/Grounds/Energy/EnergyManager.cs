@@ -179,7 +179,6 @@ public class EnergyManager : MonoBehaviour
 
     public void StopWaveEffect()
     {
-        print("stop it");
         _waveEffect.StopGrownOn();
     }
 

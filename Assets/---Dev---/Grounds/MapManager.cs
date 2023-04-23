@@ -55,11 +55,13 @@ public class MapManager : MonoBehaviour
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
 
+    private AllStates[,] _currentStateMap;
+    private List<AllStates[,]> _currentStateMapStock = new List<AllStates[,]>();
+
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
     private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
-    private List<string[]> _mapGridAllMove = new List<string[]>();
     private GameObject _lastGroundSelected;
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
@@ -128,11 +130,13 @@ public class MapManager : MonoBehaviour
         var lineJson = File.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
         _mapInfo = _mapConstructData.Map.Split("\n");
-        _mapGridAllMove.Add(_mapInfo);
+        // _mapGridAllMove.Add(_mapInfo);
 
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
+
+        _currentStateMap = new AllStates[_mapSize.x, _mapSize.y];
 
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
@@ -268,9 +272,15 @@ public class MapManager : MonoBehaviour
                     GameObject ground = Instantiate(_groundPrefab, _map.transform);
                     InitObj(ground, x, y, dico[whichEnvironment]);
                 }
+                else
+                {
+                    UpdateCurrentStateMap(x, y, dico[whichEnvironment]);
+                }
             }
         }
-        // _mapGridAllMove.Add(_mapGrid);
+
+        // Add new current state map
+        AddNewCurrentStateMap();
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -460,25 +470,29 @@ public class MapManager : MonoBehaviour
         var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
 
+        // Make them swapping true to security for non wished moves
         gLastGroundSelected.UpdateIsSwapping(true);
         gWhich.UpdateIsSwapping(true);
 
+        // Kill their tween
         _lastGroundSelected.transform.DOKill();
         which.transform.DOKill();
 
+        // Go to enter Y Pos
         gLastGroundSelected.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
         gWhich.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
-        // _lastGroundSelected.transform.DOMoveY(3,0);
-        // which.transform.DOMoveY(3,0);
 
+        // Make them jump with tween 
         _lastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
         which.transform.DOJump(lastSelecPos, 15, 1, _timeToSwap);
 
+        // Kill the preview
         ResetPreview();
 
-
+        // Wait til the jump is finished
         yield return new WaitForSeconds(_timeToSwap);
 
+        // Remove security
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
 
@@ -494,7 +508,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
 
-
+        // Launch FX to update around them
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
 
@@ -509,6 +523,7 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
+        // Wait the FX is finished
         yield return new WaitForSeconds(1.25f);
 
         // Spend energy
@@ -533,6 +548,9 @@ public class MapManager : MonoBehaviour
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
 
+        // Add new current state map
+        AddNewCurrentStateMap();
+
         // Reset protect
         gLastGroundSelected.IsProtected = false;
         gWhich.IsProtected = false;
@@ -547,7 +565,6 @@ public class MapManager : MonoBehaviour
         // Check Game Over is no recycling
         if (!_hasRecycling)
             CheckIfGameOver();
-
 
         // Allow next Swap
         IsSwapping = false;
@@ -737,26 +754,64 @@ public class MapManager : MonoBehaviour
 
     public void GoToLastMove()
     {
+        if (IsSwapping || IsPosing) return;
+
         // if (_mapGridAllMove.Count <= 1) return;
 
-        print("go to last move");
+        print("go to last move");//" :  size of _currentStateMapStock before : " + _currentStateMapStock.Count);
 
         for (int x = 0; x < _mapSize.x; x++)
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                string line = _mapGridAllMove[^1][y];
-                // Get the actual char of the string of the actual line
-                char whichEnvironment = line[x];
-
-                if (dico[whichEnvironment] != AllStates.None)
+                if (_currentStateMapStock[0][x, y] != AllStates.None)
                 {
-                    _mapGrid[x, y].GetComponent<GroundStateManager>().ForceChangeState(dico[whichEnvironment]);
+                    // print($"ole / x : {x} - y : {y} - state :{_currentStateMap[x, y]}");
+                    _mapGrid[x, y].GetComponent<GroundStateManager>()
+                        .ForceChangeState(_currentStateMapStock.Count == 1
+                            ? _currentStateMapStock[0][x, y]
+                            : _currentStateMapStock[^2][x, y]);
                 }
             }
         }
+        
+        // print("bla " + _currentStateMapStock[0][6, 4]);
+        // print("bla " +_currentStateMapStock[1][6, 4]);
 
-        // _mapGridAllMove.RemoveAt(_mapGridAllMove.Count - 1);
+        if (_currentStateMapStock.Count > 1)
+            _currentStateMapStock.RemoveAt(_currentStateMapStock.Count - 1);
+        
+        // print("go to last move :  size of _currentStateMapStock after : " + _currentStateMapStock.Count);
+    }
+
+    public void UpdateCurrentStateMap(Vector2Int coords, AllStates newState)
+    {
+        UpdateCurrentStateMap(coords.x, coords.y, newState);
+    }
+
+    public void UpdateCurrentStateMap(int x, int y, AllStates newState)
+    {
+        // print($"x : {x} - y : {y} - state :{newState}");
+        _currentStateMap[x, y] = newState;
+    }
+
+    public void AddNewCurrentStateMap()
+    {
+        print("new current map");
+
+        AllStates[,] newMapState = new AllStates[_mapSize.x, _mapSize.y];
+        Array.Copy(_currentStateMap, newMapState, _currentStateMap.Length);
+
+        // for (int x = 0; x < _mapSize.x; x++)
+        // {
+        //     for (int y = 0; y < _mapSize.y; y++)
+        //     {
+        //         newMapState[x, y] = _currentStateMap[x, y];
+        //     }
+        // }
+        
+
+        _currentStateMapStock.Add(newMapState);
     }
 
     public void ForceResetBig()
@@ -810,7 +865,8 @@ public class MapManager : MonoBehaviour
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-        if (IsSwapping) return;
+        if (IsSwapping || IsPosing) return;
+
         //ResetAllMap(false);
         ResetAllSelection();
         ResetButtonSelected();

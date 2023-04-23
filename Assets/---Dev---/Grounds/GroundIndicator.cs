@@ -144,13 +144,13 @@ public class GroundIndicator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && MapManager.Instance.GetHasFirstSwap()) // Right click to reset
-        {
-            ResetIndicator();
-            MapManager.Instance.ResetGroundSelected();
-
-            // ResetAllAroundPrevisu();
-        }
+        // if (Input.GetMouseButtonDown(1) && MapManager.Instance.GetHasFirstSwap()) // Right click to reset
+        // {
+        //     ResetIndicator();
+        //     MapManager.Instance.ResetGroundSelected();
+        //
+        //     // ResetAllAroundPrevisu();
+        // }
 
         // Block
         if (!_isEntered || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
@@ -276,6 +276,9 @@ public class GroundIndicator : MonoBehaviour
 
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
+        
+        // Add new current state map
+        MapManager.Instance.AddNewCurrentStateMap();
 
         // Reset
         ResetForNextChange();
