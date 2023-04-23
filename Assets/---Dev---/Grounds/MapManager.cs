@@ -156,7 +156,7 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.UpdateInventory(_hasInventory);
 
         // Update if tile at start
-        if (currentLvl.StartNbAllState != null)
+        if (currentLvl.StartNbAllState != null && _hasInventory)
         {
             for (int i = 0; i < currentLvl.StartNbAllState.Length; i++)
             {
@@ -767,7 +767,7 @@ public class MapManager : MonoBehaviour
 
     public void GoToLastMove()
     {
-        if (IsSwapping || IsPosing) return;
+        if (IsSwapping || IsPosing || IsVictory) return;
 
         // if (_mapGridAllMove.Count <= 1) return;
 
@@ -893,8 +893,7 @@ public class MapManager : MonoBehaviour
         // Get Nb of Recycle
         _stockNbRecycle.Add(NbOfRecycling);
     }
-
-
+    
     public void ForceResetBig()
     {
         print("force reset all");

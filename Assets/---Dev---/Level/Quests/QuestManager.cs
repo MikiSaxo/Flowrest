@@ -218,9 +218,9 @@ public class QuestManager : MonoBehaviour
                     continue;
 
                 var grnd = map[x, y].GetComponent<GroundStateManager>();
-                
-                if(grnd.GetCurrentStateEnum() != _tileChainState) continue;
-                
+
+                if (grnd.GetCurrentStateEnum() != _tileChainState) continue;
+
                 int getNb = grnd.CountSameTileConnected(map, grnd.GetCoords(), _tileChainState);
                 grnd.ResetCountTileChain();
 

@@ -146,7 +146,7 @@ public class GroundStateManager : MonoBehaviour
         }
 
         MapManager.Instance.UpdateCurrentStateMap(_coords, state);
-        
+
         _currentState = state;
         currentGroundBase = _allState[(int)state];
         currentGroundBase.EnterState(this);
@@ -214,11 +214,12 @@ public class GroundStateManager : MonoBehaviour
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
-        hexDirections = _coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
+        hexDirections = coords.x % 2 == 0 ? _hexPeerDirections : _hexOddDirections;
 
         foreach (var dir in hexDirections)
         {
             Vector2Int newPos = new Vector2Int(coords.x + dir.x, coords.y + dir.y);
+
             // Check if inside of array
             if (newPos.x < 0 || newPos.x >= mapGrid.GetLength(0) || newPos.y < 0 ||
                 newPos.y >= mapGrid.GetLength(1)) continue;
@@ -229,13 +230,13 @@ public class GroundStateManager : MonoBehaviour
             // Check if has been already treated
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated) continue;
             // Check if same State
-            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() !=
-                state) continue;
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().GetCurrentStateEnum() != state) continue;
 
             // It's good 
             _countTileChain++;
             mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsTreated = true;
             _stockTileChain.Add(mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>());
+
             // Restart the recursive
             CountSameTileConnected(mapGrid, newPos, state);
         }
@@ -412,6 +413,7 @@ public class GroundStateManager : MonoBehaviour
         {
             Instantiate(_fxTileFree, transform);
         }
+
         _fxTileBlocked.SetActive(state);
     }
 
