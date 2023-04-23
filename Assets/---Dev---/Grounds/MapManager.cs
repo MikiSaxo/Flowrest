@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 using DG.Tweening;
 using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine.EventSystems;
 
 
@@ -56,7 +58,12 @@ public class MapManager : MonoBehaviour
     private string[] _previewMessageTuto;
 
     private AllStates[,] _currentStateMap;
-    private List<AllStates[,]> _currentStateMapStock = new List<AllStates[,]>();
+    private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
+    private List<int> _stockEnergy = new List<int>();
+    private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
+    private List<Dictionary<AllStates, int>> _stockTileButton = new List<Dictionary<AllStates, int>>();
+    private List<List<int>> _stockTileButtonTest = new List<List<int>>();
+    private List<int> _stockNbRecycle = new List<int>();
 
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
@@ -279,8 +286,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // Add new current state map
-        AddNewCurrentStateMap();
+        // Save all actions
+        SaveNewMap();
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -457,10 +464,7 @@ public class MapManager : MonoBehaviour
         _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
 
-        // Update map All move
-        // _mapGridAllMove.Add(_mapGrid);
-
-        // Change position
+        // Get position
         var lastSelecPos = _lastGroundSelected.transform.position;
         var whichPos = which.transform.position;
         // (_lastGroundSelected.transform.position, which.transform.position) =
@@ -508,6 +512,10 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
 
+        // Update the current state map
+        UpdateCurrentStateMap(newCoords, gLastGroundSelected.GetCurrentStateEnum());
+        UpdateCurrentStateMap(_lastGroundCoordsSelected, gWhich.GetCurrentStateEnum());
+
         // Launch FX to update around them
         gLastGroundSelected.LaunchDropFX();
         gWhich.LaunchDropFX();
@@ -523,11 +531,13 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
-        // Wait the FX is finished
-        yield return new WaitForSeconds(1.25f);
-
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();
+
+
+        // Wait the FX is finished
+        yield return new WaitForSeconds(1.75f);
+
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
@@ -548,8 +558,8 @@ public class MapManager : MonoBehaviour
             _lastGroundSwaped[1] = gLastGroundSelected;
         }
 
-        // Add new current state map
-        AddNewCurrentStateMap();
+        // Save all actions
+        SaveNewMap();
 
         // Reset protect
         gLastGroundSelected.IsProtected = false;
@@ -642,6 +652,9 @@ public class MapManager : MonoBehaviour
         _wantToRecycle = false;
 
         RecyclingManager.Instance.DeactivateButton();
+        
+        // Save all actions
+        SaveNewMap();
     }
 
     private void WantToRecycle()
@@ -758,30 +771,83 @@ public class MapManager : MonoBehaviour
 
         // if (_mapGridAllMove.Count <= 1) return;
 
-        print("go to last move");//" :  size of _currentStateMapStock before : " + _currentStateMapStock.Count);
+        print("go to last move"); //" :  size of _currentStateMapStock before : " + _currentStateMapStock.Count);
 
+
+        // Update floor
         for (int x = 0; x < _mapSize.x; x++)
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                if (_currentStateMapStock[0][x, y] != AllStates.None)
+                if (_stockStateMap[0][x, y] != AllStates.None)
                 {
                     // print($"ole / x : {x} - y : {y} - state :{_currentStateMap[x, y]}");
                     _mapGrid[x, y].GetComponent<GroundStateManager>()
-                        .ForceChangeState(_currentStateMapStock.Count == 1
-                            ? _currentStateMapStock[0][x, y]
-                            : _currentStateMapStock[^2][x, y]);
+                        .ForceChangeState(_stockStateMap.Count == 1
+                            ? _stockStateMap[0][x, y]
+                            : _stockStateMap[^2][x, y]);
+                }
+            }
+        }
+
+        // Update Energy
+        // print($"_stockEnergy[^2] : {_stockEnergy[^2]} -  Current Energy : {EnergyManager.Instance.GetCurrentEnergy()}");
+        int getOldEnergy = 0;
+
+        if (_stockEnergy.Count == 1)
+            getOldEnergy = _stockEnergy[0] - EnergyManager.Instance.GetCurrentEnergy();
+        else
+            getOldEnergy = _stockEnergy[^2] - EnergyManager.Instance.GetCurrentEnergy();
+
+        EnergyManager.Instance.UpdateEnergy(getOldEnergy);
+
+
+        // Update Last Swaped Block
+        if (_stockLastGroundSwaped.Count > 1)
+        {
+            if (_stockLastGroundSwaped[^2][0] != null)
+                _stockLastGroundSwaped[^2][0].UpdateNoSwap(true);
+            if (_stockLastGroundSwaped[^2][1] != null)
+                _stockLastGroundSwaped[^2][1].UpdateNoSwap(true);
+        }
+
+        if (_stockLastGroundSwaped[^1][0] != null)
+            _stockLastGroundSwaped[^1][0].UpdateNoSwap(false);
+        if (_stockLastGroundSwaped[^1][1] != null)
+            _stockLastGroundSwaped[^1][1].UpdateNoSwap(false);
+
+        // Update Inventory
+        if (_stockStateMap.Count > 1)
+        {
+            SetupUIGround.Instance.ResetAllButtons();
+
+            for (int i = 0; i < _stockTileButtonTest[^2].Count; i++)
+            {
+                for (int j = 0; j < _stockTileButtonTest[^2][i]; j++)
+                {
+                    SetupUIGround.Instance.AddNewGround(i, true);
                 }
             }
         }
         
-        // print("bla " + _currentStateMapStock[0][6, 4]);
-        // print("bla " +_currentStateMapStock[1][6, 4]);
+        // Update nb of recycle
+        // int getOldRecycle = 0;
 
-        if (_currentStateMapStock.Count > 1)
-            _currentStateMapStock.RemoveAt(_currentStateMapStock.Count - 1);
-        
-        // print("go to last move :  size of _currentStateMapStock after : " + _currentStateMapStock.Count);
+        if (_stockNbRecycle.Count == 1)
+            NbOfRecycling = _stockNbRecycle[0];
+        else
+            NbOfRecycling = _stockNbRecycle[^2];
+        RecyclingManager.Instance.UpdateNbRecyclingLeft();
+
+        // Remove Last
+        if (_stockStateMap.Count > 1)
+        {
+            _stockStateMap.RemoveAt(_stockStateMap.Count - 1);
+            _stockEnergy.RemoveAt(_stockEnergy.Count - 1);
+            _stockLastGroundSwaped.RemoveAt(_stockLastGroundSwaped.Count - 1);
+            _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
+            _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
+        }
     }
 
     public void UpdateCurrentStateMap(Vector2Int coords, AllStates newState)
@@ -795,24 +861,39 @@ public class MapManager : MonoBehaviour
         _currentStateMap[x, y] = newState;
     }
 
-    public void AddNewCurrentStateMap()
+    public void SaveNewMap()
     {
-        print("new current map");
+        // print("new current map");
 
+
+        // Stock Floor
         AllStates[,] newMapState = new AllStates[_mapSize.x, _mapSize.y];
         Array.Copy(_currentStateMap, newMapState, _currentStateMap.Length);
+        _stockStateMap.Add(newMapState);
 
-        // for (int x = 0; x < _mapSize.x; x++)
-        // {
-        //     for (int y = 0; y < _mapSize.y; y++)
-        //     {
-        //         newMapState[x, y] = _currentStateMap[x, y];
-        //     }
-        // }
+        // Stock Energy
+        _stockEnergy.Add(EnergyManager.Instance.GetCurrentEnergy());
+
+        // Stock Last Block Swaped
+        GroundStateManager[] newLastBlocked = new GroundStateManager[2];
+        Array.Copy(_lastGroundSwaped, newLastBlocked, _lastGroundSwaped.Length);
+        _stockLastGroundSwaped.Add(newLastBlocked);
+
+        // Get Inventory
+        List<GameObject> inventory = SetupUIGround.Instance.GetStockTileButton();
+        int[] test = new int[10];
+        foreach (var but in inventory)
+        {
+            var currentTile = but.GetComponent<UIButton>();
+
+            test[(int)currentTile.GetStateButton()] += currentTile.GetNumberLeft();
+        }
+        _stockTileButtonTest.Add(test.ToList());
         
-
-        _currentStateMapStock.Add(newMapState);
+        // Get Nb of Recycle
+        _stockNbRecycle.Add(NbOfRecycling);
     }
+
 
     public void ForceResetBig()
     {

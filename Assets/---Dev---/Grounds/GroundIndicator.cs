@@ -256,6 +256,7 @@ public class GroundIndicator : MonoBehaviour
         // Decrease number on selected UI Button 
         MapManager.Instance.DecreaseNumberButton();
 
+
         yield return new WaitForSeconds(_timeExit);
 
         // Change State around
@@ -277,8 +278,8 @@ public class GroundIndicator : MonoBehaviour
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
         
-        // Add new current state map
-        MapManager.Instance.AddNewCurrentStateMap();
+        // Save all actions
+        MapManager.Instance.SaveNewMap();
 
         // Reset
         ResetForNextChange();

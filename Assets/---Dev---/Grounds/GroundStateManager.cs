@@ -396,7 +396,7 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateNoSwap(bool state)
     {
-        _fbPrevisu.UpdateSwap(state);
+        // _fbPrevisu.UpdateSwap(state);
         UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
     }
@@ -408,12 +408,11 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateFBReloadEnergy(bool state)
     {
-        _fxTileBlocked.SetActive(state);
-
-        if (!state)
+        if (!state && _fxTileBlocked.activeSelf)
         {
             Instantiate(_fxTileFree, transform);
         }
+        _fxTileBlocked.SetActive(state);
     }
 
     public void UpdateIsSwapping(bool state)

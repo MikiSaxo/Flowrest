@@ -148,13 +148,6 @@ public class SetupUIGround : MonoBehaviour
             ReSizeBgInventory(_widthIcon + _widthBG, _durationCloseOpen);
     }
 
-    public void AddTempGround()
-    {
-        GameObject go = Instantiate(_fBDnd, gameObject.transform);
-        go.transform.DOMove(Vector3.one * 10000, 0);
-        _stockTileButton.Add(go);
-        Destroy(go, .1f);
-    }
 
     public void GroundEmpty(GameObject button)
     {
@@ -212,5 +205,10 @@ public class SetupUIGround : MonoBehaviour
     public GroundUIData GetGroundUIData(int index)
     {
         return _groundData[index];
+    }
+
+    public List<GameObject> GetStockTileButton()
+    {
+        return _stockTileButton;
     }
 }

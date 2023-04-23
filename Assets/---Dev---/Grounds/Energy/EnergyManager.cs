@@ -109,6 +109,9 @@ public class EnergyManager : MonoBehaviour
     public void UpdateEnergy(int value)
     {
         // value *= _baseInf;
+
+        if (value == 0) return;
+        
         _energyValue += value;
 
         _energyBar.DOKill();
