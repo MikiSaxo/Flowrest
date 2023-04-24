@@ -152,7 +152,6 @@ public class LevelDataEditor : Editor
 
             if (IsTuto.boolValue)
             {
-                EditorGUILayout.PropertyField(PreviewMessage);
                 if (HasInventory.boolValue)
                 {
                     EditorGUILayout.PropertyField(HasForcePoseBlocAfterSwap);
@@ -166,7 +165,10 @@ public class LevelDataEditor : Editor
         if (mechanics)
         {
             if (IsTuto.boolValue)
+            {
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
+                EditorGUILayout.PropertyField(PreviewMessage);
+            }
 
             EditorGUILayout.Space(10);
         }

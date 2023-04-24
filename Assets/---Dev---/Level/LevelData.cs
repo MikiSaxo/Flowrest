@@ -24,7 +24,7 @@ public class LevelData : ScriptableObject
    public bool BlockLastSwap;
 
    public bool IsTuto;
-   public string PreviewMessage;
+   public string[] PreviewMessage;
    public Vector2Int[] PlayerForceSwap;
    public bool HasForcePoseBlocAfterSwap;
    public Vector2Int ForcePoseBlocCoord;

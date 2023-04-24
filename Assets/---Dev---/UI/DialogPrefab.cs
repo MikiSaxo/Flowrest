@@ -22,7 +22,14 @@ public class DialogPrefab : MonoBehaviour
     public void Init(string dialog, float dialogSpeed)
     {
         IsFinish = false;
-        DialogText.SetText(dialog);
+        // dialog = $"{dialog}\nblou";
+        if (dialog.Contains('$'))
+        {
+            var replace = dialog.Replace('$', '\n');
+            dialog = replace;
+        }
+
+        DialogText.text = dialog;
         DialogText.ForceMeshUpdate();
 
         _saveDialog = dialog;

@@ -191,7 +191,7 @@ public class MapManager : MonoBehaviour
         if (IsTuto)
         {
             // Set Preview message
-            _previewMessageTuto = new[] { currentLvl.PreviewMessage };
+            _previewMessageTuto = currentLvl.PreviewMessage;
 
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
