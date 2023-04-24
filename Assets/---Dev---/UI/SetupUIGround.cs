@@ -10,7 +10,9 @@ public class SetupUIGround : MonoBehaviour
 {
     public static SetupUIGround Instance;
 
-    [Header("Setup")] [SerializeField] private GameObject _fBDnd;
+    [Header("Setup")]
+    [SerializeField] private GameObject _fBDnd;
+    [SerializeField] private GameObject _buttonBackwards;
     // public OpenCloseMenu GroundStockage;
 
     [Header("Inventory")] [SerializeField] private GameObject _gridParent;
@@ -148,6 +150,10 @@ public class SetupUIGround : MonoBehaviour
             ReSizeBgInventory(_widthIcon + _widthBG, _durationCloseOpen);
     }
 
+    public void SetActiveBackwardsButton(bool state)
+    {
+        _buttonBackwards.SetActive(state);
+    }
 
     public void GroundEmpty(GameObject button)
     {

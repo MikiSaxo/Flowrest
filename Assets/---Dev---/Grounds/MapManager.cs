@@ -187,6 +187,7 @@ public class MapManager : MonoBehaviour
 
         // Update if tuto
         IsTuto = currentLvl.IsTuto;
+        SetupUIGround.Instance.SetActiveBackwardsButton(!IsTuto);
         if (IsTuto)
         {
             // Set Preview message
