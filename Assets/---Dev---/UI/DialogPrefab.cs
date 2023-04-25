@@ -11,13 +11,17 @@ public class DialogPrefab : MonoBehaviour
     public TMP_Text DialogText;
 
     public bool IsFinish { get; set; }
-    
+
     [SerializeField] private Vector2 _padding;
 
     private float _textSizeY;
     private float _dialogSpeed;
     private bool _stopCorou;
     private string _saveDialog;
+    
+    private int _maxNb;
+    private int _currentNb;
+    private string _currentOrder;
 
     public void Init(string dialog, float dialogSpeed)
     {
@@ -43,7 +47,8 @@ public class DialogPrefab : MonoBehaviour
         StartCoroutine(AnimationText());
     }
 
-    public void InitOrder(string text)
+
+    public void InitDescOrder(string text)
     {
         DialogText.text = text;
         DialogText.ForceMeshUpdate();
@@ -51,6 +56,34 @@ public class DialogPrefab : MonoBehaviour
         Vector2 textSize = DialogText.GetRenderedValues(false);
         _textSizeY = textSize.y;
         gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+    }
+    public void InitOrder(string desc, int nbToReach)
+    {
+        _currentOrder = desc;
+        _maxNb = nbToReach;
+        
+        UpdateText();
+        DialogText.ForceMeshUpdate();
+      
+        Vector2 textSize = DialogText.GetRenderedValues(false);
+        _textSizeY = textSize.y;
+        gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+    }
+
+    public void UpdateCurrentNbOrder(int nb)
+    {
+        _currentNb = nb;
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        DialogText.text = $"{_currentOrder} : {_currentNb} / {_maxNb}";
+    }
+
+    public void UpdateMaxNb(int nb)
+    {
+        _maxNb = nb;
     }
 
     IEnumerator AnimationText()

@@ -57,6 +57,7 @@ public class ScreensManager : MonoBehaviour
     private bool _isCorouRunning;
     private bool _hasSpawnDialog;
     private string _saveSpawnDialog;
+    private List<DialogPrefab> _stockOrdertext = new List<DialogPrefab>();
 
     private void Awake()
     {
@@ -80,7 +81,7 @@ public class ScreensManager : MonoBehaviour
 
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
-        desc.InitOrder($"{text}\n ");
+        desc.InitDescOrder($"{text}\n ");
 
         // _descriptionQuest.text = text;
     }
@@ -88,11 +89,22 @@ public class ScreensManager : MonoBehaviour
     public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach)
     {
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
-        var desc = txt.GetComponent<DialogPrefab>();
-        desc.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]} : {0} / {nbToReach}");
+        var order = txt.GetComponent<DialogPrefab>();
+        _stockOrdertext.Add(order);
+        order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
         
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
         go.GetComponent<OrderStockSprite>().Init(whichOrder, whichState);
+    }
+
+    public void InitMaxNbFullFloor(int nb)
+    {
+        _stockOrdertext[0].UpdateMaxNb(nb);
+    }
+
+    public void UpdateOrder(int newNb)
+    {
+        _stockOrdertext[0].UpdateCurrentNbOrder(newNb);
     }
 
     public void ChangeSizeGridOrder()

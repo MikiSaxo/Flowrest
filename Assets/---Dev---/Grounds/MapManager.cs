@@ -72,6 +72,7 @@ public class MapManager : MonoBehaviour
     private GameObject _lastGroundSelected;
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
+    private int _countNbOfTile;
 
     private MapConstructData _mapConstructData;
 
@@ -236,7 +237,7 @@ public class MapManager : MonoBehaviour
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
             
             // Update Order Description
-            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 99);
+            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 98);
         }
 
         // Update if flower quest
@@ -294,6 +295,11 @@ public class MapManager : MonoBehaviour
 
         // Init Level
         InitializeFloor(_mapSize);
+        
+        // Update Quest
+        if(currentLvl.QuestFloor.Length > 0)
+            ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
+        QuestsManager.CheckQuest();
     }
 
     private void InitializeFloor(Vector2Int sizeMap)
@@ -368,6 +374,9 @@ public class MapManager : MonoBehaviour
         }
 
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
+
+        // Count Nb Of Tile for Full Floor Order
+        _countNbOfTile++;
     }
 
     private void Update()
@@ -863,9 +872,6 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // Update nb of recycle
-        // int getOldRecycle = 0;
-
         if (_stockNbRecycle.Count == 1)
             NbOfRecycling = _stockNbRecycle[0];
         else
@@ -881,6 +887,8 @@ public class MapManager : MonoBehaviour
             _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
             _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
         }
+        
+        QuestsManager.CheckQuest();
     }
 
     public void UpdateCurrentStateMap(Vector2Int coords, AllStates newState)

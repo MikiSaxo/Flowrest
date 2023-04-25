@@ -21,6 +21,8 @@ public class QuestManager : MonoBehaviour
     private int _tileChainNumber;
     private int _tileCountNumber;
     private int _tileCount;
+    private int _maxTileChainCount;
+    private int _countFullFloor;
 
     private int _countQuestDone;
     private int _countQuestNumber;
@@ -113,6 +115,8 @@ public class QuestManager : MonoBehaviour
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
 
+        _maxTileChainCount = 0;
+
         for (int x = 0; x < map.GetLength(0); x++)
         {
             for (int y = 0; y < map.GetLength(1); y++)
@@ -130,12 +134,15 @@ public class QuestManager : MonoBehaviour
                 if (grnd.GetCurrentStateEnum() == AllStates.Mountain)
                     continue;
 
-                if (grnd.GetCurrentStateEnum() != _fullFloorState)
-                    return false;
+                _maxTileChainCount++;
+
+                if (grnd.GetCurrentStateEnum() == _fullFloorState)
+                    _countFullFloor++;
             }
         }
+        ScreensManager.Instance.UpdateOrder(_countFullFloor);
 
-        return true;
+        return _countFullFloor >= _maxTileChainCount;
     }
 
     private bool CheckFlowerQuest()
@@ -207,6 +214,7 @@ public class QuestManager : MonoBehaviour
     private bool CheckTileChain()
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
+        _maxTileChainCount = 0;
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -224,10 +232,17 @@ public class QuestManager : MonoBehaviour
                 int getNb = grnd.CountSameTileConnected(map, grnd.GetCoords(), _tileChainState);
                 grnd.ResetCountTileChain();
 
+                if (_maxTileChainCount < getNb)
+                    _maxTileChainCount = getNb;
+
                 if (getNb >= _tileChainNumber)
+                {
+                    ScreensManager.Instance.UpdateOrder(_maxTileChainCount);
                     return true;
+                }
             }
         }
+        ScreensManager.Instance.UpdateOrder(_maxTileChainCount);
 
         return false;
     }
@@ -255,6 +270,8 @@ public class QuestManager : MonoBehaviour
                 _tileCount++;
             }
         }
+
+        ScreensManager.Instance.UpdateOrder(_tileCount);
 
         return _tileCount >= _tileCountNumber;
     }
