@@ -17,15 +17,17 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _menuPauseParent;
-    [SerializeField] private TMP_Text _descriptionQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
     [SerializeField] private GameObject _nextLevel;
-    
-    [Header("Order")]
-    [SerializeField] private GameObject _orderMenu;
+
+    [Header("Order")] [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
     [SerializeField] private GameObject _orderPrefab;
+    [SerializeField] private GameObject _orderTextGrid;
+    [SerializeField] private GameObject _orderTextPrefab;
+    [SerializeField] private List<OrderText> _orderText;
     [SerializeField] private Image _orderImage;
+    // [SerializeField] private TMP_Text _descriptionQuest;
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -71,26 +73,40 @@ public class ScreensManager : MonoBehaviour
         _characterName.text = charaName;
     }
 
-    public void InitOrderDescription(string text, int whichOrder, AllStates whichState, int nbToReach)
+    public void InitOrderDescription(string text)
     {
         text ??= String.Empty;
         // img ??= null;
 
-        //_orderImage.gameObject.SetActive(img != null);
-        //_orderImage.sprite = img;
-        _descriptionQuest.text = text;
+        GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
+        var desc = txt.GetComponent<DialogPrefab>();
+        desc.InitOrder($"{text}\n ");
 
+        // _descriptionQuest.text = text;
+    }
+
+    public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach)
+    {
+        GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
+        var desc = txt.GetComponent<DialogPrefab>();
+        desc.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]} : {0} / {nbToReach}");
+        
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
-        go.GetComponent<OrderStock>().Init(whichOrder, whichState, nbToReach);
+        go.GetComponent<OrderStockSprite>().Init(whichOrder, whichState);
+    }
+
+    public void ChangeSizeGridOrder()
+    {
+        _orderGrid.GetComponent<GridLayoutGroup>().cellSize = new Vector2(150, 150);
     }
 
     public void VictoryScreen()
     {
         MapManager.Instance.IsVictory = true;
-        
+
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
-        
+
         _titlesParent.SetActive(true);
         _titlesText.text = _titlesString[0];
 
@@ -242,31 +258,31 @@ public class ScreensManager : MonoBehaviour
         //     }
 
 
-            // if (_countScreen < _dialogsList.Count * 2 - 1)
-            // {
-            //     if (_countScreen % 2 == 0)
-            //     {
-            //         _stopCorou = true;
-            //         _dialogText.text = _dialogsList[_countDialog];
-            //         StopCoroutine(UpdateText());
-            //     }
-            //     else
-            //     {
-            //         // print("anim");
-            //         _countDialog++;
-            //         //_dialogText.text = String.Empty;
-            //         StartCoroutine(UpdateText());
-            //     }
-            //
-            //     _countScreen++;
-            // }
-            // else
-            // {
-            //     if (_isBeginning)
-            //         EndBeginningDialog();
-            //     else
-            //         ChangeToLevelSupp();
-            // }
+        // if (_countScreen < _dialogsList.Count * 2 - 1)
+        // {
+        //     if (_countScreen % 2 == 0)
+        //     {
+        //         _stopCorou = true;
+        //         _dialogText.text = _dialogsList[_countDialog];
+        //         StopCoroutine(UpdateText());
+        //     }
+        //     else
+        //     {
+        //         // print("anim");
+        //         _countDialog++;
+        //         //_dialogText.text = String.Empty;
+        //         StartCoroutine(UpdateText());
+        //     }
+        //
+        //     _countScreen++;
+        // }
+        // else
+        // {
+        //     if (_isBeginning)
+        //         EndBeginningDialog();
+        //     else
+        //         ChangeToLevelSupp();
+        // }
         //}
     }
 

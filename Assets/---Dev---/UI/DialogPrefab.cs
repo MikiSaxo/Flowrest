@@ -43,6 +43,16 @@ public class DialogPrefab : MonoBehaviour
         StartCoroutine(AnimationText());
     }
 
+    public void InitOrder(string text)
+    {
+        DialogText.text = text;
+        DialogText.ForceMeshUpdate();
+      
+        Vector2 textSize = DialogText.GetRenderedValues(false);
+        _textSizeY = textSize.y;
+        gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+    }
+
     IEnumerator AnimationText()
     {
         int charIndex = 0;

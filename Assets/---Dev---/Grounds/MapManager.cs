@@ -224,8 +224,11 @@ public class MapManager : MonoBehaviour
             _stockPlayerForceSwap.Clear();
         }
 
-        // Reset Quest Number
+        // Reset Order Number
         QuestsManager.ResetQuestNumbers();
+        
+        // Update description Order
+        ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription);
 
         // Update if full floor quest
         if (currentLvl.QuestFloor.Length > 0)
@@ -233,18 +236,21 @@ public class MapManager : MonoBehaviour
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
             
             // Update Order Description
-            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
-                0, currentLvl.QuestFloor[0], 99);
+            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 99);
         }
 
         // Update if flower quest
-        if (_levelData[_currentLevel].QuestFlower.Length > 0)
+        if (currentLvl.QuestFlower.Length > 0)
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
             
+            if (currentLvl.QuestFlower.Length > 1)
+                ScreensManager.Instance.ChangeSizeGridOrder();
             // Update Order Description
-            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
-                1, currentLvl.QuestFlower[0], 1);
+            for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
+            {
+                ScreensManager.Instance.InitOrderGoal(1, currentLvl.QuestFlower[i], 1);
+            }
         }
 
         // Update if No Specific Tile quest
@@ -253,8 +259,7 @@ public class MapManager : MonoBehaviour
             QuestsManager.InitQuestNoSpecificTiles(currentLvl.QuestNoSpecificTiles);
             
             // Update Order Description
-            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
-                2, currentLvl.QuestNoSpecificTiles[0], 99);
+            ScreensManager.Instance.InitOrderGoal(2, currentLvl.QuestNoSpecificTiles[0], 99);
         }
 
         // Update if Tile Chain quest
@@ -265,8 +270,7 @@ public class MapManager : MonoBehaviour
                 QuestsManager.InitQuestTileChain(currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
                
                 // Update Order Description
-                ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
-                    3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
+                ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
             }
         }
 
@@ -278,8 +282,7 @@ public class MapManager : MonoBehaviour
                 QuestsManager.InitQuestTileCount(currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
                 
                 // Update Order Description
-                ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
-                    4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
+                ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
             }
         }
 
