@@ -17,11 +17,15 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _menuPauseParent;
-    [SerializeField] private GameObject _menuQuest;
     [SerializeField] private TMP_Text _descriptionQuest;
-    [SerializeField] private Image _imageQuest;
     [SerializeField] private GameObject _menuPauseTriggered;
     [SerializeField] private GameObject _nextLevel;
+    
+    [Header("Order")]
+    [SerializeField] private GameObject _orderMenu;
+    [SerializeField] private GameObject _orderGrid;
+    [SerializeField] private GameObject _orderPrefab;
+    [SerializeField] private Image _orderImage;
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -67,14 +71,17 @@ public class ScreensManager : MonoBehaviour
         _characterName.text = charaName;
     }
 
-    public void InitQuestDescription(string text, Sprite img)
+    public void InitOrderDescription(string text, int whichOrder, AllStates whichState, int nbToReach)
     {
         text ??= String.Empty;
         // img ??= null;
 
-        _imageQuest.gameObject.SetActive(img != null);
-        _imageQuest.sprite = img;
+        //_orderImage.gameObject.SetActive(img != null);
+        //_orderImage.sprite = img;
         _descriptionQuest.text = text;
+
+        GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
+        go.GetComponent<OrderStock>().Init(whichOrder, whichState, nbToReach);
     }
 
     public void VictoryScreen()
@@ -107,7 +114,7 @@ public class ScreensManager : MonoBehaviour
 
         _dialogParent.SetActive(false);
 
-        _menuQuest.GetComponent<OpenCloseMenu>().OpenMenuQuest();
+        _orderMenu.GetComponent<OpenCloseMenu>().OpenMenuQuest();
     }
 
     public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool isMiddleDialog)

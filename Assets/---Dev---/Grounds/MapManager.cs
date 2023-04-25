@@ -229,36 +229,65 @@ public class MapManager : MonoBehaviour
 
         // Update if full floor quest
         if (currentLvl.QuestFloor.Length > 0)
+        {
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
+            
+            // Update Order Description
+            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
+                0, currentLvl.QuestFloor[0], 99);
+        }
 
         // Update if flower quest
         if (_levelData[_currentLevel].QuestFlower.Length > 0)
+        {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
+            
+            // Update Order Description
+            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
+                1, currentLvl.QuestFlower[0], 1);
+        }
 
         // Update if No Specific Tile quest
         if (currentLvl.QuestNoSpecificTiles.Length > 0)
+        {
             QuestsManager.InitQuestNoSpecificTiles(currentLvl.QuestNoSpecificTiles);
+            
+            // Update Order Description
+            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
+                2, currentLvl.QuestNoSpecificTiles[0], 99);
+        }
 
         // Update if Tile Chain quest
         if (currentLvl.QuestTileChain != null)
         {
             if (currentLvl.QuestTileChain.Length > 0)
+            {
                 QuestsManager.InitQuestTileChain(currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
+               
+                // Update Order Description
+                ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
+                    3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
+            }
         }
 
         // Update if Tile Count
         if (currentLvl.QuestTileCount != null)
         {
             if (currentLvl.QuestTileCount.Length > 0)
+            {
                 QuestsManager.InitQuestTileCount(currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
+                
+                // Update Order Description
+                ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription,
+                    4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
+            }
         }
 
         // Update Dialogs
         ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, false);
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
-        ScreensManager.Instance.InitQuestDescription(_levelData[_currentLevel].QuestDescription,
-            _levelData[_currentLevel].QuestImage);
+
 
         // Init Level
         InitializeFloor(_mapSize);
@@ -653,7 +682,7 @@ public class MapManager : MonoBehaviour
         _wantToRecycle = false;
 
         RecyclingManager.Instance.DeactivateButton();
-        
+
         // Save all actions
         SaveNewMap();
     }
@@ -830,7 +859,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        
+
         // Update nb of recycle
         // int getOldRecycle = 0;
 
@@ -889,12 +918,13 @@ public class MapManager : MonoBehaviour
 
             test[(int)currentTile.GetStateButton()] += currentTile.GetNumberLeft();
         }
+
         _stockTileButtonTest.Add(test.ToList());
-        
+
         // Get Nb of Recycle
         _stockNbRecycle.Add(NbOfRecycling);
     }
-    
+
     public void ForceResetBig()
     {
         print("force reset all");
