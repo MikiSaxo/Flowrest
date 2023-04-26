@@ -26,6 +26,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
     [SerializeField] private List<OrderText> _orderText;
+
     [SerializeField] private Image _orderImage;
     // [SerializeField] private TMP_Text _descriptionQuest;
 
@@ -57,7 +58,9 @@ public class ScreensManager : MonoBehaviour
     private bool _isCorouRunning;
     private bool _hasSpawnDialog;
     private string _saveSpawnDialog;
-    private List<DialogPrefab> _stockOrdertext = new List<DialogPrefab>();
+    private List<DialogPrefab> _stockOrderText = new List<DialogPrefab>();
+    private Dictionary<AllStates, DialogPrefab> _stockOrderMultipleText = new Dictionary<AllStates, DialogPrefab>();
+    private List<GameObject> _stockOrderImg = new List<GameObject>();
 
     private void Awake()
     {
@@ -82,29 +85,43 @@ public class ScreensManager : MonoBehaviour
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
         desc.InitDescOrder($"{text}\n ");
+        _stockOrderText.Add(desc);
 
         // _descriptionQuest.text = text;
     }
 
-    public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach)
+    public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach, bool isMultiple)
     {
+        // Text
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var order = txt.GetComponent<DialogPrefab>();
-        _stockOrdertext.Add(order);
-        order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
         
+        if (isMultiple)
+            _stockOrderMultipleText.Add(whichState, order);
+        else
+            _stockOrderText.Add(order);
+        
+        order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
+
+        // Image
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
         go.GetComponent<OrderStockSprite>().Init(whichOrder, whichState);
+        _stockOrderImg.Add(go);
     }
 
     public void InitMaxNbFullFloor(int nb)
     {
-        _stockOrdertext[0].UpdateMaxNb(nb);
+        _stockOrderText[1].UpdateMaxNb(nb);
     }
 
-    public void UpdateOrder(int newNb)
+    public void UpdateOrder(int newNb, int whichOrder)
     {
-        _stockOrdertext[0].UpdateCurrentNbOrder(newNb);
+        _stockOrderText[whichOrder].UpdateCurrentNbOrder(newNb);
+    }
+
+    public void UpdateMultipleOrder(AllStates whichOrder, int newNb)
+    {
+        _stockOrderMultipleText[whichOrder].UpdateCurrentNbOrder(newNb);
     }
 
     public void ChangeSizeGridOrder()
@@ -125,10 +142,6 @@ public class ScreensManager : MonoBehaviour
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
         SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
-    }
-
-    private void StartDialog()
-    {
     }
 
     private void EndDialog()
@@ -368,6 +381,23 @@ public class ScreensManager : MonoBehaviour
         // _dialoguesParent.SetActive(false);
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _titlesParent.SetActive(false);
+        ResetOrder();
+    }
+
+    private void ResetOrder()
+    {
+        foreach (var order in _stockOrderText)
+        {
+            Destroy(order.gameObject);
+        }
+
+        foreach (var order in _stockOrderImg)
+        {
+            Destroy(order);
+        }
+
+        _stockOrderText.Clear();
+        _stockOrderImg.Clear();
     }
 
     public void GoLevelSupp()

@@ -28,7 +28,6 @@ public class QuestManager : MonoBehaviour
     private int _countQuestNumber;
 
     private List<AllStates> _flowerStateDone = new List<AllStates>();
-    private List<AllStates> _flowerStateVerified = new List<AllStates>();
 
     public void InitQuestFullFloor(AllStates whichState)
     {
@@ -140,7 +139,8 @@ public class QuestManager : MonoBehaviour
                     _countFullFloor++;
             }
         }
-        ScreensManager.Instance.UpdateOrder(_countFullFloor);
+
+        ScreensManager.Instance.UpdateOrder(_countFullFloor, 1);
 
         return _countFullFloor >= _maxTileChainCount;
     }
@@ -177,14 +177,18 @@ public class QuestManager : MonoBehaviour
         if (_flowerStateDone.Count != _flowerState.Length) return false;
 
         _flowerStateDone.Sort();
+        int countDone = 0;
 
         for (int i = 0; i < _flowerState.Length; i++)
         {
-            if (_flowerStateDone[i] != _flowerState[i])
-                return false;
+            if (_flowerStateDone[i] == _flowerState[i])
+            {
+                countDone++;
+                ScreensManager.Instance.UpdateMultipleOrder(_flowerStateDone[i], 1);
+            }
         }
 
-        return true;
+        return countDone >= _flowerState.Length;
     }
 
     private bool CheckNoSpecificTileQuest()
@@ -237,12 +241,13 @@ public class QuestManager : MonoBehaviour
 
                 if (getNb >= _tileChainNumber)
                 {
-                    ScreensManager.Instance.UpdateOrder(_maxTileChainCount);
+                    ScreensManager.Instance.UpdateOrder(_maxTileChainCount, 1);
                     return true;
                 }
             }
         }
-        ScreensManager.Instance.UpdateOrder(_maxTileChainCount);
+
+        ScreensManager.Instance.UpdateOrder(_maxTileChainCount, 1);
 
         return false;
     }
@@ -271,7 +276,7 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        ScreensManager.Instance.UpdateOrder(_tileCount);
+        ScreensManager.Instance.UpdateOrder(_tileCount, 1);
 
         return _tileCount >= _tileCountNumber;
     }
