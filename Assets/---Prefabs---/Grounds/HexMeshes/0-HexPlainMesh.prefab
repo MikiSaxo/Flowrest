@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7614459207405979692}
   - component: {fileID: 4417680681939687202}
   - component: {fileID: 6571931750853166052}
+  - component: {fileID: 8229983144357119984}
   m_Layer: 0
   m_Name: 0-HexPlainMesh
   m_TagString: Untagged
@@ -148,6 +149,23 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _timeToSpawn: 0.25
+--- !u!114 &8229983144357119984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614459207405979688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be28f7c17da80b7428960d17aa4b8aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartSize: 1
+  EndSize: 12
+  AnimationTime: 0.9
+  EaseNumber: 1
+  EaseDuration: 0.25
 --- !u!1001 &480803700039177584
 PrefabInstance:
   m_ObjectHideFlags: 0
