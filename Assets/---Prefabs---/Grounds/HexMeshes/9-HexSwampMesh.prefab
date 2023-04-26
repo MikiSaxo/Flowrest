@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614459207405979692}
-  - component: {fileID: 6304354208241528084}
+  - component: {fileID: 8451834550474504373}
   m_Layer: 0
   m_Name: 9-HexSwampMesh
   m_TagString: Untagged
@@ -78,7 +78,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6304354208241528084
+--- !u!114 &8451834550474504373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +87,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7614459207405979688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265fd27dd28d99e49ba1f2c3c6023913, type: 3}
+  m_Script: {fileID: 11500000, guid: be28f7c17da80b7428960d17aa4b8aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simple: {fileID: 8422372432852736556}
-  _biome: {fileID: 3859017493397779809}
+  StartSize: 1
+  EndSize: 12
+  AnimationTime: 0.9
+  EaseNumber: 1
+  EaseDuration: 0.25
 --- !u!1 &7859858105147103688
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ffd523fdb345514b849c410304a5499, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.39031
+      value: 0.39554998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ffd523fdb345514b849c410304a5499, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1097,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e58eed9b1a221b43b76ec6c864b63b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.31876
+      value: 0.324
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e58eed9b1a221b43b76ec6c864b63b6, type: 3}
       propertyPath: m_LocalPosition.z
