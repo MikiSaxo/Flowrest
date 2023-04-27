@@ -115,6 +115,7 @@ public class QuestManager : MonoBehaviour
         GameObject[,] map = MapManager.Instance.GetMapGrid();
 
         _maxTileChainCount = 0;
+        _countFullFloor = 0;
 
         for (int x = 0; x < map.GetLength(0); x++)
         {

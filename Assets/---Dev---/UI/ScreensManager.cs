@@ -94,7 +94,7 @@ public class ScreensManager : MonoBehaviour
 
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
-    
+
     public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach, bool isMultiple)
     {
         // Text
@@ -103,6 +103,7 @@ public class ScreensManager : MonoBehaviour
 
         if (_saveLastState == whichState)
         {
+            print("salut");
             if (isMultiple)
             {
                 var dialog = _stockOrderMultipleText.Last();
@@ -112,11 +113,14 @@ public class ScreensManager : MonoBehaviour
             else
             {
                 Destroy(_stockOrderText[^1].gameObject);
-                _stockOrderText.RemoveAt(_stockOrderText.Count-1);
+                _stockOrderText.RemoveAt(_stockOrderText.Count - 1);
             }
-            
-            Destroy(_stockOrderImg[^1]);
-            _stockOrderImg.RemoveAt(_stockOrderImg.Count-1);
+
+            if (_stockOrderImg.Count > 0)
+            {
+                Destroy(_stockOrderImg[^1]);
+                _stockOrderImg.RemoveAt(_stockOrderImg.Count - 1);
+            }
 
             _saveLastNbToReach++;
             nbToReach = _saveLastNbToReach;
@@ -126,12 +130,12 @@ public class ScreensManager : MonoBehaviour
 
         _saveLastState = whichState;
 
-        
+
         if (isMultiple)
             _stockOrderMultipleText.Add(whichState, order);
         else
             _stockOrderText.Add(order);
-        
+
         order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
 
         // Image
@@ -440,6 +444,8 @@ public class ScreensManager : MonoBehaviour
         _stockOrderText.Clear();
         _stockOrderImg.Clear();
         _stockOrderMultipleText.Clear();
+
+        _saveLastState = AllStates.None;
     }
 
     public void ResetMultiplestock()

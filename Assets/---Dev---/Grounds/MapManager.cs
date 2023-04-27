@@ -311,8 +311,11 @@ public class MapManager : MonoBehaviour
         InitializeFloor(_mapSize);
         
         // Update Quest
-        if(currentLvl.QuestFloor.Length > 0)
+        if (currentLvl.QuestFloor.Length > 0)
+        {
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
+            _countNbOfTile = 0;
+        }
         
         QuestsManager.CheckQuest();
     }
