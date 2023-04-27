@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
     [SerializeField] private float _timeToSwap;
+    [SerializeField] private float _timeToSpawnMap;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -322,6 +323,11 @@ public class MapManager : MonoBehaviour
 
     private void InitializeFloor(Vector2Int sizeMap)
     {
+        StartCoroutine(FloorSpawnTiming(sizeMap));
+    }
+
+    IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
+    {
         for (int x = 0; x < sizeMap.x; x++)
         {
             for (int y = 0; y < sizeMap.y; y++)
@@ -335,11 +341,13 @@ public class MapManager : MonoBehaviour
                 {
                     GameObject ground = Instantiate(_groundPrefab, _map.transform);
                     InitObj(ground, x, y, dico[whichEnvironment]);
+                    yield return new WaitForSeconds(_timeToSpawnMap);
                 }
                 else
                 {
                     UpdateCurrentStateMap(x, y, dico[whichEnvironment]);
                 }
+
             }
         }
 
