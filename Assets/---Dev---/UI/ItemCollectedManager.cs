@@ -14,7 +14,8 @@ public class ItemCollectedManager : MonoBehaviour
     [SerializeField] private Transform[] _tpPointsCrystals;
     [SerializeField] private GameObject _prefabGroundCollected;
     [SerializeField] private GameObject _prefabCrystalCollected;
-    [SerializeField] private GameObject _feedbacksParent;
+    [SerializeField] private GameObject _groundCollectedParent;
+    [SerializeField] private GameObject _energyCollectedParent;
 
     private List<GameObject> _stockFB = new List<GameObject>();
     // [Header("Durations, 0:Ground, 1:Crystal")] 
@@ -38,7 +39,7 @@ public class ItemCollectedManager : MonoBehaviour
 
     public void SpawnFBGroundCollected(Sprite icon, Color color, string text, AllStates state)
     {
-        GameObject go = Instantiate(_prefabGroundCollected, _feedbacksParent.transform);
+        GameObject go = Instantiate(_prefabGroundCollected, _groundCollectedParent.transform);
         go.GetComponent<FB_GroundCollected>().Init(icon, color, text, _tpPointsGround, state);
 
         _stockFB.Add(go);
@@ -48,8 +49,8 @@ public class ItemCollectedManager : MonoBehaviour
     {
         if (value == 0) return;
         
-        GameObject go = Instantiate(_prefabCrystalCollected, _feedbacksParent.transform);
-        go.transform.position = Input.mousePosition;
+        GameObject go = Instantiate(_prefabCrystalCollected, _energyCollectedParent.transform);
+        go.transform.position = _tpPointsCrystals[1].position;
         go.GetComponent<FB_CrystalCollected>().Init(value, _tpPointsCrystals[2]);
         
         _stockFB.Add(go);

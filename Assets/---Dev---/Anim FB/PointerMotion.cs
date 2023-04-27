@@ -38,4 +38,9 @@ public class PointerMotion : MonoBehaviour
         
         _canEnter = state;
     }
+
+    public void Bounce()
+    {
+        transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+    }
 }
