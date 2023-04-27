@@ -148,8 +148,8 @@ public class QuestManager : MonoBehaviour
     private bool CheckFlowerQuest()
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
-        int count = 0;
         _flowerStateDone.Clear();
+        ScreensManager.Instance.ResetMultiplestock();
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -163,10 +163,8 @@ public class QuestManager : MonoBehaviour
                 foreach (var state in _flowerState)
                 {
                     if (map[x, y].GetComponent<GroundStateManager>().GetCurrentStateEnum() == state
-                        && map[x, y].GetComponent<GroundStateManager>().CheckIfFlower()
-                       ) //&& !_flowerStateDone.Contains(state))
+                        && map[x, y].GetComponent<GroundStateManager>().CheckIfFlower())
                     {
-                        count++;
                         _flowerStateDone.Add(state);
                         break;
                     }
@@ -174,17 +172,19 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        if (_flowerStateDone.Count != _flowerState.Length) return false;
-
         _flowerStateDone.Sort();
         int countDone = 0;
 
-        for (int i = 0; i < _flowerState.Length; i++)
+        foreach (var flowerStateDone in _flowerStateDone)
         {
-            if (_flowerStateDone[i] == _flowerState[i])
+            foreach (var flowerState in _flowerState)
             {
-                countDone++;
-                ScreensManager.Instance.UpdateMultipleOrder(_flowerStateDone[i], 1);
+                if (flowerStateDone == flowerState)
+                {
+                    countDone++;
+                    ScreensManager.Instance.AddNewMultipleOrder(flowerStateDone, 1);
+                    break;
+                }
             }
         }
 

@@ -245,8 +245,22 @@ public class MapManager : MonoBehaviour
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
             
-            if (currentLvl.QuestFlower.Length > 1)
-                ScreensManager.Instance.ChangeSizeGridOrder();
+            // Check Nb of different state
+            AllStates lastState = AllStates.None;
+            var count = 0;
+            foreach (var state in currentLvl.QuestFlower)
+            {
+                if (lastState != state)
+                    count++;
+
+                lastState = state;
+            }
+            
+            if (count == 2)
+                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
+            if (count >= 3)
+                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
+            
             // Update Order Description
             for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
             {

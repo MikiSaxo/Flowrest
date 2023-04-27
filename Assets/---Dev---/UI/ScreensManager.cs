@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
@@ -65,6 +66,7 @@ public class ScreensManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _saveLastState = AllStates.None;
     }
 
     private void Start()
@@ -90,11 +92,40 @@ public class ScreensManager : MonoBehaviour
         // _descriptionQuest.text = text;
     }
 
+    private AllStates _saveLastState;
+    private int _saveLastNbToReach;
+    
     public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach, bool isMultiple)
     {
         // Text
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var order = txt.GetComponent<DialogPrefab>();
+
+        if (_saveLastState == whichState)
+        {
+            if (isMultiple)
+            {
+                var dialog = _stockOrderMultipleText.Last();
+                Destroy(dialog.Value.gameObject);
+                _stockOrderMultipleText.Remove(_stockOrderMultipleText.Keys.Last());
+            }
+            else
+            {
+                Destroy(_stockOrderText[^1].gameObject);
+                _stockOrderText.RemoveAt(_stockOrderText.Count-1);
+            }
+            
+            Destroy(_stockOrderImg[^1]);
+            _stockOrderImg.RemoveAt(_stockOrderImg.Count-1);
+
+            _saveLastNbToReach++;
+            nbToReach = _saveLastNbToReach;
+        }
+        else
+            _saveLastNbToReach = 1;
+
+        _saveLastState = whichState;
+
         
         if (isMultiple)
             _stockOrderMultipleText.Add(whichState, order);
@@ -124,9 +155,14 @@ public class ScreensManager : MonoBehaviour
         _stockOrderMultipleText[whichOrder].UpdateCurrentNbOrder(newNb);
     }
 
-    public void ChangeSizeGridOrder()
+    public void AddNewMultipleOrder(AllStates whichOrder, int nbToAdd)
     {
-        _orderGrid.GetComponent<GridLayoutGroup>().cellSize = new Vector2(150, 150);
+        _stockOrderMultipleText[whichOrder].AddNewNbOrder(nbToAdd);
+    }
+
+    public void ChangeSizeGridOrder(Vector2 newSize)
+    {
+        _orderGrid.GetComponent<GridLayoutGroup>().cellSize = newSize;
     }
 
     public void VictoryScreen()
@@ -396,8 +432,22 @@ public class ScreensManager : MonoBehaviour
             Destroy(order);
         }
 
+        foreach (var order in _stockOrderMultipleText)
+        {
+            Destroy(order.Value.gameObject);
+        }
+
         _stockOrderText.Clear();
         _stockOrderImg.Clear();
+        _stockOrderMultipleText.Clear();
+    }
+
+    public void ResetMultiplestock()
+    {
+        foreach (var text in _stockOrderMultipleText)
+        {
+            text.Value.UpdateCurrentNbOrder(0);
+        }
     }
 
     public void GoLevelSupp()

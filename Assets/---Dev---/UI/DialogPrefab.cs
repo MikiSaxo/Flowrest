@@ -76,6 +76,12 @@ public class DialogPrefab : MonoBehaviour
         UpdateText();
     }
 
+    public void AddNewNbOrder(int nb)
+    {
+        _currentNb += nb;
+        UpdateText();
+    }
+
     private void UpdateText()
     {
         DialogText.text = $"{_currentOrder} : {_currentNb} / {_maxNb}";
