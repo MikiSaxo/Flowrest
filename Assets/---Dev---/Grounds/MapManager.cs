@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
     [SerializeField] private float _timeToSwap;
+    [SerializeField] private float _timeToSpawnMap;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -245,8 +246,22 @@ public class MapManager : MonoBehaviour
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
             
-            if (currentLvl.QuestFlower.Length > 1)
-                ScreensManager.Instance.ChangeSizeGridOrder();
+            // Check Nb of different state
+            AllStates lastState = AllStates.None;
+            var count = 0;
+            foreach (var state in currentLvl.QuestFlower)
+            {
+                if (lastState != state)
+                    count++;
+
+                lastState = state;
+            }
+            
+            if (count == 2)
+                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
+            if (count >= 3)
+                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
+            
             // Update Order Description
             for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
             {
@@ -297,13 +312,21 @@ public class MapManager : MonoBehaviour
         InitializeFloor(_mapSize);
         
         // Update Quest
-        if(currentLvl.QuestFloor.Length > 0)
+        if (currentLvl.QuestFloor.Length > 0)
+        {
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
+            _countNbOfTile = 0;
+        }
         
         QuestsManager.CheckQuest();
     }
 
     private void InitializeFloor(Vector2Int sizeMap)
+    {
+        StartCoroutine(FloorSpawnTiming(sizeMap));
+    }
+
+    IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -318,11 +341,13 @@ public class MapManager : MonoBehaviour
                 {
                     GameObject ground = Instantiate(_groundPrefab, _map.transform);
                     InitObj(ground, x, y, dico[whichEnvironment]);
+                    yield return new WaitForSeconds(_timeToSpawnMap);
                 }
                 else
                 {
                     UpdateCurrentStateMap(x, y, dico[whichEnvironment]);
                 }
+
             }
         }
 

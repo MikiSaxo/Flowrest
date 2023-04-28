@@ -55,7 +55,9 @@ public class RecyclingManager : MonoBehaviour
             gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
             // gameObject.GetComponentInChildren<Button>().interactable = false;
         }
-
+        
+        GetComponent<PointerMotion>().Bounce();
+        
         UpdateDisplayRecyclingNbLeft();
     }
 
