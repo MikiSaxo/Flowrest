@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
     public int NbOfRecycling { get; private set; }
     public bool IsSwapping { get; private set; }
     public bool IsPosing { get; set; }
+    public bool IsLoading { get; set; }
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
@@ -232,7 +233,9 @@ public class MapManager : MonoBehaviour
         QuestsManager.ResetQuestNumbers();
 
         // Update description Order
-        ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription);
+        ScreensManager.Instance.InitOrderDescription(LanguageManager.Instance.Tongue == Language.Francais
+            ? currentLvl.QuestDescription
+            : currentLvl.QuestDescriptionEnglish);
 
         // Update if full floor quest
         if (currentLvl.QuestFloor.Length > 0)
@@ -334,6 +337,8 @@ public class MapManager : MonoBehaviour
 
     IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
+        IsLoading = true;
+        
         for (int x = 0; x < sizeMap.x; x++)
         {
             for (int y = 0; y < sizeMap.y; y++)
@@ -359,6 +364,8 @@ public class MapManager : MonoBehaviour
         QuestsManager.CheckQuest();
         // Save all actions
         SaveNewMap();
+
+        IsLoading = false;
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -1024,7 +1031,7 @@ public class MapManager : MonoBehaviour
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-        if (IsSwapping || IsPosing) return;
+        if (IsSwapping || IsPosing || IsLoading) return;
 
         //ResetAllMap(false);
         ResetAllSelection();

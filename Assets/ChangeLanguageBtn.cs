@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeLanguage : MonoBehaviour
+public class ChangeLanguageBtn : MonoBehaviour
 {
     [SerializeField] private Sprite[] _flags;
     [SerializeField] private Image _flagIcon;
@@ -17,23 +17,26 @@ public class ChangeLanguage : MonoBehaviour
 
     public void ChangeLanguageButton()
     {
+        if (MapManager.Instance.IsLoading) return;
+        
         LanguageManager.Instance.ChangeToFrenchOrEnglish();
+        MapManager.Instance.RestartLevel();
     }
 
-    public void FrenchOrEnglish()
+    private void FrenchOrEnglish()
     {
         if (LanguageManager.Instance.Tongue == Language.Francais)
             ChangeToFrench();
         else
             ChangeToEnglish();
     }
-    
-    public void ChangeToFrench()
+
+    private void ChangeToFrench()
     {
         _flagIcon.sprite = _flags[0];
     }
 
-    public void ChangeToEnglish()
+    private void ChangeToEnglish()
     {
         _flagIcon.sprite = _flags[1];
     }

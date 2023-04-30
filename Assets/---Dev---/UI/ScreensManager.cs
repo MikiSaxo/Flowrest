@@ -27,7 +27,9 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _orderPrefab;
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
+    [Space(15)]
     [SerializeField] private List<OrderText> _orderText;
+    [Space(5)]
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -37,8 +39,8 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
 
-    [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
-    [SerializeField] private string[] _titlesString;
+    // [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
+    // [SerializeField] private string[] _titlesString;
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
 
@@ -72,7 +74,6 @@ public class ScreensManager : MonoBehaviour
     private void Start()
     {
         //FirstScreenOfLevel();
-        LanguageManager.Instance.ChangeLanguageEvent += ChangeLanguageText;
     }
 
     public void InitCharaName(string charaName)
@@ -101,7 +102,7 @@ public class ScreensManager : MonoBehaviour
 
         if (_saveLastState == whichState)
         {
-            print("salut");
+            // print("salut");
             if (isMultiple)
             {
                 var dialog = _stockOrderMultipleText.Last();
@@ -134,7 +135,10 @@ public class ScreensManager : MonoBehaviour
         else
             _stockOrderText.Add(order);
 
-        order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
+        order.InitOrder(
+            LanguageManager.Instance.Tongue == Language.Francais
+                ? $"{_orderText[whichOrder].OrderDescription[(int)whichState]}"
+                : $"{_orderText[whichOrder].OrderDescriptionEnglish[(int)whichState]}", nbToReach);
 
         // Image
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
@@ -175,7 +179,7 @@ public class ScreensManager : MonoBehaviour
         EnergyManager.Instance.StopWaveEffect();
 
         _titlesParent.SetActive(true);
-        _titlesText.text = _titlesString[0];
+        // _titlesText.text = _titlesString[0];
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
@@ -482,10 +486,6 @@ public class ScreensManager : MonoBehaviour
             EndDialog();
     }
 
-    private void ChangeLanguageText()
-    {
-        
-    }
     public void UpdateTutoArrow(bool state)
     {
         _tutoArrow.UpdateArrow(state);
@@ -508,8 +508,4 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        LanguageManager.Instance.ChangeLanguageEvent -= ChangeLanguageText;
-    }
 }

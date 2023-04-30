@@ -61,10 +61,10 @@ public class RecyclingManager : MonoBehaviour
         UpdateDisplayRecyclingNbLeft();
     }
 
-    private void UpdateDisplayRecyclingNbLeft()
+    public void UpdateDisplayRecyclingNbLeft()
     {
         if (!_hasInfinitRecycling)
-            _recyclingNbText.text = $"{MapManager.Instance.NbOfRecycling} restant(s)";
+            _recyclingNbText.text = $"{MapManager.Instance.NbOfRecycling} {LanguageManager.Instance.GetRecycleText()}";
         // _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
     }
 

@@ -32,6 +32,7 @@ public class LevelData : ScriptableObject
 
    
    public string QuestDescription;
+   public string QuestDescriptionEnglish;
    public Sprite QuestImage;
    
    

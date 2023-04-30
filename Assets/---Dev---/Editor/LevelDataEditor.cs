@@ -33,6 +33,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty ForcePoseBlocCoord;
 
     private SerializedProperty QuestDescription;
+    private SerializedProperty QuestDescriptionEnglish;
     private SerializedProperty QuestImage;
 
     private SerializedProperty QuestFloor;
@@ -73,6 +74,7 @@ public class LevelDataEditor : Editor
         ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
+        QuestDescriptionEnglish = serializedObject.FindProperty("QuestDescriptionEnglish");
         QuestImage = serializedObject.FindProperty("QuestImage");
 
         QuestFloor = serializedObject.FindProperty("QuestFloor");
@@ -207,8 +209,10 @@ public class LevelDataEditor : Editor
         questsInfo = EditorGUILayout.BeginFoldoutHeaderGroup(questsInfo, "-  Quest(s) Infos  -");
         if (questsInfo)
         {
+            // EditorGUILayout.PropertyField(QuestImage);
             EditorGUILayout.PropertyField(QuestDescription);
-            EditorGUILayout.PropertyField(QuestImage);
+            EditorGUILayout.Space(5);
+            EditorGUILayout.PropertyField(QuestDescriptionEnglish);
 
             EditorGUILayout.Space(questsChoose ? 5 : 10);
         }

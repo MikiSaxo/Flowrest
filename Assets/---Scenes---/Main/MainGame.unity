@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51693968}
   m_Layer: 5
-  m_Name: Titles
+  m_Name: Victory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3101,7 +3101,7 @@ GameObject:
   - component: {fileID: 312272142}
   - component: {fileID: 312272141}
   m_Layer: 5
-  m_Name: TextTitle
+  m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4042,6 +4042,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 055137acb69eefe44b3378e32760a79f, type: 2}
   - {fileID: 11400000, guid: 499b4888c32e9214cb82ae9047d2fa69, type: 2}
   - {fileID: 11400000, guid: 7dbd49384c8efbc43bfe231cb872c09c, type: 2}
+--- !u!114 &488813241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4579655477069185601, guid: 5adcd8724a4d8b645aaecb46174e7905, type: 3}
+  m_PrefabInstance: {fileID: 1453575792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &491547060
 GameObject:
   m_ObjectHideFlags: 0
@@ -4455,7 +4466,7 @@ GameObject:
   - component: {fileID: 523940195}
   - component: {fileID: 523940198}
   m_Layer: 5
-  m_Name: Text_Titles
+  m_Name: VictoryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12412,50 +12423,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
---- !u!1 &1109945227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1109945229}
-  - component: {fileID: 1109945228}
-  m_Layer: 0
-  m_Name: LanguageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1109945228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109945227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfafb86f656581c4486998d8b6197c50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1109945229
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109945227}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1126886669
 GameObject:
   m_ObjectHideFlags: 0
@@ -19184,6 +19151,7 @@ GameObject:
   - component: {fileID: 1764261892}
   - component: {fileID: 1764261891}
   - component: {fileID: 1764261890}
+  - component: {fileID: 1764261895}
   m_Layer: 5
   m_Name: CanvasScreens
   m_TagString: Untagged
@@ -19206,9 +19174,9 @@ MonoBehaviour:
   _bg: {fileID: 2125585167}
   _titlesParent: {fileID: 51693967}
   _gameOverParent: {fileID: 2134788108}
+  _nextLevel: {fileID: 261037161}
   _menuPauseParent: {fileID: 1601367369}
   _menuPauseTriggered: {fileID: 94625345}
-  _nextLevel: {fileID: 261037161}
   _orderMenu: {fileID: 2121142949}
   _orderGrid: {fileID: 1597146341}
   _orderPrefab: {fileID: 7047284334977653930, guid: 85abc912d6b09414da4e23d7a693ade0, type: 3}
@@ -19217,6 +19185,17 @@ MonoBehaviour:
   _orderText:
   - OrderName: Floor
     OrderDescription:
+    - Grassias sol
+    - 
+    - Hydros sol
+    - 
+    - Calcid sol
+    - 
+    - 
+    - 
+    - 
+    - Viscosa sol
+    OrderDescriptionEnglish:
     - Grassias Floor
     - 
     - Hydros Floor
@@ -19229,6 +19208,17 @@ MonoBehaviour:
     - Viscosa Floor
   - OrderName: Flower
     OrderDescription:
+    - Grassias Fleur
+    - 
+    - Hydros Fleur
+    - 
+    - Calcid Fleur
+    - 
+    - 
+    - 
+    - 
+    - Viscosa Fleur
+    OrderDescriptionEnglish:
     - Grassias Flower
     - 
     - Hydros Flower
@@ -19241,6 +19231,17 @@ MonoBehaviour:
     - Viscosa Flower
   - OrderName: No Specific Tile
     OrderDescription:
+    - Grassias pas toi
+    - 
+    - Hydros pas toi
+    - 
+    - Calcid pas toi
+    - 
+    - 
+    - 
+    - 
+    - Viscosa pas toi
+    OrderDescriptionEnglish:
     - Grassias No Specific Tile
     - 
     - Hydros No Specific Tile
@@ -19253,6 +19254,17 @@ MonoBehaviour:
     - Viscosa No Specific Tile
   - OrderName: Tile Chain
     OrderDescription:
+    - Grassias chaine
+    - 
+    - Hydros chaine
+    - 
+    - Calcid chaine
+    - 
+    - 
+    - 
+    - 
+    - Viscosa chaine
+    OrderDescriptionEnglish:
     - Grassias Tile Chain
     - 
     - Hydros Tile Chain
@@ -19265,17 +19277,27 @@ MonoBehaviour:
     - Viscosa Tile Chain
   - OrderName: Tile Count
     OrderDescription:
-    - Grassias Tile Chain
+    - Grassias compte
     - 
-    - Hydros Tile Chain
+    - Hydros Tile compte
     - 
-    - Calcid Tile Chain
-    - 
-    - 
+    - Calcid Tile compte
     - 
     - 
-    - Viscosa Tile Chain
-  _orderImage: {fileID: 364281059}
+    - 
+    - 
+    - Viscosa Tile compte
+    OrderDescriptionEnglish:
+    - Grassias Tile Count
+    - 
+    - Hydros Tile Count
+    - 
+    - Calcid Tile Count
+    - 
+    - 
+    - 
+    - 
+    - Viscosa Tile Count
   _dialogParent: {fileID: 1092695892}
   _characterName: {fileID: 1913230862}
   _dialogContent: {fileID: 7050394040245848421}
@@ -19283,10 +19305,6 @@ MonoBehaviour:
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
   _dialogFBEnd: {fileID: 67852414}
   _dialogSpeed: 0.01
-  _titlesText: {fileID: 523940195}
-  _titlesString:
-  - <rainb>Victory!
-  - "Nouvelle d\xE9couverte dans l'almanach :"
   _tutoArrow: {fileID: 1309480015}
 --- !u!114 &1764261891
 MonoBehaviour:
@@ -19373,6 +19391,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1764261895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764261889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3493062bf95cadb4ab86e289463cb21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _orderTextButton: {fileID: 957401318}
+  _memoTextButton: {fileID: 598214397}
+  _languageTextButton: {fileID: 1544071716}
+  _resumeTextButton: {fileID: 488813241}
+  _victoryText: {fileID: 523940195}
+  _gameOverText: {fileID: 312272141}
 --- !u!1 &1792107549
 GameObject:
   m_ObjectHideFlags: 0
@@ -21686,7 +21722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2006871686}
   m_Layer: 5
-  m_Name: Language
+  m_Name: LanguageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27919,6 +27955,63 @@ MonoBehaviour:
   _scaleEnter: 1.1
   _vibrato: 7
   _canEnter: 1
+--- !u!1001 &1571688092841772757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075608, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075614, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: m_Name
+      value: ---LanguageManager---
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
 --- !u!224 &2249213698256537541
 RectTransform:
   m_ObjectHideFlags: 0
