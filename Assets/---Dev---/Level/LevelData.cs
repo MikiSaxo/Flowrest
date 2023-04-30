@@ -25,6 +25,7 @@ public class LevelData : ScriptableObject
 
    public bool IsTuto;
    public string[] PreviewMessage;
+   public string[] PreviewMessageEnglish;
    public Vector2Int[] PlayerForceSwap;
    public bool HasForcePoseBlocAfterSwap;
    public Vector2Int ForcePoseBlocCoord;
@@ -46,6 +47,9 @@ public class LevelData : ScriptableObject
    public string CharacterName;
    public string[] DialogBeginning;
    public string[] DialogEnd;
+   
+   public string[] DialogBeginningEnglish;
+   public string[] DialogEndEnglish;
 
    
 }

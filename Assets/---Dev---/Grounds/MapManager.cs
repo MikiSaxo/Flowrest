@@ -193,7 +193,9 @@ public class MapManager : MonoBehaviour
         if (IsTuto)
         {
             // Set Preview message
-            _previewMessageTuto = currentLvl.PreviewMessage;
+            _previewMessageTuto = LanguageManager.Instance.Tongue == Language.Francais
+                ? currentLvl.PreviewMessage
+                : currentLvl.PreviewMessageEnglish;
 
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
@@ -228,7 +230,7 @@ public class MapManager : MonoBehaviour
 
         // Reset Order Number
         QuestsManager.ResetQuestNumbers();
-        
+
         // Update description Order
         ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription);
 
@@ -236,7 +238,7 @@ public class MapManager : MonoBehaviour
         if (currentLvl.QuestFloor.Length > 0)
         {
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
-            
+
             // Update Order Description
             ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 98, false);
         }
@@ -245,7 +247,7 @@ public class MapManager : MonoBehaviour
         if (currentLvl.QuestFlower.Length > 0)
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
-            
+
             // Check Nb of different state
             AllStates lastState = AllStates.None;
             var count = 0;
@@ -256,12 +258,12 @@ public class MapManager : MonoBehaviour
 
                 lastState = state;
             }
-            
+
             if (count == 2)
                 ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
             if (count >= 3)
                 ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
-            
+
             // Update Order Description
             for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
             {
@@ -273,7 +275,7 @@ public class MapManager : MonoBehaviour
         if (currentLvl.QuestNoSpecificTiles.Length > 0)
         {
             QuestsManager.InitQuestNoSpecificTiles(currentLvl.QuestNoSpecificTiles);
-            
+
             // Update Order Description
             ScreensManager.Instance.InitOrderGoal(2, currentLvl.QuestNoSpecificTiles[0], 99, false);
         }
@@ -284,9 +286,10 @@ public class MapManager : MonoBehaviour
             if (currentLvl.QuestTileChain.Length > 0)
             {
                 QuestsManager.InitQuestTileChain(currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
-               
+
                 // Update Order Description
-                ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain, false);
+                ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain,
+                    false);
             }
         }
 
@@ -296,29 +299,32 @@ public class MapManager : MonoBehaviour
             if (currentLvl.QuestTileCount.Length > 0)
             {
                 QuestsManager.InitQuestTileCount(currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
-                
+
                 // Update Order Description
-                ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount, false);
+                ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount,
+                    false);
             }
         }
 
         // Update Dialogs
-        ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, false);
+        ScreensManager.Instance.SpawnNewDialogs(
+            LanguageManager.Instance.Tongue == Language.Francais
+                ? _levelData[_currentLevel].DialogBeginning
+                : _levelData[_currentLevel].DialogBeginningEnglish, false, false);
+
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
 
 
         // Init Level
         InitializeFloor(_mapSize);
-        
+
         // Update Quest
         if (currentLvl.QuestFloor.Length > 0)
         {
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
-        
-        QuestsManager.CheckQuest();
     }
 
     private void InitializeFloor(Vector2Int sizeMap)
@@ -347,10 +353,10 @@ public class MapManager : MonoBehaviour
                 {
                     UpdateCurrentStateMap(x, y, dico[whichEnvironment]);
                 }
-
             }
         }
 
+        QuestsManager.CheckQuest();
         // Save all actions
         SaveNewMap();
     }
@@ -424,7 +430,9 @@ public class MapManager : MonoBehaviour
         if (_stockPlayerForceSwap.Count == 0) return;
 
         if (!GetHasFirstSwap())
+        {
             ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, true);
+        }
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
@@ -830,7 +838,10 @@ public class MapManager : MonoBehaviour
 
     public string[] GetDialogAtVictory()
     {
-        return _levelData[_currentLevel].DialogEnd;
+        if(LanguageManager.Instance.Tongue == Language.Francais)
+            return _levelData[_currentLevel].DialogEnd;
+
+        return _levelData[_currentLevel].DialogEndEnglish;
     }
 
     public void GoToLastMove()
@@ -913,7 +924,7 @@ public class MapManager : MonoBehaviour
             _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
             _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
         }
-        
+
         QuestsManager.CheckQuest();
     }
 

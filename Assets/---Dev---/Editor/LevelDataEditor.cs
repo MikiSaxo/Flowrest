@@ -28,6 +28,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty IsTuto;
     private SerializedProperty PlayerForceSwap;
     private SerializedProperty PreviewMessage;
+    private SerializedProperty PreviewMessageEnglish;
     private SerializedProperty HasForcePoseBlocAfterSwap;
     private SerializedProperty ForcePoseBlocCoord;
 
@@ -45,6 +46,8 @@ public class LevelDataEditor : Editor
     private SerializedProperty CharacterName;
     private SerializedProperty DialogBeginning;
     private SerializedProperty DialogEnd;
+    private SerializedProperty DialogBeginningEnglish;
+    private SerializedProperty DialogEndEnglish;
 
 
     void OnEnable()
@@ -65,6 +68,7 @@ public class LevelDataEditor : Editor
         IsTuto = serializedObject.FindProperty("IsTuto");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
         PreviewMessage = serializedObject.FindProperty("PreviewMessage");
+        PreviewMessageEnglish = serializedObject.FindProperty("PreviewMessageEnglish");
         HasForcePoseBlocAfterSwap = serializedObject.FindProperty("HasForcePoseBlocAfterSwap");
         ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
 
@@ -81,7 +85,9 @@ public class LevelDataEditor : Editor
 
         CharacterName = serializedObject.FindProperty("CharacterName");
         DialogBeginning = serializedObject.FindProperty("DialogBeginning");
-        DialogEnd = serializedObject.FindProperty("DialogEnd");
+        DialogEnd = serializedObject.FindProperty("DialogEnd");  
+        DialogBeginningEnglish = serializedObject.FindProperty("DialogBeginningEnglish");
+        DialogEndEnglish = serializedObject.FindProperty("DialogEndEnglish");
     }
 
     public override void OnInspectorGUI()
@@ -168,6 +174,10 @@ public class LevelDataEditor : Editor
             {
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
                 EditorGUILayout.PropertyField(PreviewMessage);
+
+                EditorGUILayout.Space(5);
+                
+                EditorGUILayout.PropertyField(PreviewMessageEnglish);
             }
 
             EditorGUILayout.Space(10);
@@ -243,6 +253,11 @@ public class LevelDataEditor : Editor
         {
             EditorGUILayout.PropertyField(DialogBeginning);
             EditorGUILayout.PropertyField(DialogEnd);
+            
+            EditorGUILayout.Space(10);
+
+            EditorGUILayout.PropertyField(DialogBeginningEnglish);
+            EditorGUILayout.PropertyField(DialogEndEnglish);
         }
     }
 }

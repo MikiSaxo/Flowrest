@@ -14,12 +14,13 @@ public class ScreensManager : MonoBehaviour
 {
     public static ScreensManager Instance;
 
-    [Header("Parents")] [SerializeField] private GameObject _bg;
+    [Header("Big Screens")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
-    [SerializeField] private GameObject _menuPauseParent;
-    [SerializeField] private GameObject _menuPauseTriggered;
     [SerializeField] private GameObject _nextLevel;
+    
+    [Header("Pause")][SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
@@ -27,9 +28,6 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
     [SerializeField] private List<OrderText> _orderText;
-
-    [SerializeField] private Image _orderImage;
-    // [SerializeField] private TMP_Text _descriptionQuest;
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -62,7 +60,9 @@ public class ScreensManager : MonoBehaviour
     private List<DialogPrefab> _stockOrderText = new List<DialogPrefab>();
     private Dictionary<AllStates, DialogPrefab> _stockOrderMultipleText = new Dictionary<AllStates, DialogPrefab>();
     private List<GameObject> _stockOrderImg = new List<GameObject>();
-
+    private AllStates _saveLastState;
+    private int _saveLastNbToReach;
+    
     private void Awake()
     {
         Instance = this;
@@ -72,6 +72,7 @@ public class ScreensManager : MonoBehaviour
     private void Start()
     {
         //FirstScreenOfLevel();
+        LanguageManager.Instance.ChangeLanguageEvent += ChangeLanguageText;
     }
 
     public void InitCharaName(string charaName)
@@ -91,9 +92,6 @@ public class ScreensManager : MonoBehaviour
 
         // _descriptionQuest.text = text;
     }
-
-    private AllStates _saveLastState;
-    private int _saveLastNbToReach;
 
     public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach, bool isMultiple)
     {
@@ -484,51 +482,10 @@ public class ScreensManager : MonoBehaviour
             EndDialog();
     }
 
-    private const float SPACING_BETWEEN_TWO_DIALOG = 18;
-
-    // IEnumerator UpdateText()
-    // {
-    //     _isCorouRunning = true; 
-    //     
-    //     GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
-    //     var goDialog = go.GetComponent<DialogPrefab>();
-    //
-    //     var newDialog = _dialogsToDisplay[_countDialog];
-    //
-    //     if (newDialog == String.Empty)
-    //         newDialog = " ";
-    //
-    //     goDialog.Init(newDialog, _dialogSpeed);
-    //     _dialogText = goDialog.DialogText;
-    //
-    //     float textSize = goDialog.GetDialogSizeY();
-    //     _dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
-    //
-    //     int charIndex = 0;
-    //
-    //     foreach (char c in newDialog.ToCharArray())
-    //     {
-    //         if (_stopCorou)
-    //         {
-    //             _stopCorou = false;
-    //             yield break;
-    //         }
-    //
-    //         _dialogScrollBar.value = 0;
-    //
-    //         charIndex++;
-    //
-    //         var firstText = newDialog.Substring(0, charIndex);
-    //         var secondText = $"<color=#00000000>{newDialog.Substring(charIndex)}";
-    //         _dialogText.text = firstText + secondText;
-    //
-    //         yield return new WaitForSeconds(_dialogSpeed);
-    //     }
-    //
-    //     _countScreen++;
-    //     _isCorouRunning = false;
-    // }
-
+    private void ChangeLanguageText()
+    {
+        
+    }
     public void UpdateTutoArrow(bool state)
     {
         _tutoArrow.UpdateArrow(state);
@@ -549,5 +506,10 @@ public class ScreensManager : MonoBehaviour
             if (txt.gameObject != null)
                 Destroy(txt.gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        LanguageManager.Instance.ChangeLanguageEvent -= ChangeLanguageText;
     }
 }
