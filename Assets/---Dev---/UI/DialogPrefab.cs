@@ -23,6 +23,8 @@ public class DialogPrefab : MonoBehaviour
     private int _currentNb;
     private string _currentOrder;
 
+    private const float _widthOrder = 333;
+
     public void Init(string dialog, float dialogSpeed)
     {
         IsFinish = false;
@@ -52,22 +54,24 @@ public class DialogPrefab : MonoBehaviour
     {
         DialogText.text = text;
         DialogText.ForceMeshUpdate();
-      
+        
         Vector2 textSize = DialogText.GetRenderedValues(false);
         _textSizeY = textSize.y;
-        gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+        gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY - 20), 0);
     }
     public void InitOrder(string desc, int nbToReach)
     {
         _currentOrder = desc;
         _maxNb = nbToReach;
         
-        UpdateText();
+        DialogText.text = desc;
         DialogText.ForceMeshUpdate();
-      
+        
         Vector2 textSize = DialogText.GetRenderedValues(false);
         _textSizeY = textSize.y;
-        gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
+        gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY + _padding.y), 0);
+        
+        UpdateText();
     }
 
     public void UpdateCurrentNbOrder(int nb)

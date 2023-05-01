@@ -189,6 +189,21 @@ public class QuestManager : MonoBehaviour
             }
         }
 
+
+
+        if (_flowerStateDone.Count == _flowerState.Length)
+        {
+            for (int i = 0; i < _flowerStateDone.Count; i++)
+            {
+                if (_flowerStateDone[i] != _flowerState[i])
+                    return false;
+            }
+            
+            return true;
+        }
+
+        return false;
+
         return countDone >= _flowerState.Length;
     }
 

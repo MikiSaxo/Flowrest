@@ -54,7 +54,13 @@ public class LanguageManager : MonoBehaviour
     private void Start()
     {
         // ChangeToEnglish();
-        // ChangeToFrench();
+        StartCoroutine(TempWaitToChangeLanguage());
+    }
+
+    IEnumerator TempWaitToChangeLanguage()
+    {
+        yield return new WaitForSeconds(.3f);
+        ChangeToFrench();
     }
 
     public void ChooseLanguage(Language newLanguage)

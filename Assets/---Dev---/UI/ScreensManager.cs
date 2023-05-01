@@ -223,7 +223,7 @@ public class ScreensManager : MonoBehaviour
         if (_dialogsPrefabList.Count != 0)
             _dialogsPrefabList.Clear();
 
-        if (dialogs.Length == 0)
+        if (dialogs.Length == 0 && !isTheEnd)
             dialogs = new[] { " " };
         
         // Add new string dialog
