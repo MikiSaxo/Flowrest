@@ -223,6 +223,9 @@ public class ScreensManager : MonoBehaviour
         if (_dialogsPrefabList.Count != 0)
             _dialogsPrefabList.Clear();
 
+        if (dialogs.Length == 0)
+            dialogs = new[] { " " };
+        
         // Add new string dialog
         foreach (var dialog in dialogs)
         {
@@ -464,6 +467,7 @@ public class ScreensManager : MonoBehaviour
         // _countScreen = 0;
         _countDialog = 0;
 
+        ResetOrder();
         // _dialoguesParent.SetActive(false);
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);

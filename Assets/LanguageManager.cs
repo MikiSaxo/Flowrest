@@ -48,12 +48,12 @@ public class LanguageManager : MonoBehaviour
     {
         Instance = this;
         DontDestroyOnLoad(transform.gameObject);
-        ChangeToEnglish();
+        // ChangeToEnglish();
     }
 
     private void Start()
     {
-        ChangeToEnglish();
+        // ChangeToEnglish();
         // ChangeToFrench();
     }
 
