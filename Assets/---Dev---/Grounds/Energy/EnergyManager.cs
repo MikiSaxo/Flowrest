@@ -101,7 +101,8 @@ public class EnergyManager : MonoBehaviour
         if (_tempValue == 0)
             _tempValue = 1;
         yield return new WaitForSeconds(.01f);
-        ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
+        if(value > 0)
+            ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }
