@@ -204,7 +204,7 @@ public class QuestManager : MonoBehaviour
 
         return false;
 
-        return countDone >= _flowerState.Length;
+        // return countDone >= _flowerState.Length;
     }
 
     private bool CheckNoSpecificTileQuest()
