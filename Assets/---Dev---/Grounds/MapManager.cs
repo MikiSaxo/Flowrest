@@ -58,12 +58,12 @@ public class MapManager : MonoBehaviour
     private int _currentLevel;
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
+    private bool _isFullFloorOrder;
 
     private AllStates[,] _currentStateMap;
     private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
     private List<int> _stockEnergy = new List<int>();
     private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
-    private List<Dictionary<AllStates, int>> _stockTileButton = new List<Dictionary<AllStates, int>>();
     private List<List<int>> _stockTileButtonTest = new List<List<int>>();
     private List<int> _stockNbRecycle = new List<int>();
 
@@ -241,9 +241,9 @@ public class MapManager : MonoBehaviour
         if (currentLvl.QuestFloor.Length > 0)
         {
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
-
+            _isFullFloorOrder = true;
             // Update Order Description
-            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 98, false);
+            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 0, false);
         }
 
         // Update if flower quest
@@ -321,13 +321,6 @@ public class MapManager : MonoBehaviour
 
         // Init Level
         InitializeFloor(_mapSize);
-
-        // Update Quest
-        if (currentLvl.QuestFloor.Length > 0)
-        {
-            ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
-            _countNbOfTile = 0;
-        }
     }
 
     private void InitializeFloor(Vector2Int sizeMap)
@@ -338,7 +331,7 @@ public class MapManager : MonoBehaviour
     IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
         IsLoading = true;
-        
+
         for (int x = 0; x < sizeMap.x; x++)
         {
             for (int y = 0; y < sizeMap.y; y++)
@@ -361,6 +354,12 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        // Update Quest
+        if (_isFullFloorOrder)
+        {
+            ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
+            _countNbOfTile = 0;
+        }
         QuestsManager.CheckQuest();
         // Save all actions
         SaveNewMap();
@@ -415,7 +414,8 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
 
         // Count Nb Of Tile for Full Floor Order
-        _countNbOfTile++;
+        if (state != AllStates.Mountain) 
+            _countNbOfTile++;
     }
 
     private void Update()
@@ -845,7 +845,7 @@ public class MapManager : MonoBehaviour
 
     public string[] GetDialogAtVictory()
     {
-        if(LanguageManager.Instance.Tongue == Language.Francais)
+        if (LanguageManager.Instance.Tongue == Language.Francais)
             return _levelData[_currentLevel].DialogEnd;
 
         return _levelData[_currentLevel].DialogEndEnglish;
@@ -916,10 +916,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        if (_stockNbRecycle.Count == 1)
-            NbOfRecycling = _stockNbRecycle[0];
-        else
-            NbOfRecycling = _stockNbRecycle[^2];
+        NbOfRecycling = _stockNbRecycle.Count == 1 ? _stockNbRecycle[0] : _stockNbRecycle[^2];
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
 
         // Remove Last
@@ -1020,11 +1017,13 @@ public class MapManager : MonoBehaviour
                 _mapGrid[x, y] = null;
             }
         }
-
+        ResetGoToLastMove();
         SetupUIGround.Instance.ResetAllButtons();
         ItemCollectedManager.Instance.DeleteAllFB();
+        
         IsVictory = false;
-
+        _isFullFloorOrder = false;
+        
         ChangeLevel(nextLevel);
     }
 
@@ -1034,6 +1033,7 @@ public class MapManager : MonoBehaviour
         if (IsSwapping || IsPosing || IsLoading) return;
 
         //ResetAllMap(false);
+        // ResetGoToLastMove();
         ResetAllSelection();
         ResetButtonSelected();
         ResetGroundSelected();
@@ -1108,6 +1108,15 @@ public class MapManager : MonoBehaviour
                 ground.GetFbArrow().gameObject.SetActive(false);
             }
         }
+    }
+
+    private void ResetGoToLastMove()
+    {
+        _stockStateMap.Clear();
+        _stockEnergy.Clear();
+        _stockLastGroundSwaped.Clear();
+        _stockTileButtonTest.Clear();
+        _stockNbRecycle.Clear();
     }
 
     public void UpdateAllGroundTutoForcePose(bool blockAll)
