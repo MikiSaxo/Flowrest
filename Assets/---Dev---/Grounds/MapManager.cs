@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
     public int NbOfRecycling { get; private set; }
     public bool IsSwapping { get; private set; }
     public bool IsPosing { get; set; }
+    public bool IsLoading { get; set; }
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
@@ -57,12 +58,12 @@ public class MapManager : MonoBehaviour
     private int _currentLevel;
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
+    private bool _isFullFloorOrder;
 
     private AllStates[,] _currentStateMap;
     private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
     private List<int> _stockEnergy = new List<int>();
     private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
-    private List<Dictionary<AllStates, int>> _stockTileButton = new List<Dictionary<AllStates, int>>();
     private List<List<int>> _stockTileButtonTest = new List<List<int>>();
     private List<int> _stockNbRecycle = new List<int>();
 
@@ -193,7 +194,9 @@ public class MapManager : MonoBehaviour
         if (IsTuto)
         {
             // Set Preview message
-            _previewMessageTuto = currentLvl.PreviewMessage;
+            _previewMessageTuto = LanguageManager.Instance.Tongue == Language.Francais
+                ? currentLvl.PreviewMessage
+                : currentLvl.PreviewMessageEnglish;
 
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
@@ -228,24 +231,26 @@ public class MapManager : MonoBehaviour
 
         // Reset Order Number
         QuestsManager.ResetQuestNumbers();
-        
+
         // Update description Order
-        ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription);
+        ScreensManager.Instance.InitOrderDescription(LanguageManager.Instance.Tongue == Language.Francais
+            ? currentLvl.QuestDescription
+            : currentLvl.QuestDescriptionEnglish);
 
         // Update if full floor quest
         if (currentLvl.QuestFloor.Length > 0)
         {
             QuestsManager.InitQuestFullFloor(currentLvl.QuestFloor[0]);
-            
+            _isFullFloorOrder = true;
             // Update Order Description
-            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 98, false);
+            ScreensManager.Instance.InitOrderGoal(0, currentLvl.QuestFloor[0], 0, false);
         }
 
         // Update if flower quest
         if (currentLvl.QuestFlower.Length > 0)
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
-            
+
             // Check Nb of different state
             AllStates lastState = AllStates.None;
             var count = 0;
@@ -256,12 +261,12 @@ public class MapManager : MonoBehaviour
 
                 lastState = state;
             }
-            
+
             if (count == 2)
                 ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
             if (count >= 3)
                 ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
-            
+
             // Update Order Description
             for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
             {
@@ -273,7 +278,7 @@ public class MapManager : MonoBehaviour
         if (currentLvl.QuestNoSpecificTiles.Length > 0)
         {
             QuestsManager.InitQuestNoSpecificTiles(currentLvl.QuestNoSpecificTiles);
-            
+
             // Update Order Description
             ScreensManager.Instance.InitOrderGoal(2, currentLvl.QuestNoSpecificTiles[0], 99, false);
         }
@@ -284,9 +289,10 @@ public class MapManager : MonoBehaviour
             if (currentLvl.QuestTileChain.Length > 0)
             {
                 QuestsManager.InitQuestTileChain(currentLvl.QuestTileChain[0], currentLvl.NumberTileChain);
-               
+
                 // Update Order Description
-                ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain, false);
+                ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain,
+                    false);
             }
         }
 
@@ -296,29 +302,25 @@ public class MapManager : MonoBehaviour
             if (currentLvl.QuestTileCount.Length > 0)
             {
                 QuestsManager.InitQuestTileCount(currentLvl.QuestTileCount[0], currentLvl.NumberTileCount);
-                
+
                 // Update Order Description
-                ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount, false);
+                ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount,
+                    false);
             }
         }
 
         // Update Dialogs
-        ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, false);
+        ScreensManager.Instance.SpawnNewDialogs(
+            LanguageManager.Instance.Tongue == Language.Francais
+                ? _levelData[_currentLevel].DialogBeginning
+                : _levelData[_currentLevel].DialogBeginningEnglish, false, false);
+
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
 
 
         // Init Level
         InitializeFloor(_mapSize);
-        
-        // Update Quest
-        if (currentLvl.QuestFloor.Length > 0)
-        {
-            ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
-            _countNbOfTile = 0;
-        }
-        
-        QuestsManager.CheckQuest();
     }
 
     private void InitializeFloor(Vector2Int sizeMap)
@@ -328,6 +330,8 @@ public class MapManager : MonoBehaviour
 
     IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
+        IsLoading = true;
+
         for (int x = 0; x < sizeMap.x; x++)
         {
             for (int y = 0; y < sizeMap.y; y++)
@@ -347,12 +351,20 @@ public class MapManager : MonoBehaviour
                 {
                     UpdateCurrentStateMap(x, y, dico[whichEnvironment]);
                 }
-
             }
         }
 
+        // Update Quest
+        if (_isFullFloorOrder)
+        {
+            ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
+            _countNbOfTile = 0;
+        }
+        QuestsManager.CheckQuest();
         // Save all actions
         SaveNewMap();
+
+        IsLoading = false;
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -402,7 +414,8 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
 
         // Count Nb Of Tile for Full Floor Order
-        _countNbOfTile++;
+        if (state != AllStates.Mountain) 
+            _countNbOfTile++;
     }
 
     private void Update()
@@ -424,7 +437,9 @@ public class MapManager : MonoBehaviour
         if (_stockPlayerForceSwap.Count == 0) return;
 
         if (!GetHasFirstSwap())
+        {
             ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, true);
+        }
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
@@ -664,8 +679,16 @@ public class MapManager : MonoBehaviour
         gWhich.IsProtectedPrevisu = true;
 
         // Update Ground Around
-        gWhich.UpdateGroundsAroundPrevisu(gLastGroundSelected.GetCurrentStateEnum());
-        gLastGroundSelected.UpdateGroundsAroundPrevisu(gWhich.GetCurrentStateEnum());
+        gWhich.UpdateGroundsAroundPreview(gLastGroundSelected.GetCurrentStateEnum());
+        gLastGroundSelected.UpdateGroundsAroundPreview(gWhich.GetCurrentStateEnum());
+        
+        // Update new Tile in inventory
+        if (_hasInventory)
+        {
+            var result = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
+                gWhich.GetCurrentStateEnum());
+            SetupUIGround.Instance.UpdatePreviewInventory(true, result);
+        }
 
         // Reset protect
         gLastGroundSelected.IsProtectedPrevisu = false;
@@ -686,7 +709,7 @@ public class MapManager : MonoBehaviour
         var gWhich = which.GetComponent<GroundStateManager>();
 
         gWhich.IsProtectedPrevisu = true;
-        gWhich.UpdateGroundsAroundPrevisu(buttonState);
+        gWhich.UpdateGroundsAroundPreview(buttonState);
         gWhich.IsProtectedPrevisu = false;
 
         gWhich.ChangeStatePrevisu(buttonState);
@@ -785,6 +808,8 @@ public class MapManager : MonoBehaviour
         //     ScreensManager.Instance.GameOver();
         // }
 
+        if (IsVictory) yield break;
+
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
             if (!_hasInventory)
@@ -830,7 +855,10 @@ public class MapManager : MonoBehaviour
 
     public string[] GetDialogAtVictory()
     {
-        return _levelData[_currentLevel].DialogEnd;
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+            return _levelData[_currentLevel].DialogEnd;
+
+        return _levelData[_currentLevel].DialogEndEnglish;
     }
 
     public void GoToLastMove()
@@ -898,10 +926,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        if (_stockNbRecycle.Count == 1)
-            NbOfRecycling = _stockNbRecycle[0];
-        else
-            NbOfRecycling = _stockNbRecycle[^2];
+        NbOfRecycling = _stockNbRecycle.Count == 1 ? _stockNbRecycle[0] : _stockNbRecycle[^2];
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
 
         // Remove Last
@@ -913,7 +938,7 @@ public class MapManager : MonoBehaviour
             _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
             _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
         }
-        
+
         QuestsManager.CheckQuest();
     }
 
@@ -1002,20 +1027,23 @@ public class MapManager : MonoBehaviour
                 _mapGrid[x, y] = null;
             }
         }
-
+        ResetGoToLastMove();
         SetupUIGround.Instance.ResetAllButtons();
         ItemCollectedManager.Instance.DeleteAllFB();
+        
         IsVictory = false;
-
+        _isFullFloorOrder = false;
+        
         ChangeLevel(nextLevel);
     }
 
     public void RestartLevel()
     {
         // if(ScreensManager.Instance.GetIsDialogTime()) return;
-        if (IsSwapping || IsPosing) return;
+        if (IsSwapping || IsPosing || IsLoading) return;
 
         //ResetAllMap(false);
+        // ResetGoToLastMove();
         ResetAllSelection();
         ResetButtonSelected();
         ResetGroundSelected();
@@ -1073,6 +1101,8 @@ public class MapManager : MonoBehaviour
                 ground.ResetStockPrevisu();
             }
         }
+        
+        SetupUIGround.Instance.UpdatePreviewInventory(false, AllStates.None);
     }
 
     private void ResetAllPlayerForceSwapped(bool isTutoEnded)
@@ -1090,6 +1120,15 @@ public class MapManager : MonoBehaviour
                 ground.GetFbArrow().gameObject.SetActive(false);
             }
         }
+    }
+
+    private void ResetGoToLastMove()
+    {
+        _stockStateMap.Clear();
+        _stockEnergy.Clear();
+        _stockLastGroundSwaped.Clear();
+        _stockTileButtonTest.Clear();
+        _stockNbRecycle.Clear();
     }
 
     public void UpdateAllGroundTutoForcePose(bool blockAll)

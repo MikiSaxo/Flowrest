@@ -13,6 +13,7 @@ public class SetupUIGround : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private GameObject _fBDnd;
     [SerializeField] private GameObject _buttonBackwards;
+    [SerializeField] private InventoryTilePreview _inventoryTilePreview;
     // public OpenCloseMenu GroundStockage;
 
     [Header("Inventory")] [SerializeField] private GameObject _gridParent;
@@ -153,6 +154,19 @@ public class SetupUIGround : MonoBehaviour
     public void SetActiveBackwardsButton(bool state)
     {
         _buttonBackwards.SetActive(state);
+    }
+
+    public void UpdatePreviewInventory(bool activate, AllStates state)
+    {
+        if (activate)
+        {
+            var grndData = GetGroundUIData((int)state);
+            _inventoryTilePreview.InitPreviewTile(grndData.Icon, grndData.ColorIcon);
+        }
+        else
+        {
+            _inventoryTilePreview.DeactivatePreviewTile();
+        }
     }
 
     public void GroundEmpty(GameObject button)

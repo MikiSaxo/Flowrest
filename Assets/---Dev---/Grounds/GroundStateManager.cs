@@ -35,7 +35,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsPlayerForceSwapBlocked { get; set; }
     public bool IsPlayerNotForcePose { get; set; }
 
-    public AllStates StockStatePrevisu { get; set; }
+    public AllStates StockStatePreview { get; set; }
 
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
@@ -150,7 +150,7 @@ public class GroundStateManager : MonoBehaviour
         _currentState = state;
         currentGroundBase = _allState[(int)state];
         currentGroundBase.EnterState(this);
-        StockStatePrevisu = _currentState;
+        StockStatePreview = _currentState;
         _tempCurrentState = _currentState;
     }
 
@@ -354,7 +354,7 @@ public class GroundStateManager : MonoBehaviour
         ChangeState(newState);
     }
 
-    public void UpdateGroundsAroundPrevisu(AllStates otherState)
+    public void UpdateGroundsAroundPreview(AllStates otherState)
     {
         Vector2Int[] hexDirections = new Vector2Int[6];
         // Important for the offset with hex coords
@@ -381,10 +381,10 @@ public class GroundStateManager : MonoBehaviour
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();
-            var newState = ConditionManager.Instance.GetState(otherState, grnd.StockStatePrevisu);
+            var newState = ConditionManager.Instance.GetState(otherState, grnd.StockStatePreview);
 
             grnd.ChangeStatePrevisu(newState);
-            grnd.StockStatePrevisu = newState;
+            grnd.StockStatePreview = newState;
 
             _stockGroundPrevisu.Add(grnd);
         }
@@ -509,7 +509,7 @@ public class GroundStateManager : MonoBehaviour
     private void ResetPrevisu()
     {
         _fbPrevisu.DeactivateIcon();
-        StockStatePrevisu = _currentState;
+        StockStatePreview = _currentState;
     }
 
     private void OnDisable()

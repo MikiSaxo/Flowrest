@@ -14,22 +14,22 @@ public class ScreensManager : MonoBehaviour
 {
     public static ScreensManager Instance;
 
-    [Header("Parents")] [SerializeField] private GameObject _bg;
+    [Header("Big Screens")] [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
-    [SerializeField] private GameObject _menuPauseParent;
-    [SerializeField] private GameObject _menuPauseTriggered;
     [SerializeField] private GameObject _nextLevel;
+    
+    [Header("Pause")][SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
     [SerializeField] private GameObject _orderPrefab;
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
+    [Space(15)]
     [SerializeField] private List<OrderText> _orderText;
-
-    [SerializeField] private Image _orderImage;
-    // [SerializeField] private TMP_Text _descriptionQuest;
+    [Space(5)]
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
@@ -39,8 +39,8 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
 
-    [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
-    [SerializeField] private string[] _titlesString;
+    // [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
+    // [SerializeField] private string[] _titlesString;
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
 
@@ -62,7 +62,9 @@ public class ScreensManager : MonoBehaviour
     private List<DialogPrefab> _stockOrderText = new List<DialogPrefab>();
     private Dictionary<AllStates, DialogPrefab> _stockOrderMultipleText = new Dictionary<AllStates, DialogPrefab>();
     private List<GameObject> _stockOrderImg = new List<GameObject>();
-
+    private AllStates _saveLastState;
+    private int _saveLastNbToReach;
+    
     private void Awake()
     {
         Instance = this;
@@ -92,9 +94,6 @@ public class ScreensManager : MonoBehaviour
         // _descriptionQuest.text = text;
     }
 
-    private AllStates _saveLastState;
-    private int _saveLastNbToReach;
-
     public void InitOrderGoal(int whichOrder, AllStates whichState, int nbToReach, bool isMultiple)
     {
         // Text
@@ -103,7 +102,7 @@ public class ScreensManager : MonoBehaviour
 
         if (_saveLastState == whichState)
         {
-            print("salut");
+            // print("salut");
             if (isMultiple)
             {
                 var dialog = _stockOrderMultipleText.Last();
@@ -136,7 +135,10 @@ public class ScreensManager : MonoBehaviour
         else
             _stockOrderText.Add(order);
 
-        order.InitOrder($"{_orderText[whichOrder].OrderDescription[(int)whichState]}", nbToReach);
+        order.InitOrder(
+            LanguageManager.Instance.Tongue == Language.Francais
+                ? $"{_orderText[whichOrder].OrderDescription[(int)whichState]}"
+                : $"{_orderText[whichOrder].OrderDescriptionEnglish[(int)whichState]}", nbToReach);
 
         // Image
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
@@ -177,7 +179,7 @@ public class ScreensManager : MonoBehaviour
         EnergyManager.Instance.StopWaveEffect();
 
         _titlesParent.SetActive(true);
-        _titlesText.text = _titlesString[0];
+        // _titlesText.text = _titlesString[0];
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
@@ -221,6 +223,9 @@ public class ScreensManager : MonoBehaviour
         if (_dialogsPrefabList.Count != 0)
             _dialogsPrefabList.Clear();
 
+        if (dialogs.Length == 0 && !isTheEnd)
+            dialogs = new[] { " " };
+        
         // Add new string dialog
         foreach (var dialog in dialogs)
         {
@@ -462,6 +467,7 @@ public class ScreensManager : MonoBehaviour
         // _countScreen = 0;
         _countDialog = 0;
 
+        ResetOrder();
         // _dialoguesParent.SetActive(false);
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);
@@ -484,51 +490,6 @@ public class ScreensManager : MonoBehaviour
             EndDialog();
     }
 
-    private const float SPACING_BETWEEN_TWO_DIALOG = 18;
-
-    // IEnumerator UpdateText()
-    // {
-    //     _isCorouRunning = true; 
-    //     
-    //     GameObject go = Instantiate(_dialogPrefab, _dialogContent.transform);
-    //     var goDialog = go.GetComponent<DialogPrefab>();
-    //
-    //     var newDialog = _dialogsToDisplay[_countDialog];
-    //
-    //     if (newDialog == String.Empty)
-    //         newDialog = " ";
-    //
-    //     goDialog.Init(newDialog, _dialogSpeed);
-    //     _dialogText = goDialog.DialogText;
-    //
-    //     float textSize = goDialog.GetDialogSizeY();
-    //     _dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
-    //
-    //     int charIndex = 0;
-    //
-    //     foreach (char c in newDialog.ToCharArray())
-    //     {
-    //         if (_stopCorou)
-    //         {
-    //             _stopCorou = false;
-    //             yield break;
-    //         }
-    //
-    //         _dialogScrollBar.value = 0;
-    //
-    //         charIndex++;
-    //
-    //         var firstText = newDialog.Substring(0, charIndex);
-    //         var secondText = $"<color=#00000000>{newDialog.Substring(charIndex)}";
-    //         _dialogText.text = firstText + secondText;
-    //
-    //         yield return new WaitForSeconds(_dialogSpeed);
-    //     }
-    //
-    //     _countScreen++;
-    //     _isCorouRunning = false;
-    // }
-
     public void UpdateTutoArrow(bool state)
     {
         _tutoArrow.UpdateArrow(state);
@@ -550,4 +511,5 @@ public class ScreensManager : MonoBehaviour
                 Destroy(txt.gameObject);
         }
     }
+
 }

@@ -8,5 +8,6 @@ public class OrderText
 {
     public string OrderName;
     public string[] OrderDescription;
+    public string[] OrderDescriptionEnglish;
 }
 
