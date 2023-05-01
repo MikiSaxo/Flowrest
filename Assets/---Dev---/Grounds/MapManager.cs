@@ -679,8 +679,16 @@ public class MapManager : MonoBehaviour
         gWhich.IsProtectedPrevisu = true;
 
         // Update Ground Around
-        gWhich.UpdateGroundsAroundPrevisu(gLastGroundSelected.GetCurrentStateEnum());
-        gLastGroundSelected.UpdateGroundsAroundPrevisu(gWhich.GetCurrentStateEnum());
+        gWhich.UpdateGroundsAroundPreview(gLastGroundSelected.GetCurrentStateEnum());
+        gLastGroundSelected.UpdateGroundsAroundPreview(gWhich.GetCurrentStateEnum());
+        
+        // Update new Tile in inventory
+        if (_hasInventory)
+        {
+            var result = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
+                gWhich.GetCurrentStateEnum());
+            SetupUIGround.Instance.UpdatePreviewInventory(true, result);
+        }
 
         // Reset protect
         gLastGroundSelected.IsProtectedPrevisu = false;
@@ -701,7 +709,7 @@ public class MapManager : MonoBehaviour
         var gWhich = which.GetComponent<GroundStateManager>();
 
         gWhich.IsProtectedPrevisu = true;
-        gWhich.UpdateGroundsAroundPrevisu(buttonState);
+        gWhich.UpdateGroundsAroundPreview(buttonState);
         gWhich.IsProtectedPrevisu = false;
 
         gWhich.ChangeStatePrevisu(buttonState);
@@ -799,6 +807,8 @@ public class MapManager : MonoBehaviour
         // {
         //     ScreensManager.Instance.GameOver();
         // }
+
+        if (IsVictory) yield break;
 
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
@@ -1091,6 +1101,8 @@ public class MapManager : MonoBehaviour
                 ground.ResetStockPrevisu();
             }
         }
+        
+        SetupUIGround.Instance.UpdatePreviewInventory(false, AllStates.None);
     }
 
     private void ResetAllPlayerForceSwapped(bool isTutoEnded)
