@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7614459207405979692}
   - component: {fileID: 77867915388978050}
+  - component: {fileID: 5772255063168817146}
   m_Layer: 0
   m_Name: 2-HexWaterMesh
   m_TagString: Untagged
@@ -50,6 +51,22 @@ MonoBehaviour:
   AnimationTime: 0.9
   EaseNumber: 1
   EaseDuration: 0.25
+--- !u!114 &5772255063168817146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614459207405979688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a30244e495f9554db080e8aaaab24d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mesh:
+  - {fileID: 3992834041207829942}
+  _textureBase: {fileID: 2800000, guid: c6408dc0513c8bc40a797a7ad93df3cc, type: 3}
+  _textureSelected: {fileID: 2800000, guid: 79804e5743a36f14ca712358451bed35, type: 3}
 --- !u!1001 &1782966550260608011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,6 +74,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7614459207405979692}
     m_Modifications:
+    - target: {fileID: 1931946372509780755, guid: 15d9af41193953444ade3ce7c6137261, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7402540993474988813, guid: 15d9af41193953444ade3ce7c6137261, type: 3}
       propertyPath: m_Name
       value: Prefab_TILE_Infected (BLUE ORANGE) (4)
@@ -107,6 +128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15d9af41193953444ade3ce7c6137261, type: 3}
+--- !u!23 &3992834041207829942 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3447289762772703677, guid: 15d9af41193953444ade3ce7c6137261, type: 3}
+  m_PrefabInstance: {fileID: 1782966550260608011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7202942223892949979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8884374372868081616, guid: 15d9af41193953444ade3ce7c6137261, type: 3}
