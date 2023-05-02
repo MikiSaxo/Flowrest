@@ -25,9 +25,12 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 1
   PreviewMessage:
-  - bla
-  - blo
-  - blouuuu
+  - "Une tuile est terrain sur lequel tu peux apercevoir un environnement, lorsque
+    tu va \xE9changer ces tuiles entre elles tu vas  <b>d\xE9penser de l'\xE9nergie</b>."
+  - "Pour \xE9changer deux tuiles entre elles, <b>clique sur une tuile</b> puis choisis
+    en une deuxi\xE8me. Lorsque tu cliqueras sur cette derni\xE8re tu vas les \xE9changer
+    entre elles."
+  - "<b>Attention, chaque changement va te co\xFBter de l'\xE9nergie.</b>"
   PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 2}
@@ -46,20 +49,20 @@ MonoBehaviour:
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - "Bonjour Petri, les Ressources Aliens m'ont pr\xE9venu de ton arriv\xE9. \\nMon
+  - "Bonjour Petri, les Ressources Aliens m'ont pr\xE9venu de ton arriv\xE9. $Mon
     travail aujourd'hui va \xEAtre de t'enseigner les technologies que nous utilisons
     dans l'entreprise."
   - "Pour des raisons d'\xE9conomie, nous travaillons pour chaque commandes sur <b>des
     \xE9chantillons d'environnements</b> qui sont envoy\xE9 \xE0 nos clients et ensuite
     transform\xE9 en plan\xE8tes lorsque la commande est valid\xE9."
   - "Chacune des commandes que tu vas avoir va te demander d'exp\xE9rimenter. Tu
-    vas donc utiliser pour chacune de tes actions de <b>l'\xE9nergie</b>."
+    vas donc utiliser pour chacune de tes actions de <color=purple><b>l'\xE9nergie</b></color>."
   - "Ton \xE9nergie lors d'une journ\xE9e <b>n'est pas infinie</b>, aussi fait attention
     a ne pas t'\xE9puiser sans r\xE9ussir \xE0 remplir ta commande."
   - "Justement, en parlant d'\xE9nergie, aujourd'hui nous allons t'apprendre \xE0
     \xE9changer deux tuiles entre elles."
   DialogEnd:
-  - "Bien jou\xE9. \\nSi jamais tu as besoin d'informations lorsque tu travailles,
+  - "Bien jou\xE9. $Si jamais tu as besoin d'informations lorsque tu travailles,
     je t'ai \xE9crit un m\xE9mo pour t'aider."
   DialogBeginningEnglish:
   - jhkv
