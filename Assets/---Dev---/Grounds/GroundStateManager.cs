@@ -37,6 +37,8 @@ public class GroundStateManager : MonoBehaviour
 
     public AllStates StockStatePreview { get; set; }
 
+    public MeshManager CurrentMeshManager { get; set; }
+
 
     [Header("Setup")] [SerializeField] private GameObject _meshParent;
     [SerializeField] private GameObject _indicator;
@@ -171,6 +173,7 @@ public class GroundStateManager : MonoBehaviour
         Destroy(_meshCurrent);
         GameObject go = Instantiate(_meshes[meshNb], _meshParent.transform);
         _meshCurrent = go;
+        CurrentMeshManager = _meshCurrent.GetComponent<MeshManager>();
     }
 
     public void ChangeCoords(Vector2Int coords)

@@ -96,7 +96,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7614459207405979692}
   - component: {fileID: 8229983144357119984}
-  - component: {fileID: 5240921293015638267}
   m_Layer: 0
   m_Name: 0-HexPlainMesh
   m_TagString: Untagged
@@ -137,20 +136,6 @@ MonoBehaviour:
   AnimationTime: 0.9
   EaseNumber: 1
   EaseDuration: 0.25
---- !u!114 &5240921293015638267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7614459207405979688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a30244e495f9554db080e8aaaab24d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mesh: {fileID: 4994001442802954646}
-  _texture: {fileID: 0}
 --- !u!1001 &480803700039177584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -633,11 +618,6 @@ PrefabInstance:
 --- !u!4 &2139599961701526212 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61bf7d2cec1aa7347895d3f7548d50df, type: 3}
-  m_PrefabInstance: {fileID: 1890345988583181615}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &4994001442802954646 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6878573824961100985, guid: 61bf7d2cec1aa7347895d3f7548d50df, type: 3}
   m_PrefabInstance: {fileID: 1890345988583181615}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2199272541159120417
