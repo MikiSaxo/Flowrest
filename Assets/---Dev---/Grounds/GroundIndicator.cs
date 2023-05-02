@@ -218,12 +218,23 @@ public class GroundIndicator : MonoBehaviour
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_hoveredYPos, duration);
+        
+        if (_parent.CurrentMeshManager != null)
+        {
+            // print(_parent.CurrentMeshManager);
+            _parent.CurrentMeshManager.UpdateTexture(true);
+        }
     }
 
     private void OnLeaveAnim(float duration)
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutSine);
+        
+        if (_parent.CurrentMeshManager != null)
+        {
+            _parent.CurrentMeshManager.UpdateTexture(false);
+        }
     }
 
     private void PoseBloc()
