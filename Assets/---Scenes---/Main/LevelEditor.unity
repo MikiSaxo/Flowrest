@@ -15716,7 +15716,7 @@ MonoBehaviour:
   - {fileID: 1221779596}
   - {fileID: 2056037684}
   _openDuration: 5
-  _closeDuration: 0.4
+  _closeDuration: 4
   _objToMove: {fileID: 44414454}
   _isClosed: 1
   _isTriggered: 0
@@ -17761,7 +17761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1525715783595064054, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 450.05627
+      value: 762.5563
       objectReference: {fileID: 0}
     - target: {fileID: 1525715783595064054, guid: 6bf83266ddbc3d44b9fde56ea7f7a702, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -19687,12 +19687,15 @@ MonoBehaviour:
   _bg: {fileID: 2125585167}
   _titlesParent: {fileID: 51693967}
   _gameOverParent: {fileID: 2134788108}
-  _menuPauseParent: {fileID: 1601367369}
-  _menuQuest: {fileID: 2121142949}
-  _descriptionQuest: {fileID: 0}
-  _imageQuest: {fileID: 0}
-  _menuPauseTriggered: {fileID: 94625345}
   _nextLevel: {fileID: 0}
+  _menuPauseParent: {fileID: 1601367369}
+  _menuPauseTriggered: {fileID: 94625345}
+  _orderMenu: {fileID: 0}
+  _orderGrid: {fileID: 0}
+  _orderPrefab: {fileID: 0}
+  _orderTextGrid: {fileID: 0}
+  _orderTextPrefab: {fileID: 0}
+  _orderText: []
   _dialogParent: {fileID: 0}
   _characterName: {fileID: 0}
   _dialogContent: {fileID: 0}
@@ -19700,10 +19703,6 @@ MonoBehaviour:
   _dialogPrefab: {fileID: 0}
   _dialogFBEnd: {fileID: 0}
   _dialogSpeed: 0.01
-  _titlesText: {fileID: 523940195}
-  _titlesString:
-  - <rainb>Victory !
-  - "Nouvelle d\xE9couverte dans l'almanach :"
   _tutoArrow: {fileID: 0}
 --- !u!114 &1764261891
 MonoBehaviour:
@@ -22611,6 +22610,10 @@ PrefabInstance:
       propertyPath: _inputFieldMapName
       value: 
       objectReference: {fileID: 1557288367}
+    - target: {fileID: 2467349874891765909, guid: 7c81a0e55d2a16f4295107cf7483188d, type: 3}
+      propertyPath: _hexGroundMeshes.Array.data[4]
+      value: 
+      objectReference: {fileID: 4748107601608561441, guid: 8aaa4ceaf2d3e2e4790b72bfbc275e3e, type: 3}
     - target: {fileID: 5016794794796605570, guid: 7c81a0e55d2a16f4295107cf7483188d, type: 3}
       propertyPath: m_RootOrder
       value: 6
