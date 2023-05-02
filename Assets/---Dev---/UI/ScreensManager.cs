@@ -463,6 +463,15 @@ public class ScreensManager : MonoBehaviour
 
     public void GoLevelSupp()
     {
+        MapManager.Instance.ForceResetBig();
+        StartCoroutine(WaitToGoLevelSupp());
+    }
+
+    IEnumerator WaitToGoLevelSupp()
+    {
+        TransiManager.Instance.LaunchGrownOn();
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        
         _isDialogTime = false;
         // _countScreen = 0;
         _countDialog = 0;

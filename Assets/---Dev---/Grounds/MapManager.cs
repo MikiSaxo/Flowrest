@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
+    [SerializeField] private TransiManager _transiManager;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -331,6 +332,7 @@ public class MapManager : MonoBehaviour
     IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
         IsLoading = true;
+        _transiManager.LaunchShrink();
 
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -360,6 +362,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
+
         QuestsManager.CheckQuest();
         // Save all actions
         SaveNewMap();
@@ -414,7 +417,7 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
 
         // Count Nb Of Tile for Full Floor Order
-        if (state != AllStates.Mountain) 
+        if (state != AllStates.Mountain)
             _countNbOfTile++;
     }
 
@@ -452,6 +455,15 @@ public class MapManager : MonoBehaviour
         if (_currentLevel < _levelData.Length - 1 && nextlevel)
             _currentLevel++;
 
+        InitializeMap();
+
+        // StartCoroutine(WaitToChangeLevel());
+    }
+
+    IEnumerator WaitToChangeLevel()
+    {
+        _transiManager.LaunchGrownOn();
+        yield return new WaitForSeconds(_transiManager.GetTimeForGrowOn());
         InitializeMap();
     }
 
@@ -681,7 +693,7 @@ public class MapManager : MonoBehaviour
         // Update Ground Around
         gWhich.UpdateGroundsAroundPreview(gLastGroundSelected.GetCurrentStateEnum());
         gLastGroundSelected.UpdateGroundsAroundPreview(gWhich.GetCurrentStateEnum());
-        
+
         // Update new Tile in inventory
         if (_hasInventory)
         {
@@ -1027,13 +1039,14 @@ public class MapManager : MonoBehaviour
                 _mapGrid[x, y] = null;
             }
         }
+
         ResetGoToLastMove();
         SetupUIGround.Instance.ResetAllButtons();
         ItemCollectedManager.Instance.DeleteAllFB();
-        
+
         IsVictory = false;
         _isFullFloorOrder = false;
-        
+
         ChangeLevel(nextLevel);
     }
 
@@ -1044,14 +1057,24 @@ public class MapManager : MonoBehaviour
 
         //ResetAllMap(false);
         // ResetGoToLastMove();
+        print("laucnh restart");
+
+        StartCoroutine(WaitToRestart());
+        // InitializeMap();
+    }
+
+    IEnumerator WaitToRestart()
+    {
+        TransiManager.Instance.LaunchGrownOn();
+
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+
         ResetAllSelection();
         ResetButtonSelected();
         ResetGroundSelected();
         SetupUIGround.Instance.ResetAllButtons();
         ScreensManager.Instance.RestartSceneOrLevel();
         ResetAllMap(false);
-
-        // InitializeMap();
     }
 
     public void ResetButtonSelected()
@@ -1101,7 +1124,7 @@ public class MapManager : MonoBehaviour
                 ground.ResetStockPrevisu();
             }
         }
-        
+
         SetupUIGround.Instance.UpdatePreviewInventory(false, AllStates.None);
     }
 

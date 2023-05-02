@@ -6,8 +6,7 @@ using DG.Tweening;
 
 public class TransiHexagone : MonoBehaviour
 {
-    [SerializeField] private float _timeGrowOn;
-    [SerializeField] private float _timeShrink;
+ 
 
     private void Start()
     {
@@ -15,17 +14,17 @@ public class TransiHexagone : MonoBehaviour
         // gameObject.transform.DOScale(0, 0);
     }
 
-    public void GrowOn()
+    public void GrowOn(float timeGrowOn)
     {
         gameObject.transform.DOKill();
         gameObject.transform.DOScale(0, 0);
-        gameObject.transform.DOScale(.25f, _timeGrowOn);
+        gameObject.transform.DOScale(.25f, timeGrowOn);
     }
 
-    public void Shrink()
+    public void Shrink(float timeShrink)
     {
         gameObject.transform.DOKill();
         gameObject.transform.DOScale(.25f, 0);
-        gameObject.transform.DOScale(0, _timeShrink);
+        gameObject.transform.DOScale(0, timeShrink);
     }
 }

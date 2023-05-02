@@ -5,35 +5,56 @@ using UnityEngine;
 
 public class TransiManager : MonoBehaviour
 {
-    [SerializeField] private float _timeBetweenColumnGrowOn;
-    [SerializeField] private float _timeBetweenColumnShrink;
-    [SerializeField] private TransiColumn[] _columns;
+    public static TransiManager Instance;
     
-    void Start()
+    [Header("Grow")]
+    [SerializeField] private float _timeBetweenColumnGrowOn;
+    [SerializeField] private float _timeGrowOn;
+    [Header("Shrink")]
+    [SerializeField] private float _timeBetweenColumnShrink;
+    [SerializeField] private float _timeShrink;
+    [SerializeField] private TransiColumn[] _columns;
+
+    private void Awake()
     {
-        StartCoroutine(LaunchShrink());
+        Instance = this;
     }
 
-    IEnumerator LaunchGrownOn()
+    void Start()
+    {
+        // StartCoroutine(Shrink());
+    }
+
+    public void LaunchGrownOn()
+    {
+        StartCoroutine(GrownOn());
+    }
+
+    IEnumerator GrownOn()
     {
         foreach (var column in _columns)
         {
             foreach (var hexa in column.Column)
             {
-                hexa.GetComponent<TransiHexagone>().GrowOn();
+                hexa.GetComponent<TransiHexagone>().GrowOn(_timeGrowOn);
             }
 
             yield return new WaitForSeconds(_timeBetweenColumnGrowOn);
         }
     }
+    
+    public void LaunchShrink()
+    {
+        StartCoroutine(Shrink());
+    }
 
-    IEnumerator LaunchShrink()
+    IEnumerator Shrink()
     {
         foreach (var column in _columns)
         {
             foreach (var hexa in column.Column)
             {
-                hexa.GetComponent<TransiHexagone>().Shrink();
+                hexa.GetComponent<TransiHexagone>().Shrink(_timeShrink);
             }
 
             yield return new WaitForSeconds(_timeBetweenColumnShrink);
@@ -43,7 +64,12 @@ public class TransiManager : MonoBehaviour
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.A))
-            StartCoroutine(LaunchGrownOn());
+            StartCoroutine(GrownOn());
 
+    }
+
+    public float GetTimeForGrowOn()
+    {
+        return _columns.Length * _timeBetweenColumnGrowOn + _timeGrowOn;
     }
 }
