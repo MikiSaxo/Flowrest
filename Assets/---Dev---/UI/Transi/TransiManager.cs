@@ -65,8 +65,8 @@ public class TransiManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-            StartCoroutine(GrownOn());
+        // if(Input.GetKeyDown(KeyCode.A))
+        //     StartCoroutine(GrownOn());
 
     }
 

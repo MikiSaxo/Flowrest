@@ -329,6 +329,7 @@ public class MapManager : MonoBehaviour
     {
         IsLoading = true;
         TransiManager.Instance.LaunchShrink();
+        _countNbOfTile = 0;
 
         for (int x = 0; x < sizeMap.x; x++)
         {
