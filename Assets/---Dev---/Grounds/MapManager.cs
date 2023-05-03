@@ -6,9 +6,6 @@ using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using DG.Tweening;
-using UnityEditor.Rendering;
-using UnityEditor.ShaderGraph.Serialization;
-using UnityEngine.EventSystems;
 
 
 public class MapManager : MonoBehaviour
@@ -39,7 +36,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
-    [SerializeField] private TransiManager _transiManager;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -332,7 +328,7 @@ public class MapManager : MonoBehaviour
     IEnumerator FloorSpawnTiming(Vector2Int sizeMap)
     {
         IsLoading = true;
-        _transiManager.LaunchShrink();
+        TransiManager.Instance.LaunchShrink();
 
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -458,13 +454,6 @@ public class MapManager : MonoBehaviour
         InitializeMap();
 
         // StartCoroutine(WaitToChangeLevel());
-    }
-
-    IEnumerator WaitToChangeLevel()
-    {
-        _transiManager.LaunchGrownOn();
-        yield return new WaitForSeconds(_transiManager.GetTimeForGrowOn());
-        InitializeMap();
     }
 
     public void ChangeActivatedButton(GameObject button)
@@ -1057,7 +1046,7 @@ public class MapManager : MonoBehaviour
 
         //ResetAllMap(false);
         // ResetGoToLastMove();
-        print("laucnh restart");
+        // print("laucnh restart");
 
         StartCoroutine(WaitToRestart());
         // InitializeMap();
