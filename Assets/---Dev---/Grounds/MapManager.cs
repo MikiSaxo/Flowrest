@@ -619,14 +619,15 @@ public class MapManager : MonoBehaviour
         EnergyManager.Instance.ReduceEnergyBySwap();
 
 
-        // Wait the FX is finished
-        yield return new WaitForSeconds(1.75f);
-
-
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
         if (_lastGroundSelected != null)
             _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+        
+        
+        // Wait the FX is finished
+        yield return new WaitForSeconds(1.75f);
+
 
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)

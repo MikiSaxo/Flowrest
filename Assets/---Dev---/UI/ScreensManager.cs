@@ -85,7 +85,7 @@ public class ScreensManager : MonoBehaviour
     {
         text ??= String.Empty;
         // img ??= null;
-
+        
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
         desc.InitDescOrder($"{text}\n ");
@@ -99,6 +99,8 @@ public class ScreensManager : MonoBehaviour
         // Text
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var order = txt.GetComponent<DialogPrefab>();
+
+        _orderTextGrid.GetComponent<VerticalLayoutGroup>().spacing = 0;
 
         if (_saveLastState == whichState)
         {
@@ -144,6 +146,15 @@ public class ScreensManager : MonoBehaviour
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
         go.GetComponent<OrderStockSprite>().Init(whichOrder, whichState);
         _stockOrderImg.Add(go);
+        
+        StartCoroutine(UpdateGridText());
+    }
+
+    IEnumerator UpdateGridText()
+    {
+        yield return new WaitForSeconds(.1f);
+        // Update the grid by force to actualise the grid because it's buggy??
+        _orderTextGrid.GetComponent<VerticalLayoutGroup>().spacing = 1;
     }
 
     public void InitMaxNbFullFloor(int nb)
