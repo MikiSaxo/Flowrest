@@ -24,13 +24,21 @@ MonoBehaviour:
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 1
-  PreviewMessage: 
+  PreviewMessage:
+  - "Ici par exemple, en \xE9changeant une tuile de <color=red>Grassias</color> avec
+    une tuile de <color=yellow>Calcid</color>, l'environnement autour de ta tuile
+    se changera \xE9galement en un environnement de <color=red>Grassias</color>."
+  - "Un syst\xE8me de <b>pr\xE9visualisation</b> con\xE7u par nos meilleurs ing\xE9nieurs
+    peut te permettre de toujours savoir quel r\xE9sultat ton \xE9change va provoquer
+    alors n'h\xE9site pas \xE0 t'en servir !"
+  PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 2}
   - {x: 6, y: 2}
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   QuestDescription: 'Tuto 2 : Faire une fleur de <color=#8bdb76>Grassias</color>'
+  QuestDescriptionEnglish: 
   QuestImage: {fileID: 21300000, guid: db06e6a99456d134f8815e40c3a9bcd9, type: 3}
   QuestFloor: 
   QuestFlower: 00000000
@@ -41,9 +49,12 @@ MonoBehaviour:
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - "Hier je t'ai montr\xE9 comment d\xE9placer des tiles entre elles."
-  - "Apr\xE8s avoir \xE9chang\xE9 deux tiles, les environnements autour de celles-ci
+  - "Maintenant que tu sais comment \xE9changer deux tuiles entre elles, je vais
+    t'apporter quelques pr\xE9cisions sur ces \xE9changes."
+  - "Apr\xE8s avoir \xE9chang\xE9 deux tuiles, les environnements autour de celles-ci
     vont se modifier."
-  - "Tu vas pouvoir (avant de les \xE9changer) voir quels transformations tu vas
-    pouvoir avoir en te d\xE9pla\xE7ant."
+  - "Attention, n'oublies pas que <b>c'est la premi\xE8re tuile s\xE9lectionn\xE9e</b>
+    qui va effectuer ses changements en priorit\xE9."
   DialogEnd: []
+  DialogBeginningEnglish: []
+  DialogEndEnglish: []
