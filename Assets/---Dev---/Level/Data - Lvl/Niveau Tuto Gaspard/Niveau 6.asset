@@ -24,17 +24,15 @@ MonoBehaviour:
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 1
-  PreviewMessage: "D\xE9sormais, lorsque tu feras un \xE9change, tu r\xE9cup\xE8reras
-    l'association de ces deux tiles. Tu peux ensuite la placer sur le terrain en
-    faisant attention \xE0 ce que la tile en dessous soit diff\xE9rente (sinon ce
-    n'est pas possible de la placer)."
+  PreviewMessage: []
+  PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 0}
   - {x: 6, y: 4}
   HasForcePoseBlocAfterSwap: 1
   ForcePoseBlocCoord: {x: 4, y: 2}
-  QuestDescription: 'Niveau 6 : Faire en sorte d''avoir 6 tiles de <color=#504d38>Vasea</color>
-    adjacentes'
+  QuestDescription: "Niveau 6 : R\xE9aliser une chaine de 6 Viscosa"
+  QuestDescriptionEnglish: 
   QuestImage: {fileID: 21300000, guid: 98112a698b53b1c4391b79f851dfb009, type: 3}
   QuestFloor: 
   QuestFlower: 
@@ -49,3 +47,5 @@ MonoBehaviour:
     je vais te donner acc\xE8s \xE0 un inventaire."
   DialogEnd:
   - Je te laisse te familiariser avec ce nouvel outil, on se retrouve demain.
+  DialogBeginningEnglish: []
+  DialogEndEnglish: []

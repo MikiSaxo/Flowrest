@@ -29,7 +29,7 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  QuestDescription: "Tuto 12  : Cr\xE9er une chaine de 8 Grassias."
+  QuestDescription: "Tuto 12  : Cr\xE9er une chaine de 8 Grassias"
   QuestDescriptionEnglish: 
   QuestImage: {fileID: 21300000, guid: d3bc2a09cb3c5e3438a952ce090300bb, type: 3}
   QuestFloor: 
@@ -40,7 +40,14 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
-  DialogBeginning: []
+  DialogBeginning:
+  - "La gestion d'environnement est un travail qui demande de la <b>r\xE9fl\xE9xion</b>,
+    tu vas quelquefois devoir r\xE9fl\xE9chir \xE0 des mouvements sur plusieurs coups."
+  - "Par exemple, pour r\xE9ussir ici \xE0 faire des tuiles de Grassias, tu vas devoir
+    t'y prendre a plusieurs reprises afin d'atteindre l'\xE9tat que tu souhaites."
+  - "Apr\xE8s tout, si une tuile de Grassias \xE9tait cr\xE9\xE9e ici sans passer
+    par l'\xE9tat de tuile Viscosa, c'est sans doute parce que tu aurais caus\xE9
+    un bug dans l'environnement !"
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
