@@ -1057,7 +1057,7 @@ public class MapManager : MonoBehaviour
 
         //ResetAllMap(false);
         // ResetGoToLastMove();
-        print("laucnh restart");
+        // print("laucnh restart");
 
         StartCoroutine(WaitToRestart());
         // InitializeMap();

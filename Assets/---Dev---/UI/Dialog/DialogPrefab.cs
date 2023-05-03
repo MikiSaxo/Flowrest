@@ -57,13 +57,13 @@ public class DialogPrefab : MonoBehaviour
 
     private string UpdateModifierText(string dialog)
     {
-
+        string replace = dialog;
+        
         foreach (var text in _textModifier)
         {
             if (dialog.Contains(text.Text))
             {
                 var color = $"<color=#{ColorUtility.ToHtmlStringRGBA(text.Color)}>";
-                string replace = String.Empty;
 
                 if (text.IsBold && text.IsItalic)
                 {
@@ -79,8 +79,8 @@ public class DialogPrefab : MonoBehaviour
                 }
                 else
                     replace = dialog.Replace(text.Text, $"{color}{text.Text}</color>");
-
-                return replace;
+                    
+                dialog = replace;
             }
         }
 
@@ -90,7 +90,7 @@ public class DialogPrefab : MonoBehaviour
     public void InitDescOrder(string text)
     {
         text = UpdateModifierText(text);
-        
+
         DialogText.text = text;
         DialogText.ForceMeshUpdate();
 
@@ -102,13 +102,13 @@ public class DialogPrefab : MonoBehaviour
     public void InitOrder(string desc, int nbToReach)
     {
         desc = UpdateModifierText(desc);
-        
+
         _currentOrder = desc;
         _maxNb = nbToReach;
 
         DialogText.text = desc;
         DialogText.ForceMeshUpdate();
-        
+
         Vector2 textSize = DialogText.GetRenderedValues(false);
         _textSizeY = textSize.y;
         gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY + _padding.y), 0);
