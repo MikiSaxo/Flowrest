@@ -313,7 +313,7 @@ public class GroundStateManager : MonoBehaviour
     public void LaunchDropFX()
     {
         _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
-        // _colorOtherSwap = Color.white;
+        _colorOtherSwap = Color.white;
         // _colorOtherSwap.r -= .1f;
         // _colorOtherSwap.g -= .1f;
         // _colorOtherSwap.b -= .1f;
