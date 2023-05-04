@@ -401,6 +401,12 @@ public class MapManager : MonoBehaviour
         else
             ground.UpdatePrevisuArrow(false);
 
+        // Count Nb Of Tile for Full Floor Order
+        if (state != AllStates.Mountain)
+        {
+            _countNbOfTile++;
+        }
+        
         // Init Crystal or not
         Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
         foreach (var crystalsCoords in coordsByCurrentLvl)
@@ -412,10 +418,6 @@ public class MapManager : MonoBehaviour
         }
 
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, true);
-
-        // Count Nb Of Tile for Full Floor Order
-        if (state != AllStates.Mountain)
-            _countNbOfTile++;
     }
 
     private void Update()
@@ -619,6 +621,7 @@ public class MapManager : MonoBehaviour
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();
 
+        yield return new WaitForSeconds(.02f);
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);

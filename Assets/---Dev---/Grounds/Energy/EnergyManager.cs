@@ -41,7 +41,7 @@ public class EnergyManager : MonoBehaviour
     private bool _isInit;
     private float _lerpTiming;
 
-        private void Awake()
+    private void Awake()
     {
         Instance = this;
 
@@ -100,9 +100,14 @@ public class EnergyManager : MonoBehaviour
         _tempValue += value;
         if (_tempValue == 0)
             _tempValue = 1;
+
         yield return new WaitForSeconds(.01f);
-        if(value > 0)
+        
+        if (value > 0)
+        {
             ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
+        }
+
         UpdateEnergy(_tempValue);
         _tempValue = 0;
     }
@@ -112,7 +117,7 @@ public class EnergyManager : MonoBehaviour
         // value *= _baseInf;
 
         if (value == 0) return;
-        
+
         _energyValue += value;
 
         _energyBar.DOKill();
@@ -142,7 +147,7 @@ public class EnergyManager : MonoBehaviour
             //
             BounceEnergy();
 
-            _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage);});
+            _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage); });
 
             StopWaveEffect();
             _hitEnergyBar.DOValue(1, .4f);
@@ -168,9 +173,9 @@ public class EnergyManager : MonoBehaviour
         if (_isInit)
         {
             _lerpTiming += Time.deltaTime / (_currentEnergy * _timeInitAnim);
-            
+
             float newValue = Mathf.Lerp(0, 1, _lerpTiming);
-            
+
             _energyBar.value = newValue;
             _hitEnergyBar.value = newValue;
         }
