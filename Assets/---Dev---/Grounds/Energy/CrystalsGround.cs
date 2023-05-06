@@ -8,6 +8,11 @@ public class CrystalsGround : MonoBehaviour
 
     private bool _isCrystalsConsumed;
 
+    public void InitCrystal()
+    {
+        _isCrystalsConsumed = false;
+        _crystals.SetActive(true);
+    }
     public void UpdateCrystals(bool state, bool isInit)
     {
         if (_isCrystalsConsumed) return;
@@ -23,5 +28,10 @@ public class CrystalsGround : MonoBehaviour
         }
         else
             _crystals.SetActive(true);
+    }
+
+    public bool GetIfHasCrystal()
+    {
+        return _crystals.activeSelf;
     }
 }

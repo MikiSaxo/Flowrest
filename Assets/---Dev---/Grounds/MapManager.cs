@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using DG.Tweening;
+using UnityEditor;
 
 
 public class MapManager : MonoBehaviour
@@ -59,6 +60,7 @@ public class MapManager : MonoBehaviour
 
     private AllStates[,] _currentStateMap;
     private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
+    private List<bool[,]> _stockCrystals = new List<bool[,]>();
     private List<int> _stockEnergy = new List<int>();
     private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
     private List<List<int>> _stockTileButtonTest = new List<List<int>>();
@@ -406,7 +408,7 @@ public class MapManager : MonoBehaviour
         {
             _countNbOfTile++;
         }
-        
+
         // Init Crystal or not
         Vector2Int[] coordsByCurrentLvl = _mapConstructData.Coords.ToArray();
         foreach (var crystalsCoords in coordsByCurrentLvl)
@@ -627,8 +629,8 @@ public class MapManager : MonoBehaviour
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
         if (_lastGroundSelected != null)
             _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-        
-        
+
+
         // Wait the FX is finished
         yield return new WaitForSeconds(1.75f);
 
@@ -871,12 +873,12 @@ public class MapManager : MonoBehaviour
     {
         if (IsSwapping || IsPosing || IsVictory) return;
 
-        // if (_mapGridAllMove.Count <= 1) return;
+        if (_stockStateMap.Count <= 1) return;
 
         print("go to last move"); //" :  size of _currentStateMapStock before : " + _currentStateMapStock.Count);
 
 
-        // Update floor
+        // Update floor and crystals
         for (int x = 0; x < _mapSize.x; x++)
         {
             for (int y = 0; y < _mapSize.y; y++)
@@ -884,10 +886,24 @@ public class MapManager : MonoBehaviour
                 if (_stockStateMap[0][x, y] != AllStates.None)
                 {
                     // print($"ole / x : {x} - y : {y} - state :{_currentStateMap[x, y]}");
-                    _mapGrid[x, y].GetComponent<GroundStateManager>()
-                        .ForceChangeState(_stockStateMap.Count == 1
-                            ? _stockStateMap[0][x, y]
-                            : _stockStateMap[^2][x, y]);
+                    _mapGrid[x, y].GetComponent<GroundStateManager>().ForceChangeState(_stockStateMap.Count == 1
+                        ? _stockStateMap[0][x, y]
+                        : _stockStateMap[^2][x, y]);
+
+                    if (_stockCrystals.Count == 1)
+                    {
+                        if (_stockCrystals[0][x, y])
+                        {
+                            _mapGrid[x, y].GetComponent<CrystalsGround>().InitCrystal();
+                        }
+                    }
+                    else
+                    {
+                        if (_stockCrystals[^2][x, y])
+                        {
+                            _mapGrid[x, y].GetComponent<CrystalsGround>().InitCrystal();
+                        }
+                    }
                 }
             }
         }
@@ -932,6 +948,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        // Update Recycling
         NbOfRecycling = _stockNbRecycle.Count == 1 ? _stockNbRecycle[0] : _stockNbRecycle[^2];
         RecyclingManager.Instance.UpdateNbRecyclingLeft();
 
@@ -943,6 +960,7 @@ public class MapManager : MonoBehaviour
             _stockLastGroundSwaped.RemoveAt(_stockLastGroundSwaped.Count - 1);
             _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
             _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
+            _stockCrystals.RemoveAt(_stockCrystals.Count - 1);
         }
 
         QuestsManager.CheckQuest();
@@ -959,6 +977,29 @@ public class MapManager : MonoBehaviour
         _currentStateMap[x, y] = newState;
     }
 
+    private bool[,] UpdateCrystalMap()
+    {
+        bool[,] newCrystalMap = new bool[_mapSize.x, _mapSize.y];
+
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                if (_currentStateMap[x, y] != AllStates.None)
+                {
+                    bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
+                    newCrystalMap[x, y] = hasCrystal;
+                }
+                else
+                {
+                    newCrystalMap[x, y] = false;
+                }
+            }
+        }
+
+        return newCrystalMap;
+    }
+
     public void SaveNewMap()
     {
         // print("new current map");
@@ -971,6 +1012,11 @@ public class MapManager : MonoBehaviour
 
         // Stock Energy
         _stockEnergy.Add(EnergyManager.Instance.GetCurrentEnergy());
+
+        // Stock Crystals
+        // bool[,] newCrystalMap = new bool[_mapSize.x, _mapSize.y];
+        // Array.Copy(UpdateCrystalMap(), newCrystalMap, UpdateCrystalMap().Length);
+        _stockCrystals.Add(UpdateCrystalMap());
 
         // Stock Last Block Swaped
         GroundStateManager[] newLastBlocked = new GroundStateManager[2];
@@ -1146,6 +1192,7 @@ public class MapManager : MonoBehaviour
         _stockLastGroundSwaped.Clear();
         _stockTileButtonTest.Clear();
         _stockNbRecycle.Clear();
+        _stockCrystals.Clear();
     }
 
     public void UpdateAllGroundTutoForcePose(bool blockAll)

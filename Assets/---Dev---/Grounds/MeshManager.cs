@@ -42,6 +42,8 @@ public class MeshManager : MonoBehaviour
         //         mat.SetTexture("_BaseMap", _textureBase);
         //     }
         // }
+        if (_matt == null) return;
+        
 
         if (state)
             _matt.SetTexture("_BaseMap", _textureSelected);
