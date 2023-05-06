@@ -74,8 +74,8 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
 
         if (_parent.IsPlayerForceSwapBlocked) return;
-        
-        if(MapManager.Instance.IsPosing) return;
+
+        if (MapManager.Instance.IsPosing) return;
 
         if (_parent.IsPlayerNotForcePose && MapManager.Instance.LastObjButtonSelected != null) return;
 
@@ -108,7 +108,7 @@ public class GroundIndicator : MonoBehaviour
             MapManager.Instance.ResetPreview();
             return;
         }
-        
+
         if (MapManager.Instance.GetHasGroundSelected())
         {
             // print("call ground swap previsu");
@@ -173,7 +173,7 @@ public class GroundIndicator : MonoBehaviour
                 StartCoroutine(WaitALittleToReset());
                 return;
             }
-            
+
             if (_isSelected && _isEntered && MapManager.Instance.IsTuto)
                 return;
 
@@ -218,7 +218,7 @@ public class GroundIndicator : MonoBehaviour
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_hoveredYPos, duration);
-        
+
         if (_parent.CurrentMeshManager != null)
         {
             // print(_parent.CurrentMeshManager);
@@ -230,7 +230,7 @@ public class GroundIndicator : MonoBehaviour
     {
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutSine);
-        
+
         if (_parent.CurrentMeshManager != null)
         {
             _parent.CurrentMeshManager.UpdateTexture(false);
@@ -258,7 +258,7 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.ResetPreview();
 
         // Init the new State
-        gameObject.GetComponentInParent<GroundStateManager>().InitState(MapManager.Instance.LastStateButtonSelected);
+        _parent.InitState(MapManager.Instance.LastStateButtonSelected);
 
         // Make Anim
         _meshParent.transform.DOKill();
@@ -272,13 +272,15 @@ public class GroundIndicator : MonoBehaviour
 
         // Change State around
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(_parent.GetCurrentStateEnum());
-
         gameObject.GetComponentInParent<GroundStateManager>().LaunchDropFX();
-
-        yield return new WaitForSeconds(1.5f);
-
+        
         // Spend energy
         EnergyManager.Instance.ReduceEnergyByLandingGround();
+
+        // Has Crystal
+        gameObject.GetComponentInParent<CrystalsGround>().UpdateCrystals(false, false);
+
+        yield return new WaitForSeconds(1.5f);
 
         // Launch Quest
         MapManager.Instance.QuestsManager.CheckQuest();
@@ -288,7 +290,7 @@ public class GroundIndicator : MonoBehaviour
 
         // Check if Game Over
         MapManager.Instance.CheckIfGameOver();
-        
+
         // Save all actions
         MapManager.Instance.SaveNewMap();
 
