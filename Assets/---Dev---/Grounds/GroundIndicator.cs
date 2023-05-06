@@ -245,8 +245,7 @@ public class GroundIndicator : MonoBehaviour
         // Avoid to update by same ground
         // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
         //     (int)MapManager.Instance.LastStateButtonSelected) return;
-
-
+        
         MapManager.Instance.IsPosing = true;
 
         StartCoroutine(PoseBlocTime());
@@ -267,6 +266,7 @@ public class GroundIndicator : MonoBehaviour
         // Decrease number on selected UI Button 
         MapManager.Instance.DecreaseNumberButton();
 
+        MapManager.Instance.ResetButtonSelected();
 
         yield return new WaitForSeconds(_timeExit);
 
@@ -320,11 +320,11 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.CheckIfButtonIsEmpty())
             MapManager.Instance.ResetAllSelection();
 
+        
         if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
 
         // Reset to avoid problem with dnd
         MapManager.Instance.ResetGroundSelected();
-        MapManager.Instance.ResetButtonSelected();
     }
 
     public Vector2Int GetParentCoords()

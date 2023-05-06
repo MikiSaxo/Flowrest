@@ -421,8 +421,14 @@ public class ScreensManager : MonoBehaviour
     {
         _dialogsPrefabList[^1].EndAnimationText();
         _isDialogTime = false;
-
+        
         CheckIfEnd();
+    }
+
+    IEnumerator ResetAfterSkipDialog()
+    {
+        yield return new WaitForSeconds(.001f);
+        MapManager.Instance.ForceResetBig();
     }
 
     public void RestartSceneOrLevel()
@@ -509,7 +515,10 @@ public class ScreensManager : MonoBehaviour
         if (_isTheEnd)
             UpdateButtonGoLevelSupp(true);
         else
+        {
             EndDialog();
+            StartCoroutine(ResetAfterSkipDialog());
+        }
     }
 
     public void UpdateTutoArrow(bool state)
