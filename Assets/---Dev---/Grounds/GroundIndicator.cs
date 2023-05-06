@@ -295,9 +295,11 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.SaveNewMap();
 
         // Reset
-        ResetForNextChange();
-
         MapManager.Instance.IsPosing = false;
+
+        yield return new WaitForSeconds(.01f);
+        ResetForNextChange();
+        // MapManager.Instance.ResetBig();
 
         if (MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
             MapManager.Instance.UpdateAllGroundTutoForcePose(false);
