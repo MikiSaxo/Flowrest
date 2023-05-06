@@ -964,6 +964,11 @@ public class MapManager : MonoBehaviour
         }
 
         QuestsManager.CheckQuest();
+
+        if (_stockStateMap.Count <= 1)
+        {
+            ScreensManager.Instance.UpdateBackwardsButton(false);
+        }
     }
 
     public void UpdateCurrentStateMap(Vector2Int coords, AllStates newState)
@@ -1003,7 +1008,7 @@ public class MapManager : MonoBehaviour
     public void SaveNewMap()
     {
         // print("new current map");
-
+        ScreensManager.Instance.UpdateBackwardsButton(_stockStateMap.Count != 0);
 
         // Stock Floor
         AllStates[,] newMapState = new AllStates[_mapSize.x, _mapSize.y];
