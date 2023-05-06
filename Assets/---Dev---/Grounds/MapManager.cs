@@ -622,8 +622,8 @@ public class MapManager : MonoBehaviour
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();
-
-        yield return new WaitForSeconds(.02f);
+        
+        // yield return new WaitForSeconds(.01f);
 
         // Get crystals if have crystals
         which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
