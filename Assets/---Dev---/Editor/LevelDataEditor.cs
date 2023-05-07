@@ -31,6 +31,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty PreviewMessageEnglish;
     private SerializedProperty HasForcePoseBlocAfterSwap;
     private SerializedProperty ForcePoseBlocCoord;
+    private SerializedProperty PopUpImages;
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestDescriptionEnglish;
@@ -72,6 +73,7 @@ public class LevelDataEditor : Editor
         PreviewMessageEnglish = serializedObject.FindProperty("PreviewMessageEnglish");
         HasForcePoseBlocAfterSwap = serializedObject.FindProperty("HasForcePoseBlocAfterSwap");
         ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
+        PopUpImages = serializedObject.FindProperty("PopUpImages");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestDescriptionEnglish = serializedObject.FindProperty("QuestDescriptionEnglish");
@@ -87,7 +89,7 @@ public class LevelDataEditor : Editor
 
         CharacterName = serializedObject.FindProperty("CharacterName");
         DialogBeginning = serializedObject.FindProperty("DialogBeginning");
-        DialogEnd = serializedObject.FindProperty("DialogEnd");  
+        DialogEnd = serializedObject.FindProperty("DialogEnd");
         DialogBeginningEnglish = serializedObject.FindProperty("DialogBeginningEnglish");
         DialogEndEnglish = serializedObject.FindProperty("DialogEndEnglish");
     }
@@ -126,7 +128,7 @@ public class LevelDataEditor : Editor
         if (energy)
         {
             EditorGUILayout.PropertyField(EnergyAtStart);
-            
+
             EditorGUILayout.PropertyField(HasRecycling);
 
             if (HasRecycling.boolValue)
@@ -152,18 +154,20 @@ public class LevelDataEditor : Editor
             if (HasInventory.boolValue)
                 DisplayChooseStartNbState();
 
-            
 
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
-            EditorGUILayout.PropertyField(IsTuto);
 
+            EditorGUILayout.Space(5);
+
+            EditorGUILayout.PropertyField(IsTuto);
+            
             if (IsTuto.boolValue)
             {
                 if (HasInventory.boolValue)
                 {
                     EditorGUILayout.PropertyField(HasForcePoseBlocAfterSwap);
-                    if(HasForcePoseBlocAfterSwap.boolValue)
+                    if (HasForcePoseBlocAfterSwap.boolValue)
                         EditorGUILayout.PropertyField(ForcePoseBlocCoord);
                 }
             }
@@ -178,9 +182,12 @@ public class LevelDataEditor : Editor
                 EditorGUILayout.PropertyField(PreviewMessage);
 
                 EditorGUILayout.Space(5);
-                
+
                 EditorGUILayout.PropertyField(PreviewMessageEnglish);
             }
+            EditorGUILayout.Space(7);
+
+            EditorGUILayout.PropertyField(PopUpImages);
 
             EditorGUILayout.Space(10);
         }
@@ -257,7 +264,7 @@ public class LevelDataEditor : Editor
         {
             EditorGUILayout.PropertyField(DialogBeginning);
             EditorGUILayout.PropertyField(DialogEnd);
-            
+
             EditorGUILayout.Space(10);
 
             EditorGUILayout.PropertyField(DialogBeginningEnglish);

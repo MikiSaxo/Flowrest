@@ -9,7 +9,7 @@ public class LevelData : ScriptableObject
    public string LevelFolder;
    
    
-   [Tooltip("Values are like 50, 100, 550 -> MAX = 1000")] public int EnergyAtStart;
+   public int EnergyAtStart;
 
    
    public bool HasInventory;
@@ -29,7 +29,7 @@ public class LevelData : ScriptableObject
    public Vector2Int[] PlayerForceSwap;
    public bool HasForcePoseBlocAfterSwap;
    public Vector2Int ForcePoseBlocCoord;
-
+   public Sprite[] PopUpImages;
    
    public string QuestDescription;
    public string QuestDescriptionEnglish;

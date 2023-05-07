@@ -307,12 +307,16 @@ public class MapManager : MonoBehaviour
                     false);
             }
         }
+        
+        // Update if PopUp
+        if(currentLvl.PopUpImages.Length > 0)
+            PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
 
         // Update Dialogs
         ScreensManager.Instance.SpawnNewDialogs(
             LanguageManager.Instance.Tongue == Language.Francais
                 ? _levelData[_currentLevel].DialogBeginning
-                : _levelData[_currentLevel].DialogBeginningEnglish, false, false);
+                : _levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
@@ -442,7 +446,7 @@ public class MapManager : MonoBehaviour
 
         if (!GetHasFirstSwap())
         {
-            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, true);
+            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, false);
         }
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]

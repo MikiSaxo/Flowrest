@@ -9,6 +9,7 @@ public class LegendScroll : MonoBehaviour
     [Header("Legend Setup")]
     [SerializeField] private Image _imgLegend;
     [SerializeField] private Sprite[] _sprLegend;
+    [Tooltip("Only if needed to depop")] [SerializeField] private GameObject _skipPopUpButton;
     [Header("Page")]
     [SerializeField] private GameObject _gridPage;
     [SerializeField] private GameObject _pagePrefab;
@@ -19,6 +20,18 @@ public class LegendScroll : MonoBehaviour
 
     private void Start()
     {
+        if(_sprLegend.Length > 0)
+            UpdateLegend();
+    }
+
+    public void InitLegend(Sprite[] allSprites)
+    {
+        _sprLegend = allSprites;
+        UpdateLegend();
+    }
+    
+    private void UpdateLegend()
+    {
         for (int i = 0; i < _sprLegend.Length; i++)
         {
             GameObject go = Instantiate(_pagePrefab, _gridPage.transform);
@@ -28,6 +41,8 @@ public class LegendScroll : MonoBehaviour
         _count = 0;
         _imgLegend.sprite = _sprLegend[_count];
         _stockPagePrefab[0].GetComponent<Image>().sprite = _sprPage[_count];
+        
+        CheckIfEndOfLegend();
     }
 
     public void MoveToLeft()
@@ -41,6 +56,8 @@ public class LegendScroll : MonoBehaviour
         
         _imgLegend.sprite = _sprLegend[_count];
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[0];
+
+        CheckIfEndOfLegend();
     }
     
     public void MoveToRight()
@@ -54,5 +71,14 @@ public class LegendScroll : MonoBehaviour
         
         _imgLegend.sprite = _sprLegend[_count];
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[0];
+
+        CheckIfEndOfLegend();
+    }
+
+    private void CheckIfEndOfLegend()
+    {
+        if(_skipPopUpButton == null) return;
+
+        _skipPopUpButton.SetActive(_count == _sprLegend.Length - 1);
     }
 }

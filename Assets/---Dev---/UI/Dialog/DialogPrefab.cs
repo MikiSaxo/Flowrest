@@ -161,7 +161,7 @@ public class DialogPrefab : MonoBehaviour
             // Update text with the two part
             DialogText.text = firstText + secondText;
 
-            ScreensManager.Instance.GoToBottomScrollBar();
+            // ScreensManager.Instance.GoToBottomScrollBar();
             yield return new WaitForSeconds(_dialogSpeed);
         }
 

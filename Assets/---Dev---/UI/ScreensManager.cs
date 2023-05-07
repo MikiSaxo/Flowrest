@@ -14,14 +14,16 @@ public class ScreensManager : MonoBehaviour
 {
     public static ScreensManager Instance;
 
-    [Header("Big Screens")] [SerializeField] private GameObject _bg;
+    [Header("Big Screens")] [SerializeField]
+    private GameObject _bg;
+
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _nextLevel;
-    
-    [Header("Pause")][SerializeField] private Button _backwardsButton;
-    
-    [Header("Pause")][SerializeField] private GameObject _menuPauseParent;
+
+    [Header("Pause")] [SerializeField] private Button _backwardsButton;
+
+    [Header("Pause")] [SerializeField] private GameObject _menuPauseParent;
     [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;
@@ -29,11 +31,11 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _orderPrefab;
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
-    [Space(15)]
-    [SerializeField] private List<OrderText> _orderText;
-    [Space(5)]
+    [Space(15)] [SerializeField] private List<OrderText> _orderText;
 
-    [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
+    [Space(5)] [Header("Dialogs")] [SerializeField]
+    private GameObject _dialogParent;
+
     [SerializeField] private TMP_Text _characterName;
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private Scrollbar _dialogScrollBar;
@@ -52,6 +54,7 @@ public class ScreensManager : MonoBehaviour
     private bool _isDialogTime;
     private bool _isTheEnd;
     private bool _isFirstScreen;
+    private bool _hasPopUp;
 
     private bool _isPaused;
 
@@ -66,7 +69,7 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
-    
+
     private void Awake()
     {
         Instance = this;
@@ -87,7 +90,7 @@ public class ScreensManager : MonoBehaviour
     {
         text ??= String.Empty;
         // img ??= null;
-        
+
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
         desc.InitDescOrder($"{text}\n ");
@@ -148,7 +151,7 @@ public class ScreensManager : MonoBehaviour
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
         go.GetComponent<OrderStockSprite>().Init(whichOrder, whichState);
         _stockOrderImg.Add(go);
-        
+
         StartCoroutine(UpdateGridText());
     }
 
@@ -201,11 +204,6 @@ public class ScreensManager : MonoBehaviour
 
     private void EndDialog()
     {
-        // if (!MapManager.Instance.IsTuto)
-        // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
-
-        // RemoveLastDialog();
-
         MouseHitRaycast.Instance.IsBlockMouse(false);
 
         _dialogParent.SetActive(false);
@@ -213,20 +211,33 @@ public class ScreensManager : MonoBehaviour
         _orderMenu.GetComponent<OpenCloseMenu>().OpenMenuQuest();
     }
 
-    public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool isMiddleDialog)
+    public void UpdatePopUp(bool state)
+    {
+        PopUpManager.Instance.UpdatePopUp(state);
+
+        _dialogParent.SetActive(false);
+        _hasPopUp = false;
+
+        if (!state)
+        {
+            CheckIfEnd();
+        }
+    }
+
+    public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool hasPopUp)
     {
         RemoveLastDialog();
+
+        _hasPopUp = hasPopUp;
 
         // Set isDialoging and Reset count old dialog
         _isDialogTime = true;
         _countDialog = 0;
 
         // Open Dialog Menu
-        // _dialogParent.GetComponent<OpenCloseMenu>().OpenAnim();
         _dialogParent.SetActive(true);
 
         // Block mouse
-        // if (!isMiddleDialog)
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
         // Clear two list of old dialogs
@@ -238,7 +249,7 @@ public class ScreensManager : MonoBehaviour
 
         if (dialogs.Length == 0 && !isTheEnd)
             dialogs = new[] { " " };
-        
+
         // Add new string dialog
         foreach (var dialog in dialogs)
         {
@@ -304,10 +315,10 @@ public class ScreensManager : MonoBehaviour
         _countDialog++;
     }
 
-    public void GoToBottomScrollBar()
-    {
-        _dialogScrollBar.value = 0;
-    }
+    // public void GoToBottomScrollBar()
+    // {
+    //     _dialogScrollBar.value = 0;
+    // }
 
     public void GameOver()
     {
@@ -421,7 +432,7 @@ public class ScreensManager : MonoBehaviour
     {
         _dialogsPrefabList[^1].EndAnimationText();
         _isDialogTime = false;
-        
+
         CheckIfEnd();
     }
 
@@ -490,7 +501,7 @@ public class ScreensManager : MonoBehaviour
     {
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
-        
+
         _isDialogTime = false;
         // _countScreen = 0;
         _countDialog = 0;
@@ -516,8 +527,16 @@ public class ScreensManager : MonoBehaviour
             UpdateButtonGoLevelSupp(true);
         else
         {
-            EndDialog();
-            StartCoroutine(ResetAfterSkipDialog());
+            if (!_hasPopUp)
+            {
+                EndDialog();
+                if (!MapManager.Instance.IsTuto)
+                    StartCoroutine(ResetAfterSkipDialog());
+            }
+            else
+            {
+                UpdatePopUp(true);
+            }
         }
     }
 
@@ -547,5 +566,4 @@ public class ScreensManager : MonoBehaviour
                 Destroy(txt.gameObject);
         }
     }
-
 }
