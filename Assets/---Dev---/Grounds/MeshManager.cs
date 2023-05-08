@@ -33,7 +33,6 @@ public class MeshManager : MonoBehaviour
                 GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
         }
 
-        print(randomNumber);
         _props[randomNumber].SetActive(true);
     }
 

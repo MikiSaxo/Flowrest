@@ -18,10 +18,12 @@ public class LegendScroll : MonoBehaviour
     private List<GameObject> _stockPagePrefab = new List<GameObject>();
     private int _count;
 
-    private void Start()
+    private void Awake()
     {
-        if(_sprLegend.Length > 0)
+        if (_sprLegend.Length > 0)
+        {
             UpdateLegend();
+        }
     }
 
     public void InitLegend(Sprite[] allSprites)

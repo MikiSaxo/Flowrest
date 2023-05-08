@@ -160,6 +160,7 @@ public class EnergyManager : MonoBehaviour
         _numberToDisplay.text = $"{_energyValue}";
         _currentEnergy = _energyValue;
 
+        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white; 
         // MapManager.Instance.CheckIfGameOver();
     }
 
