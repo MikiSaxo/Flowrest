@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CrystalsGround : MonoBehaviour
 {
-    [SerializeField] private GameObject _crystals;
+    [SerializeField] private GameObject _crystal;
 
     private bool _isCrystalsConsumed;
 
     public void InitCrystal()
     {
         _isCrystalsConsumed = false;
-        _crystals.SetActive(true);
+        _crystal.SetActive(true);
     }
     public void UpdateCrystals(bool state, bool isInit)
     {
@@ -20,18 +20,25 @@ public class CrystalsGround : MonoBehaviour
         if (state == false)
         {
             _isCrystalsConsumed = true;
-            _crystals.SetActive(false);
+            _crystal.SetActive(false);
             
             if (isInit) return;
             
             EnergyManager.Instance.EarnEnergyByCrystal();
         }
         else
-            _crystals.SetActive(true);
+            _crystal.SetActive(true);
     }
 
     public bool GetIfHasCrystal()
     {
-        return _crystals.activeSelf;
+        return _crystal.activeSelf;
+    }
+
+    public void ChangeCrystal(GameObject newCrystal)
+    {
+        _crystal.SetActive(false);
+        _crystal = newCrystal;
+        _crystal.SetActive(true);
     }
 }

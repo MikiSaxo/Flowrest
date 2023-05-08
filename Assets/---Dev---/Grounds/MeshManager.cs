@@ -2,14 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MeshManager : MonoBehaviour
 {
+    [Header("Texture")]
     [SerializeField] private MeshRenderer[] _mesh;
     [SerializeField] private Texture2D _textureBase;
     [SerializeField] private Texture2D _textureSelected;
     private List<Material> _mat;
     private Material _matt;
+
+    [Header("Crystals")]
+    [SerializeField] private GameObject[] _crystals;
+
+
+    private void Awake()
+    {
+        if (_crystals.Length == 0) return;
+
+        
+        int randomNumber = Random.Range(0, _crystals.Length);
+        GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
+    }
 
     private void Start()
     {

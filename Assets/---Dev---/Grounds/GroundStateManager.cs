@@ -52,7 +52,7 @@ public class GroundStateManager : MonoBehaviour
 
     [SerializeField] private float _timeBounceValue;
 
-    [Header("Temp coords just to see it")] [SerializeField]
+    [Header("Temp coords just to see them")] [SerializeField]
     private Vector2Int _coords;
 
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
