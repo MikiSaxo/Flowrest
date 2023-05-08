@@ -29,6 +29,7 @@ public class MeshManager : MonoBehaviour
 
         if (_crystals.Length > 0)
         {
+            print("_crystals.Lengt : " + _crystals.Length);
             if (GetComponentInParent<CrystalsGround>() != null)
                 GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
         }
