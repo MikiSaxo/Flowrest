@@ -93,6 +93,8 @@ public class EditorGroundManager : MonoBehaviour
 
     private void InstantiateGround()
     {
+        if (_currentCharState == EditorMapManager.Instance.GetCharSelectedButton()) return;
+        
         if (_currentGround != null)
         {
             _currentCharState = NONE;
@@ -100,6 +102,7 @@ public class EditorGroundManager : MonoBehaviour
         }
 
         if (EditorMapManager.Instance.GetObjSelectedButton() == null) return;
+
 
         GameObject go = Instantiate(EditorMapManager.Instance.GetObjSelectedButton(), _indicator.transform);
         _currentGround = go;
