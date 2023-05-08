@@ -418,6 +418,13 @@ public class GroundStateManager : MonoBehaviour
         }
 
         _fxTileBlocked.SetActive(state);
+
+        if (state)
+        {
+            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Bored, false);
+        }
+        else
+            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, true);
     }
 
     public void UpdateIsSwapping(bool state)

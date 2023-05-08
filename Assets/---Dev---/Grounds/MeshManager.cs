@@ -4,13 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum TileState
+{
+    Normal,
+    Selected,
+    Bored
+}
+
 public class MeshManager : MonoBehaviour
 {
     [Header("Texture")] [SerializeField] private MeshRenderer[] _mesh;
     [SerializeField] private Texture2D _textureBase;
     [SerializeField] private Texture2D _textureSelected;
+    [SerializeField] private Texture2D _textureBored;
     private List<Material> _mat;
     private Material _matt;
+    private TileState _currentTileState;
 
     [Header("Variations")] [SerializeField]
     private GameObject[] _props;
@@ -29,7 +38,6 @@ public class MeshManager : MonoBehaviour
 
         if (_crystals.Length > 0)
         {
-            print("_crystals.Lengt : " + _crystals.Length);
             if (GetComponentInParent<CrystalsGround>() != null)
                 GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
         }
@@ -65,7 +73,7 @@ public class MeshManager : MonoBehaviour
         // _mat.SetTexture("Texture", _texture);
     }
 
-    public void UpdateTexture(bool state)
+    public void UpdateTexture(TileState state, bool isReset)
     {
         // if (state)
         // {
@@ -83,10 +91,18 @@ public class MeshManager : MonoBehaviour
         // }
         if (_matt == null) return;
 
+        if (_currentTileState == TileState.Bored && !isReset) return;        
 
-        if (state)
+
+        if (state == TileState.Selected)
             _matt.SetTexture("_BaseMap", _textureSelected);
-        else
+        else if (state == TileState.Normal)
             _matt.SetTexture("_BaseMap", _textureBase);
+        else
+        {
+            _matt.SetTexture("_BaseMap", _textureBored);
+        }
+
+        _currentTileState = state;
     }
 }

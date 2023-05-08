@@ -94,6 +94,7 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null)
         {
             _parent.UpdateNoSwap(true);
+            UpdateTileState(TileState.Selected, true);
             return;
         }
 
@@ -222,7 +223,7 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.CurrentMeshManager != null)
         {
             // print(_parent.CurrentMeshManager);
-            _parent.CurrentMeshManager.UpdateTexture(true);
+            UpdateTileState(TileState.Selected, false);
         }
     }
 
@@ -233,8 +234,13 @@ public class GroundIndicator : MonoBehaviour
 
         if (_parent.CurrentMeshManager != null)
         {
-            _parent.CurrentMeshManager.UpdateTexture(false);
+            UpdateTileState(TileState.Normal, false);
         }
+    }
+
+    public void UpdateTileState(TileState state, bool isReset)
+    {
+        _parent.CurrentMeshManager.UpdateTexture(state, isReset);
     }
 
     private void PoseBloc()
