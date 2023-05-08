@@ -6,24 +6,48 @@ using Random = UnityEngine.Random;
 
 public class MeshManager : MonoBehaviour
 {
-    [Header("Texture")]
-    [SerializeField] private MeshRenderer[] _mesh;
+    [Header("Texture")] [SerializeField] private MeshRenderer[] _mesh;
     [SerializeField] private Texture2D _textureBase;
     [SerializeField] private Texture2D _textureSelected;
     private List<Material> _mat;
     private Material _matt;
 
-    [Header("Crystals")]
+    [Header("Variations")] [SerializeField]
+    private GameObject[] _props;
+
     [SerializeField] private GameObject[] _crystals;
 
 
     private void Awake()
     {
-        if (_crystals.Length == 0) return;
+        if (_crystals.Length == 0 && _props.Length == 0) return;
 
-        
-        int randomNumber = Random.Range(0, _crystals.Length);
-        GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
+        DeactivateAllProps8Crystal();
+
+        int randomNumber = 0;
+        randomNumber = Random.Range(0, _crystals.Length != 0 ? _crystals.Length : _props.Length);
+
+        if (_crystals.Length > 0)
+        {
+            if (GetComponentInParent<CrystalsGround>() != null)
+                GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
+        }
+
+        print(randomNumber);
+        _props[randomNumber].SetActive(true);
+    }
+
+    private void DeactivateAllProps8Crystal()
+    {
+        foreach (var crystal in _crystals)
+        {
+            crystal.SetActive(false);
+        }
+
+        foreach (var prop in _props)
+        {
+            prop.SetActive(false);
+        }
     }
 
     private void Start()
@@ -58,7 +82,7 @@ public class MeshManager : MonoBehaviour
         //     }
         // }
         if (_matt == null) return;
-        
+
 
         if (state)
             _matt.SetTexture("_BaseMap", _textureSelected);
