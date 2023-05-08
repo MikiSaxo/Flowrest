@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEngine.Playables;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
+// ReSharper disable All
 
 public class ScreensManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class ScreensManager : MonoBehaviour
     [Header("Pause")] [SerializeField] private Button _backwardsButton;
 
     [Header("Pause")] [SerializeField] private GameObject _menuPauseParent;
-    [SerializeField] private GameObject _menuPauseTriggered;
+    // [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
@@ -38,7 +39,7 @@ public class ScreensManager : MonoBehaviour
 
     [SerializeField] private TMP_Text _characterName;
     [SerializeField] private GameObject _dialogContent;
-    [SerializeField] private Scrollbar _dialogScrollBar;
+    // [SerializeField] private Scrollbar _dialogScrollBar;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
@@ -402,10 +403,10 @@ public class ScreensManager : MonoBehaviour
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
         MouseHitRaycast.Instance.IsBlockMouse(state);
-        _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = state;
+        // _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = state;
 
-        if (!state)
-            _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
+        // if (!state)
+        //     _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
     }
 
     public void UpdateDialogFB(bool state)

@@ -312,10 +312,9 @@ public class MapManager : MonoBehaviour
         if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
 
         // Update Dialogs
-        ScreensManager.Instance.SpawnNewDialogs(
-            LanguageManager.Instance.Tongue == Language.Francais
-                ? _levelData[_currentLevel].DialogBeginning
-                : _levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
+        ScreensManager.Instance.SpawnNewDialogs(LanguageManager.Instance.Tongue == Language.Francais
+            ? _levelData[_currentLevel].DialogBeginning
+            : _levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
