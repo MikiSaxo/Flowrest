@@ -307,10 +307,9 @@ public class MapManager : MonoBehaviour
                     false);
             }
         }
-        
+
         // Update if PopUp
-        if(currentLvl.PopUpImages.Length > 0)
-            PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
+        if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
 
         // Update Dialogs
         ScreensManager.Instance.SpawnNewDialogs(
@@ -626,7 +625,7 @@ public class MapManager : MonoBehaviour
 
         // Spend energy
         EnergyManager.Instance.ReduceEnergyBySwap();
-        
+
         // yield return new WaitForSeconds(.01f);
 
         // Get crystals if have crystals
