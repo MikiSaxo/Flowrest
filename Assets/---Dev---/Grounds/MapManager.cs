@@ -418,7 +418,7 @@ public class MapManager : MonoBehaviour
         {
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
-            which.GetComponent<CrystalsGround>().UpdateCrystals(true, true);
+            which.GetComponent<CrystalsGround>().InitCrystal();
             return;
         }
 
@@ -995,8 +995,9 @@ public class MapManager : MonoBehaviour
             {
                 if (_currentStateMap[x, y] != AllStates.None)
                 {
-                    bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
-                    newCrystalMap[x, y] = hasCrystal;
+                    // bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
+                    // newCrystalMap[x, y] = hasCrystal;
+                    newCrystalMap[x, y] = false;
                 }
                 else
                 {
