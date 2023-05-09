@@ -17484,6 +17484,75 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8084888582374170931, guid: e7023709c89eae948a343f5d9311f110, type: 3}
   m_PrefabInstance: {fileID: 8084888582564323721}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1467619357
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5481515041848372996, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_Name
+      value: ParticlesFloating
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_RootOrder
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373017, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373018, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373018, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481515041848373018, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 100
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 051ac7c944eefe84dae9e99c11686735, type: 3}
 --- !u!1 &1471979441
 GameObject:
   m_ObjectHideFlags: 0
@@ -35177,7 +35246,6 @@ MonoBehaviour:
   _nextLevel: {fileID: 261037161}
   _backwardsButton: {fileID: 0}
   _menuPauseParent: {fileID: 1601367369}
-  _menuPauseTriggered: {fileID: 94625345}
   _orderMenu: {fileID: 2121142949}
   _orderGrid: {fileID: 1597146341}
   _orderPrefab: {fileID: 7047284334977653930, guid: 85abc912d6b09414da4e23d7a693ade0, type: 3}
@@ -35252,7 +35320,6 @@ MonoBehaviour:
   _dialogParent: {fileID: 1092695892}
   _characterName: {fileID: 1913230862}
   _dialogContent: {fileID: 7050394040245848421}
-  _dialogScrollBar: {fileID: 1286909591}
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
   _dialogFBEnd: {fileID: 67852414}
   _dialogSpeed: 0.01
