@@ -89,6 +89,7 @@ public class MeshManager : MonoBehaviour
         //         mat.SetTexture("_BaseMap", _textureBase);
         //     }
         // }
+        
         if (_matt == null) return;
 
         if (_currentTileState == TileState.Bored && !isReset) return;        
@@ -98,11 +99,20 @@ public class MeshManager : MonoBehaviour
             _matt.SetTexture("_BaseMap", _textureSelected);
         else if (state == TileState.Normal)
             _matt.SetTexture("_BaseMap", _textureBase);
-        else
+        else if (state == TileState.Bored)
         {
             _matt.SetTexture("_BaseMap", _textureBored);
+            // StartCoroutine(WaitForceBored());
         }
 
         _currentTileState = state;
+    }
+
+    public void ForceBored()
+    {
+        if (_matt == null) return;
+
+        _matt.SetTexture("_BaseMap", _textureBored);
+        // print("force bored");
     }
 }

@@ -26,15 +26,16 @@ public class GroundIndicator : MonoBehaviour
     private float _selectedYPos;
     private bool _isSelected;
     private bool _isEntered;
-    private Vector2Int _coords;
-    private List<GameObject> _tempEntered = new List<GameObject>();
-    private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
+    // private Vector2Int _coords;
+    
+    // private List<GameObject> _tempEntered = new List<GameObject>();
+    // private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
 
-    private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
-        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
-
-    private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
-        { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
+    // private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
+    //     { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
+    //
+    // private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
+    //     { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
@@ -240,7 +241,13 @@ public class GroundIndicator : MonoBehaviour
 
     public void UpdateTileState(TileState state, bool isReset)
     {
-        _parent.CurrentMeshManager.UpdateTexture(state, isReset);
+        if (_parent.JustBeenSwaped && state != TileState.Bored) return;
+
+        // print("blabla blaa bored " + _parent.GetCoords() + " / " + state);
+        if (state == TileState.Bored)
+            _parent.CurrentMeshManager.ForceBored();
+        else
+            _parent.CurrentMeshManager.UpdateTexture(state, isReset);
     }
 
     private void PoseBloc()

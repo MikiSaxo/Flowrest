@@ -403,6 +403,9 @@ public class GroundStateManager : MonoBehaviour
         // _fbPrevisu.UpdateSwap(state);
         UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
+        //
+        // if(state)
+        //     _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Bored, true);
     }
 
     public void UpdateFbNoSwap(bool state)
@@ -419,12 +422,14 @@ public class GroundStateManager : MonoBehaviour
 
         _fxTileBlocked.SetActive(state);
 
+        // print("UpdateFBReloadEnergy " + state);
         if (state)
         {
-            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Bored, false);
+            // print("hachiparmentier " + state + " / coords : " + _coords);
+            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Bored, true);
         }
         else
-            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, true);
+            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, false);
     }
 
     public void UpdateIsSwapping(bool state)
