@@ -147,7 +147,7 @@ public class GroundStateManager : MonoBehaviour
             BounceAnim();
         }
 
-        MapManager.Instance.UpdateCurrentStateMap(_coords, state);
+        LastMoveManager.Instance.UpdateCurrentStateMap(_coords, state);
 
         _currentState = state;
         currentGroundBase = _allState[(int)state];

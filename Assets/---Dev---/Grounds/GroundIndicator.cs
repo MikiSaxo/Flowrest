@@ -298,7 +298,7 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.CheckIfGameOver();
 
         // Save all actions
-        MapManager.Instance.SaveNewMap();
+        LastMoveManager.Instance.SaveNewMap();
 
         // Reset
         MapManager.Instance.IsPosing = false;
