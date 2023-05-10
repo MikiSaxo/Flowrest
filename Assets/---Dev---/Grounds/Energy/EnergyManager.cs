@@ -58,6 +58,8 @@ public class EnergyManager : MonoBehaviour
         _currentEnergy = _energyValue;
         _lerpTiming = 0;
 
+        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white; 
+
         if (startEnergy == 0)
             _waveEffect.StartGrowOnAlways();
     }
@@ -170,6 +172,7 @@ public class EnergyManager : MonoBehaviour
             ReduceEnergyBySwap();
         if (Input.GetKeyDown(KeyCode.R))
             EarnEnergyByCrystal();
+        
 
         if (_isInit)
         {
@@ -184,6 +187,7 @@ public class EnergyManager : MonoBehaviour
 
     private void BounceEnergy()
     {
+        _maskParent.transform.DOScale(1, 0);
         _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
     }
 
