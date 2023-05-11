@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
+    [SerializeField] private float _timeWaitBetweenDropFX;
 
     // [Header("Level")] [SerializeField] private string _levelName;
     // [SerializeField] private string[] _lvlDataName;
@@ -600,18 +601,19 @@ public class MapManager : MonoBehaviour
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
-
-        // Update Ground Around
+        
+        // Update Ground Around && Launch FX
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
+        gLastGroundSelected.LaunchDropFX();
+        
+        yield return new WaitForSeconds(_timeWaitBetweenDropFX);
+        
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
-
+        gWhich.LaunchDropFX();
+        
         // Update the current state map
         LastMoveManager.Instance.UpdateCurrentStateMap(newCoords, gLastGroundSelected.GetCurrentStateEnum());
         LastMoveManager.Instance.UpdateCurrentStateMap(_lastGroundCoordsSelected, gWhich.GetCurrentStateEnum());
-
-        // Launch FX to update around them
-        gLastGroundSelected.LaunchDropFX();
-        gWhich.LaunchDropFX();
 
         // Get Bloc to UI
         if (_hasInventory)
