@@ -151,7 +151,7 @@ public class MapManager : MonoBehaviour
 
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
-        
+
         // Init Start energy
         EnergyManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
@@ -312,9 +312,10 @@ public class MapManager : MonoBehaviour
         if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
 
         // Update Dialogs
-        ScreensManager.Instance.SpawnNewDialogs(LanguageManager.Instance.Tongue == Language.Francais
-            ? _levelData[_currentLevel].DialogBeginning
-            : _levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, currentLvl.PopUpImages.Length > 0);
+        else if (LanguageManager.Instance.Tongue == Language.English)
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
@@ -601,16 +602,16 @@ public class MapManager : MonoBehaviour
         // Change coords inside of GroundManager
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
-        
+
         // Update Ground Around && Launch FX
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
         gLastGroundSelected.LaunchDropFX();
-        
+
         yield return new WaitForSeconds(_timeWaitBetweenDropFX);
-        
+
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
         gWhich.LaunchDropFX();
-        
+
         // Update the current state map
         LastMoveManager.Instance.UpdateCurrentStateMap(newCoords, gLastGroundSelected.GetCurrentStateEnum());
         LastMoveManager.Instance.UpdateCurrentStateMap(_lastGroundCoordsSelected, gWhich.GetCurrentStateEnum());
