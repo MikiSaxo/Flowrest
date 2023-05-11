@@ -14856,6 +14856,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616895361}
   m_Mesh: {fileID: -8015884150060369992, guid: a2b6e9542337a8540bb973ed42febd91, type: 3}
+--- !u!1 &1622744694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8494882442127450093, guid: 467ba7fbe0c0317449377845e63b237e, type: 3}
+  m_PrefabInstance: {fileID: 584174072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1622744696
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622744694}
+  m_Enabled: 1
+  m_Alpha: 0.03
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1635874097
 GameObject:
   m_ObjectHideFlags: 0
@@ -23796,6 +23813,10 @@ PrefabInstance:
       propertyPath: _map
       value: 
       objectReference: {fileID: 29539077}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _timeWaitBetweenDropFX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081795, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: m_RootOrder
       value: 6
