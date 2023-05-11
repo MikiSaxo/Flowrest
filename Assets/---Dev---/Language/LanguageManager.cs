@@ -42,7 +42,10 @@ public class LanguageManager : MonoBehaviour
     [Header("Recycle Menu")]
     [SerializeField] private string _recycleTextFrench;
     [SerializeField] private string _recycleTextEnglish;
-    
+   
+    [Header("No Energy Text")]
+    [SerializeField] private string _noEnergyTextFrench;
+    [SerializeField] private string _noEnergyTextEnglish;
 
     private void Awake()
     {
@@ -127,6 +130,14 @@ public class LanguageManager : MonoBehaviour
             return _recycleTextFrench;
 
         return _recycleTextEnglish;
+    }
+    
+    public string GetNoEnergyText()
+    {
+        if (Tongue == Language.Francais)
+            return _noEnergyTextFrench;
+
+        return _noEnergyTextEnglish;
     }
     
     public string GetVictoryText()

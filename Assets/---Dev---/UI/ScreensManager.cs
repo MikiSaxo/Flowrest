@@ -23,8 +23,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _nextLevel;
 
     [Header("Pause")] [SerializeField] private Button _backwardsButton;
-
-    [Header("Pause")] [SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuPauseParent;
     // [SerializeField] private GameObject _menuPauseTriggered;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;

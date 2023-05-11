@@ -31,6 +31,7 @@ public class WaveEffect : MonoBehaviour
 
     public void StopGrownOn()
     {
+
         _canMove = false;
         _img.DOKill();
         _img.DOFade(0, 0);

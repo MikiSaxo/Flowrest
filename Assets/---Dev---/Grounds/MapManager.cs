@@ -144,10 +144,13 @@ public class MapManager : MonoBehaviour
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
         _mapSize.y = _mapInfo.Length;
-        
+
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
+        // Reset Wave Energy
+        EnergyManager.Instance.StopWaveEffect();
+        
         // Init Start energy
         EnergyManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
@@ -175,9 +178,6 @@ public class MapManager : MonoBehaviour
         RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
-
-        // Reset Wave Energy
-        EnergyManager.Instance.StopWaveEffect();
 
         // Update if has Previsu
         _hasPrevisu = currentLvl.HasPrevisu;
@@ -230,9 +230,10 @@ public class MapManager : MonoBehaviour
         QuestsManager.ResetQuestNumbers();
 
         // Update description Order
-        ScreensManager.Instance.InitOrderDescription(LanguageManager.Instance.Tongue == Language.Francais
-            ? currentLvl.QuestDescription
-            : currentLvl.QuestDescriptionEnglish);
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescription);
+        else if (LanguageManager.Instance.Tongue == Language.English)
+            ScreensManager.Instance.InitOrderDescription(currentLvl.QuestDescriptionEnglish);
 
         // Update if full floor quest
         if (currentLvl.QuestFloor.Length > 0)
@@ -647,11 +648,11 @@ public class MapManager : MonoBehaviour
             _lastGroundSwapped[1] = gLastGroundSelected;
             LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
         }
-        
+
 
         // Wait the FX is finished
         yield return new WaitForSeconds(1.75f);
-        
+
 
         // Save all actions
         LastMoveManager.Instance.SaveNewMap();
@@ -978,7 +979,7 @@ public class MapManager : MonoBehaviour
 
         _lastGroundSwapped[0] = null;
         _lastGroundSwapped[1] = null;
-        
+
         LastMoveManager.Instance.UpdateLastGroundSwapped(null, null);
     }
 

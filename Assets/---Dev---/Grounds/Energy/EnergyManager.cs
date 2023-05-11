@@ -17,6 +17,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private WaveEffect _waveEffect;
     [SerializeField] private Image _vignettage;
     [SerializeField] private GameObject _maskParent;
+    [SerializeField] private GameObject _fbNoEnergy;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -32,7 +33,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private int _costByLandingGround;
 
     [Header("Timing")] [SerializeField] private float _timeInitAnim;
-    [Header("Timing")] [SerializeField] private float _timeVignettage;
+    [SerializeField] private float _timeVignettage;
 
     private int _energyValue;
     private int _currentEnergy;
@@ -40,6 +41,7 @@ public class EnergyManager : MonoBehaviour
     private float _timerSpawnFBCrystal;
     private bool _isInit;
     private float _lerpTiming;
+    private GameObject _currentFbNoEnergy;
 
     private void Awake()
     {
@@ -58,10 +60,13 @@ public class EnergyManager : MonoBehaviour
         _currentEnergy = _energyValue;
         _lerpTiming = 0;
 
-        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white; 
+        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
 
-        if (startEnergy == 0)
+        if (_energyValue == 0)
+        {
             _waveEffect.StartGrowOnAlways();
+        }
+            
     }
 
     IEnumerator AnimInitEnergy(int energy)
@@ -189,6 +194,14 @@ public class EnergyManager : MonoBehaviour
     {
         _maskParent.transform.DOScale(1, 0);
         _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+    }
+
+    public void SpawnNoEnergyText()
+    {
+        if (_currentFbNoEnergy != null) return;
+        
+        GameObject go = Instantiate(_fbNoEnergy, transform);
+        _currentFbNoEnergy = go;
     }
 
     public void StopWaveEffect()

@@ -26,7 +26,8 @@ public class GroundIndicator : MonoBehaviour
     private float _selectedYPos;
     private bool _isSelected;
 
-    private bool _isEntered;
+    private bool _isEnteredLimited;
+    private bool _isEnteredFree;
     // private Vector2Int _coords;
 
     // private List<GameObject> _tempEntered = new List<GameObject>();
@@ -71,6 +72,7 @@ public class GroundIndicator : MonoBehaviour
 
     public void OnEnterPointer()
     {
+        _isEnteredFree = true;
         // if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
@@ -87,11 +89,15 @@ public class GroundIndicator : MonoBehaviour
         // }
 
         if (MapManager.Instance.LastObjButtonSelected == null && EnergyManager.Instance.IsEnergyInferiorToCostSwap())
+        {
             return;
+        }
 
         if (MapManager.Instance.LastObjButtonSelected != null &&
             EnergyManager.Instance.IsEnergyInferiorToCostLandingGround())
+        {
             return;
+        }
 
         if (_parent.JustBeenSwaped && MapManager.Instance.LastObjButtonSelected == null)
         {
@@ -103,7 +109,7 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.IsSwapping) return;
 
         //other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
-        _isEntered = true;
+        _isEnteredLimited = true;
 
 
         if (_isSelected || IsSwapping)
@@ -130,7 +136,8 @@ public class GroundIndicator : MonoBehaviour
     {
         _parent.UpdateFbNoSwap(false);
 
-        _isEntered = false;
+        _isEnteredLimited = false;
+        _isEnteredFree = false;
 
         if (_isSelected || IsSwapping ||
             MapManager.Instance.IsSwapping) return;
@@ -154,9 +161,12 @@ public class GroundIndicator : MonoBehaviour
         //
         //     // ResetAllAroundPrevisu();
         // }
+        
+        if(EnergyManager.Instance.GetCurrentEnergy() <= 0 && Input.GetMouseButtonDown(0) && _isEnteredFree && !MapManager.Instance.IsVictory)
+            EnergyManager.Instance.SpawnNoEnergyText();
 
         // Block
-        if (!_isEntered || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
+        if (!_isEnteredLimited || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
 
 
         // First case: select bloc for swap
@@ -165,7 +175,7 @@ public class GroundIndicator : MonoBehaviour
             if (MapManager.Instance.IsSwapping) return;
 
             // Reset if click again on it
-            if (_isSelected && _isEntered && !MapManager.Instance.IsTuto)
+            if (_isSelected && _isEnteredLimited && !MapManager.Instance.IsTuto)
             {
                 // _parent.IsProtectedPrevisu = false;
                 //
@@ -177,7 +187,7 @@ public class GroundIndicator : MonoBehaviour
                 return;
             }
 
-            if (_isSelected && _isEntered && MapManager.Instance.IsTuto)
+            if (_isSelected && _isEnteredLimited && MapManager.Instance.IsTuto)
                 return;
 
             // Useful to block Trigger enter and exit
@@ -319,7 +329,7 @@ public class GroundIndicator : MonoBehaviour
     public void ResetIndicator()
     {
         _isSelected = false;
-        _isEntered = false;
+        _isEnteredLimited = false;
 
         OnLeaveAnim(_timeExit);
         MapManager.Instance.IsGroundFirstSelected = false;
