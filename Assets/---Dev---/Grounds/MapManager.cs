@@ -755,7 +755,7 @@ public class MapManager : MonoBehaviour
         ResetTwoLastSwapped();
         _wantToRecycle = false;
 
-        RecyclingManager.Instance.DeactivateButton();
+        RecyclingManager.Instance.DeselectRecycle();
 
         // Save all actions
         LastMoveManager.Instance.SaveNewMap();
@@ -897,9 +897,8 @@ public class MapManager : MonoBehaviour
 
     private void AllReset()
     {
-        RecyclingManager.Instance.DeactivateButton();
+        RecyclingManager.Instance.DeselectRecycle();
         ResetButtonSelected();
-        //RecyclingManager.Instance.UpdateRecycling(false);
         ResetPreview();
         ResetGroundSelected();
     }
@@ -955,6 +954,7 @@ public class MapManager : MonoBehaviour
     public void ResetButtonSelected()
     {
         ChangeActivatedButton(null);
+        // _wantToRecycle = false;
     }
 
     public void ResetGroundSelected()
@@ -1003,6 +1003,11 @@ public class MapManager : MonoBehaviour
         }
 
         SetupUIGround.Instance.UpdatePreviewInventory(false, AllStates.None);
+    }
+
+    public void ResetWantToRecycle()
+    {
+        _wantToRecycle = false;
     }
 
     private void ResetAllPlayerForceSwapped(bool isTutoEnded)

@@ -192,6 +192,10 @@ public class GroundIndicator : MonoBehaviour
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
+            
+            // Reset Recycle if was selected
+            MapManager.Instance.ResetWantToRecycle();
+            RecyclingManager.Instance.DeselectRecycle();
 
             // Make animation
             if (!MapManager.Instance.IsGroundFirstSelected)
