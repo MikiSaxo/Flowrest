@@ -25,9 +25,10 @@ public class GroundIndicator : MonoBehaviour
     private float _hoveredYPos;
     private float _selectedYPos;
     private bool _isSelected;
+
     private bool _isEntered;
     // private Vector2Int _coords;
-    
+
     // private List<GameObject> _tempEntered = new List<GameObject>();
     // private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
 
@@ -244,10 +245,7 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.JustBeenSwaped && state != TileState.Bored) return;
 
         // print("blabla blaa bored " + _parent.GetCoords() + " / " + state);
-        if (state == TileState.Bored)
-            _parent.CurrentMeshManager.ForceBored();
-        else
-            _parent.CurrentMeshManager.UpdateTexture(state, isReset);
+        _parent.CurrentMeshManager.UpdateTexture(state, isReset);
     }
 
     private void PoseBloc()
@@ -258,7 +256,7 @@ public class GroundIndicator : MonoBehaviour
         // Avoid to update by same ground
         // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
         //     (int)MapManager.Instance.LastStateButtonSelected) return;
-        
+
         MapManager.Instance.IsPosing = true;
 
         StartCoroutine(PoseBlocTime());
@@ -286,7 +284,7 @@ public class GroundIndicator : MonoBehaviour
         // Change State around
         gameObject.GetComponentInParent<GroundStateManager>().UpdateGroundsAround(_parent.GetCurrentStateEnum());
         gameObject.GetComponentInParent<GroundStateManager>().LaunchDropFX();
-        
+
         // Spend energy
         EnergyManager.Instance.ReduceEnergyByLandingGround();
 
@@ -333,7 +331,7 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.CheckIfButtonIsEmpty())
             MapManager.Instance.ResetAllSelection();
 
-        
+
         if (!MapManager.Instance.GetIsDragNDrop() && !MapManager.Instance.CheckIfButtonIsEmpty()) return;
 
         // Reset to avoid problem with dnd

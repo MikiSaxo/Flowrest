@@ -103,17 +103,9 @@ public class MeshManager : MonoBehaviour
         else if (state == TileState.Bored)
         {
             _matt.SetTexture("_BaseMap", _textureBored);
-            // StartCoroutine(WaitForceBored());
         }
 
         _currentTileState = state;
     }
 
-    public void ForceBored()
-    {
-        if (_matt == null) return;
-
-        _matt.SetTexture("_BaseMap", _textureBored);
-        // print("force bored");
-    }
 }
