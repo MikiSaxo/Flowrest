@@ -43,8 +43,18 @@ public class MeshManager : MonoBehaviour
         }
 
         _props[randomNumber].SetActive(true);
+        _matt = _mesh[0].material;
     }
 
+
+    private void Start()
+    {
+        // foreach (var mesh in _mesh)
+        // {
+        //     _mat.Add(mesh.material);
+        // }
+    }
+    
     private void DeactivateAllProps8Crystal()
     {
         foreach (var crystal in _crystals)
@@ -56,15 +66,6 @@ public class MeshManager : MonoBehaviour
         {
             prop.SetActive(false);
         }
-    }
-
-    private void Start()
-    {
-        // foreach (var mesh in _mesh)
-        // {
-        //     _mat.Add(mesh.material);
-        // }
-        _matt = _mesh[0].material;
     }
 
     private void Update()
