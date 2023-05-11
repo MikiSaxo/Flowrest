@@ -8,7 +8,7 @@ public class MouseHitRaycast : MonoBehaviour
     public static MouseHitRaycast Instance;
 
     public bool IsOnGround { get; set; }
-    
+
     private Vector3 _worldPosition;
     private Plane _plane = new Plane(Vector3.up, 0);
     private bool _isOnIndicator;
@@ -20,7 +20,7 @@ public class MouseHitRaycast : MonoBehaviour
 
     private Vector2Int _lastCoordsHit;
     private GroundIndicator _lastGroundHit;
-    
+
     private void Awake()
     {
         Instance = this;
@@ -28,8 +28,8 @@ public class MouseHitRaycast : MonoBehaviour
 
     void Update()
     {
-        if(_isBlocked || MapManager.Instance.IsPosing) return;
-        
+        if (_isBlocked || MapManager.Instance.IsPosing) return;
+
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _layerToHit))
@@ -38,32 +38,42 @@ public class MouseHitRaycast : MonoBehaviour
 
             if (newBloc == null)
             {
-                if(_lastGroundHit != null)
+                if (_lastGroundHit != null)
                     _lastGroundHit.OnExitPointer();
 
-                if(Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0))
+                {
                     MapManager.Instance.ResetBig();
-                
+
+                    if (!MapManager.Instance.IsOnUI)
+                        StartCoroutine(WaitToResetRecycle());
+                }
+
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
                 IsOnGround = false;
-                
+
                 return;
             }
 
+            // if (Input.GetMouseButtonDown(0) && !MapManager.Instance.IsOnUI)
+            // {
+            //     StartCoroutine(WaitToResetRecycle());
+            // }
+
             if (newBloc.GetParentCoords() != _lastCoordsHit)
             {
-                if(_lastGroundHit != null)
+                if (_lastGroundHit != null)
                     _lastGroundHit.OnExitPointer();
-                
+
                 _lastCoordsHit = newBloc.GetParentCoords();
                 _lastGroundHit = newBloc;
                 _lastGroundHit.OnEnterPointer();
                 IsOnGround = true;
             }
         }
-        
+
         //if(_isBlocked) return;
-        
+
         // if (Camera.main != null)
         // {
         //     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -74,6 +84,12 @@ public class MouseHitRaycast : MonoBehaviour
         // }
         //
         // transform.position = _worldPosition;
+    }
+
+    IEnumerator WaitToResetRecycle()
+    {
+        yield return new WaitForSeconds(.1f);
+        MapManager.Instance.ResetWantToRecycle();
     }
 
     public void IsBlockMouse(bool yesOrNot)
@@ -91,6 +107,7 @@ public class MouseHitRaycast : MonoBehaviour
     {
         _isOnIndicator = yesOrNot;
     }
+
     public void IsOnUI(bool yesOrNot) // Called in Content Pointer Enter/Exit
     {
         _isOnUI = yesOrNot;

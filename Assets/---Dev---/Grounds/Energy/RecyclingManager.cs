@@ -65,6 +65,8 @@ public class RecyclingManager : MonoBehaviour
     {
         if (!_hasInfinitRecycling)
             _recyclingNbText.text = $"{MapManager.Instance.NbOfRecycling} {LanguageManager.Instance.GetRecycleText()}";
+
+        UpdateVisualState();
         // _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
     }
 
@@ -78,19 +80,34 @@ public class RecyclingManager : MonoBehaviour
 
     public void OnEnter()
     {
-        GetComponentInChildren<Image>().color = Color.yellow;
+        if (MapManager.Instance.NbOfRecycling > 0)
+            GetComponentInChildren<Image>().color = Color.yellow;
     }
 
     public void OnExit()
     {
         if (_isSelected) return;
-        
-        GetComponentInChildren<Image>().color = Color.white;
+
+        UpdateVisualState();
     }
 
-    public void DeactivateButton()
+    public void DeselectRecycle()
     {
         _isSelected = false;
         OnExit();
     }
+
+    private void UpdateVisualState()
+    {
+        if (MapManager.Instance.NbOfRecycling > 0)
+        {
+            GetComponentInChildren<Image>().color = Color.white;
+            GetComponent<PointerMotion>().UpdateCanEnter(true);
+        }
+        else
+        {
+            GetComponentInChildren<Image>().color = Color.grey;
+            GetComponent<PointerMotion>().UpdateCanEnter(false);
+        }
+    } 
 }
