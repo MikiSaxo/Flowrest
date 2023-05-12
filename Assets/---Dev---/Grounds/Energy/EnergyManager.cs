@@ -207,6 +207,7 @@ public class EnergyManager : MonoBehaviour
     public void StopWaveEffect()
     {
         _waveEffect.StopGrownOn();
+        _numberToDisplay.color = Color.white;
     }
 
     public bool IsEnergyInferiorToCostSwap()

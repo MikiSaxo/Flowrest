@@ -190,6 +190,7 @@ public class ScreensManager : MonoBehaviour
     public void VictoryScreen()
     {
         MapManager.Instance.IsVictory = true;
+        MapManager.Instance.ResetTwoLastSwapped();
 
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
