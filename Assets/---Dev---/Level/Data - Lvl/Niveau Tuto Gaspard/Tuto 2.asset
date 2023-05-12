@@ -25,18 +25,19 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 1
   PreviewMessage:
-  - "Ici par exemple, en \xE9changeant une tuile de <color=red>Grassias</color> avec
-    une tuile de <color=yellow>Calcid</color>, l'environnement autour de ta tuile
-    se changera \xE9galement en un environnement de <color=red>Grassias</color>."
-  - "Un syst\xE8me de <b>pr\xE9visualisation</b> con\xE7u par nos meilleurs ing\xE9nieurs
-    peut te permettre de toujours savoir quel r\xE9sultat ton \xE9change va provoquer
-    alors n'h\xE9site pas \xE0 t'en servir !"
+  - "Ici, tu vas \xE9changer ta tuile de Grassias avec une tuile de Calcid. La tuile
+    de Grassias va modifier les tuiles de Calcid adjacentes."
+  - "Comme indiqu\xE9 dans le m\xE9mo, une tuile de Grassias combin\xE9 \xE0 une
+    tuile de Calcid donne une tuile de Grassias."
+  - "Pour faciliter ton travail, nos ing\xE9nieurs ont con\xE7us un syst\xE8me permettant
+    de <b>pr\xE9visualiser</b> les modifications que tes tuiles vont apporter."
   PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 2}
   - {x: 6, y: 2}
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
+  PopUpImages: []
   QuestDescription: 'Tuto 2 : Faire une fleur de Grassias'
   QuestDescriptionEnglish: 
   QuestImage: {fileID: 21300000, guid: db06e6a99456d134f8815e40c3a9bcd9, type: 3}
@@ -51,10 +52,10 @@ MonoBehaviour:
   DialogBeginning:
   - "Maintenant que tu sais comment \xE9changer deux tuiles entre elles, je vais
     t'apporter quelques pr\xE9cisions sur ces \xE9changes."
-  - "Apr\xE8s avoir \xE9chang\xE9 deux tuiles, les environnements autour de celles-ci
-    vont se modifier."
-  - "Attention, n'oublies pas que <b>c'est la premi\xE8re tuile s\xE9lectionn\xE9e</b>
-    qui va effectuer ses changements en priorit\xE9."
+  - "Les tuiles adjacentes aux tuiles \xE9chang\xE9es se voient modifi\xE9es."
+  - "<b>La premi\xE8re tuile s\xE9lectionn\xE9e</b> va effectuer ses changements
+    <b>en priorit\xE9</b>. Elle sera ensuite suivie <b>des changements de la deuxi\xE8me
+    tuile \xE9chang\xE9e</b>."
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
