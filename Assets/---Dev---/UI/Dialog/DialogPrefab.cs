@@ -77,7 +77,7 @@ public class DialogPrefab : MonoBehaviour
                 {
                     replace = dialog.Replace(text.Text, $"<i>{color}{text.Text}</color></i>");
                 }
-                else if (text.IsBold && text.IsItalic)
+                else if (!text.IsColor && text.IsBold && text.IsItalic)
                 {
                     replace = dialog.Replace(text.Text, $"<b><i>{text.Text}</i></b>");
                 }
@@ -89,7 +89,7 @@ public class DialogPrefab : MonoBehaviour
                 {
                     replace = dialog.Replace(text.Text, $"<i>{text.Text}</i>");
                 }
-                else
+                else if(text.IsColor)
                     replace = dialog.Replace(text.Text, $"{color}{text.Text}</color>");
 
                 dialog = replace;
