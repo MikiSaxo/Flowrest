@@ -369,6 +369,7 @@ public class MapManager : MonoBehaviour
         QuestsManager.CheckQuest();
         // Save all actions
         LastMoveManager.Instance.InitMapGrid(_mapGrid);
+        ResetTwoLastSwapped();
         LastMoveManager.Instance.SaveNewMap();
 
 

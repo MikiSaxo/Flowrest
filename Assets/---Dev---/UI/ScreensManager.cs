@@ -493,6 +493,9 @@ public class ScreensManager : MonoBehaviour
 
     public void GoLevelSupp()
     {
+        if (MapManager.Instance.IsLoading) return;
+        MapManager.Instance.IsLoading = false;
+        
         MapManager.Instance.ForceResetBig();
         StartCoroutine(WaitToGoLevelSupp());
     }
