@@ -70,7 +70,7 @@ public class LastMoveManager : MonoBehaviour
             {
                 if (_currentStateMap[x, y] != AllStates.None)
                 {
-                    // bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
+                    bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
                     // newCrystalMap[x, y] = hasCrystal;
                     newCrystalMap[x, y] = false;
                 }

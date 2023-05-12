@@ -404,8 +404,8 @@ public class GroundStateManager : MonoBehaviour
         UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
         //
-        // if(state)
-        //     _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Bored, true);
+        if(!state)
+            _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, true);
     }
 
     public void UpdateFbNoSwap(bool state)

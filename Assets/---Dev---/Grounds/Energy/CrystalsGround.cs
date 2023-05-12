@@ -35,13 +35,13 @@ public class CrystalsGround : MonoBehaviour
 
     public bool GetIfHasCrystal()
     {
+        // print("I have cristal " + _isCrystalsConsumed);
         return _isCrystalsConsumed;
-        
     }
 
     public void ChangeCrystal(GameObject newCrystal)
     {
-        if (_crystal == null) return;
+        if (newCrystal == null) return;
         
         _crystal.SetActive(false);
         _crystal = newCrystal;
