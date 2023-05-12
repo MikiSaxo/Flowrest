@@ -36,7 +36,7 @@ public class CrystalsGround : MonoBehaviour
     public bool GetIfHasCrystal()
     {
         // print("I have cristal " + _isCrystalsConsumed);
-        return _isCrystalsConsumed;
+        return !_isCrystalsConsumed;
     }
 
     public void ChangeCrystal(GameObject newCrystal)

@@ -10,43 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 4
+  m_Name: Niveau 6.1
   m_EditorClassIdentifier: 
-  LevelName: Niveau 4
+  LevelName: Niveau 6.1
   LevelFolder: Level Editor
-  EnergyAtStart: 5
-  HasInventory: 0
+  EnergyAtStart: 2
+  HasInventory: 1
   StartNbState: 0
-  StartNbAllState: 
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  IsTuto: 0
+  IsTuto: 1
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap: []
-  HasForcePoseBlocAfterSwap: 0
-  ForcePoseBlocCoord: {x: 0, y: 0}
+  PlayerForceSwap:
+  - {x: 2, y: 0}
+  - {x: 6, y: 4}
+  HasForcePoseBlocAfterSwap: 1
+  ForcePoseBlocCoord: {x: 4, y: 2}
   PopUpImages: []
-  QuestDescription: "Niveau 4 : R\xE9aliser une chaine de 8 Grassias"
+  QuestDescription: "Niveau 6 : R\xE9aliser une fleur de Hydros en seulement 2 actions"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 668fe0b614e6664428aee5f25d1529a4, type: 3}
-  QuestFloor: 
+  QuestImage: {fileID: 21300000, guid: 98112a698b53b1c4391b79f851dfb009, type: 3}
+  QuestFloor: 02000000
   QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 00000000
-  NumberTileChain: 0
+  QuestTileChain: 
+  NumberTileChain: 6
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - "Tu l\u2019as remarqu\xE9, en face de toi on peut voir un environnement montagneux."
-  - "Il est impossible \xE0 bouger et il emp\xEAche les r\xE9actions autour de lui."
-  - "Cela peut \xEAtre extr\xEAmement utile pour contr\xF4ler nos changements mais
-    cela peut \xE9galement te bloquer."
+  - "Maintenant que tu es \xE0 l'aise avec les technologies de base que nous utilisons,
+    je vais te donner acc\xE8s \xE0 un inventaire."
   DialogEnd:
-  - "Tu te d\xE9brouilles mieux que je ne l'esp\xE9rais. \xC0 demain Petri."
+  - Je te laisse te familiariser avec ce nouvel outil, on se retrouve demain.
   DialogBeginningEnglish: []
   DialogEndEnglish: []

@@ -68,11 +68,15 @@ public class LastMoveManager : MonoBehaviour
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                if (_currentStateMap[x, y] != AllStates.None)
+                if (_currentStateMap[x, y] != AllStates.None && _currentStateMap[x, y] != AllStates.Mountain)
                 {
-                    bool hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
-                    // newCrystalMap[x, y] = hasCrystal;
-                    newCrystalMap[x, y] = false;
+                    bool hasCrystal;
+                    if (_mapGrid[x, y].GetComponent<CrystalsGround>() != null)
+                        hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
+                    else
+                        hasCrystal = false;
+                    
+                    newCrystalMap[x, y] = hasCrystal;
                 }
                 else
                 {
@@ -98,11 +102,11 @@ public class LastMoveManager : MonoBehaviour
         _stockEnergy.Add(EnergyManager.Instance.GetCurrentEnergy());
 
         // Stock Crystals
-        // bool[,] newCrystalMap = new bool[_mapSize.x, _mapSize.y];
-        // Array.Copy(UpdateCrystalMap(), newCrystalMap, UpdateCrystalMap().Length);
+        bool[,] newCrystalMap = new bool[_mapSize.x, _mapSize.y];
+        Array.Copy(UpdateCrystalMap(), newCrystalMap, UpdateCrystalMap().Length);
         _stockCrystals.Add(UpdateCrystalMap());
 
-        // Stock Last Block Swaped
+        // Stock Last Block Swapped
         GroundStateManager[] newLastBlocked = new GroundStateManager[2];
         Array.Copy(_lastGroundSwapped, newLastBlocked, _lastGroundSwapped.Length);
         _stockLastGroundSwaped.Add(newLastBlocked);
