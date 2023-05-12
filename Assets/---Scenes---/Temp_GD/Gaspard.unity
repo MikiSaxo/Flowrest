@@ -15225,6 +15225,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 07bc6146ca22d2644a1f3d033ba9f335, type: 3}
   - {fileID: 21300000, guid: 69b87b4c06e86ad4a89b43d8783f6793, type: 3}
   - {fileID: 21300000, guid: e01d679592a85a14caf7dd5ca9aee8ea, type: 3}
+  _skipPopUpButton: {fileID: 0}
   _gridPage: {fileID: 827908917}
   _pagePrefab: {fileID: 7665791168215843389, guid: 9e8a9620a2796cb449484263d9e9f08c, type: 3}
   _sprPage:
@@ -20756,8 +20757,8 @@ MonoBehaviour:
   _titlesParent: {fileID: 51693967}
   _gameOverParent: {fileID: 2134788108}
   _nextLevel: {fileID: 261037161}
+  _backwardsButton: {fileID: 0}
   _menuPauseParent: {fileID: 1601367369}
-  _menuPauseTriggered: {fileID: 94625345}
   _orderMenu: {fileID: 2121142949}
   _orderGrid: {fileID: 1597146341}
   _orderPrefab: {fileID: 7047284334977653930, guid: 85abc912d6b09414da4e23d7a693ade0, type: 3}
@@ -20882,7 +20883,6 @@ MonoBehaviour:
   _dialogParent: {fileID: 1092695892}
   _characterName: {fileID: 1913230862}
   _dialogContent: {fileID: 7050394040245848421}
-  _dialogScrollBar: {fileID: 1286909591}
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
   _dialogFBEnd: {fileID: 67852414}
   _dialogSpeed: 0.01
@@ -30038,7 +30038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
-      value: 26
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _lvlDataName.Array.size
@@ -30119,33 +30119,37 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[18]
       value: 
-      objectReference: {fileID: 11400000, guid: 6dde75f54c8d4b04195bcfda9c09a418, type: 2}
+      objectReference: {fileID: 11400000, guid: bb764b5a83c345747ab0ec561b51886b, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[19]
       value: 
-      objectReference: {fileID: 11400000, guid: 67c5c213a85ad794eb51988183dfb91b, type: 2}
+      objectReference: {fileID: 11400000, guid: 6dde75f54c8d4b04195bcfda9c09a418, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[20]
       value: 
-      objectReference: {fileID: 11400000, guid: 63bad25f591465d48bcdf98900d937b7, type: 2}
+      objectReference: {fileID: 11400000, guid: 67c5c213a85ad794eb51988183dfb91b, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[21]
       value: 
-      objectReference: {fileID: 11400000, guid: aadaf1d06489c04468fdb8bc939f673c, type: 2}
+      objectReference: {fileID: 11400000, guid: 63bad25f591465d48bcdf98900d937b7, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[22]
       value: 
-      objectReference: {fileID: 11400000, guid: 99c2d8a5b86771e4da603a176bbd50ec, type: 2}
+      objectReference: {fileID: 11400000, guid: aadaf1d06489c04468fdb8bc939f673c, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[23]
       value: 
-      objectReference: {fileID: 11400000, guid: b188d9f90295edb428109e2217f9d00b, type: 2}
+      objectReference: {fileID: 11400000, guid: 99c2d8a5b86771e4da603a176bbd50ec, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[24]
       value: 
-      objectReference: {fileID: 11400000, guid: 4cf0c1773720e02469ef4b975139df8d, type: 2}
+      objectReference: {fileID: 11400000, guid: b188d9f90295edb428109e2217f9d00b, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[25]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cf0c1773720e02469ef4b975139df8d, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _levelData.Array.data[26]
       value: 
       objectReference: {fileID: 11400000, guid: 0ec91859b4cbff74fbaaac21d80f2cca, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
