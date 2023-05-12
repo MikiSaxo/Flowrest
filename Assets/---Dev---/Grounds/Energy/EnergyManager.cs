@@ -18,6 +18,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private Image _vignettage;
     [SerializeField] private GameObject _maskParent;
     [SerializeField] private GameObject _fbNoEnergy;
+    [SerializeField] private float _timeToFillEnergy;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -40,7 +41,6 @@ public class EnergyManager : MonoBehaviour
     private int _tempValue;
     private float _timerSpawnFBCrystal;
     private bool _isInit;
-    private float _lerpTiming;
     private GameObject _currentFbNoEnergy;
 
     private void Awake()
@@ -58,7 +58,6 @@ public class EnergyManager : MonoBehaviour
         _hitEnergyBar.value = 0;
         _numberToDisplay.text = $"{0}";
         _currentEnergy = _energyValue;
-        _lerpTiming = 0;
 
         _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
 
@@ -66,20 +65,32 @@ public class EnergyManager : MonoBehaviour
         {
             _waveEffect.StartGrowOnAlways();
         }
-            
+    }
+
+    private void AnimEnergyBar()
+    {
+        _energyBar.DOValue(1, _timeToFillEnergy).SetEase(Ease.Linear);
+        _hitEnergyBar.DOValue(1, _timeToFillEnergy).SetEase(Ease.Linear);
     }
 
     IEnumerator AnimInitEnergy(int energy)
     {
-        for (int i = 0; i <= energy; i++)
+        _isInit = true;
+
+        if (energy > 0)
         {
-            yield return new WaitForSeconds(_timeInitAnim);
-            _isInit = true;
-            _numberToDisplay.text = $"{i}";
+            AnimEnergyBar();
+            
+            for (int i = 1; i <= energy; i++)
+            {
+                yield return new WaitForSeconds(_timeToFillEnergy / energy);
+                _numberToDisplay.text = $"{i}";
+            }
+
+            BounceEnergy();
         }
 
         _isInit = false;
-        BounceEnergy();
     }
 
     public void ReduceEnergyBySwap()
@@ -107,12 +118,12 @@ public class EnergyManager : MonoBehaviour
         _tempValue += value;
         if (_tempValue == 0)
             _tempValue = 1;
-        
+
         if (value > 0)
         {
             ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
         }
-        
+
         yield return new WaitForSeconds(.01f);
 
         UpdateEnergy(_tempValue);
@@ -167,27 +178,16 @@ public class EnergyManager : MonoBehaviour
         _numberToDisplay.text = $"{_energyValue}";
         _currentEnergy = _energyValue;
 
-        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white; 
+        _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
         // MapManager.Instance.CheckIfGameOver();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            ReduceEnergyBySwap();
-        if (Input.GetKeyDown(KeyCode.R))
-            EarnEnergyByCrystal();
-        
-
-        if (_isInit)
-        {
-            _lerpTiming += Time.deltaTime / (_currentEnergy * _timeInitAnim);
-
-            float newValue = Mathf.Lerp(0, 1, _lerpTiming);
-
-            _energyBar.value = newValue;
-            _hitEnergyBar.value = newValue;
-        }
+        // if (Input.GetKeyDown(KeyCode.F))
+        //     ReduceEnergyBySwap();
+        // if (Input.GetKeyDown(KeyCode.R))
+        //     EarnEnergyByCrystal();
     }
 
     private void BounceEnergy()
@@ -199,7 +199,7 @@ public class EnergyManager : MonoBehaviour
     public void SpawnNoEnergyText()
     {
         if (_currentFbNoEnergy != null) return;
-        
+
         GameObject go = Instantiate(_fbNoEnergy, transform);
         _currentFbNoEnergy = go;
     }
