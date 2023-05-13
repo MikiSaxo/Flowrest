@@ -35,13 +35,9 @@ public class MapManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
-    [SerializeField] private float _timeToSwap;
+    [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
     [SerializeField] private float _timeWaitBetweenDropFX;
-
-    // [Header("Level")] [SerializeField] private string _levelName;
-    // [SerializeField] private string[] _lvlDataName;
-
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private bool _hasInventory;
@@ -58,14 +54,6 @@ public class MapManager : MonoBehaviour
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
     private bool _isFullFloorOrder;
-
-    // private AllStates[,] _currentStateMap;
-    // private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
-    // private List<bool[,]> _stockCrystals = new List<bool[,]>();
-    // private List<int> _stockEnergy = new List<int>();
-    // private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
-    // private List<List<int>> _stockTileButtonTest = new List<List<int>>();
-    // private List<int> _stockNbRecycle = new List<int>();
 
     private Vector2Int _mapSize;
     private Vector2Int _lastGroundCoordsSelected;
@@ -122,6 +110,11 @@ public class MapManager : MonoBehaviour
         dico.Add(TUNDRA, AllStates.Tundra);
         dico.Add(SWAMP, AllStates.Swamp);
         dico.Add(MOUNTAIN, AllStates.Mountain);
+
+        if (BigManager.Instance != null)
+        {
+            _currentLevel = BigManager.Instance.CurrentLevel;
+        }
 
         InitializeMap();
         LastStateButtonSelected = AllStates.None;
@@ -461,7 +454,12 @@ public class MapManager : MonoBehaviour
     private void ChangeLevel(bool nextlevel)
     {
         if (_currentLevel < _levelData.Length - 1 && nextlevel)
+        {
             _currentLevel++;
+            
+            if (BigManager.Instance != null)
+                BigManager.Instance.CurrentLevel++;
+        }
 
         InitializeMap();
 

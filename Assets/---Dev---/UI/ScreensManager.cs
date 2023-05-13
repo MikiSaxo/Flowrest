@@ -201,6 +201,9 @@ public class ScreensManager : MonoBehaviour
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
         SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
+
+        if (BigManager.Instance != null)
+            BigManager.Instance.LevelUnlocked++;
     }
 
     private void EndDialog()
