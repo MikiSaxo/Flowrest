@@ -14,4 +14,16 @@ public class LevelButton : MonoBehaviour
         _textNumber.text = $"{levelNumber}";
         _levelNumber = levelNumber;
     }
+
+    public void OnClick()
+    {
+        if (BigManager.Instance == null)
+        {
+            print("Didn't found ----BigManager----");
+            return;
+        }
+
+        BigManager.Instance.CurrentLevel = _levelNumber-1;
+        MainMenuManager.Instance.LaunchMainScene();
+    }
 }

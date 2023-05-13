@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public static MainMenuManager Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     public void LaunchMainScene()
     {
         SceneManager.LoadScene(1);

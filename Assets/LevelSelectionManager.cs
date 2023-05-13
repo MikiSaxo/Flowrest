@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class LevelSelectionManager : MonoBehaviour
 {
-    [Header("Setup")] [SerializeField] private int _numberOfLevels;
+    [Header("Setup")] [SerializeField] private int _totalNumbersOfLevels;
+    [SerializeField] private int _numberOfLevelsPerPage;
     [Header("Prefabs")] [SerializeField] private GameObject _gridLevelSelectionPrefab;
     [SerializeField] private GameObject _levelSelectionPrefab;
 
@@ -28,9 +29,9 @@ public class LevelSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < _numberOfLevels; i++)
+        for (int i = 0; i < _totalNumbersOfLevels; i++)
         {
-            if (i == 0 || i % 9 == 0)
+            if (i == 0 || i % _numberOfLevelsPerPage == 0)
             {
                 GameObject grid = Instantiate(_gridLevelSelectionPrefab, transform);
                 _currentGridToCreateLevel = grid;

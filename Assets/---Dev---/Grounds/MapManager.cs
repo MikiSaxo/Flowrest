@@ -35,6 +35,10 @@ public class MapManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
+    
+    [Header("Choose StartLevelIndex")]
+    [SerializeField] private int _currentLevel;
+
     [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
     [SerializeField] private float _timeWaitBetweenDropFX;
@@ -50,7 +54,6 @@ public class MapManager : MonoBehaviour
     private List<Vector2Int> _stockPlayerForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
     private bool _wantToRecycle;
-    private int _currentLevel;
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
     private bool _isFullFloorOrder;
@@ -114,6 +117,9 @@ public class MapManager : MonoBehaviour
         if (BigManager.Instance != null)
         {
             _currentLevel = BigManager.Instance.CurrentLevel;
+            // Check if not too High
+            if (_currentLevel >= _levelData.Length)
+                _currentLevel = _levelData.Length - 1;
         }
 
         InitializeMap();
