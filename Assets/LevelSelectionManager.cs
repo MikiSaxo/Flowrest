@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class LevelSelectionManager : MonoBehaviour
 {
+    [Space(10)] [SerializeField] private bool _unlockAllLevels;
     [Header("Setup")] [SerializeField] private int _totalNumbersOfLevels;
     [SerializeField] private int _numberOfLevelsPerPage;
     [Header("Prefabs")] [SerializeField] private GameObject _gridLevelSelectionPrefab;
@@ -39,7 +40,11 @@ public class LevelSelectionManager : MonoBehaviour
             }
 
             GameObject go = Instantiate(_levelSelectionPrefab, _currentGridToCreateLevel.transform);
-            go.GetComponent<LevelButton>().Init(i + 1, i > BigManager.Instance.LevelUnlocked);
+            
+            if(!_unlockAllLevels)
+                go.GetComponent<LevelButton>().Init(i + 1, i > BigManager.Instance.LevelUnlocked);
+            else
+                go.GetComponent<LevelButton>().Init(i + 1, false);
         }
 
         UpdateLegend();

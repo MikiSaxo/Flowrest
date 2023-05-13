@@ -17,10 +17,10 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     public void ChangeLanguageButton()
     {
-        if (MapManager.Instance.IsLoading) return;
-        
-        LanguageManager.Instance.ChangeToFrenchOrEnglish();
-        MapManager.Instance.RestartLevel();
+        // if (MapManager.Instance.IsLoading) return;
+        //
+        // LanguageManager.Instance.ChangeToFrenchOrEnglish();
+        // MapManager.Instance.RestartLevel();
     }
 
     private void FrenchOrEnglish()
