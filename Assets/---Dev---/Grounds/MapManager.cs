@@ -36,7 +36,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
     
-    [Header("Choose StartLevelIndex")]
+    [Header("Choose Start Level Index")]
     [SerializeField] private int _currentLevel;
 
     [Header("Timing")] [SerializeField] private float _timeToSwap;

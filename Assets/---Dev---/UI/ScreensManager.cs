@@ -203,7 +203,10 @@ public class ScreensManager : MonoBehaviour
         SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
 
         if (BigManager.Instance != null)
-            BigManager.Instance.LevelUnlocked++;
+        {
+            if(BigManager.Instance.CurrentLevel >= BigManager.Instance.LevelUnlocked)  
+                BigManager.Instance.LevelUnlocked++;
+        }
     }
 
     private void EndDialog()

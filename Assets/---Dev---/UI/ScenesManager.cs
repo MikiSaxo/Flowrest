@@ -13,6 +13,13 @@ public class ScenesManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        StartCoroutine(WaitGoToMainMenu());
+    }
+
+    IEnumerator WaitGoToMainMenu()
+    {
+        TransiManager.Instance.LaunchGrownOn();
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
         SceneManager.LoadScene(0);
     }
 }

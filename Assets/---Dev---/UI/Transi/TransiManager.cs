@@ -32,7 +32,8 @@ public class TransiManager : MonoBehaviour
 
     IEnumerator GrownOn()
     {
-        MapManager.Instance.IsLoading = true;
+        if(MapManager.Instance != null)
+            MapManager.Instance.IsLoading = true;
         foreach (var column in _columns)
         {
             foreach (var hexa in column.Column)
@@ -60,7 +61,8 @@ public class TransiManager : MonoBehaviour
 
             yield return new WaitForSeconds(_timeBetweenColumnShrink);
         }
-        MapManager.Instance.IsLoading = false;
+        if(MapManager.Instance != null)
+            MapManager.Instance.IsLoading = false;
     }
 
     private void Update()
@@ -73,5 +75,9 @@ public class TransiManager : MonoBehaviour
     public float GetTimeForGrowOn()
     {
         return _columns.Length * _timeBetweenColumnGrowOn + _timeGrowOn;
+    }
+    public float GetTimeForShrink()
+    {
+        return _columns.Length * _timeBetweenColumnShrink + _timeShrink;
     }
 }

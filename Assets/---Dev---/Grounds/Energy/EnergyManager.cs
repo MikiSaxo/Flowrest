@@ -40,7 +40,6 @@ public class EnergyManager : MonoBehaviour
     private int _currentEnergy;
     private int _tempValue;
     private float _timerSpawnFBCrystal;
-    private bool _isInit;
     private GameObject _currentFbNoEnergy;
 
     private void Awake()
@@ -75,8 +74,8 @@ public class EnergyManager : MonoBehaviour
 
     IEnumerator AnimInitEnergy(int energy)
     {
-        _isInit = true;
-
+        yield return new WaitForSeconds(_timeToFillEnergy);
+        
         if (energy > 0)
         {
             AnimEnergyBar();
@@ -89,8 +88,6 @@ public class EnergyManager : MonoBehaviour
 
             BounceEnergy();
         }
-
-        _isInit = false;
     }
 
     public void ReduceEnergyBySwap()

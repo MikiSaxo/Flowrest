@@ -8,13 +8,29 @@ public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager Instance;
 
+    public bool IsLoading { get; set; }
+
     private void Awake()
     {
         Instance = this;
     }
 
+    private void Start()
+    {
+        TransiManager.Instance.LaunchShrink();
+    }
+
     public void LaunchMainScene()
     {
+        StartCoroutine(WaitToLaunchMainScene());
+    }
+
+    IEnumerator WaitToLaunchMainScene()
+    {
+        IsLoading = true;
+        TransiManager.Instance.LaunchGrownOn();
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        IsLoading = false;
         SceneManager.LoadScene(1);
     }
 
