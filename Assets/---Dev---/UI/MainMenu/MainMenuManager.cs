@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
@@ -18,6 +19,14 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         TransiManager.Instance.LaunchShrink();
+    }
+    
+    private void RequestPermissions()
+    {
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+        }
     }
 
     public void LaunchMainScene()
