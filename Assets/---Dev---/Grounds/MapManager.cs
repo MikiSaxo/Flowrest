@@ -9,6 +9,8 @@ using DG.Tweening;
 using UnityEditor;
 
 
+
+
 public class MapManager : MonoBehaviour
 {
     public static MapManager Instance;
@@ -17,6 +19,8 @@ public class MapManager : MonoBehaviour
 
     // public event Action CheckBiome;
     public event Action ResetSelection;
+
+    #region Prop
 
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
@@ -30,7 +34,8 @@ public class MapManager : MonoBehaviour
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
-
+    
+    #endregion
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
@@ -133,10 +138,21 @@ public class MapManager : MonoBehaviour
         var mapNameJson = _levelData[_currentLevel].LevelName;
         var mapFolderName = _levelData[_currentLevel].LevelFolder;
         var currentLvl = _levelData[_currentLevel];
-
+        
+        // Old
+        // string mapPath = Application.streamingAssetsPath + $"/{mapFolderName}/{mapNameJson}.txt";
+        // var lineJson = File.ReadAllText(mapPath);
+        
+        // Initialize
+        BetterStreamingAssets.Initialize();
         // Get the text map
-        string mapPath = Application.streamingAssetsPath + $"/{mapFolderName}/{mapNameJson}.txt";
-        var lineJson = File.ReadAllText(mapPath);
+        var mapPath = $"/{mapFolderName}/{mapNameJson}.txt";
+        if (!BetterStreamingAssets.FileExists(mapPath))
+        {
+            Debug.LogErrorFormat("Streaming asset not found: {0}", mapPath);
+        }
+        
+        var lineJson = BetterStreamingAssets.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
         _mapInfo = _mapConstructData.Map.Split("\n");
         // _mapGridAllMove.Add(_mapInfo);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,6 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager Instance;
-
     public bool IsLoading { get; set; }
 
     private void Awake()
@@ -21,13 +21,13 @@ public class MainMenuManager : MonoBehaviour
         TransiManager.Instance.LaunchShrink();
     }
     
-    private void RequestPermissions()
-    {
-        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
-        {
-            Permission.RequestUserPermission(Permission.ExternalStorageRead);
-        }
-    }
+    // private void RequestPermissions()
+    // {
+    //     if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+    //     {
+    //         Permission.RequestUserPermission(Permission.ExternalStorageRead);
+    //     }
+    // }
 
     public void LaunchMainScene()
     {

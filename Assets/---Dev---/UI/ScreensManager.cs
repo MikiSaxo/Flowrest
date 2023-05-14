@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
-using UnityEditor;
-using UnityEngine.Playables;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 // ReSharper disable All
 
@@ -43,10 +41,11 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
 
+    [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
+    
     // [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
     // [SerializeField] private string[] _titlesString;
 
-    [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
 
     // private TMP_Text _dialogText;
     private List<string> _dialogsList = new List<string>();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Crystal", menuName = "Flowrest/Crystals Level Datas")]
+[CreateAssetMenu(fileName = "Niveau X", menuName = "Flowrest/Level Data")]
 public class LevelData : ScriptableObject
 {
    public string LevelName;
