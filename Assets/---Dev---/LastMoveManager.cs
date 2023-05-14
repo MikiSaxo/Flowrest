@@ -75,7 +75,7 @@ public class LastMoveManager : MonoBehaviour
                         hasCrystal = _mapGrid[x, y].GetComponent<CrystalsGround>().GetIfHasCrystal();
                     else
                         hasCrystal = false;
-                    
+
                     newCrystalMap[x, y] = hasCrystal;
                 }
                 else
@@ -181,14 +181,12 @@ public class LastMoveManager : MonoBehaviour
         // Update Last Swapped Block
         if (_stockLastGroundSwaped.Count > 1)
         {
-            if (_stockLastGroundSwaped[^2][0] != null)
+            if (_stockLastGroundSwaped[^2][0] != null && _stockLastGroundSwaped[^2][1] != null)
             {
                 _stockLastGroundSwaped[^2][0].UpdateNoSwap(true);
-            }
-
-            if (_stockLastGroundSwaped[^2][1] != null)
-            {
                 _stockLastGroundSwaped[^2][1].UpdateNoSwap(true);
+
+                MapManager.Instance.UpdateTwoLastSwapped(_stockLastGroundSwaped[^2][0], _stockLastGroundSwaped[^2][1]);
             }
         }
 
@@ -196,6 +194,7 @@ public class LastMoveManager : MonoBehaviour
             _stockLastGroundSwaped[^1][0].UpdateNoSwap(false);
         if (_stockLastGroundSwaped[^1][1] != null)
             _stockLastGroundSwaped[^1][1].UpdateNoSwap(false);
+
 
         // Update Inventory
         if (_stockStateMap.Count > 1)

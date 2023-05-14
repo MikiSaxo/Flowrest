@@ -327,10 +327,12 @@ public class MapManager : MonoBehaviour
         if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
 
         // Update Dialogs
+        var hasPopUp = currentLvl.PopUpImages.Length > 0;
+
         if (LanguageManager.Instance.Tongue == Language.Francais)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, currentLvl.PopUpImages.Length > 0);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp);
         else if (LanguageManager.Instance.Tongue == Language.English)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, currentLvl.PopUpImages.Length > 0);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
@@ -668,8 +670,7 @@ public class MapManager : MonoBehaviour
 
             ResetTwoLastSwapped();
 
-            _lastGroundSwapped[0] = gWhich;
-            _lastGroundSwapped[1] = gLastGroundSelected;
+            UpdateTwoLastSwapped(gWhich, gLastGroundSelected);
             LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
         }
 
@@ -750,6 +751,12 @@ public class MapManager : MonoBehaviour
         gWhich.IsProtectedPrevisu = false;
 
         gWhich.ChangeStatePrevisu(buttonState);
+    }
+
+    public void UpdateTwoLastSwapped(GroundStateManager gWhich, GroundStateManager gLastGroundSelected)
+    {
+        _lastGroundSwapped[0] = gWhich;
+        _lastGroundSwapped[1] = gLastGroundSelected;
     }
 
     public void UseRecycling()
