@@ -71,6 +71,7 @@ public class MapManager : MonoBehaviour
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
     private int _countNbOfTile;
+    private bool _TileHasCrystal;
 
     private MapConstructData _mapConstructData;
 
@@ -626,14 +627,35 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
 
-        // Update Ground Around && Launch FX
+        // Update Ground Around && Launch FX && if has Crystals
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
         gLastGroundSelected.LaunchDropFX();
+        if (_lastGroundSelected != null)
+        {
+            if (_lastGroundSelected.GetComponent<CrystalsGround>().GetIfHasCrystal())
+            {
+                _TileHasCrystal = true;
+                _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+                ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _lastGroundSelected.transform.position);
+            }
+        }
+        
+        yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
 
-        yield return new WaitForSeconds(_timeWaitBetweenDropFX);
+        
+        if (which.GetComponent<CrystalsGround>().GetIfHasCrystal())
+        {
+            _TileHasCrystal = true;
+            which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+            ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, which.transform.position);
+        }
+
+        yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
 
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
         gWhich.LaunchDropFX();
+        
+        
 
         // Update the current state map
         LastMoveManager.Instance.UpdateCurrentStateMap(newCoords, gLastGroundSelected.GetCurrentStateEnum());
@@ -651,14 +673,10 @@ public class MapManager : MonoBehaviour
         }
 
         // Spend energy
-        EnergyManager.Instance.ReduceEnergyBySwap();
-
-        // yield return new WaitForSeconds(.01f);
-
-        // Get crystals if have crystals
-        which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-        if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+        if(!_TileHasCrystal)
+            EnergyManager.Instance.ReduceEnergyBySwap();
+        _TileHasCrystal = false;
+        
 
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)

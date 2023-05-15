@@ -34,7 +34,7 @@ public class FB_GroundCollected : MonoBehaviour
         // _durationDispawn = durDispawn;
 
         ResetAll();
-        SpawnAnim();
+        SpawnAnimGround();
     }
 
     private void ResetAll()
@@ -46,23 +46,23 @@ public class FB_GroundCollected : MonoBehaviour
         _rays.transform.DOScale(1, 0);
     }
 
-    private void SpawnAnim()
+    private void SpawnAnimGround()
     {
-        _objToMove.transform.DOMove(_tpPoints[1].position, _durationSpawn).OnComplete(WaitToDispawn);
+        _objToMove.transform.DOMove(_tpPoints[1].position, _durationSpawn).OnComplete(WaitToDispawnGround);
         _objToMove.transform.DOScale(1, _durationSpawn);
     }
 
-    private void WaitToDispawn()
+    private void WaitToDispawnGround()
     {
         _objToMove.transform.DOMove(_tpPoints[1].position, _durationWait).OnComplete(DispawnRays);
     }
 
     private void DispawnRays()
     {
-        _rays.transform.DOScale(0, _durationDispawnRays).OnComplete(DispawnAnim);
+        _rays.transform.DOScale(0, _durationDispawnRays).OnComplete(DispawnAnimGround);
     }
 
-    private void DispawnAnim()
+    private void DispawnAnimGround()
     {
         SetupUIGround.Instance.ChangeSizeBGBeforeNewGround((int)_state, false);
         
@@ -74,6 +74,7 @@ public class FB_GroundCollected : MonoBehaviour
 
     private void DeleteObj()
     {
+
         KillTween();
         SetupUIGround.Instance.AddNewGround((int)_state, false);
         ItemCollectedManager.Instance.DeleteFB(gameObject);
