@@ -107,17 +107,17 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         dico.Add(NONE, AllStates.None);
-        dico.Add(PLAIN, AllStates.Plain);
+        dico.Add(PLAIN, AllStates.__Grassias__);
         dico.Add(DESERT, AllStates.Desert);
-        dico.Add(WATER, AllStates.Water);
+        dico.Add(WATER, AllStates.__Hydros__);
         dico.Add(TROPICAL, AllStates.Tropical);
-        dico.Add(SAVANNA, AllStates.Savanna);
+        dico.Add(SAVANNA, AllStates.__Calcid__);
         dico.Add(GEYSER, AllStates.Geyser);
         dico.Add(SNOW, AllStates.Snow);
         dico.Add(POLAR_DESERT, AllStates.PolarDesert);
         dico.Add(TUNDRA, AllStates.Tundra);
-        dico.Add(SWAMP, AllStates.Swamp);
-        dico.Add(MOUNTAIN, AllStates.Mountain);
+        dico.Add(SWAMP, AllStates.__Viscosa__);
+        dico.Add(MOUNTAIN, AllStates.__Pyreneos__);
 
         if (BigManager.Instance != null)
         {
@@ -428,7 +428,7 @@ public class MapManager : MonoBehaviour
             ground.UpdatePrevisuArrow(false);
 
         // Count Nb Of Tile for Full Floor Order
-        if (state != AllStates.Mountain)
+        if (state != AllStates.__Pyreneos__)
         {
             _countNbOfTile++;
         }
