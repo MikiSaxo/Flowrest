@@ -45,12 +45,12 @@ public class ItemCollectedManager : MonoBehaviour
         _stockFB.Add(go);
     }
 
-    public void SpawnFBEnergyCollected(int value)
+    public void SpawnFBEnergyCollected(int value, Vector3 tilePos)
     {
         if (value == 0) return;
         
         GameObject go = Instantiate(_prefabCrystalCollected, _energyCollectedParent.transform);
-        go.transform.position = _tpPointsCrystals[1].position;
+        go.transform.position = tilePos;//_tpPointsCrystals[1].position;
         go.GetComponent<FB_CrystalCollected>().Init(value, _tpPointsCrystals[2]);
         
         _stockFB.Add(go);

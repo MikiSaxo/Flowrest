@@ -15,6 +15,11 @@ public class FB_CrystalCollected : MonoBehaviour
     [Header("Durations")] [SerializeField] private float _durationSpawn;
     [SerializeField] private float _durationWait;
     [SerializeField] private float _durationDispawn;
+    [SerializeField] private float _durationWaitToDelete;
+    
+    [Header("Durations")]
+    [SerializeField] private Color _earnEnergyColor;
+
     
     private Transform _tpEndPoint;
     private int _value;
@@ -22,7 +27,7 @@ public class FB_CrystalCollected : MonoBehaviour
     public void Init(int value, Transform tpEndPoint)//, float durSpawn, float durWait, float durDispawn)
     {
         _text.text = $"{value}";
-        _text.color = value <= 0 ? Color.red : Color.green;
+        _text.color = value <= 0 ? Color.red : _earnEnergyColor;
         
         _tpEndPoint = tpEndPoint;
         _value = value;
@@ -58,7 +63,7 @@ public class FB_CrystalCollected : MonoBehaviour
 
     private void WaitToDelete()
     {
-        _objToMove.transform.DOScale(0, 3).OnComplete(DeleteObj);
+        _objToMove.transform.DOScale(0, _durationWaitToDelete).OnComplete(DeleteObj);
     }
 
     private void DeleteObj()
