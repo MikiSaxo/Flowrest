@@ -923,6 +923,11 @@ public class MapManager : MonoBehaviour
         return _levelData[_currentLevel].DialogEndEnglish;
     }
 
+    public int GetCurrentLevel()
+    {
+        return _currentLevel;
+    }
+
     public void ForceResetBig()
     {
         print("force reset all");

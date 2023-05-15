@@ -102,6 +102,18 @@ public class DialogPrefab : MonoBehaviour
     public void InitDescOrder(string text)
     {
         text = UpdateModifierText(text);
+        
+        if (text.Contains('$'))
+        {
+            var replace = text.Replace('$', '\n');
+            text = replace;
+        }
+        
+        if (text.Contains('µ'))
+        {
+            var replace = text.Replace("µ", $"{MapManager.Instance.GetCurrentLevel()+1}");
+            text = replace;
+        }
 
         DialogText.text = text;
         DialogText.ForceMeshUpdate();

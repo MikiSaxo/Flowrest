@@ -231,6 +231,8 @@ public class LastMoveManager : MonoBehaviour
         {
             ScreensManager.Instance.UpdateBackwardsButton(false);
         }
+        
+        MapManager.Instance.ResetBig();
     }
 
     public void ResetGoToLastMove()
