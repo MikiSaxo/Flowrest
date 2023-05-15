@@ -68,7 +68,7 @@ public class LastMoveManager : MonoBehaviour
         {
             for (int y = 0; y < _mapSize.y; y++)
             {
-                if (_currentStateMap[x, y] != AllStates.None && _currentStateMap[x, y] != AllStates.Mountain)
+                if (_currentStateMap[x, y] != AllStates.None && _currentStateMap[x, y] != AllStates.__Pyreneos__)
                 {
                     bool hasCrystal;
                     if (_mapGrid[x, y].GetComponent<CrystalsGround>() != null)

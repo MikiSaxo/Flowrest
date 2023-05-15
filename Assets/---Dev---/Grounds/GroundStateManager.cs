@@ -9,17 +9,17 @@ using Unity.VisualScripting;
 public enum AllStates
 {
     None = -1,
-    Plain = 0,
+    __Grassias__ = 0,
     Desert = 1,
-    Water = 2,
+    __Hydros__ = 2,
     Tropical = 3,
-    Savanna = 4,
+    __Calcid__ = 4,
     Geyser = 5,
     Snow = 6,
     PolarDesert = 7,
     Tundra = 8,
-    Swamp = 9,
-    Mountain = 10
+    __Viscosa__ = 9,
+    __Pyreneos__ = 10
 }
 
 public class GroundStateManager : MonoBehaviour
@@ -292,7 +292,7 @@ public class GroundStateManager : MonoBehaviour
 
             // Check if not a Mountain
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .GetCurrentStateEnum() == AllStates.Mountain)
+                    .GetCurrentStateEnum() == AllStates.__Pyreneos__)
             {
                 angle += 60;
                 continue;
@@ -380,7 +380,7 @@ public class GroundStateManager : MonoBehaviour
 
             // Check if not a Mountain
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .GetCurrentStateEnum() == AllStates.Mountain) continue;
+                    .GetCurrentStateEnum() == AllStates.__Pyreneos__) continue;
 
 
             var grnd = mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>();

@@ -199,9 +199,9 @@ public class LevelDataEditor : Editor
         LevelData _levelData = (LevelData)target;
 
         if (_levelData.StartNbState == AllStates.None)
-            _levelData.StartNbState = AllStates.Plain;
-        if (_levelData.StartNbState == AllStates.Mountain)
-            _levelData.StartNbState = AllStates.Swamp;
+            _levelData.StartNbState = AllStates.__Grassias__;
+        if (_levelData.StartNbState == AllStates.__Pyreneos__)
+            _levelData.StartNbState = AllStates.__Viscosa__;
 
         EditorGUILayout.PropertyField(StartNbState);
 

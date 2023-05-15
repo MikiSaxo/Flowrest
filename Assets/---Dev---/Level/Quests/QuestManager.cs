@@ -131,7 +131,7 @@ public class QuestManager : MonoBehaviour
                 if (grnd.GetCurrentStateEnum() == AllStates.None)
                     continue;
 
-                if (grnd.GetCurrentStateEnum() == AllStates.Mountain)
+                if (grnd.GetCurrentStateEnum() == AllStates.__Pyreneos__)
                     continue;
 
                 _maxTileChainCount++;

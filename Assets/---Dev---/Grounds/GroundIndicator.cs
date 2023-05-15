@@ -75,7 +75,7 @@ public class GroundIndicator : MonoBehaviour
         _isEnteredFree = true;
         // if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
-        if (_parent.GetCurrentStateEnum() == AllStates.Mountain) return;
+        if (_parent.GetCurrentStateEnum() == AllStates.__Pyreneos__) return;
 
         if (_parent.IsPlayerForceSwapBlocked) return;
 
