@@ -71,6 +71,7 @@ public class MapManager : MonoBehaviour
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
     private int _countNbOfTile;
+    private bool _TileHasCrystal;
 
     private MapConstructData _mapConstructData;
 
@@ -633,6 +634,7 @@ public class MapManager : MonoBehaviour
         {
             if (_lastGroundSelected.GetComponent<CrystalsGround>().GetIfHasCrystal())
             {
+                _TileHasCrystal = true;
                 _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
                 ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _lastGroundSelected.transform.position);
             }
@@ -643,6 +645,7 @@ public class MapManager : MonoBehaviour
         
         if (which.GetComponent<CrystalsGround>().GetIfHasCrystal())
         {
+            _TileHasCrystal = true;
             which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
             ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, which.transform.position);
         }
@@ -670,7 +673,10 @@ public class MapManager : MonoBehaviour
         }
 
         // Spend energy
-        EnergyManager.Instance.ReduceEnergyBySwap();
+        if(!_TileHasCrystal)
+            EnergyManager.Instance.ReduceEnergyBySwap();
+        _TileHasCrystal = false;
+        
 
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)

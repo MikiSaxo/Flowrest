@@ -33,7 +33,7 @@ public class FB_CrystalCollected : MonoBehaviour
         _value = value;
 
         ResetAll();
-        SpawnAnim();
+        SpawnAnimCrystal();
     }
 
     private void ResetAll()
@@ -42,19 +42,19 @@ public class FB_CrystalCollected : MonoBehaviour
         //_objToMove.transform.DOScale(0, 0);
     }
 
-    private void SpawnAnim()
+    private void SpawnAnimCrystal()
     {
-        _objToMove.transform.DOMoveY(transform.position.y + _yOffset, _durationSpawn).OnComplete(WaitToDispawn);
+        _objToMove.transform.DOMoveY(transform.position.y + _yOffset, _durationSpawn).OnComplete(WaitToDispawnCrystal);
         _objToMove.transform.DOScale(1, _durationSpawn);
     }
 
-    private void WaitToDispawn()
+    private void WaitToDispawnCrystal()
     {
-        _objToMove.transform.DOScale(Vector3.one, _durationWait).OnComplete(DispawnAnim);
+        _objToMove.transform.DOScale(Vector3.one, _durationWait).OnComplete(DispawnAnimCrystal);
     }
 
 
-    private void DispawnAnim()
+    private void DispawnAnimCrystal()
     {
         // _objToMove.transform.DOMove(_tpEndPoint.position, _durationDispawn);
         _objToMove.transform.DOJump(_tpEndPoint.position, 20, 1,  _durationDispawn);
@@ -63,6 +63,7 @@ public class FB_CrystalCollected : MonoBehaviour
 
     private void WaitToDelete()
     {
+        EnergyManager.Instance.EarnEnergyByCrystal();
         _objToMove.transform.DOScale(0, _durationWaitToDelete).OnComplete(DeleteObj);
     }
 

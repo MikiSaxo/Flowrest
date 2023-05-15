@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEditorInternal;
 
 public class EnergyManager : MonoBehaviour
 {
