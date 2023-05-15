@@ -15,6 +15,11 @@ public class FB_CrystalCollected : MonoBehaviour
     [Header("Durations")] [SerializeField] private float _durationSpawn;
     [SerializeField] private float _durationWait;
     [SerializeField] private float _durationDispawn;
+    [SerializeField] private float _durationWaitToDelete;
+    
+    [Header("Durations")]
+    [SerializeField] private Color _earnEnergyColor;
+
     
     private Transform _tpEndPoint;
     private int _value;
@@ -22,13 +27,13 @@ public class FB_CrystalCollected : MonoBehaviour
     public void Init(int value, Transform tpEndPoint)//, float durSpawn, float durWait, float durDispawn)
     {
         _text.text = $"{value}";
-        _text.color = value <= 0 ? Color.red : Color.green;
+        _text.color = value <= 0 ? Color.red : _earnEnergyColor;
         
         _tpEndPoint = tpEndPoint;
         _value = value;
 
         ResetAll();
-        SpawnAnim();
+        SpawnAnimCrystal();
     }
 
     private void ResetAll()
@@ -37,23 +42,29 @@ public class FB_CrystalCollected : MonoBehaviour
         //_objToMove.transform.DOScale(0, 0);
     }
 
-    private void SpawnAnim()
+    private void SpawnAnimCrystal()
     {
-        _objToMove.transform.DOMoveY(transform.position.y + _yOffset, _durationSpawn).OnComplete(WaitToDispawn);
+        _objToMove.transform.DOMoveY(transform.position.y + _yOffset, _durationSpawn).OnComplete(WaitToDispawnCrystal);
         _objToMove.transform.DOScale(1, _durationSpawn);
     }
 
-    private void WaitToDispawn()
+    private void WaitToDispawnCrystal()
     {
-        _objToMove.transform.DOScale(Vector3.one, _durationWait).OnComplete(DispawnAnim);
+        _objToMove.transform.DOScale(Vector3.one, _durationWait).OnComplete(DispawnAnimCrystal);
     }
 
 
-    private void DispawnAnim()
+    private void DispawnAnimCrystal()
     {
         // _objToMove.transform.DOMove(_tpEndPoint.position, _durationDispawn);
         _objToMove.transform.DOJump(_tpEndPoint.position, 20, 1,  _durationDispawn);
-        _objToMove.transform.DOScale(0, _durationDispawn).OnComplete(DeleteObj);
+        _objToMove.transform.DOScale(0, _durationDispawn).OnComplete(WaitToDelete);
+    }
+
+    private void WaitToDelete()
+    {
+        EnergyManager.Instance.EarnEnergyByCrystal();
+        _objToMove.transform.DOScale(0, _durationWaitToDelete).OnComplete(DeleteObj);
     }
 
     private void DeleteObj()

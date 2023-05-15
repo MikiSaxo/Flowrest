@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEditorInternal;
 
 public class EnergyManager : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class EnergyManager : MonoBehaviour
 
         if (value > 0)
         {
-            ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
+            //ItemCollectedManager.Instance.SpawnFBEnergyCollected(_tempValue);
         }
 
         yield return new WaitForSeconds(.01f);
@@ -181,10 +182,10 @@ public class EnergyManager : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.F))
-        //     ReduceEnergyBySwap();
-        // if (Input.GetKeyDown(KeyCode.R))
-        //     EarnEnergyByCrystal();
+        if (Input.GetKeyDown(KeyCode.F))
+            ReduceEnergyBySwap();
+        if (Input.GetKeyDown(KeyCode.R))
+            EarnEnergyByCrystal();
     }
 
     private void BounceEnergy()

@@ -303,7 +303,11 @@ public class GroundIndicator : MonoBehaviour
         EnergyManager.Instance.ReduceEnergyByLandingGround();
 
         // Has Crystal
-        gameObject.GetComponentInParent<CrystalsGround>().UpdateCrystals(false, false);
+        if (gameObject.GetComponentInParent<CrystalsGround>().GetIfHasCrystal())
+        {
+            ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _parent.transform.position);
+            gameObject.GetComponentInParent<CrystalsGround>().UpdateCrystals(false, false);
+        }
 
         yield return new WaitForSeconds(1.5f);
 
