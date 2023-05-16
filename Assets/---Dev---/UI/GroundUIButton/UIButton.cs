@@ -59,6 +59,11 @@ public class UIButton : MonoBehaviour
             SetupUIGround.Instance.GroundEmpty(gameObject);
     }
 
+    public void IsOnUI(bool state)
+    {
+        MapManager.Instance.IsOnUI = state;
+    }
+    
     public AllStates GetStateButton()
     {
         return _stateButton;

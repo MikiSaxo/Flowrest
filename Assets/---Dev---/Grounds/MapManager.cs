@@ -496,6 +496,12 @@ public class MapManager : MonoBehaviour
         // Activate or not the UI Button's indicator and update if one was selected or not
         if (IsGroundFirstSelected || ScreensManager.Instance.GetIsDialogTime()) return;
 
+        if (LastObjButtonSelected != null && button == LastObjButtonSelected)
+        {
+            ChangeActivatedButton(null);
+            return;
+        }
+
         if (IsPlayerForcePoseBlocAfterSwap)
         {
             if (button != null)
@@ -611,10 +617,15 @@ public class MapManager : MonoBehaviour
 
         // Kill the preview
         ResetPreview();
+        
+        // Spend Energy
+        EnergyManager.Instance.ReduceEnergyBySwap();
+
 
         // Wait til the jump is finished
         yield return new WaitForSeconds(_timeToSwap);
 
+        
         // Remove security
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
@@ -627,14 +638,16 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.ChangeCoords(newCoords);
         gWhich.ChangeCoords(_lastGroundCoordsSelected);
 
-        // Update Ground Around && Launch FX && if has Crystals
+        // Update Ground Around
         gLastGroundSelected.UpdateGroundsAround(gLastGroundSelected.GetCurrentStateEnum());
+        //Launch FX
         gLastGroundSelected.LaunchDropFX();
+        // Earn energy if has Crystals
         if (_lastGroundSelected != null)
         {
             if (_lastGroundSelected.GetComponent<CrystalsGround>().GetIfHasCrystal())
             {
-                _TileHasCrystal = true;
+                // _TileHasCrystal = true;
                 _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
                 ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _lastGroundSelected.transform.position);
             }
@@ -642,20 +655,20 @@ public class MapManager : MonoBehaviour
         
         yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
 
-        
+        // Earn energy if has Crystals
         if (which.GetComponent<CrystalsGround>().GetIfHasCrystal())
         {
-            _TileHasCrystal = true;
+            // _TileHasCrystal = true;
             which.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
             ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, which.transform.position);
         }
 
         yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
 
+        // Update Ground Around
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
+        //Launch FX
         gWhich.LaunchDropFX();
-        
-        
 
         // Update the current state map
         LastMoveManager.Instance.UpdateCurrentStateMap(newCoords, gLastGroundSelected.GetCurrentStateEnum());
@@ -672,10 +685,10 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
-        // Spend energy
-        if(!_TileHasCrystal)
-            EnergyManager.Instance.ReduceEnergyBySwap();
-        _TileHasCrystal = false;
+        // // Spend energy
+        // if(!_TileHasCrystal)
+        //     EnergyManager.Instance.ReduceEnergyBySwap();
+        // _TileHasCrystal = false;
         
 
         // Bloc for Next Swap
@@ -878,7 +891,7 @@ public class MapManager : MonoBehaviour
                 ScreensManager.Instance.GameOver();
             else if (_hasInventory && !_hasRecycling)
                 ScreensManager.Instance.GameOver();
-            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0)
+            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0 && SetupUIGround.Instance.CheckIfStillGround())
                 ScreensManager.Instance.GameOver();
         }
     }

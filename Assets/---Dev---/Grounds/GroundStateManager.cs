@@ -57,7 +57,7 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
-    [SerializeField] private GameObject _fxTileBlocked;
+    [SerializeField] private GameObject _fxTileBored;
     [SerializeField] private GameObject _fxTileFree;
 
 
@@ -415,12 +415,20 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateFBReloadEnergy(bool state)
     {
-        if (!state && _fxTileBlocked.activeSelf)
+        if (!state && _fxTileBored.activeSelf)
         {
             Instantiate(_fxTileFree, transform);
         }
 
-        _fxTileBlocked.SetActive(state);
+        _fxTileBored.SetActive(state);
+
+        if (state)
+        {
+            var ps = _fxTileBored.GetComponent<ParticleSystem>();
+            var main = ps.main;
+            Color tileColor = SetupUIGround.Instance.GetGroundUIData((int)_currentState).ColorIcon;
+            main.startColor = tileColor;
+        }
 
         // print("UpdateFBReloadEnergy " + state);
         if (state)

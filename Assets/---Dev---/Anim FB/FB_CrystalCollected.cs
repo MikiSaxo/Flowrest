@@ -56,7 +56,6 @@ public class FB_CrystalCollected : MonoBehaviour
 
     private void DispawnAnimCrystal()
     {
-        // _objToMove.transform.DOMove(_tpEndPoint.position, _durationDispawn);
         _objToMove.transform.DOJump(_tpEndPoint.position, 20, 1,  _durationDispawn);
         _objToMove.transform.DOScale(0, _durationDispawn).OnComplete(WaitToDelete);
     }
@@ -70,7 +69,6 @@ public class FB_CrystalCollected : MonoBehaviour
     private void DeleteObj()
     {
         KillTween();
-        // EnergyManager.Instance.UpdateEnergy(_value);
         ItemCollectedManager.Instance.DeleteFB(gameObject);
     }
 

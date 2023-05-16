@@ -38,6 +38,7 @@ public class DialogPrefab : MonoBehaviour
 
         dialog = UpdateModifierText(dialog);
 
+        dialog += " ";
 
         DialogText.text = dialog;
         DialogText.ForceMeshUpdate();
