@@ -71,7 +71,8 @@ public class MapManager : MonoBehaviour
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
     private int _countNbOfTile;
-    private bool _TileHasCrystal;
+    private int _countTilesWithCrystal;
+    private bool _tileHasCrystal;
 
     private MapConstructData _mapConstructData;
 
@@ -167,9 +168,6 @@ public class MapManager : MonoBehaviour
 
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
-
-        // Init Start energy
-        EnergyManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
         // Update if has inventory
         _hasInventory = currentLvl.HasInventory;
@@ -353,6 +351,7 @@ public class MapManager : MonoBehaviour
         IsLoading = true;
         TransiManager.Instance.LaunchShrink();
         _countNbOfTile = 0;
+        _countTilesWithCrystal = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
 
         for (int x = 0; x < sizeMap.x; x++)
@@ -383,6 +382,15 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
+        
+        // Init Start energy
+        var startEnergy = _levelData[_currentLevel].EnergyAtStart;
+        var startNbRecycling = _levelData[_currentLevel].NbOfRecycling;
+        var reduceBySwap = (_countTilesWithCrystal) / 2;
+        if (_countTilesWithCrystal == 1)
+            reduceBySwap = 1;
+        var maxEnergy = startEnergy + _countTilesWithCrystal * 2 - reduceBySwap + startNbRecycling;
+        EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
 
         QuestsManager.CheckQuest();
         // Save all actions
@@ -441,6 +449,7 @@ public class MapManager : MonoBehaviour
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
             which.GetComponent<CrystalsGround>().InitCrystal();
+            _countTilesWithCrystal++;
             return;
         }
 
