@@ -4822,7 +4822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3852100886561444343}
   m_Layer: 0
-  m_Name: SelectionEffect
+  m_Name: SelectionEnAttente
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4893,7 +4893,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5183,7 +5183,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16.43
+      scalar: 9.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
