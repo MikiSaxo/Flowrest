@@ -16,7 +16,8 @@ public class SetupUIGround : MonoBehaviour
     [SerializeField] private InventoryTilePreview _inventoryTilePreview;
     // public OpenCloseMenu GroundStockage;
 
-    [Header("Inventory")] [SerializeField] private GameObject _gridParent;
+    [Header("Inventory")] [SerializeField] private GameObject _bigParent;
+    [SerializeField] private GameObject _gridParent;
     [SerializeField] private GameObject _prefabTileButton;
     [SerializeField] private GameObject _bgInventory;
     [SerializeField] private float _durationCloseOpen;
@@ -46,10 +47,6 @@ public class SetupUIGround : MonoBehaviour
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
         _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
         Destroy(go);
-    }
-
-    private void Start()
-    {
     }
 
     public void SetIfHasRecycling(bool state)
@@ -94,11 +91,6 @@ public class SetupUIGround : MonoBehaviour
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
-
-        //RecyclingManager.Instance.UpdateRecycling(false);
-
-        // n_MapManager.Instance.ResetButtonSelected();
-        // n_MapManager.Instance.ResetGroundSelected();
     }
 
     public void AddNewGround(int stateNb, bool isStart)
@@ -111,6 +103,8 @@ public class SetupUIGround : MonoBehaviour
             {
                 currentTile.UpdateNumberLeft(1);
                 currentTile.GetComponent<PointerMotion>().OnLeave();
+                if(!isStart)
+                    _bigParent.GetComponent<PointerMotion>().Bounce();
 
                 return;
             }
@@ -121,6 +115,8 @@ public class SetupUIGround : MonoBehaviour
             _groundData[stateNb].GroundState);
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
+        if(!isStart)
+            _bigParent.GetComponent<PointerMotion>().Bounce();
 
         if (isStart)
             ChangeSizeBGBeforeNewGround(stateNb, isStart);
@@ -194,13 +190,6 @@ public class SetupUIGround : MonoBehaviour
 
     public bool CheckIfStillGround()
     {
-        // foreach (var tileButton in _stockTileButton)
-        // {
-        //     if (tileButton.gameObject.activeSelf)
-        //         return true;
-        // }
-        //
-        // return false;
         return _stockTileButton.Count != 0;
     }
 
