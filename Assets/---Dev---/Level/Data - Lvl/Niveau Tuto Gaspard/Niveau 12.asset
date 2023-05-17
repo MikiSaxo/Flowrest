@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 12
   m_EditorClassIdentifier: 
-  LevelName: Niveau 12
+  LevelName: Tuto 10.1
   LevelFolder: Level Editor
-  EnergyAtStart: 1
-  HasInventory: 1
+  EnergyAtStart: 2
+  HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 
-  HasRecycling: 1
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   HasPrevisu: 1
@@ -30,20 +30,23 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$Remplir le terrain de Grassias"
+  QuestDescription: "Niveau \xB5 :$R\xE9aliser une chaine de 9 Viscosa en seulement
+    2 mouvements"
   QuestDescriptionEnglish: 
   QuestImage: {fileID: 21300000, guid: 32ae3564b94909c48b55ea762599ec1b, type: 3}
-  QuestFloor: 00000000
+  QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 
-  NumberTileChain: 0
+  QuestTileChain: 09000000
+  NumberTileChain: 9
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - 
-  DialogEnd:
-  - 
+  - "Aujourd'hui, j'aimerais te tester sur la cr\xE9ation de tuiles de Viscosa mais
+    aussi sur la formation de cha\xEEnes."
+  - "N'oublie pas qu'il est quelquefois plus efficace d'\xE9changer des <b>tuiles
+    du m\xEAme environnement entre elles</b>."
+  DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

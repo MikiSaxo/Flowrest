@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 3
   m_EditorClassIdentifier: 
-  LevelName: Niveau 3
+  LevelName: Niveau 1
   LevelFolder: Level Editor
-  EnergyAtStart: 4
+  EnergyAtStart: 1
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 
   HasRecycling: 0
-  HasInfinitRecycling: 0
+  HasInfinitRecycling: 1
   NbOfRecycling: 0
   HasPrevisu: 1
-  BlockLastSwap: 1
+  BlockLastSwap: 0
   IsTuto: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
@@ -30,21 +30,24 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$R\xE9aliser une fleur de Calcid"
+  QuestDescription: "Niveau \xB5 :$Faire 1 fleur de Grassias et  fleur de Calcid"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 72aa34b479cc6094aa170c2ec6383e24, type: 3}
+  QuestImage: {fileID: 21300000, guid: 1cef3e34351b97c4b858d9c26d37d637, type: 3}
   QuestFloor: 
-  QuestFlower: 04000000
+  QuestFlower: 0000000004000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 0
+  NumberTileCount: 12
   CharacterName: Profess.io
   DialogBeginning:
-  - Tu peux apercevoir devant toi une tuile de Pyreneos.
-  - "Cette tuile peut offrir de fabuleux terrains de randonn\xE9s \xE0 nos clients
-    cependant, elle va emp\xEAcher toutes modifications de passer \xE0 travers elle."
+  - "Un client souhaite une plan\xE8te recouverte de Grassias et de Calcid. $Pour
+    cela, tu vas cr\xE9er deux fleurs d'environnements diff\xE9rents."
+  - "Une fleur est compos\xE9e de 6 tuiles dispos\xE9es circulairement et d'une tuile
+    plac\xE9e en son centre. Elles sont toutes du m\xEAme environnement."
+  - "Je ne serais pas disponible aujourd'hui. Je suis aux fourneaux pour la nouvelle
+    ann\xE9e lumi\xE8re. Bon courage !"
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 7
+  m_Name: Niveau 20
   m_EditorClassIdentifier: 
-  LevelName: Niveau 2.5
+  LevelName: Niveau 4
   LevelFolder: Level Editor
   EnergyAtStart: 5
   HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  StartNbAllState: 
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
@@ -30,20 +30,22 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$Remplir le terrain de Grassias"
+  QuestDescription: "Niveau \xB5 :$R\xE9aliser une chaine de 8 Grassias"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 7f50e342b1a7c2f47a7d274751aa9ba3, type: 3}
-  QuestFloor: 00000000
+  QuestImage: {fileID: 21300000, guid: 668fe0b614e6664428aee5f25d1529a4, type: 3}
+  QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 
-  NumberTileChain: 0
+  QuestTileChain: 00000000
+  NumberTileChain: 8
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - "Aujourd'hui tu es en autonomie. Tu n'as qu'\xE0 suivre la directive de ta commande
-    et tout ira bien."
+  - "Nous avons eu la chance de recevoir une demande d'un haut dignitaire venant
+    de l'oppos\xE9 de notre galaxie."
+  - "Je n'ai pas compris exactement ce que veut le client mais il voudrait \"Muchas
+    Grassias\" donc je te laisse figurer \xE7a. "
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

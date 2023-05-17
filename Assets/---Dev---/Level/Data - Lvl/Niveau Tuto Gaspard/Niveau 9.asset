@@ -12,41 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 9
   m_EditorClassIdentifier: 
-  LevelName: Niveau 9
+  LevelName: Niveau 1.3
   LevelFolder: Level Editor
-  EnergyAtStart: 0
-  HasInventory: 1
-  StartNbState: 9
-  StartNbAllState: 00000000000000000000000000000000010000000000000000000000000000000000000001000000
-  HasRecycling: 1
-  HasInfinitRecycling: 0
-  NbOfRecycling: 2
+  EnergyAtStart: 3
+  HasInventory: 0
+  StartNbState: 0
+  StartNbAllState: 
+  HasRecycling: 0
+  HasInfinitRecycling: 1
+  NbOfRecycling: 0
   HasPrevisu: 1
-  BlockLastSwap: 1
-  IsTuto: 0
+  BlockLastSwap: 0
+  IsTuto: 1
   PreviewMessage: []
   PreviewMessageEnglish: []
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$Cr\xE9er 2  fleurs de Calcid et  1 fleur d'Hydros"
+  QuestDescription: "Niveau \xB5 :$R\xE9aliser au moins une tile de Grassias"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 66923f8745c4f324dba8a2739a2ad2d0, type: 3}
+  QuestImage: {fileID: 21300000, guid: 1a658b0f92d90df48ae2fbdad6ed691c, type: 3}
   QuestFloor: 
-  QuestFlower: 020000000400000004000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
-  QuestTileCount: 
-  NumberTileCount: 0
+  QuestTileCount: 00000000
+  NumberTileCount: 1
   CharacterName: Profess.io
   DialogBeginning:
-  - "Le recyclage de tuile est un des points qui font que notre entreprise est l'une
-    des plus \xE9cologique du march\xE9."
-  - "Les ressources que t'offre l'entreprise vont \xEAtre r\xE9fl\xE9chi pour r\xE9duire
-    les co\xFBts alors fait attention \xE0 ce que tu vas recycler."
-  DialogEnd:
-  - Tu t'en sors bien, on se retrouve demain.
+  - "Tu t'en sors suffisament bien pour qu'on ajoute \xE0 ton CV l'utilisation des
+    tuiles d'Hydros."
+  - "Chaque tuiles va avoir un impact diff\xE9rent sur son environnement.$Par exemple,
+    une tuile d'Hydros et une tuile de Calcid forme la tuile la plus pris\xE9e de
+    \"La Voie Lact\xE9e\" : la tuile de Grassias."
+  - "L'EKorp \xE0 r\xE9ussi \xE0 retrouver d'anciens textes qui parlaient de \"toucher
+    de la Grassias\"; c'est dire \xE0 quel point cet environnement est populaire."
+  DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
