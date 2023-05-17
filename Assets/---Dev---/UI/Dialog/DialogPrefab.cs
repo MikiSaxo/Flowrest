@@ -175,24 +175,8 @@ public class DialogPrefab : MonoBehaviour
                 yield break;
             }
 
-
+            
             var checkSecond = String.Empty;
-
-            // if (charIndex + 7 < _saveDialog.Length - 1)
-            // {
-            //     checkSecond = _saveDialog.Substring(charIndex, 7);
-            //
-            //     if (checkSecond == "<color=")
-            //         charIndex += 17;
-            //
-            //     if (checkSecond == "</color")
-            //         charIndex += 8;
-            //     
-            //     
-            //  
-            //     
-            //    
-            // }
 
             if (charIndex + 3 < _saveDialog.Length - 1)
             {
@@ -228,7 +212,6 @@ public class DialogPrefab : MonoBehaviour
 
             charIndex = Mathf.Clamp(charIndex, charIndex, _saveDialog.Length);
 
-            // print("charIndex : " + charIndex + " / " + _saveDialog.Length);
 
             // Display the first part of the text
             var firstText = _saveDialog.Substring(0, charIndex);
