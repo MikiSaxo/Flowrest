@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
 using TMPro;
-using UnityEditorInternal;
 
 public class EnergyManager : MonoBehaviour
 {
@@ -40,6 +37,7 @@ public class EnergyManager : MonoBehaviour
     private int _energyValue;
     private int _currentEnergy;
     private int _tempValue;
+    private int _maxEnergy;
     private float _timerSpawnFBCrystal;
     private GameObject _currentFbNoEnergy;
 
@@ -50,7 +48,7 @@ public class EnergyManager : MonoBehaviour
         //_baseInf = 1 / (float)_howBase;
     }
 
-    public void InitEnergy(int startEnergy)
+    public void InitEnergy(int startEnergy, int maxEnergy)
     {
         _energyValue = startEnergy;
         StartCoroutine(AnimInitEnergy(startEnergy));
@@ -58,6 +56,7 @@ public class EnergyManager : MonoBehaviour
         _hitEnergyBar.value = 0;
         _numberToDisplay.text = $"{0}";
         _currentEnergy = _energyValue;
+        _maxEnergy = maxEnergy;
 
         _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
 
@@ -69,8 +68,9 @@ public class EnergyManager : MonoBehaviour
 
     private void AnimEnergyBar()
     {
-        _energyBar.DOValue(1, _timeToFillEnergy).SetEase(Ease.Linear);
-        _hitEnergyBar.DOValue(1, _timeToFillEnergy).SetEase(Ease.Linear);
+        float energyDisplay = (float)_currentEnergy / (float)_maxEnergy;
+        _energyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
+        _hitEnergyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
     }
 
     IEnumerator AnimInitEnergy(int energy)
@@ -151,8 +151,10 @@ public class EnergyManager : MonoBehaviour
                 _waveEffect.StartGrowOneTime();
             }
 
-            _energyBar.value = _energyValue;
-            _hitEnergyBar.DOValue(_energyValue, .4f).SetDelay(.4f);
+            float energyDisplay = (float)_energyValue / (float)_maxEnergy;
+
+            _energyBar.value = energyDisplay;
+            _hitEnergyBar.DOValue(energyDisplay, .4f).SetDelay(.4f);
         }
         else
         {
@@ -166,8 +168,10 @@ public class EnergyManager : MonoBehaviour
             _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage); });
 
             StopWaveEffect();
-            _hitEnergyBar.DOValue(1, .4f);
-            _energyBar.DOValue(1, .4f);
+
+            float energyDisplay = (float)_energyValue / (float)_maxEnergy;
+            _hitEnergyBar.DOValue(energyDisplay, .4f);
+            _energyBar.DOValue(energyDisplay, .4f);
         }
 
         // // Bad system to avoid 499 or 501 but 500 

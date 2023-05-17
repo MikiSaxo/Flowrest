@@ -47,6 +47,7 @@ public class MapManager : MonoBehaviour
     [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
     [SerializeField] private float _timeWaitBetweenDropFX;
+    [SerializeField] private float _timeWaitEndSwap = 1.5f;
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private bool _hasInventory;
@@ -71,7 +72,8 @@ public class MapManager : MonoBehaviour
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
     private int _countNbOfTile;
-    private bool _TileHasCrystal;
+    private int _countTilesWithCrystal;
+    private bool _tileHasCrystal;
 
     private MapConstructData _mapConstructData;
 
@@ -167,9 +169,6 @@ public class MapManager : MonoBehaviour
 
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
-
-        // Init Start energy
-        EnergyManager.Instance.InitEnergy(currentLvl.EnergyAtStart);
 
         // Update if has inventory
         _hasInventory = currentLvl.HasInventory;
@@ -353,6 +352,7 @@ public class MapManager : MonoBehaviour
         IsLoading = true;
         TransiManager.Instance.LaunchShrink();
         _countNbOfTile = 0;
+        _countTilesWithCrystal = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
 
         for (int x = 0; x < sizeMap.x; x++)
@@ -383,6 +383,15 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
+        
+        // Init Start energy
+        var startEnergy = _levelData[_currentLevel].EnergyAtStart;
+        var startNbRecycling = _levelData[_currentLevel].NbOfRecycling;
+        var reduceBySwap = (_countTilesWithCrystal) / 2;
+        if (_countTilesWithCrystal == 1)
+            reduceBySwap = 1;
+        var maxEnergy = startEnergy + _countTilesWithCrystal * 2 - reduceBySwap + startNbRecycling;
+        EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
 
         QuestsManager.CheckQuest();
         // Save all actions
@@ -441,6 +450,7 @@ public class MapManager : MonoBehaviour
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
             which.GetComponent<CrystalsGround>().InitCrystal();
+            _countTilesWithCrystal++;
             return;
         }
 
@@ -685,12 +695,6 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
-        // // Spend energy
-        // if(!_TileHasCrystal)
-        //     EnergyManager.Instance.ReduceEnergyBySwap();
-        // _TileHasCrystal = false;
-        
-
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)
         {
@@ -707,7 +711,7 @@ public class MapManager : MonoBehaviour
 
 
         // Wait the FX is finished
-        yield return new WaitForSeconds(1.75f);
+        yield return new WaitForSeconds(_timeWaitEndSwap);
 
 
         // Save all actions
@@ -730,6 +734,8 @@ public class MapManager : MonoBehaviour
 
         // Allow next Swap
         IsSwapping = false;
+        
+        // ResetBig();
     }
 
     public void GroundSwapPreview(GameObject which)
@@ -1030,6 +1036,8 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
+        
+        MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
     public void ResetAllSelection()

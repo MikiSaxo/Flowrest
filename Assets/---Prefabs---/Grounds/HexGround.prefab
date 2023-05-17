@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2073194735628377732}
   - component: {fileID: 6776018865989401812}
-  - component: {fileID: 7647496206535253539}
   m_Layer: 9
   m_Name: Indicator
   m_TagString: Untagged
@@ -51,20 +50,6 @@ MonoBehaviour:
   _meshParent: {fileID: 7994009417085831957}
   _timeEnter: 0.15
   _timeExit: 1
---- !u!136 &7647496206535253539
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2202029719449191839}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 4.2
-  m_Height: 9.052335
-  m_Direction: 1
-  m_Center: {x: 0, y: -1.0888324, z: 0}
 --- !u!1 &2407001091993214221
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,10 +511,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 0
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 0
 --- !u!1 &7994009417085831957
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +845,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8015884150060369992, guid: a2b6e9542337a8540bb973ed42febd91, type: 3}
 --- !u!4 &2082640520171680814 stripped
@@ -946,6 +932,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0376ea186bf6ebe4c8a2111c9adeb75e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0376ea186bf6ebe4c8a2111c9adeb75e, type: 3}
 --- !u!4 &3874553286898350853 stripped
@@ -969,7 +959,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1502407184239197826, guid: 0376ea186bf6ebe4c8a2111c9adeb75e, type: 3}
 --- !u!1001 &4039486168433454034
