@@ -609,10 +609,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!114 &160975791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,10 +868,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!114 &261037165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1964,10 +1966,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!114 &464938668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,6 +2190,7 @@ MonoBehaviour:
   _fBDnd: {fileID: 1588833879}
   _buttonBackwards: {fileID: 160975787}
   _inventoryTilePreview: {fileID: 795526491}
+  _bigParent: {fileID: 0}
   _gridParent: {fileID: 943956878}
   _prefabTileButton: {fileID: 4758558417778980639, guid: 8efb05f5f89d514468f4e9f5379a99d5, type: 3}
   _bgInventory: {fileID: 1325435354}
@@ -5966,10 +5970,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!114 &811065624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6522,10 +6527,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 0
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!114 &869595280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9803,10 +9809,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 0
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 0
 --- !u!1 &1413432680
 GameObject:
   m_ObjectHideFlags: 0
@@ -13860,10 +13867,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!1001 &1571688092841772757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14170,11 +14178,11 @@ PrefabInstance:
       objectReference: {fileID: 29539077}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 0
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _timeWaitBetweenDropFX
@@ -14298,6 +14306,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4cf0c1773720e02469ef4b975139df8d, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[29]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d693a658968a404ebbbc0d74f3d9539, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _levelData.Array.data[30]
       value: 
       objectReference: {fileID: 11400000, guid: 0ec91859b4cbff74fbaaac21d80f2cca, type: 2}
     - target: {fileID: 6942186750416081795, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
