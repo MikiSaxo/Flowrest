@@ -73,7 +73,6 @@ public class GroundIndicator : MonoBehaviour
     public void OnEnterPointer()
     {
         _isEnteredFree = true;
-        // if (!other.gameObject.GetComponentInParent<FollowMouse>()) return;
 
         if (_parent.GetCurrentStateEnum() == AllStates.__Pyreneos__) return;
 
@@ -83,10 +82,6 @@ public class GroundIndicator : MonoBehaviour
 
         if (_parent.IsPlayerNotForcePose && MapManager.Instance.LastObjButtonSelected != null) return;
 
-        // if (MapManager.Instance.LastObjButtonSelected != null)
-        // {
-        //     if (_parent.GetCurrentStateEnum() == MapManager.Instance.GetLastStateSelected()) return;
-        // }
 
         if (MapManager.Instance.LastObjButtonSelected == null && EnergyManager.Instance.IsEnergyInferiorToCostSwap())
         {
@@ -108,7 +103,6 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.IsSwapping) return;
 
-        //other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(true);
         _isEnteredLimited = true;
 
 
@@ -120,7 +114,6 @@ public class GroundIndicator : MonoBehaviour
 
         if (MapManager.Instance.GetHasGroundSelected())
         {
-            // print("call ground swap previsu");
             MapManager.Instance.GroundSwapPreview(_parent.gameObject);
         }
         else if (MapManager.Instance.LastObjButtonSelected)
@@ -143,8 +136,6 @@ public class GroundIndicator : MonoBehaviour
             MapManager.Instance.IsSwapping) return;
 
 
-        // other.gameObject.GetComponentInParent<FollowMouse>().IsOnIndicator(false);
-
         _parent.IsProtectedPrevisu = false;
 
         MapManager.Instance.ResetPreview();
@@ -154,14 +145,7 @@ public class GroundIndicator : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetMouseButtonDown(1) && MapManager.Instance.GetHasFirstSwap()) // Right click to reset
-        // {
-        //     ResetIndicator();
-        //     MapManager.Instance.ResetGroundSelected();
-        //
-        //     // ResetAllAroundPrevisu();
-        // }
-        
+        // If no energy
         if(EnergyManager.Instance.GetCurrentEnergy() <= 0 && Input.GetMouseButtonDown(0) && _isEnteredFree && !MapManager.Instance.IsVictory)
             EnergyManager.Instance.SpawnNoEnergyText();
 
@@ -177,11 +161,6 @@ public class GroundIndicator : MonoBehaviour
             // Reset if click again on it
             if (_isSelected && _isEnteredLimited && !MapManager.Instance.IsTuto)
             {
-                // _parent.IsProtectedPrevisu = false;
-                //
-                // MapManager.Instance.ResetPreview();
-                //
-                // OnLeaveAnim(_timeExit);
                 ResetIndicator();
                 StartCoroutine(WaitALittleToReset());
                 return;

@@ -694,12 +694,6 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
-        // // Spend energy
-        // if(!_TileHasCrystal)
-        //     EnergyManager.Instance.ReduceEnergyBySwap();
-        // _TileHasCrystal = false;
-        
-
         // Bloc for Next Swap
         if (_blockLastGroundsSwapped)
         {
@@ -739,6 +733,8 @@ public class MapManager : MonoBehaviour
 
         // Allow next Swap
         IsSwapping = false;
+        
+        // ResetBig();
     }
 
     public void GroundSwapPreview(GameObject which)
@@ -1039,6 +1035,8 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
+        
+        MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
     public void ResetAllSelection()

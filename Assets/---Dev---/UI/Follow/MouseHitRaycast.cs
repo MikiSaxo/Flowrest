@@ -55,11 +55,6 @@ public class MouseHitRaycast : MonoBehaviour
                 return;
             }
 
-            // if (Input.GetMouseButtonDown(0) && !MapManager.Instance.IsOnUI)
-            // {
-            //     StartCoroutine(WaitToResetRecycle());
-            // }
-
             if (newBloc.GetParentCoords() != _lastCoordsHit)
             {
                 if (_lastGroundHit != null)
@@ -71,19 +66,6 @@ public class MouseHitRaycast : MonoBehaviour
                 IsOnGround = true;
             }
         }
-
-        //if(_isBlocked) return;
-
-        // if (Camera.main != null)
-        // {
-        //     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //
-        //     if (!_plane.Raycast(ray, out var distance)) return;
-        //
-        //     _worldPosition = ray.GetPoint(distance);
-        // }
-        //
-        // transform.position = _worldPosition;
     }
 
     IEnumerator WaitToResetRecycle()
@@ -111,5 +93,11 @@ public class MouseHitRaycast : MonoBehaviour
     public void IsOnUI(bool yesOrNot) // Called in Content Pointer Enter/Exit
     {
         _isOnUI = yesOrNot;
+    }
+
+    public void ResetLastGroundHit()
+    {
+        _lastGroundHit = null;
+        _lastCoordsHit = Vector2Int.down*1000;
     }
 }
