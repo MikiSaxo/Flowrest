@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 4
   m_EditorClassIdentifier: 
-  LevelName: Niveau 4
+  LevelName: Tuto 4
   LevelFolder: Level Editor
-  EnergyAtStart: 5
+  EnergyAtStart: 3
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 
   HasRecycling: 0
-  HasInfinitRecycling: 0
+  HasInfinitRecycling: 1
   NbOfRecycling: 0
   HasPrevisu: 1
-  BlockLastSwap: 1
+  BlockLastSwap: 0
   IsTuto: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
@@ -30,22 +30,25 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$R\xE9aliser une chaine de 8 Grassias"
+  QuestDescription: "Niveau \xB5 :$Faire 1 fleur de Grassias "
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 668fe0b614e6664428aee5f25d1529a4, type: 3}
+  QuestImage: {fileID: 21300000, guid: 481c944fd6756f94b909e722d31bf5dc, type: 3}
   QuestFloor: 
-  QuestFlower: 
+  QuestFlower: 00000000
   QuestNoSpecificTiles: 
-  QuestTileChain: 00000000
-  NumberTileChain: 8
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 0
+  NumberTileCount: 12
   CharacterName: Profess.io
   DialogBeginning:
-  - "Nous avons eu la chance de recevoir une demande d'un haut dignitaire venant
-    de l'oppos\xE9 de notre galaxie."
-  - "Je n'ai pas compris exactement ce que veut le client mais il voudrait \"Muchas
-    Grassias\" donc je te laisse figurer \xE7a. "
-  DialogEnd: []
+  - "Bonne nouvelle ! Le client a appr\xE9ci\xE9 ton travail !"
+  - ...
+  - "La mauvaise nouvelle c'est qu'il a dit que ce n'\xE9tait \"pas assez feng shui
+    pour lui\". "
+  - Enfin, on va juste lui renvoyer une fleur de Grassias et il sera content.
+  DialogEnd:
+  - "Parfait je vais envoyer \xE7a. $Ne t'en fais pas, il y a toujours des clients
+    qui sont plus  ... <i>\"particuliers\"</i> que d'autres."
   DialogBeginningEnglish: []
   DialogEndEnglish: []

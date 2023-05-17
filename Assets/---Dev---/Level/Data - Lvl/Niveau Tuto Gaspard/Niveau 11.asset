@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 11
   m_EditorClassIdentifier: 
-  LevelName: Niveau 11
+  LevelName: Tuto 10
   LevelFolder: Level Editor
   EnergyAtStart: 1
-  HasInventory: 1
-  StartNbState: 4
+  HasInventory: 0
+  StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 1
+  HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   HasPrevisu: 1
@@ -30,23 +30,22 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$R\xE9aliser 1  fleur de Grassias et 1 fleur de
-    Viscosa"
+  QuestDescription: "Niveau \xB5 :$Cr\xE9er au moins une tile de Viscosa"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 7a408e188947edb41b404094c9f011e4, type: 3}
+  QuestImage: {fileID: 21300000, guid: b6e38787045cd3c43bd967c7e145fbcc, type: 3}
   QuestFloor: 
-  QuestFlower: 0000000009000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
-  QuestTileCount: 
-  NumberTileCount: 0
-  CharacterName: Profess.io
+  QuestTileCount: 09000000
+  NumberTileCount: 1
+  CharacterName: Profess.Io
   DialogBeginning:
-  - "Je t'ai trouv\xE9 de quoi continuer \xE0 t'exercer."
-  - "Tes t\xE2ches d'aujourd'hui consisteront donc \xE0 terraformer cet environnement
-    \xE0 l'aide de ces cristaux."
-  DialogEnd:
-  - Bon travail aujourd'hui, on se revoit demain.
+  - "En combinant une tuile d'Hydros et de Grassias tu vas pouvoir cr\xE9er une tuile
+    de Viscosa."
+  - "C'est un environnement r\xE9put\xE9 pour ses gaz et affectueusement surnomm\xE9
+    par son cr\xE9ateur le P.E.T, abr\xE9viation de\"Pression Exub\xE9rante sur Tuile\"."
+  DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

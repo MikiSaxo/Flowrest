@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 7
+  m_Name: Niveau 22
   m_EditorClassIdentifier: 
-  LevelName: Niveau 2.5
+  LevelName: Niveau 6.1
   LevelFolder: Level Editor
-  EnergyAtStart: 5
-  HasInventory: 0
+  EnergyAtStart: 2
+  HasInventory: 1
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 0
@@ -26,24 +26,26 @@ MonoBehaviour:
   IsTuto: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap: []
-  HasForcePoseBlocAfterSwap: 0
-  ForcePoseBlocCoord: {x: 0, y: 0}
+  PlayerForceSwap:
+  - {x: 2, y: 0}
+  - {x: 6, y: 4}
+  HasForcePoseBlocAfterSwap: 1
+  ForcePoseBlocCoord: {x: 4, y: 2}
   PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$Remplir le terrain de Grassias"
+  QuestDescription: "Niveau \xB5 :$Remplir le terrain d'Hydros"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 7f50e342b1a7c2f47a7d274751aa9ba3, type: 3}
-  QuestFloor: 00000000
+  QuestImage: {fileID: 21300000, guid: 98112a698b53b1c4391b79f851dfb009, type: 3}
+  QuestFloor: 02000000
   QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
-  NumberTileChain: 0
+  NumberTileChain: 6
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   DialogBeginning:
-  - "Aujourd'hui tu es en autonomie. Tu n'as qu'\xE0 suivre la directive de ta commande
-    et tout ira bien."
+  - "Notre client a insist\xE9 sur la confidentialit\xE9 de ce projet, il ne faut
+    pas que tu l'hydro-leak"
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

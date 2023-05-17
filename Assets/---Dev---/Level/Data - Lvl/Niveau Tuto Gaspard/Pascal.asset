@@ -10,40 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 7
+  m_Name: Pascal
   m_EditorClassIdentifier: 
-  LevelName: Niveau 2.5
+  LevelName: Niveau 5
   LevelFolder: Level Editor
-  EnergyAtStart: 5
+  EnergyAtStart: 2
   HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  StartNbAllState: 
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
-  PreviewMessage: []
-  PreviewMessageEnglish: []
+  PreviewMessage: 
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
-  QuestDescription: "Niveau \xB5 :$Remplir le terrain de Grassias"
-  QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 7f50e342b1a7c2f47a7d274751aa9ba3, type: 3}
-  QuestFloor: 00000000
+  QuestDescription: "Niveau 5 : Cr\xE9er 12 tiles de <color=#504d38>Vasea</color>"
+  QuestImage: {fileID: 21300000, guid: 7257069460269534a84924cdeaa0b4cc, type: 3}
+  QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
-  QuestTileCount: 
-  NumberTileCount: 0
+  QuestTileCount: 09000000
+  NumberTileCount: 12
   CharacterName: Profess.io
   DialogBeginning:
-  - "Aujourd'hui tu es en autonomie. Tu n'as qu'\xE0 suivre la directive de ta commande
-    et tout ira bien."
-  DialogEnd: []
-  DialogBeginningEnglish: []
-  DialogEndEnglish: []
+  - "Fais attention \xE0 tes actions lorsque tu terraformes."
+  - "Une fausse manipulation est si vite arriv\xE9e."
+  DialogEnd:
+  - "Merci pour ton travail aujourd'hui, \xE0 demain."
