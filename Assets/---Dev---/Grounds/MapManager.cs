@@ -47,6 +47,7 @@ public class MapManager : MonoBehaviour
     [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
     [SerializeField] private float _timeWaitBetweenDropFX;
+    [SerializeField] private float _timeWaitEndSwap = 1.5f;
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private bool _hasInventory;
@@ -710,7 +711,7 @@ public class MapManager : MonoBehaviour
 
 
         // Wait the FX is finished
-        yield return new WaitForSeconds(1.75f);
+        yield return new WaitForSeconds(_timeWaitEndSwap);
 
 
         // Save all actions

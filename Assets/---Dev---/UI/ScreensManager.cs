@@ -500,9 +500,9 @@ public class ScreensManager : MonoBehaviour
     public void GoLevelSupp()
     {
         if (MapManager.Instance.IsLoading) return;
+        
         MapManager.Instance.IsLoading = false;
         
-        MapManager.Instance.ForceResetBig();
         StartCoroutine(WaitToGoLevelSupp());
     }
 
@@ -520,6 +520,8 @@ public class ScreensManager : MonoBehaviour
         // _dialogParent.GetComponent<OpenCloseMenu>().CloseAnim();
         _bg.SetActive(false);
         _titlesParent.SetActive(false);
+
+        MapManager.Instance.ForceResetBig();
         MapManager.Instance.ResetAllMap(true);
         // StartCoroutine(UnlockMouse());
     }
