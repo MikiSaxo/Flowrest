@@ -136,8 +136,6 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMap()
     {
-        // var mapName = $"{_levelName}{_currentLevel}";
-        // var mapName = _levelData[_currentLevel].LevelName;
         var mapNameJson = _levelData[_currentLevel].LevelName;
         var mapFolderName = _levelData[_currentLevel].LevelFolder;
         var currentLvl = _levelData[_currentLevel];
@@ -158,7 +156,6 @@ public class MapManager : MonoBehaviour
         var lineJson = BetterStreamingAssets.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
         _mapInfo = _mapConstructData.Map.Split("\n");
-        // _mapGridAllMove.Add(_mapInfo);
 
         // Get its size
         _mapSize.x = _mapInfo[0].Length;
@@ -195,7 +192,7 @@ public class MapManager : MonoBehaviour
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
 
-        // Update if has Previsu
+        // Update if has Preview
         _hasPrevisu = currentLvl.HasPrevisu;
 
         // Update if bloc last grounds swapped
@@ -377,7 +374,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // Update Quest
+        // Update if full floor order 
         if (_isFullFloorOrder)
         {
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);

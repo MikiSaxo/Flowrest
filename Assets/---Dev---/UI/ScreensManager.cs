@@ -214,7 +214,7 @@ public class ScreensManager : MonoBehaviour
 
         _dialogParent.SetActive(false);
 
-        _orderMenu.GetComponent<OpenCloseMenu>().OpenMenuQuest();
+        _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
     }
 
     public void UpdatePopUp(bool state)
