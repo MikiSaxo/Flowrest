@@ -27,6 +27,7 @@ public class EditorSaveMap : MonoBehaviour
     public MapConstructData _currentMapConstructData;
     private string _hexColorGood;
     private string _hexColorNotGood;
+    private GameObject _currentFBTextPrefab;
 
     private const string _saveNoName = "No map name written";
     private const string _saveSucceed = "saved";
@@ -45,6 +46,11 @@ public class EditorSaveMap : MonoBehaviour
 
         // _currentMapConstructData = new MapConstructData();
         //SaveJson();
+    }
+
+    public string GetColorNotGood()
+    {
+        return _hexColorNotGood;
     }
 
     private void Update()
@@ -68,15 +74,27 @@ public class EditorSaveMap : MonoBehaviour
         _inputFieldMapName.text = "";
     }
 
-    private void SpawnFbText(string text)
+    public void UpdateInputField(string newName)
     {
-        GameObject go = Instantiate(_fBTextPrefab, _fBTextParent.transform);
-        var fBText = go.GetComponent<TMP_Text>();
+        _inputFieldMapName.text = newName;
+    }
+
+    public void SpawnFbText(string text)
+    {
+        if (_currentFBTextPrefab != null)
+        {
+            _currentFBTextPrefab.GetComponent<TMP_Text>().DOKill();
+            Destroy(_currentFBTextPrefab);
+        }
         
+        GameObject go = Instantiate(_fBTextPrefab, _fBTextParent.transform);
+        _currentFBTextPrefab = go;
+        var fBText = _currentFBTextPrefab.GetComponent<TMP_Text>();
         fBText.DOFade(1, 0);
         fBText.text = text;
         fBText.DOFade(0, _durationDispawnText);
-        Destroy(go, _durationDispawnText);
+        
+        Destroy(_currentFBTextPrefab, _durationDispawnText);
     }
 
     private void CreateTextFile(char[,] mapGrid)

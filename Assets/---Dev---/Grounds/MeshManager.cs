@@ -31,6 +31,7 @@ public class MeshManager : MonoBehaviour
 
     [SerializeField] private GameObject[] _crystals;
 
+    private GameObject _currentCrystal;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class MeshManager : MonoBehaviour
 
         if (_crystals.Length > 0)
         {
+            _currentCrystal = _crystals[randomNumber];
             if (GetComponentInParent<CrystalsGround>() != null)
             {
                 GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
@@ -64,6 +66,11 @@ public class MeshManager : MonoBehaviour
                 _propsStartColor[i] = _propsMat[i].GetColor("_BaseColor");
             }
         }
+    }
+
+    public void UpdateCrystal(bool state)
+    {
+        _currentCrystal.SetActive(state);
     }
 
     private void DeactivateAllProps8Crystal()

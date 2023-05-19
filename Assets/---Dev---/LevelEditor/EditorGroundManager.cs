@@ -72,7 +72,7 @@ public class EditorGroundManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             if (EditorMapManager.Instance.GetCharSelectedButton() != 'C')
-                InstantiateGround();
+                PrepareGround();
             else
                 InstantiateEnergy();
         }
@@ -91,7 +91,7 @@ public class EditorGroundManager : MonoBehaviour
         _coords = new Vector2Int(x, y);
     }
 
-    private void InstantiateGround()
+    public void PrepareGround()
     {
         if (_currentCharState == EditorMapManager.Instance.GetCharSelectedButton()) return;
         
@@ -103,29 +103,40 @@ public class EditorGroundManager : MonoBehaviour
 
         if (EditorMapManager.Instance.GetObjSelectedButton() == null) return;
 
+        CreateGround();//EditorMapManager.Instance.GetCharSelectedButton());
+    }
 
+    private void CreateGround()
+    {
+        // EditorMapManager.Instance.UpdateCharSelected($"{c}");
         GameObject go = Instantiate(EditorMapManager.Instance.GetObjSelectedButton(), _indicator.transform);
         _currentGround = go;
-        _currentCharState = EditorMapManager.Instance.GetCharSelectedButton();
+        char c = EditorMapManager.Instance.GetCharSelectedButton();
+        _currentCharState = c;
 
-        EditorMapManager.Instance.UpdateMap(_currentCharState, _coords);
+        EditorMapManager.Instance.UpdateMap(c, _coords);
 
-        if (_currentCharState == MOUNTAIN)
+        if (c == MOUNTAIN)
             DestroyEnergy();
     }
 
-    private void InstantiateEnergy()
+    public void InstantiateEnergy()
     {
         if (_currentGround == null) return;
 
         EditorSaveMap.Instance.AddCoordsEnergy(_coords);
-        _energy.SetActive(true);
+        // _energy.SetActive(true);
+        
+        _currentGround.GetComponent<MeshManager>().UpdateCrystal(true);
     }
 
     private void DestroyEnergy()
     {
-        _energy.SetActive(false);
+        // _energy.SetActive(false);
         EditorSaveMap.Instance.DestroyCoordsEnergy(_coords);
+        
+        if (_currentGround != null && _currentGround.GetComponent<MeshManager>() != null)
+            _currentGround.GetComponent<MeshManager>().UpdateCrystal(false);
     }
 
     public void DestroyGround()
