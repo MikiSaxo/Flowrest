@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEditor;
-
-
+using UnityEngine.Networking;
 
 
 public class MapManager : MonoBehaviour
@@ -34,15 +34,16 @@ public class MapManager : MonoBehaviour
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
-    
+
     #endregion
 
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
-    
-    [Header("Choose Start Level Index")]
-    [SerializeField] private int _currentLevel;
+    [SerializeField] private GameObject _loadingText;
+
+    [Header("Choose Start Level Index")] [SerializeField]
+    private int _currentLevel;
 
     [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
@@ -130,31 +131,72 @@ public class MapManager : MonoBehaviour
                 _currentLevel = _levelData.Length - 1;
         }
 
+        StartCoroutine(CheckFileMap());
+    }
+
+    IEnumerator CheckFileMap()
+    {
+        var mapNameJson = _levelData[_currentLevel].LevelName;
+        var mapFolderName = _levelData[_currentLevel].LevelFolder;
+        var mapPath = $"{mapFolderName}/{mapNameJson}.txt";
+        
+#if UNITY_WEBGL && !UNITY_EDITOR
+        StartCoroutine(LoadTextFileHTML(mapPath));
+        yield return new WaitForSeconds(2.5f);
+        _loadingText.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        _loadingText.SetActive(false);
+#else
+        LoadTextFileNormal(mapPath);
+        yield return new WaitForSeconds(.1f);
+#endif
+
+        
         InitializeMap();
         LastStateButtonSelected = AllStates.None;
     }
 
-    private void InitializeMap()
+    IEnumerator LoadTextFileHTML(string filePath)
     {
-        var mapNameJson = _levelData[_currentLevel].LevelName;
-        var mapFolderName = _levelData[_currentLevel].LevelFolder;
-        var currentLvl = _levelData[_currentLevel];
-        
-        // Old
-        // string mapPath = Application.streamingAssetsPath + $"/{mapFolderName}/{mapNameJson}.txt";
-        // var lineJson = File.ReadAllText(mapPath);
-        
+        string path = Path.Combine(Application.streamingAssetsPath, filePath);
+
+        UnityWebRequest www = UnityWebRequest.Get(path);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            string textt = www.downloadHandler.text;
+            // Faites quelque chose avec le contenu du fichier texte ici
+
+            var testMapConstructData = JsonUtility.FromJson<MapConstructData>(textt);
+            _mapConstructData = testMapConstructData;
+        }
+    }
+
+    private void LoadTextFileNormal(string mapPath)
+    {
         // Initialize
         BetterStreamingAssets.Initialize();
         // Get the text map
-        var mapPath = $"/{mapFolderName}/{mapNameJson}.txt";
         if (!BetterStreamingAssets.FileExists(mapPath))
         {
             Debug.LogErrorFormat("Streaming asset not found: {0}", mapPath);
         }
-        
+
         var lineJson = BetterStreamingAssets.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
+    }
+
+
+    private void InitializeMap()
+    {
+        var currentLvl = _levelData[_currentLevel];
+
+        // Old
+        //string mapPath2 = Application.streamingAssetsPath + $"/{mapFolderName}/{mapNameJson}.txt";
+        // var lineJson = File.ReadAllText(mapPath);
+
+
         _mapInfo = _mapConstructData.Map.Split("\n");
 
         // Get its size
@@ -380,7 +422,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
-        
+
         // Init Start energy
         var startEnergy = _levelData[_currentLevel].EnergyAtStart;
         var startNbRecycling = _levelData[_currentLevel].NbOfRecycling;
@@ -488,12 +530,14 @@ public class MapManager : MonoBehaviour
         if (_currentLevel < _levelData.Length - 1 && nextlevel)
         {
             _currentLevel++;
-            
+
             if (BigManager.Instance != null)
                 BigManager.Instance.CurrentLevel++;
         }
 
-        InitializeMap();
+        StartCoroutine(CheckFileMap());
+
+        //InitializeMap();
 
         // StartCoroutine(WaitToChangeLevel());
     }
@@ -624,7 +668,7 @@ public class MapManager : MonoBehaviour
 
         // Kill the preview
         ResetPreview();
-        
+
         // Spend Energy
         EnergyManager.Instance.ReduceEnergyBySwap();
 
@@ -632,7 +676,7 @@ public class MapManager : MonoBehaviour
         // Wait til the jump is finished
         yield return new WaitForSeconds(_timeToSwap);
 
-        
+
         // Remove security
         gLastGroundSelected.UpdateIsSwapping(false);
         gWhich.UpdateIsSwapping(false);
@@ -659,8 +703,8 @@ public class MapManager : MonoBehaviour
                 ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _lastGroundSelected.transform.position);
             }
         }
-        
-        yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
+
+        yield return new WaitForSeconds(_timeWaitBetweenDropFX / 2);
 
         // Earn energy if has Crystals
         if (which.GetComponent<CrystalsGround>().GetIfHasCrystal())
@@ -670,7 +714,7 @@ public class MapManager : MonoBehaviour
             ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, which.transform.position);
         }
 
-        yield return new WaitForSeconds(_timeWaitBetweenDropFX/2);
+        yield return new WaitForSeconds(_timeWaitBetweenDropFX / 2);
 
         // Update Ground Around
         gWhich.UpdateGroundsAround(gWhich.GetCurrentStateEnum());
@@ -731,7 +775,7 @@ public class MapManager : MonoBehaviour
 
         // Allow next Swap
         IsSwapping = false;
-        
+
         // ResetBig();
     }
 
@@ -894,7 +938,8 @@ public class MapManager : MonoBehaviour
                 ScreensManager.Instance.GameOver();
             else if (_hasInventory && !_hasRecycling)
                 ScreensManager.Instance.GameOver();
-            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0 && SetupUIGround.Instance.CheckIfStillGround())
+            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0 &&
+                     SetupUIGround.Instance.CheckIfStillGround())
                 ScreensManager.Instance.GameOver();
         }
     }
@@ -1033,7 +1078,7 @@ public class MapManager : MonoBehaviour
             _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
         _lastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
-        
+
         MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
