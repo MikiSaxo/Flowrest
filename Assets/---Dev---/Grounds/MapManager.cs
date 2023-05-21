@@ -206,7 +206,8 @@ public class MapManager : MonoBehaviour
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
 
-        // Reset Wave Energy
+        // Reset Energy and Wave 
+        EnergyManager.Instance.ResetEnergy();
         EnergyManager.Instance.StopWaveEffect();
 
         // Update if has inventory
@@ -390,6 +391,7 @@ public class MapManager : MonoBehaviour
     {
         IsLoading = true;
         TransiManager.Instance.LaunchShrink();
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink()/2);
         _countNbOfTile = 0;
         _countTilesWithCrystal = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);

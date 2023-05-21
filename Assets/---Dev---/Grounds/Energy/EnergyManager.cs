@@ -40,6 +40,7 @@ public class EnergyManager : MonoBehaviour
     private int _maxEnergy;
     private float _timerSpawnFBCrystal;
     private GameObject _currentFbNoEnergy;
+    private bool _isInit;
 
     private void Awake()
     {
@@ -75,12 +76,13 @@ public class EnergyManager : MonoBehaviour
 
     IEnumerator AnimInitEnergy(int energy)
     {
+        _isInit = true;
         yield return new WaitForSeconds(_timeToFillEnergy);
-        
+
         if (energy > 0)
         {
             AnimEnergyBar();
-            
+
             for (int i = 1; i <= energy; i++)
             {
                 yield return new WaitForSeconds(_timeToFillEnergy / energy);
@@ -89,6 +91,9 @@ public class EnergyManager : MonoBehaviour
 
             BounceEnergy();
         }
+
+        _numberToDisplay.text = $"{_currentEnergy}";
+        _isInit = false;
     }
 
     public void ReduceEnergyBySwap()
@@ -113,6 +118,12 @@ public class EnergyManager : MonoBehaviour
 
     IEnumerator WaitToUpdate(int value)
     {
+        if (_isInit)
+        {
+            StopCoroutine(AnimInitEnergy(_currentEnergy));
+            _isInit = false;
+        }
+        
         _tempValue += value;
         if (_tempValue == 0)
             _tempValue = 1;
@@ -130,8 +141,6 @@ public class EnergyManager : MonoBehaviour
 
     public void UpdateEnergy(int value)
     {
-        // value *= _baseInf;
-
         if (value == 0) return;
 
         _energyValue += value;
@@ -158,11 +167,6 @@ public class EnergyManager : MonoBehaviour
         }
         else
         {
-            // var energyValue = 1;
-            //
-            // if (_energyValue < 1)
-            //     energyValue = 0;
-            //
             BounceEnergy();
 
             _vignettage.DOFade(1, _timeVignettage).OnComplete(() => { _vignettage.DOFade(0, _timeVignettage); });
@@ -181,7 +185,6 @@ public class EnergyManager : MonoBehaviour
         _currentEnergy = _energyValue;
 
         _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
-        // MapManager.Instance.CheckIfGameOver();
     }
 
     private void Update()
@@ -225,5 +228,14 @@ public class EnergyManager : MonoBehaviour
     public int GetCurrentEnergy()
     {
         return _currentEnergy;
+    }
+
+    public void ResetEnergy()
+    {
+        _numberToDisplay.text = $"0";
+        _currentEnergy = 0;
+        _numberToDisplay.color = Color.white;
+        _hitEnergyBar.DOValue(0, 0);
+        _energyBar.DOValue(0, 0);
     }
 }
