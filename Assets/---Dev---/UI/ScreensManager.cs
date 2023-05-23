@@ -228,6 +228,8 @@ public class ScreensManager : MonoBehaviour
         _dialogParent.SetActive(false);
 
         _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
+
+        MapManager.Instance.ActivateArrowIfForceSwap();
     }
 
     public void UpdatePopUp(bool state)

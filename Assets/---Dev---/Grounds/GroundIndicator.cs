@@ -271,6 +271,9 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.DecreaseNumberButton();
 
         MapManager.Instance.ResetButtonSelected();
+        
+        if (MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
+            MapManager.Instance.UpdateAllGroundTutoForcePose(false);
 
         yield return new WaitForSeconds(_timeExit);
 
@@ -309,8 +312,7 @@ public class GroundIndicator : MonoBehaviour
         ResetForNextChange();
         // MapManager.Instance.ResetBig();
 
-        if (MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
-            MapManager.Instance.UpdateAllGroundTutoForcePose(false);
+       
     }
 
     public void ResetIndicator()

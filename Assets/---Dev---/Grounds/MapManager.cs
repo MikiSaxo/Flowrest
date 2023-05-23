@@ -75,6 +75,8 @@ public class MapManager : MonoBehaviour
     private int _countNbOfTile;
     private int _countTilesWithCrystal;
     private bool _tileHasCrystal;
+    private bool _forceSwapHasFirstTile;
+    private bool _forceSwapHasSecondTile;
 
     private MapConstructData _mapConstructData;
 
@@ -139,7 +141,7 @@ public class MapManager : MonoBehaviour
         var mapNameJson = _levelData[_currentLevel].LevelName;
         var mapFolderName = _levelData[_currentLevel].LevelFolder;
         var mapPath = $"{mapFolderName}/{mapNameJson}.txt";
-        
+
 #if UNITY_WEBGL && !UNITY_EDITOR
         StartCoroutine(LoadTextFileHTML(mapPath));
         yield return new WaitForSeconds(2.5f);
@@ -151,7 +153,7 @@ public class MapManager : MonoBehaviour
         yield return new WaitForSeconds(.1f);
 #endif
 
-        
+
         InitializeMap();
         LastStateButtonSelected = AllStates.None;
     }
@@ -186,7 +188,6 @@ public class MapManager : MonoBehaviour
         var lineJson = BetterStreamingAssets.ReadAllText(mapPath);
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
     }
-
 
     private void InitializeMap()
     {
@@ -261,6 +262,8 @@ public class MapManager : MonoBehaviour
                     _stockPlayerForceSwap.Clear();
                     _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[0]);
                     _stockPlayerForceSwap.Add(currentLvl.PlayerForceSwap[1]);
+                    _forceSwapHasFirstTile = false;
+                    _forceSwapHasSecondTile = false;
                 }
 
                 if (_hasInventory)
@@ -391,7 +394,7 @@ public class MapManager : MonoBehaviour
     {
         IsLoading = true;
         TransiManager.Instance.LaunchShrink();
-        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink()/2);
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink() / 2);
         _countNbOfTile = 0;
         _countTilesWithCrystal = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
@@ -472,8 +475,8 @@ public class MapManager : MonoBehaviour
         if (_isPlayerForceSwap)
         {
             ground.IsPlayerForceSwapBlocked = coord != _stockPlayerForceSwap[0];
-            ground.UpdatePrevisuArrow(!(coord != _stockPlayerForceSwap[0]));
-            // ground.UpdatePrevisuArrow(true);
+            // ground.UpdatePrevisuArrow(!(coord != _stockPlayerForceSwap[0]));
+            ground.UpdatePrevisuArrow(false);
         }
         else
             ground.UpdatePrevisuArrow(false);
@@ -525,7 +528,7 @@ public class MapManager : MonoBehaviour
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
             .GetComponent<GroundStateManager>();
-        secondGround.UpdatePrevisuArrow(true);
+        // secondGround.UpdatePrevisuArrow(true);
         secondGround.IsPlayerForceSwapBlocked = false;
     }
 
@@ -991,6 +994,29 @@ public class MapManager : MonoBehaviour
     public int GetCurrentLevel()
     {
         return _currentLevel;
+    }
+
+    public Vector2Int GetTileStockForceSwap(int index)
+    {
+        return _stockPlayerForceSwap[index];
+    }
+
+    public void ActivateArrowIfForceSwap()
+    {
+        if (_stockPlayerForceSwap.Count == 0) return;
+
+        if (!_forceSwapHasFirstTile)
+        {
+            _mapGrid[_stockPlayerForceSwap[0].x, _stockPlayerForceSwap[0].y].GetComponent<GroundStateManager>().UpdatePrevisuArrow(true);
+            _forceSwapHasFirstTile = true;
+            return;
+        }
+
+        if (!_forceSwapHasSecondTile)
+        {
+            _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>().UpdatePrevisuArrow(true);
+            _forceSwapHasSecondTile = true;
+        }
     }
 
     public void ForceResetBig()
