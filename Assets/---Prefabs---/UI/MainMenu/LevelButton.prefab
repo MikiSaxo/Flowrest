@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1782218, g: 0.53331876, b: 0.8396226, a: 1}
+  m_Color: {r: 0.754717, g: 0.57261, b: 0.13171947, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9987322, g: 1, b: 0, a: 1}
+    m_HighlightedColor: {r: 0.6415094, g: 0.4935722, b: 0.14222142, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -414,10 +414,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!222 &8243854877166546850
 CanvasRenderer:
   m_ObjectHideFlags: 0

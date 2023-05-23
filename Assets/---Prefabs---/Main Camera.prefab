@@ -46,7 +46,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -59,12 +59,12 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.01
+  far clip plane: 1145.83
+  field of view: 26.991467
   orthographic: 0
-  orthographic size: 30
-  m_Depth: -1
+  orthographic size: 0.0024000905
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -95,7 +95,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: c9a5bfdfd259cee4690159681fe82912, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!114 &8966416019672835240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,11 +109,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zoomSpeed: 5
-  _rotaXStartEnd: {x: -10, y: 55}
+  _rotaXStartEnd: {x: 40, y: 40}
   _durationAnimRota: 0
-  _minMaxPosX: {x: -3, y: 37}
-  _minMaxPosY: {x: 33, y: 68}
-  _minMaxPosZ: {x: -40, y: -10}
+  _minMaxPosX: {x: -30, y: 80}
+  _minMaxPosY: {x: 40, y: 150}
+  _minMaxPosZ: {x: -125, y: 0}
 --- !u!81 &8966416019672835245
 AudioListener:
   m_ObjectHideFlags: 0
