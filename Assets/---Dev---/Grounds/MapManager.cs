@@ -33,6 +33,7 @@ public class MapManager : MonoBehaviour
     public bool IsLoading { get; set; }
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
+    public bool IsTutoRecycling { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
 
     #endregion
@@ -245,6 +246,8 @@ public class MapManager : MonoBehaviour
         // Update if tuto
         IsTuto = currentLvl.IsTuto;
         SetupUIGround.Instance.SetActiveBackwardsButton(!IsTuto);
+        IsTutoRecycling = false;
+        
         if (IsTuto)
         {
             // Set Preview message
@@ -252,6 +255,8 @@ public class MapManager : MonoBehaviour
                 ? currentLvl.PreviewMessage
                 : currentLvl.PreviewMessageEnglish;
 
+            IsTutoRecycling = currentLvl.IsTutoRecycling;
+            
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
             {
@@ -872,6 +877,8 @@ public class MapManager : MonoBehaviour
         _wantToRecycle = false;
 
         RecyclingManager.Instance.DeselectRecycle();
+        if(IsTutoRecycling)
+            RecyclingManager.Instance.UpdateArrowTuto(false);
 
         // Save all actions
         LastMoveManager.Instance.SaveNewMap();

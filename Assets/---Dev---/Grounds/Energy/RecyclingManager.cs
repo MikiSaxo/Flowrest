@@ -12,6 +12,7 @@ public class RecyclingManager : MonoBehaviour
     public static RecyclingManager Instance;
 
     [SerializeField] private GameObject _recycling;
+    [SerializeField] private FB_Arrow _arrowTuto;
     [SerializeField] private TextMeshProUGUI _recyclingNbText;
 
     private bool _hasInfinitRecycling;
@@ -109,5 +110,10 @@ public class RecyclingManager : MonoBehaviour
             GetComponentInChildren<Image>().color = Color.grey;
             GetComponent<PointerMotion>().UpdateCanEnter(false);
         }
-    } 
+    }
+
+    public void UpdateArrowTuto(bool state)
+    {
+        _arrowTuto.UpdateArrow(state);
+    }
 }

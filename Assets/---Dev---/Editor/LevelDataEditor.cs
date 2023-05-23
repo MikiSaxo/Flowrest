@@ -26,6 +26,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
     private SerializedProperty IsTuto;
+    private SerializedProperty IsTutoRecycling;
     private SerializedProperty PlayerForceSwap;
     private SerializedProperty PreviewMessage;
     private SerializedProperty PreviewMessageEnglish;
@@ -67,7 +68,9 @@ public class LevelDataEditor : Editor
         NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
+        
         IsTuto = serializedObject.FindProperty("IsTuto");
+        IsTutoRecycling = serializedObject.FindProperty("IsTutoRecycling");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
         PreviewMessage = serializedObject.FindProperty("PreviewMessage");
         PreviewMessageEnglish = serializedObject.FindProperty("PreviewMessageEnglish");
@@ -178,6 +181,7 @@ public class LevelDataEditor : Editor
         {
             if (IsTuto.boolValue)
             {
+                EditorGUILayout.PropertyField(IsTutoRecycling);
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
                 EditorGUILayout.PropertyField(PreviewMessage);
 

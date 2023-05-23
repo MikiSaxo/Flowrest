@@ -41,6 +41,7 @@ public class EnergyManager : MonoBehaviour
     private float _timerSpawnFBCrystal;
     private GameObject _currentFbNoEnergy;
     private bool _isInit;
+    private bool _hasInitTutoRecycling;
 
     private void Awake()
     {
@@ -58,6 +59,8 @@ public class EnergyManager : MonoBehaviour
         _numberToDisplay.text = $"{0}";
         _currentEnergy = _energyValue;
         _maxEnergy = maxEnergy;
+        _hasInitTutoRecycling = false;
+
 
         _numberToDisplay.color = _energyValue == 0 ? Color.red : Color.white;
 
@@ -154,6 +157,19 @@ public class EnergyManager : MonoBehaviour
             {
                 _waveEffect.StartGrowOnAlways();
                 _energyValue = 0;
+                
+                if (MapManager.Instance.IsTuto && MapManager.Instance.IsTutoRecycling)
+                {
+                    if (!_hasInitTutoRecycling)
+                    {
+                        RecyclingManager.Instance.UpdateArrowTuto(true);
+                        _hasInitTutoRecycling = true;
+                    }
+                    else
+                    {
+                        RecyclingManager.Instance.UpdateArrowTuto(false);
+                    }
+                }
             }
             else
             {

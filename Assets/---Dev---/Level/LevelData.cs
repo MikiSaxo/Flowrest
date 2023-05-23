@@ -24,6 +24,7 @@ public class LevelData : ScriptableObject
    public bool BlockLastSwap;
 
    public bool IsTuto;
+   public bool IsTutoRecycling;
    public string[] PreviewMessage;
    public string[] PreviewMessageEnglish;
    public Vector2Int[] PlayerForceSwap;
