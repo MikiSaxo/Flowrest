@@ -165,6 +165,19 @@ public class ScreensManager : MonoBehaviour
     {
         _stockOrderText[1].UpdateMaxNb(nb);
     }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UpdatePause(!_isPaused);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
+        {
+            OnClick();
+        }
+    }
 
     public void UpdateOrder(int newNb, int whichOrder)
     {
@@ -215,6 +228,8 @@ public class ScreensManager : MonoBehaviour
         _dialogParent.SetActive(false);
 
         _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
+
+        MapManager.Instance.ActivateArrowIfForceSwap();
     }
 
     public void UpdatePopUp(bool state)
@@ -321,69 +336,11 @@ public class ScreensManager : MonoBehaviour
         _countDialog++;
     }
 
-    // public void GoToBottomScrollBar()
-    // {
-    //     _dialogScrollBar.value = 0;
-    // }
-
     public void GameOver()
     {
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
         MouseHitRaycast.Instance.IsBlockMouse(true);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            UpdatePause(!_isPaused);
-
-
-        if (!_isDialogTime) return;
-
-
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     if (CheckIfDialogEnded())
-        //         return;
-        //
-        //     if (_dialogsPrefabList[^1].IsFinish)
-        //     {
-        //         SpawnAllDialog();
-        //     }
-        //     else
-        //     {
-        //         _dialogsPrefabList[^1].EndAnimationText();
-        //         UpdateDialogFB(true);
-        //     }
-
-
-        // if (_countScreen < _dialogsList.Count * 2 - 1)
-        // {
-        //     if (_countScreen % 2 == 0)
-        //     {
-        //         _stopCorou = true;
-        //         _dialogText.text = _dialogsList[_countDialog];
-        //         StopCoroutine(UpdateText());
-        //     }
-        //     else
-        //     {
-        //         // print("anim");
-        //         _countDialog++;
-        //         //_dialogText.text = String.Empty;
-        //         StartCoroutine(UpdateText());
-        //     }
-        //
-        //     _countScreen++;
-        // }
-        // else
-        // {
-        //     if (_isBeginning)
-        //         EndBeginningDialog();
-        //     else
-        //         ChangeToLevelSupp();
-        // }
-        //}
     }
 
     public void OnClick()
