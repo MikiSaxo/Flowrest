@@ -503,7 +503,9 @@ public class MapManager : MonoBehaviour
         // Right click to Reset
         if (Input.GetMouseButtonDown(1))
         {
-            ResetBig();
+            if (IsTuto) return;
+
+            ForceResetBig();
         }
     }
 
@@ -1018,6 +1020,7 @@ public class MapManager : MonoBehaviour
         ResetButtonSelected();
         ResetPreview();
         ResetGroundSelected();
+        SetupUIGround.Instance.EndFb();
     }
 
     public void ResetAllMap(bool nextLevel)
