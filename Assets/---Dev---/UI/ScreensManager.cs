@@ -269,7 +269,12 @@ public class ScreensManager : MonoBehaviour
             _dialogsPrefabList.Clear();
 
         if (dialogs.Length == 0 && !isTheEnd)
+        {
             dialogs = new[] { " " };
+            _isDialogTime = false;
+            CheckIfEnd();
+            return;
+        }
 
         // Add new string dialog
         foreach (var dialog in dialogs)
