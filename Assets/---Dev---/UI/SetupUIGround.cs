@@ -16,7 +16,7 @@ public class SetupUIGround : MonoBehaviour
     [SerializeField] private InventoryTilePreview _inventoryTilePreview;
     // public OpenCloseMenu GroundStockage;
 
-    [Header("Inventory")] [SerializeField] private GameObject _bigParent;
+    [Header("Inventory")] [SerializeField] private GameObject _bigParentInventory;
     [SerializeField] private GameObject _gridParent;
     [SerializeField] private GameObject _prefabTileButton;
     [SerializeField] private GameObject _bgInventory;
@@ -47,6 +47,7 @@ public class SetupUIGround : MonoBehaviour
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
         _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
         Destroy(go);
+        UpdateOpacityInventory(0);
     }
 
     public void SetIfHasRecycling(bool state)
@@ -86,6 +87,14 @@ public class SetupUIGround : MonoBehaviour
         //GroundStockage.ForcedOpen = true;
     }
 
+    public void UpdateOpacityInventory(int alpha)
+    {
+        if(alpha == 0)
+            _bigParentInventory.GetComponent<CanvasGroup>().alpha = alpha;
+        else
+            _bigParentInventory.GetComponent<CanvasGroup>().DOFade(alpha, .5f);
+    }
+    
     public void EndFb() // Use by Ground buttons
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
@@ -104,7 +113,7 @@ public class SetupUIGround : MonoBehaviour
                 currentTile.UpdateNumberLeft(1);
                 currentTile.GetComponent<PointerMotion>().OnLeave();
                 if(!isStart)
-                    _bigParent.GetComponent<PointerMotion>().Bounce();
+                    _bigParentInventory.GetComponent<PointerMotion>().Bounce();
 
                 return;
             }
@@ -116,7 +125,7 @@ public class SetupUIGround : MonoBehaviour
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
         if(!isStart)
-            _bigParent.GetComponent<PointerMotion>().Bounce();
+            _bigParentInventory.GetComponent<PointerMotion>().Bounce();
 
         if (isStart)
             ChangeSizeBGBeforeNewGround(stateNb, isStart);
@@ -182,11 +191,7 @@ public class SetupUIGround : MonoBehaviour
         _bgInventory.GetComponent<RectTransform>().DOSizeDelta(newSize, duration).SetEase(Ease.OutSine);
     }
 
-    public void UpdateInventory(bool state)
-    {
-        //GroundStockage.gameObject.SetActive(state);
-        _bgInventory.SetActive(state);
-    }
+   
 
     public bool CheckIfStillGround()
     {

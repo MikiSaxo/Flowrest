@@ -34,6 +34,7 @@ public class MapManager : MonoBehaviour
     public bool IsOnUI { get; set; }
     public bool IsTuto { get; set; }
     public bool IsTutoRecycling { get; set; }
+    public bool HasInventory { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
 
     #endregion
@@ -52,7 +53,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
-    private bool _hasInventory;
     private bool _hasRecycling;
     private bool _hasInfinitRecycling;
     private bool _hasPrevisu;
@@ -213,11 +213,13 @@ public class MapManager : MonoBehaviour
         EnergyManager.Instance.StopWaveEffect();
 
         // Update if has inventory
-        _hasInventory = currentLvl.HasInventory;
-        SetupUIGround.Instance.UpdateInventory(_hasInventory);
+        HasInventory = currentLvl.HasInventory;
+        // int alphaInventory = Convert.ToInt32(HasInventory);
+        SetupUIGround.Instance.UpdateOpacityInventory(0);
+        // SetupUIGround.Instance.UpdateOpacityInventory(alphaInventory);
 
         // Update if tile at start
-        if (currentLvl.StartNbAllState != null && _hasInventory)
+        if (currentLvl.StartNbAllState != null && HasInventory)
         {
             for (int i = 0; i < currentLvl.StartNbAllState.Length; i++)
             {
@@ -271,7 +273,7 @@ public class MapManager : MonoBehaviour
                     _forceSwapHasSecondTile = false;
                 }
 
-                if (_hasInventory)
+                if (HasInventory)
                 {
                     IsPlayerForcePoseBlocAfterSwap = currentLvl.HasForcePoseBlocAfterSwap;
                     _coordsForcePoseBloc = currentLvl.ForcePoseBlocCoord;
@@ -738,7 +740,7 @@ public class MapManager : MonoBehaviour
         LastMoveManager.Instance.UpdateCurrentStateMap(_lastGroundCoordsSelected, gWhich.GetCurrentStateEnum());
 
         // Get Bloc to UI
-        if (_hasInventory)
+        if (HasInventory)
         {
             var tileToAdd = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
@@ -811,7 +813,7 @@ public class MapManager : MonoBehaviour
         gLastGroundSelected.UpdateGroundsAroundPreview(gWhich.GetCurrentStateEnum());
 
         // Update new Tile in inventory
-        if (_hasInventory)
+        if (HasInventory)
         {
             var result = ConditionManager.Instance.GetState(gLastGroundSelected.GetCurrentStateEnum(),
                 gWhich.GetCurrentStateEnum());
@@ -948,11 +950,11 @@ public class MapManager : MonoBehaviour
 
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
-            if (!_hasInventory)
+            if (!HasInventory)
                 ScreensManager.Instance.GameOver();
-            else if (_hasInventory && !_hasRecycling)
+            else if (HasInventory && !_hasRecycling)
                 ScreensManager.Instance.GameOver();
-            else if (_hasInventory && _hasRecycling && NbOfRecycling <= 0 &&
+            else if (HasInventory && _hasRecycling && NbOfRecycling <= 0 &&
                      SetupUIGround.Instance.CheckIfStillGround())
                 ScreensManager.Instance.GameOver();
         }

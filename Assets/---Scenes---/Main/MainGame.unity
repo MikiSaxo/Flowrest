@@ -2907,7 +2907,7 @@ MonoBehaviour:
   _fBDnd: {fileID: 1588833879}
   _buttonBackwards: {fileID: 160975787}
   _inventoryTilePreview: {fileID: 795526491}
-  _bigParent: {fileID: 1269609028}
+  _bigParentInventory: {fileID: 1269609028}
   _gridParent: {fileID: 943956878}
   _prefabTileButton: {fileID: 4758558417778980639, guid: 8efb05f5f89d514468f4e9f5379a99d5, type: 3}
   _bgInventory: {fileID: 1325435354}
@@ -6274,7 +6274,7 @@ GameObject:
   - component: {fileID: 686570305}
   - component: {fileID: 686570304}
   m_Layer: 5
-  m_Name: Loading Level
+  m_Name: LoadingLevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17169,7 +17169,7 @@ PrefabInstance:
       objectReference: {fileID: 686570303}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 25
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
@@ -17178,11 +17178,11 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: c1f51ebeb5f736b47a3490b6a30d34bf, type: 2}
+      objectReference: {fileID: 11400000, guid: 7fd13ec518d67dc4985087b75ace0132, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 7fd13ec518d67dc4985087b75ace0132, type: 2}
+      objectReference: {fileID: 11400000, guid: c1f51ebeb5f736b47a3490b6a30d34bf, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[2]
       value: 

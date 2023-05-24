@@ -230,6 +230,9 @@ public class ScreensManager : MonoBehaviour
         _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
 
         MapManager.Instance.ActivateArrowIfForceSwap();
+        
+        if(MapManager.Instance.HasInventory)
+            SetupUIGround.Instance.UpdateOpacityInventory(1);
     }
 
     public void UpdatePopUp(bool state)
