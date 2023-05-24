@@ -8,6 +8,7 @@ using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine.Networking;
 
 
@@ -36,6 +37,7 @@ public class MapManager : MonoBehaviour
     public bool IsTutoRecycling { get; set; }
     public bool HasInventory { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
+    public bool OpenMemo { get; private set; }
 
     #endregion
 
@@ -239,6 +241,9 @@ public class MapManager : MonoBehaviour
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
 
+        // Update if open memo
+        OpenMemo = currentLvl.OpenMemo;
+        
         // Update if has Preview
         _hasPrevisu = currentLvl.HasPrevisu;
 
@@ -1072,6 +1077,7 @@ public class MapManager : MonoBehaviour
         LastMoveManager.Instance.ResetGoToLastMove();
         SetupUIGround.Instance.ResetAllButtons();
         ItemCollectedManager.Instance.DeleteAllFB();
+        ScreensManager.Instance.CloseCommandMenu();
 
         IsVictory = false;
         _isFullFloorOrder = false;

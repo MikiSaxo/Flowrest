@@ -13,41 +13,38 @@ public class ScreensManager : MonoBehaviour
 {
     public static ScreensManager Instance;
 
-    [Header("Big Screens")] [SerializeField]
-    private GameObject _bg;
-
+    [Header("Big Screens")] 
+    [SerializeField] private GameObject _bg;
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _nextLevel;
 
-    [Header("Pause")] [SerializeField] private Button _backwardsButton;
+    [Header("Pause")] 
+    [SerializeField] private Button _backwardsButton;
     [SerializeField] private GameObject _menuPauseParent;
-    // [SerializeField] private GameObject _menuPauseTriggered;
 
-    [Header("Order")] [SerializeField] private GameObject _orderMenu;
+    [Header("Order")] 
+    [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
     [SerializeField] private GameObject _orderPrefab;
     [SerializeField] private GameObject _orderTextGrid;
     [SerializeField] private GameObject _orderTextPrefab;
-    [Space(15)] [SerializeField] private List<OrderText> _orderText;
+    [Space(15)] 
+    [SerializeField] private List<OrderText> _orderText;
 
-    [Space(5)] [Header("Dialogs")] [SerializeField]
-    private GameObject _dialogParent;
-
+    [Space(5)] 
+    [Header("Dialogs")] 
+    [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
     [SerializeField] private GameObject _dialogContent;
-    // [SerializeField] private Scrollbar _dialogScrollBar;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
     
-    // [Header("Titles")] [SerializeField] private TextMeshProUGUI _titlesText;
-    // [SerializeField] private string[] _titlesString;
-
-
-    // private TMP_Text _dialogText;
+    [Header("Memo")] [SerializeField] private OpenCloseMenu _memoMenu;
+    
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
     private bool _isDialogTime;
@@ -68,6 +65,7 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
+    private bool _isMemoOpened;
 
     private void Awake()
     {
@@ -156,7 +154,7 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator UpdateGridText()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.2f);
         // Update the grid by force to actualise the grid because it's buggy??
         _orderTextGrid.GetComponent<VerticalLayoutGroup>().spacing = 1;
     }
@@ -227,7 +225,8 @@ public class ScreensManager : MonoBehaviour
 
         _dialogParent.SetActive(false);
 
-        _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
+        // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
+        _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
 
         MapManager.Instance.ActivateArrowIfForceSwap();
         
@@ -253,10 +252,12 @@ public class ScreensManager : MonoBehaviour
         RemoveLastDialog();
 
         _hasPopUp = hasPopUp;
+       
 
         // Set isDialoging and Reset count old dialog
         _isDialogTime = true;
         _countDialog = 0;
+        _isMemoOpened = false;
 
         // Open Dialog Menu
         _dialogParent.SetActive(true);
@@ -304,7 +305,15 @@ public class ScreensManager : MonoBehaviour
     private void SpawnAllDialog()
     {
         if (_dialogsPrefabList.Count != _dialogsList.Count)
+        {
+            if (MapManager.Instance.OpenMemo && _countDialog == 1)
+            {
+                _memoMenu.OpenAnim();
+                _isMemoOpened = true;
+            }
+            
             SpawnDialog();
+        }
         else
             print("all dialogs have spawned");
     }
@@ -503,6 +512,11 @@ public class ScreensManager : MonoBehaviour
             UpdateButtonGoLevelSupp(true);
         else
         {
+            if (MapManager.Instance.OpenMemo && !_isMemoOpened)
+            {
+                _memoMenu.OpenAnim();
+                _isMemoOpened = true;
+            }
             if (!_hasPopUp)
             {
                 EndDialog();
@@ -541,5 +555,10 @@ public class ScreensManager : MonoBehaviour
             if (txt.gameObject != null)
                 Destroy(txt.gameObject);
         }
+    }
+
+    public void CloseCommandMenu()
+    {
+        _orderMenu.GetComponent<OpenCloseMenu>().CloseQuick();
     }
 }

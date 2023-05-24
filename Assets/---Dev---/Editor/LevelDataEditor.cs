@@ -23,6 +23,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty HasRecycling;
     private SerializedProperty HasInfinitRecycling;
     private SerializedProperty NbOfRecycling;
+    private SerializedProperty OpenMemo;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
     private SerializedProperty IsTuto;
@@ -66,6 +67,7 @@ public class LevelDataEditor : Editor
         HasRecycling = serializedObject.FindProperty("HasRecycling");
         HasInfinitRecycling = serializedObject.FindProperty("HasInfinitRecycling");
         NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
+        OpenMemo = serializedObject.FindProperty("OpenMemo");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
         
@@ -103,7 +105,7 @@ public class LevelDataEditor : Editor
 
         DisplayLevel();
         DisplayEnergy();
-        DisplayMechanics();
+        DisplayGPE();
         DisplayQuestChoose();
         DisplayQuestInfo();
         DisplayDialogs();
@@ -147,7 +149,7 @@ public class LevelDataEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
     }
 
-    private void DisplayMechanics()
+    private void DisplayGPE()
     {
         mechanics = EditorGUILayout.BeginFoldoutHeaderGroup(mechanics, "-  GPE  -");
         if (mechanics)
@@ -158,6 +160,7 @@ public class LevelDataEditor : Editor
                 DisplayChooseStartNbState();
 
 
+            EditorGUILayout.PropertyField(OpenMemo);
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
 

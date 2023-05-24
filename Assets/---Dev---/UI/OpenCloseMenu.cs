@@ -15,11 +15,11 @@ public class OpenCloseMenu : MonoBehaviour
     [SerializeField] private bool _isClosed;
     [SerializeField] private bool _isTriggered;
 
-    [SerializeField] private float _cooldownReset;
-    [Header("Aroow FB")]
+    // [SerializeField] private float _cooldownReset;
+    [Header("Arrow FB")]
     [SerializeField] private GameObject _arrowIcon;
     [SerializeField] private float _timeRotateArrow;
-    private float _cooldownToClose;
+    // private float _cooldownToClose;
 
     public bool ForcedOpen { get; set; }
     public bool IsMenuPauseOpen { get; set; }
@@ -68,7 +68,7 @@ public class OpenCloseMenu : MonoBehaviour
         
         if (!_isTriggered) return;
 
-        _cooldownToClose = _cooldownReset;
+        // _cooldownToClose = _cooldownReset;
         OpenAnim();
     }
 
@@ -87,6 +87,12 @@ public class OpenCloseMenu : MonoBehaviour
     {
         if (!IsMenuPauseOpen)
             ForcedOpen = false;
+    }
+
+    public void CloseQuick()
+    {
+        _isClosed = true;
+        _objToMove.transform.position = _tpPoints[0].position;
     }
 
     private void Update()

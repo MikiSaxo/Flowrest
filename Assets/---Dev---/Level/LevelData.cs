@@ -20,6 +20,7 @@ public class LevelData : ScriptableObject
    public bool HasInfinitRecycling;
    public int NbOfRecycling;
    
+   public bool OpenMemo;
    public bool HasPrevisu;
    public bool BlockLastSwap;
 
