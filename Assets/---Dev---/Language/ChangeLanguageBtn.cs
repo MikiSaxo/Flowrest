@@ -12,7 +12,7 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     private void Start()
     {
-        LanguageManager.Instance.ChangeLanguageEvent += FrenchOrEnglish;
+        // LanguageManager.Instance.ChangeLanguageEvent += FrenchOrEnglish;
     }
 
     public void ChangeLanguageButton()
@@ -31,18 +31,26 @@ public class ChangeLanguageBtn : MonoBehaviour
             ChangeToEnglish();
     }
 
-    private void ChangeToFrench()
+    public void ChangeToFrench()
     {
+        if (MapManager.Instance.IsLoading) return;
+        
+        LanguageManager.Instance.ChangeToFrench();
         _flagIcon.sprite = _flags[0];
+        MapManager.Instance.RestartLevel();
     }
 
-    private void ChangeToEnglish()
+    public void ChangeToEnglish()
     {
+        if (MapManager.Instance.IsLoading) return;
+
+        LanguageManager.Instance.ChangeToEnglish();
         _flagIcon.sprite = _flags[1];
+        MapManager.Instance.RestartLevel();
     }
 
     private void OnDisable()
     {
-        LanguageManager.Instance.ChangeLanguageEvent -= FrenchOrEnglish;
+        // LanguageManager.Instance.ChangeLanguageEvent -= FrenchOrEnglish;
     }
 }
