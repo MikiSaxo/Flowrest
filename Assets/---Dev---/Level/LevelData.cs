@@ -20,6 +20,7 @@ public class LevelData : ScriptableObject
    public bool HasInfinitRecycling;
    public int NbOfRecycling;
    
+   public bool OpenMemo;
    public bool HasPrevisu;
    public bool BlockLastSwap;
 
@@ -34,7 +35,6 @@ public class LevelData : ScriptableObject
    
    public string QuestDescription;
    public string QuestDescriptionEnglish;
-   public Sprite QuestImage;
    
    
    public AllStates[] QuestFloor;
@@ -52,6 +52,4 @@ public class LevelData : ScriptableObject
    
    public string[] DialogBeginningEnglish;
    public string[] DialogEndEnglish;
-
-   
 }

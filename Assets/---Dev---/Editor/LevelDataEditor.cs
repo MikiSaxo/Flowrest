@@ -23,6 +23,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty HasRecycling;
     private SerializedProperty HasInfinitRecycling;
     private SerializedProperty NbOfRecycling;
+    private SerializedProperty OpenMemo;
     private SerializedProperty HasPrevisu;
     private SerializedProperty BlockLastSwap;
     private SerializedProperty IsTuto;
@@ -36,7 +37,6 @@ public class LevelDataEditor : Editor
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestDescriptionEnglish;
-    private SerializedProperty QuestImage;
 
     private SerializedProperty QuestFloor;
     private SerializedProperty QuestFlower;
@@ -66,9 +66,10 @@ public class LevelDataEditor : Editor
         HasRecycling = serializedObject.FindProperty("HasRecycling");
         HasInfinitRecycling = serializedObject.FindProperty("HasInfinitRecycling");
         NbOfRecycling = serializedObject.FindProperty("NbOfRecycling");
+        OpenMemo = serializedObject.FindProperty("OpenMemo");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
-        
+
         IsTuto = serializedObject.FindProperty("IsTuto");
         IsTutoRecycling = serializedObject.FindProperty("IsTutoRecycling");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
@@ -80,7 +81,6 @@ public class LevelDataEditor : Editor
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestDescriptionEnglish = serializedObject.FindProperty("QuestDescriptionEnglish");
-        QuestImage = serializedObject.FindProperty("QuestImage");
 
         QuestFloor = serializedObject.FindProperty("QuestFloor");
         QuestFlower = serializedObject.FindProperty("QuestFlower");
@@ -103,7 +103,7 @@ public class LevelDataEditor : Editor
 
         DisplayLevel();
         DisplayEnergy();
-        DisplayMechanics();
+        DisplayGPE();
         DisplayQuestChoose();
         DisplayQuestInfo();
         DisplayDialogs();
@@ -147,7 +147,7 @@ public class LevelDataEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
     }
 
-    private void DisplayMechanics()
+    private void DisplayGPE()
     {
         mechanics = EditorGUILayout.BeginFoldoutHeaderGroup(mechanics, "-  GPE  -");
         if (mechanics)
@@ -158,13 +158,15 @@ public class LevelDataEditor : Editor
                 DisplayChooseStartNbState();
 
 
+            EditorGUILayout.PropertyField(OpenMemo);
             EditorGUILayout.PropertyField(HasPrevisu);
             EditorGUILayout.PropertyField(BlockLastSwap);
 
             EditorGUILayout.Space(5);
 
+            EditorGUILayout.PropertyField(IsTutoRecycling);
             EditorGUILayout.PropertyField(IsTuto);
-            
+
             if (IsTuto.boolValue)
             {
                 if (HasInventory.boolValue)
@@ -181,7 +183,6 @@ public class LevelDataEditor : Editor
         {
             if (IsTuto.boolValue)
             {
-                EditorGUILayout.PropertyField(IsTutoRecycling);
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
                 EditorGUILayout.PropertyField(PreviewMessage);
 
@@ -189,6 +190,7 @@ public class LevelDataEditor : Editor
 
                 EditorGUILayout.PropertyField(PreviewMessageEnglish);
             }
+
             EditorGUILayout.Space(7);
 
             EditorGUILayout.PropertyField(PopUpImages);

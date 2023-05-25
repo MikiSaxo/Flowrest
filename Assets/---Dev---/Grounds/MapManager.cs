@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEditor;
@@ -36,6 +35,7 @@ public class MapManager : MonoBehaviour
     public bool IsTutoRecycling { get; set; }
     public bool HasInventory { get; set; }
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
+    public bool OpenMemo { get; private set; }
 
     #endregion
 
@@ -212,11 +212,18 @@ public class MapManager : MonoBehaviour
         EnergyManager.Instance.ResetEnergy();
         EnergyManager.Instance.StopWaveEffect();
 
+        // Init Start energy
+        var startEnergy = currentLvl.EnergyAtStart;
+        var startNbRecycling = currentLvl.NbOfRecycling;
+        var reduceBySwap = (_countTilesWithCrystal) / 2;
+        if (_countTilesWithCrystal == 1)
+            reduceBySwap = 1;
+        var maxEnergy = startEnergy + _countTilesWithCrystal * 2 - reduceBySwap + startNbRecycling;
+        EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
+        
         // Update if has inventory
         HasInventory = currentLvl.HasInventory;
-        // int alphaInventory = Convert.ToInt32(HasInventory);
         SetupUIGround.Instance.UpdateOpacityInventory(0);
-        // SetupUIGround.Instance.UpdateOpacityInventory(alphaInventory);
 
         // Update if tile at start
         if (currentLvl.StartNbAllState != null && HasInventory)
@@ -239,6 +246,9 @@ public class MapManager : MonoBehaviour
         if (_hasRecycling)
             RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
 
+        // Update if open memo
+        OpenMemo = currentLvl.OpenMemo;
+
         // Update if has Preview
         _hasPrevisu = currentLvl.HasPrevisu;
 
@@ -248,8 +258,9 @@ public class MapManager : MonoBehaviour
         // Update if tuto
         IsTuto = currentLvl.IsTuto;
         SetupUIGround.Instance.SetActiveBackwardsButton(!IsTuto);
-        IsTutoRecycling = false;
-        
+        // IsTutoRecycling = false;
+        IsTutoRecycling = currentLvl.IsTutoRecycling;
+
         if (IsTuto)
         {
             // Set Preview message
@@ -257,8 +268,7 @@ public class MapManager : MonoBehaviour
                 ? currentLvl.PreviewMessage
                 : currentLvl.PreviewMessageEnglish;
 
-            IsTutoRecycling = currentLvl.IsTutoRecycling;
-            
+
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
             {
@@ -387,7 +397,6 @@ public class MapManager : MonoBehaviour
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
 
-
         // Init Level
         InitializeFloor(_mapSize);
     }
@@ -434,15 +443,6 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.InitMaxNbFullFloor(_countNbOfTile);
             _countNbOfTile = 0;
         }
-
-        // Init Start energy
-        var startEnergy = _levelData[_currentLevel].EnergyAtStart;
-        var startNbRecycling = _levelData[_currentLevel].NbOfRecycling;
-        var reduceBySwap = (_countTilesWithCrystal) / 2;
-        if (_countTilesWithCrystal == 1)
-            reduceBySwap = 1;
-        var maxEnergy = startEnergy + _countTilesWithCrystal * 2 - reduceBySwap + startNbRecycling;
-        EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
 
         QuestsManager.CheckQuest();
         // Save all actions
@@ -571,6 +571,15 @@ public class MapManager : MonoBehaviour
         {
             if (button != null)
                 UpdateAllGroundTutoForcePose(true);
+        }
+
+        if (IsTutoRecycling && button != null)
+        {
+            if (!RecyclingManager.Instance.HasInitTutoRecycling)
+            {
+                ScreensManager.Instance.UpdateTutoArrow(false);
+                RecyclingManager.Instance.UpdateArrowTuto(true);
+            }
         }
 
         // Activate Trash can
@@ -879,8 +888,11 @@ public class MapManager : MonoBehaviour
         _wantToRecycle = false;
 
         RecyclingManager.Instance.DeselectRecycle();
-        if(IsTutoRecycling)
+        if (IsTutoRecycling)
+        {
+            RecyclingManager.Instance.HasInitTutoRecycling = true;
             RecyclingManager.Instance.UpdateArrowTuto(false);
+        }
 
         // Save all actions
         LastMoveManager.Instance.SaveNewMap();
@@ -1016,14 +1028,16 @@ public class MapManager : MonoBehaviour
 
         if (!_forceSwapHasFirstTile)
         {
-            _mapGrid[_stockPlayerForceSwap[0].x, _stockPlayerForceSwap[0].y].GetComponent<GroundStateManager>().UpdatePrevisuArrow(true);
+            _mapGrid[_stockPlayerForceSwap[0].x, _stockPlayerForceSwap[0].y].GetComponent<GroundStateManager>()
+                .UpdatePrevisuArrow(true);
             _forceSwapHasFirstTile = true;
             return;
         }
 
         if (!_forceSwapHasSecondTile)
         {
-            _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>().UpdatePrevisuArrow(true);
+            _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>()
+                .UpdatePrevisuArrow(true);
             _forceSwapHasSecondTile = true;
         }
     }
@@ -1040,7 +1054,7 @@ public class MapManager : MonoBehaviour
         if (ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI ||
             MouseHitRaycast.Instance.IsOnGround) return;
 
-        ScreensManager.Instance.UpdateTutoArrow(false);
+        //ScreensManager.Instance.UpdateTutoArrow(false);
 
         if (IsTuto) return;
 
@@ -1072,6 +1086,7 @@ public class MapManager : MonoBehaviour
         LastMoveManager.Instance.ResetGoToLastMove();
         SetupUIGround.Instance.ResetAllButtons();
         ItemCollectedManager.Instance.DeleteAllFB();
+        ScreensManager.Instance.CloseCommandMenu();
 
         IsVictory = false;
         _isFullFloorOrder = false;

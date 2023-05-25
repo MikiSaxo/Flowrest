@@ -80,13 +80,13 @@ public class LanguageManager : MonoBehaviour
             ChangeToFrench();
     }
 
-    private void ChangeToFrench()
+    public void ChangeToFrench()
     {
         Tongue = Language.Francais;
         ChangeLanguageEvent?.Invoke();
     }
 
-    private void ChangeToEnglish()
+    public void ChangeToEnglish()
     {
         Tongue = Language.English;
         ChangeLanguageEvent?.Invoke();
