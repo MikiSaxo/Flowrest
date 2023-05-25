@@ -11,6 +11,11 @@ public class FB_Arrow : MonoBehaviour
     [SerializeField] private Image _imgRnd;
     [SerializeField] private float _baseYPos;
     [SerializeField] private float _timeCycle;
+    
+    private void Start()
+    {
+        Animation();
+    }
 
     public void UpdateArrow(bool state)
     {
@@ -19,11 +24,6 @@ public class FB_Arrow : MonoBehaviour
 
         if (_imgRnd != null)
             _imgRnd.enabled = state;
-
-        if (state)
-            Animation();
-        else
-            transform.DOKill();
     }
 
     private void Animation()

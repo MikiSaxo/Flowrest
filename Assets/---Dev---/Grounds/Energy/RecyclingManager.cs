@@ -11,6 +11,9 @@ public class RecyclingManager : MonoBehaviour
 {
     public static RecyclingManager Instance;
 
+    
+    public bool HasInitTutoRecycling { get; set; }
+
     [SerializeField] private GameObject _recycling;
     [SerializeField] private FB_Arrow _arrowTuto;
     [SerializeField] private TextMeshProUGUI _recyclingNbText;
@@ -29,16 +32,12 @@ public class RecyclingManager : MonoBehaviour
     {
         _recycling.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
-
-        // if (!activateOrNot)
-        //     return;
-
-        //gameObject.GetComponentInChildren<Button>().interactable = true;
     }
 
     public void InitNbRecycling(bool hasInfinit)
     {
         _hasInfinitRecycling = hasInfinit;
+        HasInitTutoRecycling = false;
         // _maxRecycling = number;
         // _currentLeftRecycling = _maxRecycling;
         _recyclingNbText.gameObject.SetActive(!_hasInfinitRecycling);

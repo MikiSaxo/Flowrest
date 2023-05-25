@@ -272,6 +272,9 @@ public class ScreensManager : MonoBehaviour
         if (_dialogsPrefabList.Count != 0)
             _dialogsPrefabList.Clear();
 
+        // set if it's victory dialog
+        _isTheEnd = isTheEnd;
+        
         if (dialogs.Length == 0 && !isTheEnd)
         {
             dialogs = new[] { " " };
@@ -285,9 +288,6 @@ public class ScreensManager : MonoBehaviour
         {
             _dialogsList.Add(dialog);
         }
-
-        // set if it's victory dialog
-        _isTheEnd = isTheEnd;
 
         if (!isTheEnd)
             UpdateButtonGoLevelSupp(false);
@@ -527,7 +527,6 @@ public class ScreensManager : MonoBehaviour
             {
                 UpdatePopUp(true);
             }
-
             EnergyManager.Instance.LaunchAnimEnergy();
         }
     }
