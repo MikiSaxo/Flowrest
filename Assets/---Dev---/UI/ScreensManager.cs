@@ -527,6 +527,8 @@ public class ScreensManager : MonoBehaviour
             {
                 UpdatePopUp(true);
             }
+
+            EnergyManager.Instance.LaunchAnimEnergy();
         }
     }
 

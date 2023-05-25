@@ -53,10 +53,9 @@ public class EnergyManager : MonoBehaviour
     public void InitEnergy(int startEnergy, int maxEnergy)
     {
         _energyValue = startEnergy;
-        StartCoroutine(AnimInitEnergy(startEnergy));
         _energyBar.value = 0;
         _hitEnergyBar.value = 0;
-        _numberToDisplay.text = $"{0}";
+        _numberToDisplay.text = $"0";
         _currentEnergy = _energyValue;
         _maxEnergy = maxEnergy;
         _hasInitTutoRecycling = false;
@@ -77,10 +76,15 @@ public class EnergyManager : MonoBehaviour
         _hitEnergyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
     }
 
+    public void LaunchAnimEnergy()
+    {
+        StartCoroutine(AnimInitEnergy(_currentEnergy));
+    }
+
     IEnumerator AnimInitEnergy(int energy)
     {
         _isInit = true;
-        yield return new WaitForSeconds(_timeToFillEnergy);
+        // yield return new WaitForSeconds(_timeToFillEnergy);
 
         if (energy > 0)
         {
@@ -205,10 +209,10 @@ public class EnergyManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            ReduceEnergyBySwap();
-        if (Input.GetKeyDown(KeyCode.R))
-            EarnEnergyByCrystal();
+        // if (Input.GetKeyDown(KeyCode.F))
+        //     ReduceEnergyBySwap();
+        // if (Input.GetKeyDown(KeyCode.R))
+        //     EarnEnergyByCrystal();
     }
 
     private void BounceEnergy()
