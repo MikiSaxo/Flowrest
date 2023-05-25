@@ -258,7 +258,6 @@ public class MapManager : MonoBehaviour
         // Update if tuto
         IsTuto = currentLvl.IsTuto;
         SetupUIGround.Instance.SetActiveBackwardsButton(!IsTuto);
-        // IsTutoRecycling = false;
         IsTutoRecycling = currentLvl.IsTutoRecycling;
 
         if (IsTuto)
@@ -384,10 +383,12 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if PopUp
-        if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.PopUpImages);
+        // if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.FileNamePopUp);
+        if(currentLvl.FileNamePopUp != String.Empty)
+            PopUpManager.Instance.InitPopUp(currentLvl.FileNamePopUp);
 
         // Update Dialogs
-        var hasPopUp = currentLvl.PopUpImages.Length > 0;
+        bool hasPopUp = currentLvl.FileNamePopUp != String.Empty;
 
         if (LanguageManager.Instance.Tongue == Language.Francais)
             ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp);

@@ -32,6 +32,7 @@ public class LevelData : ScriptableObject
    public bool HasForcePoseBlocAfterSwap;
    public Vector2Int ForcePoseBlocCoord;
    public Sprite[] PopUpImages;
+   public string FileNamePopUp;
    
    public string QuestDescription;
    public string QuestDescriptionEnglish;
