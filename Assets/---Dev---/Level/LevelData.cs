@@ -35,7 +35,6 @@ public class LevelData : ScriptableObject
    
    public string QuestDescription;
    public string QuestDescriptionEnglish;
-   public Sprite QuestImage;
    
    
    public AllStates[] QuestFloor;
@@ -53,6 +52,4 @@ public class LevelData : ScriptableObject
    
    public string[] DialogBeginningEnglish;
    public string[] DialogEndEnglish;
-
-   
 }

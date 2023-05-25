@@ -37,7 +37,6 @@ public class LevelDataEditor : Editor
 
     private SerializedProperty QuestDescription;
     private SerializedProperty QuestDescriptionEnglish;
-    private SerializedProperty QuestImage;
 
     private SerializedProperty QuestFloor;
     private SerializedProperty QuestFlower;
@@ -70,7 +69,7 @@ public class LevelDataEditor : Editor
         OpenMemo = serializedObject.FindProperty("OpenMemo");
         HasPrevisu = serializedObject.FindProperty("HasPrevisu");
         BlockLastSwap = serializedObject.FindProperty("BlockLastSwap");
-        
+
         IsTuto = serializedObject.FindProperty("IsTuto");
         IsTutoRecycling = serializedObject.FindProperty("IsTutoRecycling");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
@@ -82,7 +81,6 @@ public class LevelDataEditor : Editor
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
         QuestDescriptionEnglish = serializedObject.FindProperty("QuestDescriptionEnglish");
-        QuestImage = serializedObject.FindProperty("QuestImage");
 
         QuestFloor = serializedObject.FindProperty("QuestFloor");
         QuestFlower = serializedObject.FindProperty("QuestFlower");
@@ -166,8 +164,9 @@ public class LevelDataEditor : Editor
 
             EditorGUILayout.Space(5);
 
+            EditorGUILayout.PropertyField(IsTutoRecycling);
             EditorGUILayout.PropertyField(IsTuto);
-            
+
             if (IsTuto.boolValue)
             {
                 if (HasInventory.boolValue)
@@ -184,7 +183,6 @@ public class LevelDataEditor : Editor
         {
             if (IsTuto.boolValue)
             {
-                EditorGUILayout.PropertyField(IsTutoRecycling);
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
                 EditorGUILayout.PropertyField(PreviewMessage);
 
@@ -192,6 +190,7 @@ public class LevelDataEditor : Editor
 
                 EditorGUILayout.PropertyField(PreviewMessageEnglish);
             }
+
             EditorGUILayout.Space(7);
 
             EditorGUILayout.PropertyField(PopUpImages);
