@@ -10,13 +10,22 @@ public class LanguageUI : MonoBehaviour
     [SerializeField] private TMP_Text _orderTextButton;
     [SerializeField] private TMP_Text _memoTextButton;
 
-    [Header("Pause Menu")]
-    [SerializeField] private TMP_Text _languageTextButton;
-    [SerializeField] private TMP_Text _resumeTextButton;
-    
     [Header("Victory - Defeat")] 
     [SerializeField] private TMP_Text _victoryText;
     [SerializeField] private TMP_Text _gameOverText;
+    
+    [Header("Pause Menu")]
+    [SerializeField] private TMP_Text _resumeTextButton;
+    [SerializeField] private TMP_Text _quitTextButton;
+
+    [Header("Option Menu")]
+    [SerializeField] private TMP_Text _musicTextButton;
+    [SerializeField] private TMP_Text _sfxTextButton;
+    [SerializeField] private TMP_Text _controlsTextButton;
+    [SerializeField] private TMP_Text _languageTextButton;
+    [SerializeField] private TMP_Text _creditsTextButton;
+    [SerializeField] private TMP_Text _backButtonTextButton;
+    
 
 
     // [Header("Recycle")]
@@ -41,5 +50,16 @@ public class LanguageUI : MonoBehaviour
         // _recycleTextButton.text = _languageManager.GetRecycleText();
         _victoryText.text = _languageManager.GetVictoryText();
         _gameOverText.text = _languageManager.GetGameOverText();
+        _quitTextButton.text = _languageManager.GetQuitButtonText();
+        _musicTextButton.text = _languageManager.GetMusicText();
+        _sfxTextButton.text = _languageManager.GetSfxText();
+        _controlsTextButton.text = _languageManager.GetControlsText();
+        _creditsTextButton.text = _languageManager.GetCreditsText();
+        _backButtonTextButton.text = _languageManager.GetBackButtonText();
+    }
+
+    private void OnDisable()
+    {
+        _languageManager.ChangeLanguageEvent -= ChangeLanguage;
     }
 }

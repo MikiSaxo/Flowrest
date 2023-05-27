@@ -381,6 +381,9 @@ public class ScreensManager : MonoBehaviour
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
+        
+        if(_isDialogTime) return;
+        
         StartCoroutine(WaitToUnlockMouse(state));
     }
 
