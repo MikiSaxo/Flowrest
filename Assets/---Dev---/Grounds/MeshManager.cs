@@ -19,46 +19,47 @@ public class MeshManager : MonoBehaviour
     [SerializeField] private Texture2D _textureBored;
     [SerializeField] private Color _boredColor;
 
-    [Header("Props")] [SerializeField] private StockProps[] _stockProps;
+    [Header("Variations")]
+    [SerializeField] private MeshVariations[] _meshVariations;
 
     private Material[] _matt = new Material[2];
     private Material[] _propsMat;
     private Color[] _propsStartColor = new Color[0];
     private TileState _currentTileState;
-
-    [Header("Variations")] [SerializeField]
-    private GameObject[] _props;
-
-    [SerializeField] private GameObject[] _crystals;
-
     private GameObject _currentCrystal;
+    private int _randomNb;
 
     private void Awake()
     {
-        if (_crystals.Length == 0 && _props.Length == 0) return;
+        if (_meshVariations.Length == 0) return;
 
         DeactivateAllProps8Crystal();
 
         int randomNumber = 0;
-        randomNumber = Random.Range(0, _crystals.Length != 0 ? _crystals.Length : _props.Length);
-
-        if (_crystals.Length > 0)
+        randomNumber = Random.Range(0, _meshVariations.Length);
+        _randomNb = randomNumber;
+        
+        if (_meshVariations.Length > 0)
         {
-            _currentCrystal = _crystals[randomNumber];
+            _currentCrystal = _meshVariations[randomNumber].Crystals;
             if (GetComponentInParent<CrystalsGround>() != null)
             {
-                GetComponentInParent<CrystalsGround>().ChangeCrystal(_crystals[randomNumber]);
+                GetComponentInParent<CrystalsGround>().ChangeCrystal(_meshVariations[randomNumber].Crystals);
             }
         }
 
-        _props[randomNumber].SetActive(true);
+        _meshVariations[randomNumber].Props.SetActive(true);
+        
         _matt[0] = _supportMesh[0].material;
         _matt[1] = _supportMesh[1].material;
 
 
-        if (_stockProps.Length > 0)
+        if (_meshVariations.Length > 0)
         {
-            _propsMat = _stockProps[randomNumber].GetProps();
+            _propsMat = _meshVariations[randomNumber].Props.GetComponent<StockProps>().GetProps();
+            
+            if (_propsMat == null) return;
+            
             _propsStartColor = new Color[_propsMat.Length];
 
             for (int i = 0; i < _propsMat.Length; i++)
@@ -75,14 +76,10 @@ public class MeshManager : MonoBehaviour
 
     private void DeactivateAllProps8Crystal()
     {
-        foreach (var crystal in _crystals)
+        foreach (var variation in _meshVariations)
         {
-            crystal.SetActive(false);
-        }
-
-        foreach (var prop in _props)
-        {
-            prop.SetActive(false);
+            variation.Props.SetActive(false);
+            variation.Crystals.SetActive(false);
         }
     }
 
@@ -147,5 +144,10 @@ public class MeshManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public GameObject GetSpecificParticule()
+    {
+        return _meshVariations[_randomNb].Particules;
     }
 }

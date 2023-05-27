@@ -621,6 +621,20 @@ MonoBehaviour:
   - {fileID: 7269202787068350240}
   - {fileID: 4175440251710104169}
   - {fileID: 8961813517882577895}
+  _specificParticules:
+  - {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
+  - {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
+  - {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
+  _meshVariations:
+  - Props: {fileID: 7099698457342365657}
+    Crystals: {fileID: 7269202787068350240}
+    Particules: {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
+  - Props: {fileID: 2083877171702929717}
+    Crystals: {fileID: 4175440251710104169}
+    Particules: {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
+  - Props: {fileID: 4643363624825336442}
+    Crystals: {fileID: 8961813517882577895}
+    Particules: {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
 --- !u!114 &1245440750826707901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,7 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265ac514e25381c40bd5ea36b3f954fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particulePrefab: {fileID: 2306479643104262367, guid: d463576f4009a5341a01647f71a16f2a, type: 3}
   _particuleParent: {fileID: 384049590547413852}
   _timeSpawnMin: 7
   _timeSpawnMax: 15
