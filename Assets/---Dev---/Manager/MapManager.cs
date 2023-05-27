@@ -126,9 +126,9 @@ public class MapManager : MonoBehaviour
         dico.Add(SWAMP, AllStates.__Viscosa__);
         dico.Add(MOUNTAIN, AllStates.__Pyreneos__);
 
-        if (BigManager.Instance != null)
+        if (LevelProgressionManager.Instance != null)
         {
-            _currentLevel = BigManager.Instance.CurrentLevel;
+            _currentLevel = LevelProgressionManager.Instance.CurrentLevel;
             // Check if not too High
             if (_currentLevel >= _levelData.Length)
                 _currentLevel = _levelData.Length - 1;
@@ -546,8 +546,8 @@ public class MapManager : MonoBehaviour
         {
             _currentLevel++;
 
-            if (BigManager.Instance != null)
-                BigManager.Instance.CurrentLevel++;
+            if (LevelProgressionManager.Instance != null)
+                LevelProgressionManager.Instance.CurrentLevel++;
         }
 
         StartCoroutine(CheckFileMap());

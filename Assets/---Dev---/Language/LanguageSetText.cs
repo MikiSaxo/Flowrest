@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LanguageUI : MonoBehaviour
+public class LanguageSetText : MonoBehaviour
 {
     [Header("Order - Memo")] 
     [SerializeField] private TMP_Text _orderTextButton;

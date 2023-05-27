@@ -25,13 +25,13 @@ public class LevelButton : MonoBehaviour
     {
         if(MainMenuManager.Instance.IsLoading) return;
         
-        if (BigManager.Instance == null)
+        if (LevelProgressionManager.Instance == null)
         {
             print("Didn't found ----BigManager----");
             return;
         }
 
-        BigManager.Instance.CurrentLevel = _levelNumber-1;
+        LevelProgressionManager.Instance.CurrentLevel = _levelNumber-1;
         MainMenuManager.Instance.LaunchMainScene();
     }
 

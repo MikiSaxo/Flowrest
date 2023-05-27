@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigManager : MonoBehaviour
+public class LevelProgressionManager : MonoBehaviour
 {
-    public static BigManager Instance;
+    public static LevelProgressionManager Instance;
 
     public int CurrentLevel { get; set; }
     public int LevelUnlocked { get; set; }

@@ -212,10 +212,10 @@ public class ScreensManager : MonoBehaviour
 
         SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
 
-        if (BigManager.Instance != null)
+        if (LevelProgressionManager.Instance != null)
         {
-            if(BigManager.Instance.CurrentLevel >= BigManager.Instance.LevelUnlocked)  
-                BigManager.Instance.LevelUnlocked++;
+            if(LevelProgressionManager.Instance.CurrentLevel >= LevelProgressionManager.Instance.LevelUnlocked)  
+                LevelProgressionManager.Instance.LevelUnlocked++;
         }
     }
 
