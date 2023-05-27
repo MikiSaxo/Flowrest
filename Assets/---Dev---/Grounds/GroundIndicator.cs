@@ -104,7 +104,7 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.IsSwapping) return;
 
         _isEnteredLimited = true;
-
+        AudioManager.Instance.PlaySFX("TileEntered");
 
         if (_isSelected || IsSwapping)
         {
@@ -171,7 +171,8 @@ public class GroundIndicator : MonoBehaviour
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
-            
+            AudioManager.Instance.PlaySFX("TileSelected");
+
             // Reset Recycle if was selected
             MapManager.Instance.ResetWantToRecycle();
             RecyclingManager.Instance.DeselectRecycle();

@@ -381,11 +381,13 @@ public class ScreensManager : MonoBehaviour
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
-        MouseHitRaycast.Instance.IsBlockMouse(state);
-        // _menuPauseTriggered.GetComponent<OpenCloseMenu>().IsMenuPauseOpen = state;
+        StartCoroutine(WaitToUnlockMouse(state));
+    }
 
-        // if (!state)
-        //     _menuPauseTriggered.GetComponent<OpenCloseMenu>().ForcedOpen = false;
+    IEnumerator WaitToUnlockMouse(bool state)
+    {
+        yield return new WaitForSeconds(.1f);
+        MouseHitRaycast.Instance.IsBlockMouse(state);
     }
 
     public void UpdateDialogFB(bool state)
