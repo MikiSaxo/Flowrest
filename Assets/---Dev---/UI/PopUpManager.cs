@@ -23,7 +23,13 @@ public class PopUpManager : MonoBehaviour
         if (fileName == String.Empty) return;
         
         string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{fileName}.mp4");
-        
+
+        if (!File.Exists(videoPath))
+        {
+            Debug.LogError("Video PopUp Name doesn't exist");
+            return;
+        }
+
         _videoPlayer.url = videoPath;
         _videoPlayer.Play();
     }
