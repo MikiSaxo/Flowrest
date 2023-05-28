@@ -215,12 +215,14 @@ public class MapManager : MonoBehaviour
         // Init Start energy
         var startEnergy = currentLvl.EnergyAtStart;
         var startNbRecycling = currentLvl.NbOfRecycling;
+        _countTilesWithCrystal = _mapConstructData.Coords.Count;
         var reduceBySwap = (_countTilesWithCrystal) / 2;
         if (_countTilesWithCrystal == 1)
             reduceBySwap = 1;
         var maxEnergy = startEnergy + _countTilesWithCrystal * 2 - reduceBySwap + startNbRecycling;
         EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
-        
+        EnergyManager.Instance.LaunchAnimEnergy();
+
         // Update if has inventory
         HasInventory = currentLvl.HasInventory;
         SetupUIGround.Instance.UpdateOpacityInventory(0);
@@ -413,7 +415,6 @@ public class MapManager : MonoBehaviour
         TransiManager.Instance.LaunchShrink();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink() / 2);
         _countNbOfTile = 0;
-        _countTilesWithCrystal = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
 
         for (int x = 0; x < sizeMap.x; x++)
@@ -502,7 +503,6 @@ public class MapManager : MonoBehaviour
             if (crystalsCoords.x != x || crystalsCoords.y != y) continue;
 
             which.GetComponent<CrystalsGround>().InitCrystal();
-            _countTilesWithCrystal++;
             return;
         }
 
@@ -950,25 +950,22 @@ public class MapManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.02f);
 
-        // bool inventory = EnergyManager.Instance.IsEnergyInferiorToCostLandingGround() || !_hasInventory;
-        //
-        // if (EnergyManager.Instance.IsEnergyInferiorToCostSwap()
-        //     && inventory
-        //     && !SetupUIGround.Instance.CheckIfStillGround())
-        // {
-        //     ScreensManager.Instance.GameOver();
-        // }
-
         if (IsVictory) yield break;
 
+        // If no energy left
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0)
         {
+            // If no Inventory
             if (!HasInventory)
                 ScreensManager.Instance.GameOver();
+            // If has Inventory and no recycling
             else if (HasInventory && !_hasRecycling)
                 ScreensManager.Instance.GameOver();
-            else if (HasInventory && _hasRecycling && NbOfRecycling <= 0 &&
-                     SetupUIGround.Instance.CheckIfStillGround())
+            // If has Inventory and has recycling and no ground left and nb recycling more than 0
+            else if (HasInventory && _hasRecycling && !SetupUIGround.Instance.CheckIfStillGround() && NbOfRecycling > 0)
+                ScreensManager.Instance.GameOver();
+            // If has Inventory and has recycling and no recycling left
+            else if (HasInventory && _hasRecycling && NbOfRecycling <= 0)
                 ScreensManager.Instance.GameOver();
         }
     }

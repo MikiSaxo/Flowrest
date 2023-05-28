@@ -195,7 +195,7 @@ public class SetupUIGround : MonoBehaviour
 
     public bool CheckIfStillGround()
     {
-        return _stockTileButton.Count != 0;
+        return _stockTileButton.Count > 0;
     }
 
     public void ResetAllButtons()

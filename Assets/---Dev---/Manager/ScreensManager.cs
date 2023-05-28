@@ -219,21 +219,6 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
-    private void EndDialog()
-    {
-        MouseHitRaycast.Instance.IsBlockMouse(false);
-
-        _dialogParent.SetActive(false);
-
-        // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
-        _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
-
-        MapManager.Instance.ActivateArrowIfForceSwap();
-        
-        if(MapManager.Instance.HasInventory)
-            SetupUIGround.Instance.UpdateOpacityInventory(1);
-    }
-
     public void UpdatePopUp(bool state)
     {
         PopUpManager.Instance.UpdatePopUp(state);
@@ -299,6 +284,8 @@ public class ScreensManager : MonoBehaviour
             return;
         }
 
+        _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
+
         SpawnAllDialog();
     }
 
@@ -352,7 +339,20 @@ public class ScreensManager : MonoBehaviour
 
         _countDialog++;
     }
+    
+    private void EndDialog()
+    {
+        MouseHitRaycast.Instance.IsBlockMouse(false);
 
+        _dialogParent.SetActive(false);
+
+        // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
+
+        MapManager.Instance.ActivateArrowIfForceSwap();
+        
+        if(MapManager.Instance.HasInventory)
+            SetupUIGround.Instance.UpdateOpacityInventory(1);
+    }
     public void GameOver()
     {
         _bg.SetActive(true);
@@ -532,7 +532,6 @@ public class ScreensManager : MonoBehaviour
             {
                 UpdatePopUp(true);
             }
-            EnergyManager.Instance.LaunchAnimEnergy();
         }
     }
 
