@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
     
     public void PlayMusic(string name)
     {
-        print($"Launch {name} music");
+        // print($"Launch {name} music");
         Sounds s = Array.Find(Musics, sound => sound.Name == name);
         if (s == null)
         {
@@ -86,7 +86,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(string name)
     {
-        print($"Launch {name} sfx");
+        // print($"Launch {name} sfx");
         Sounds s = Array.Find(SFX, sound => sound.Name == name);
         if (s == null)
         {
