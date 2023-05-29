@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MouseHitRaycast : MonoBehaviour
@@ -10,7 +11,6 @@ public class MouseHitRaycast : MonoBehaviour
     public bool IsOnGround { get; set; }
 
     private Vector3 _worldPosition;
-    private Plane _plane = new Plane(Vector3.up, 0);
     private bool _isOnIndicator;
     private bool _isOnUI;
     private bool _isBlocked;
@@ -30,8 +30,15 @@ public class MouseHitRaycast : MonoBehaviour
     {
         if (_isBlocked || MapManager.Instance.IsPosing) return;
 
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(MapManager.Instance.IsAndroid)
+            DetectTileAndroid();
+        else
+            DetectTile();
+    }
 
+    private void DetectTile()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _layerToHit))
         {
             var newBloc = hit.collider.gameObject.GetComponentInParent<GroundIndicator>();
@@ -68,6 +75,55 @@ public class MouseHitRaycast : MonoBehaviour
         }
     }
 
+    private void DetectTileAndroid()
+    {
+        if (!Input.GetMouseButtonDown(0)) return;
+
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _layerToHit))
+        {
+            var newBloc = hit.collider.gameObject.GetComponentInParent<GroundIndicator>();
+
+            if (newBloc == null)
+            {
+                if (_lastGroundHit != null)
+                {
+                    _lastGroundHit.OnExitPointer();
+                }
+
+                MapManager.Instance.ResetBig();
+
+                if (!MapManager.Instance.IsOnUI)
+                    StartCoroutine(WaitToResetRecycle());
+
+                _lastCoordsHit = new Vector2Int(-1000, -1000);
+
+                return;
+            }
+
+            if (MapManager.Instance.LastObjButtonSelected == null)
+            {
+                if (_lastGroundHit != null && _lastCoordsHit == newBloc.GetParentCoords() &&
+                    _lastGroundHit == newBloc &&
+                    MapManager.Instance.LastGroundSelected.GetComponent<GroundStateManager>().GetCoords() ==
+                    _lastCoordsHit)
+                {
+                    _lastGroundHit.OnExitPointer();
+                    MapManager.Instance.ResetBig();
+                    return;
+                }
+            }
+
+
+            if (_lastGroundHit != null && _lastCoordsHit != newBloc.GetParentCoords())
+                _lastGroundHit.OnExitPointer();
+
+            _lastCoordsHit = newBloc.GetParentCoords();
+            _lastGroundHit = newBloc;
+            _lastGroundHit.OnEnterPointer();
+        }
+    }
+
     IEnumerator WaitToResetRecycle()
     {
         yield return new WaitForSeconds(.1f);
@@ -98,6 +154,6 @@ public class MouseHitRaycast : MonoBehaviour
     public void ResetLastGroundHit()
     {
         _lastGroundHit = null;
-        _lastCoordsHit = Vector2Int.down*1000;
+        _lastCoordsHit = Vector2Int.down * 1000;
     }
 }

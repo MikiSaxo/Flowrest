@@ -23,6 +23,7 @@ public class MapManager : MonoBehaviour
 
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
+    public GameObject LastGroundSelected { get; set; }
     public bool IsGroundFirstSelected { get; set; }
     public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }
@@ -42,7 +43,10 @@ public class MapManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject _map = null;
     [SerializeField] private GameObject _groundPrefab = null;
     [SerializeField] private float _distance;
-    [SerializeField] private GameObject _loadingText;
+
+    [Header("Android")] public bool IsAndroid;
+    
+    [Header("HTML")][SerializeField] private GameObject _loadingText;
 
     [Header("Choose Start Level Index")] [SerializeField]
     private int _currentLevel;
@@ -70,7 +74,6 @@ public class MapManager : MonoBehaviour
     private Vector2Int _lastGroundCoordsSelected;
     private Vector2Int _coordsForcePoseBloc;
     private GameObject[,] _mapGrid;
-    private GameObject _lastGroundSelected;
     private Image _recycleImg;
     private AllStates _secondLastGroundSelected;
     private int _countNbOfTile;
@@ -661,17 +664,17 @@ public class MapManager : MonoBehaviour
         }
 
         // Update map
-        _mapGrid[newCoords.x, newCoords.y] = _lastGroundSelected;
+        _mapGrid[newCoords.x, newCoords.y] = LastGroundSelected;
         _mapGrid[_lastGroundCoordsSelected.x, _lastGroundCoordsSelected.y] = which;
 
         // Get position
-        var lastSelecPos = _lastGroundSelected.transform.position;
+        var lastSelecPos = LastGroundSelected.transform.position;
         var whichPos = which.transform.position;
         // (_lastGroundSelected.transform.position, which.transform.position) =
         //     (which.transform.position, _lastGroundSelected.transform.position);
 
         // Get GroundStateManager 
-        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
+        var gLastGroundSelected = LastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
 
         // Make them swapping true to security for non wished moves
@@ -679,7 +682,7 @@ public class MapManager : MonoBehaviour
         gWhich.UpdateIsSwapping(true);
 
         // Kill their tween
-        _lastGroundSelected.transform.DOKill();
+        LastGroundSelected.transform.DOKill();
         which.transform.DOKill();
 
         // Go to enter Y Pos
@@ -687,7 +690,7 @@ public class MapManager : MonoBehaviour
         gWhich.GetIndicator().GetComponent<GroundIndicator>().OnEnterAnim(0);
 
         // Make them jump with tween 
-        _lastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
+        LastGroundSelected.transform.DOJump(whichPos, 10, 1, _timeToSwap);
         which.transform.DOJump(lastSelecPos, 15, 1, _timeToSwap);
 
         // Kill the preview
@@ -718,13 +721,13 @@ public class MapManager : MonoBehaviour
         //Launch FX
         gLastGroundSelected.LaunchDropFX();
         // Earn energy if has Crystals
-        if (_lastGroundSelected != null)
+        if (LastGroundSelected != null)
         {
-            if (_lastGroundSelected.GetComponent<CrystalsGround>().GetIfHasCrystal())
+            if (LastGroundSelected.GetComponent<CrystalsGround>().GetIfHasCrystal())
             {
                 // _TileHasCrystal = true;
-                _lastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
-                ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, _lastGroundSelected.transform.position);
+                LastGroundSelected.GetComponent<CrystalsGround>().UpdateCrystals(false, false);
+                ItemCollectedManager.Instance.SpawnFBEnergyCollected(1, LastGroundSelected.transform.position);
             }
         }
 
@@ -811,7 +814,7 @@ public class MapManager : MonoBehaviour
         ResetPreview();
 
         // Get GroundStateManager 
-        var gLastGroundSelected = _lastGroundSelected.GetComponent<GroundStateManager>();
+        var gLastGroundSelected = LastGroundSelected.GetComponent<GroundStateManager>();
         var gWhich = which.GetComponent<GroundStateManager>();
 
         // Protect these blocs a transformation
@@ -918,7 +921,7 @@ public class MapManager : MonoBehaviour
         // Reset to start from scratch
         ResetGroundSelected();
         // Update lastSelected if need to call Swap() after
-        _lastGroundSelected = which;
+        LastGroundSelected = which;
         _lastGroundCoordsSelected = coords;
     }
 
@@ -933,7 +936,7 @@ public class MapManager : MonoBehaviour
     {
         if (LastObjButtonSelected != null) return;
 
-        if (_lastGroundSelected != null)
+        if (LastGroundSelected != null)
             GroundSwap(which, newCoords);
         else
             CheckAroundGroundSelected(which, newCoords);
@@ -972,8 +975,8 @@ public class MapManager : MonoBehaviour
 
     public AllStates GetLastStateSelected()
     {
-        return _lastGroundSelected != null
-            ? _lastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
+        return LastGroundSelected != null
+            ? LastGroundSelected.GetComponent<GroundStateManager>().GetCurrentStateEnum()
             : LastStateButtonSelected;
     }
 
@@ -994,7 +997,7 @@ public class MapManager : MonoBehaviour
 
     public bool GetHasGroundSelected()
     {
-        return _lastGroundSelected;
+        return LastGroundSelected;
     }
 
     public bool GetHasFirstSwap()
@@ -1068,6 +1071,7 @@ public class MapManager : MonoBehaviour
         ResetPreview();
         ResetGroundSelected();
         SetupUIGround.Instance.EndFb();
+        MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
     public void ResetAllMap(bool nextLevel)
@@ -1127,12 +1131,12 @@ public class MapManager : MonoBehaviour
 
     public void ResetGroundSelected()
     {
-        if (_lastGroundSelected != null)
-            _lastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
-        _lastGroundSelected = null;
+        if (LastGroundSelected != null)
+            LastGroundSelected.GetComponent<GroundStateManager>().ResetIndicator();
+        LastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
 
-        MouseHitRaycast.Instance.ResetLastGroundHit();
+       // MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
     public void ResetAllSelection()
