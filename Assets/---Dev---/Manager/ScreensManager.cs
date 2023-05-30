@@ -300,7 +300,6 @@ public class ScreensManager : MonoBehaviour
             {
                 _memoMenu.OpenAnim();
                 StartCoroutine(WaitToLaunchMemoOpening());
-                _isMemoOpened = true;
             }
             
             SpawnDialog();
@@ -525,7 +524,6 @@ public class ScreensManager : MonoBehaviour
             {
                 _memoMenu.OpenAnim();
                 StartCoroutine(WaitToLaunchMemoOpening());
-                _isMemoOpened = true;
             }
             if (!_hasPopUp)
             {
@@ -574,6 +572,7 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator WaitToLaunchMemoOpening()
     {
+        _isMemoOpened = true;
         yield return new WaitForSeconds(.5f);
         _memoWaveEffect.StartGrowOneTime();
     }

@@ -16,6 +16,7 @@ public class LegendScroll : MonoBehaviour
 
     [Header("Page")] [SerializeField] private GameObject _gridPage;
     [SerializeField] private GameObject _pagePrefab;
+    [SerializeField] private GameObject _arrows;
     [SerializeField] private Sprite[] _sprPage;
 
     private List<GameObject> _stockPagePrefab = new List<GameObject>();
@@ -34,40 +35,63 @@ public class LegendScroll : MonoBehaviour
     public void InitLegend(Sprite[] allSprites)
     {
         _sprLegend = allSprites;
-        UpdateLegend();
         _isVideoLegend = false;
+        UpdateLegend();
     }
 
     public void InitVideoLegend(PopUpInfos[] popUpInfos)
     {
         _popUpInfos = popUpInfos;
         _isVideoLegend = true;
+
+        if (popUpInfos.Length > 1)
+        {
+            UpdateLegend();
+        }
+        else
+        {
+            _gridPage.SetActive(false);
+            if(_arrows != null)
+                _arrows.SetActive(false);
+        }
     }
 
     private void UpdateLegend()
     {
-        for (int i = 0; i < _sprLegend.Length; i++)
-        {
-            GameObject go = Instantiate(_pagePrefab, _gridPage.transform);
-            _stockPagePrefab.Add(go);
-        }
-
         _count = 0;
-
+        
         if (!_isVideoLegend)
         {
+            for (int i = 0; i < _sprLegend.Length; i++)
+            {
+                GameObject go = Instantiate(_pagePrefab, _gridPage.transform);
+                _stockPagePrefab.Add(go);
+            }
+
             _imgLegend.sprite = _sprLegend[_count];
-            _stockPagePrefab[0].GetComponent<Image>().sprite = _sprPage[_count];
         }
         else
         {
+            for (int i = 0; i < _popUpInfos.Length; i++)
+            {
+                GameObject go = Instantiate(_pagePrefab, _gridPage.transform);
+                _stockPagePrefab.Add(go);
+            }
         }
+        
+        _gridPage.SetActive(true);
+        if(_arrows != null)
+            _arrows.SetActive(true);
+
+        // Fill first page
+        _stockPagePrefab[0].GetComponent<Image>().sprite = _sprPage[_count];
 
         CheckIfEndOfLegend();
     }
 
     public void MoveToLeft()
     {
+        // Change the page indicator to empty 
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[1];
 
         _count--;
@@ -88,6 +112,7 @@ public class LegendScroll : MonoBehaviour
                 _popUpInfos[_count].Description);
         }
 
+        // Fill the new page indicator
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[0];
 
         CheckIfEndOfLegend();
@@ -95,7 +120,7 @@ public class LegendScroll : MonoBehaviour
 
     public void MoveToRight()
     {
-        // Change
+        // Change the page indicator to empty 
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[1];
 
         _count++;
@@ -116,6 +141,7 @@ public class LegendScroll : MonoBehaviour
                 _popUpInfos[_count].Description);
         }
 
+        // Fill the new page indicator
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[0];
 
         CheckIfEndOfLegend();

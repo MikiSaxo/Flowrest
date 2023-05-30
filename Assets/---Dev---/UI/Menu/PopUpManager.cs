@@ -25,7 +25,7 @@ public class PopUpManager : MonoBehaviour
         Instance = this;
     }
 
-    public void InitPopUp(PopUpInfos[] filesName)
+    public void InitPopUp(PopUpInfos[] popUpInfos)
     {
         // _canOpenPopUp = false;
         //
@@ -43,7 +43,10 @@ public class PopUpManager : MonoBehaviour
         // _videoPlayer.url = videoPath;
         // _videoPlayer.Play();
         
-        UpdatePopUp(filesName[0].Title, filesName[0].VideoName, filesName[0].Description);
+        UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
+        
+        if(GetComponent<LegendScroll>() != null)
+            GetComponent<LegendScroll>().InitVideoLegend(popUpInfos);
     }
 
     public void UpdatePopUp(string title, string videoName, string description)
