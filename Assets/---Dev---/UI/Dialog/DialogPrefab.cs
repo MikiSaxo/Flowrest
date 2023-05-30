@@ -144,12 +144,16 @@ public class DialogPrefab : MonoBehaviour
     public void UpdateCurrentNbOrder(int nb)
     {
         _currentNb = nb;
+        if (_currentNb > _maxNb)
+            _currentNb = _maxNb;
         UpdateText();
     }
 
     public void AddNewNbOrder(int nb)
     {
         _currentNb += nb;
+        if (_currentNb > _maxNb)
+            _currentNb = _maxNb;
         UpdateText();
     }
 
