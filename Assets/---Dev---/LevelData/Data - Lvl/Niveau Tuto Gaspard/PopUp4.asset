@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
+  m_Name: PopUp4
+  m_EditorClassIdentifier: 
+  LevelName: PopUp4
+  LevelFolder: Level Editor
+  EnergyAtStart: 5
+  HasInventory: 1
+  StartNbState: 0
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  HasRecycling: 0
+  HasInfinitRecycling: 0
+  NbOfRecycling: 0
+  OpenMemo: 0
+  HasPrevisu: 1
+  BlockLastSwap: 1
+  IsTuto: 0
+  IsTutoRecycling: 0
+  PreviewMessage:
+  - "Chaque tuile poss\xE8de son propre environnement. Lorsque tu les \xE9change
+    entre elles, ton \xE9nergie diminue."
+  - "Pour \xE9changer deux tuiles, cliques sur l'une d'entre elles puis s\xE9lectionnes
+    en une deuxi\xE8me."
+  PreviewMessageEnglish: []
+  PlayerForceSwap:
+  - {x: 2, y: 2}
+  - {x: 6, y: 2}
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
+  PopUpImages: []
+  FileNamePopUp: 
+  QuestDescription: "Commande \xB5 :"
+  QuestDescriptionEnglish: 
+  QuestFloor: 
+  QuestFlower: 
+  QuestNoSpecificTiles: 
+  QuestTileChain: 00000000
+  NumberTileChain: 50
+  QuestTileCount: 
+  NumberTileCount: 0
+  CharacterName: Profess.io
+  DialogBeginning:
+  - "Bonjour P\xE9tri, les Ressources Aliens m'ont pr\xE9venu de ton arriv\xE9e.
+    $Mon travail aujourd'hui va \xEAtre de t'enseigner les technologies que nous
+    utilisons dans l'entreprise."
+  - "Pour des raisons \xE9conomiques, nous travaillons sur des \xE9chantillons d'environnements
+    qui sont envoy\xE9s \xE0 nos clients et ensuite transform\xE9s en plan\xE8tes."
+  - "Chaque action va te demander de l'\xE9nergie. Tu peux voir ta jauge d'\xE9nergie
+    en bas \xE0 droite de ton interface."
+  - "Fais attention, ton <b>\xE9nergie est limit\xE9e</b> par projets. $Aujourd'hui
+    nous allons apprendre \xE0 \xE9changer des tuiles entre elles."
+  DialogEnd:
+  - "J'ai mis \xE0 ta disposition un <b>m\xE9mo</b> dans lequel tu peux retrouver
+    les combinaisons entre les tuiles. N'h\xE9sites pas \xE0 l'utiliser si tu te
+    sens perdu."
+  DialogBeginningEnglish:
+  - jhkv
+  DialogEndEnglish: []
