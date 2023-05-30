@@ -551,7 +551,7 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel(bool nextlevel)
     {
-        if (++_currentLevel >= _levelData.Length)
+        if ((_currentLevel += 1) >= _levelData.Length)
         {
             ScreensManager.Instance.LaunchCredits();
             return;
