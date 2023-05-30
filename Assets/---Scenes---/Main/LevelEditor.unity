@@ -1061,7 +1061,6 @@ MonoBehaviour:
   _objToMove: {fileID: 65832672}
   _isClosed: 1
   _isTriggered: 1
-  _cooldownReset: 1
   _arrowIcon: {fileID: 0}
   _timeRotateArrow: 0
 --- !u!1 &101532694
@@ -3098,7 +3097,6 @@ MonoBehaviour:
   _objToMove: {fileID: 58848685}
   _isClosed: 1
   _isTriggered: 1
-  _cooldownReset: 10
   _arrowIcon: {fileID: 0}
   _timeRotateArrow: 0
 --- !u!1 &367591524
@@ -11141,6 +11139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recycling: {fileID: 0}
+  _arrowTuto: {fileID: 0}
   _recyclingNbText: {fileID: 0}
 --- !u!1 &805048251
 GameObject:
@@ -16285,7 +16284,6 @@ MonoBehaviour:
   _objToMove: {fileID: 44414454}
   _isClosed: 1
   _isTriggered: 0
-  _cooldownReset: 0
   _arrowIcon: {fileID: 0}
   _timeRotateArrow: 0
 --- !u!1 &1239335336
@@ -20539,6 +20537,7 @@ MonoBehaviour:
   _dialogFBEnd: {fileID: 0}
   _dialogSpeed: 0.01
   _tutoArrow: {fileID: 0}
+  _memoMenu: {fileID: 0}
 --- !u!114 &1764261891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23451,7 +23450,6 @@ MonoBehaviour:
   _objToMove: {fileID: 1115001541}
   _isClosed: 1
   _isTriggered: 0
-  _cooldownReset: 0
   _arrowIcon: {fileID: 0}
   _timeRotateArrow: 0
 --- !u!1 &2125585167
@@ -25972,11 +25970,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835247, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 52.49
+      value: 92.62
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835247, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22
+      value: -82
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835247, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: m_LocalRotation.w

@@ -217,6 +217,7 @@ public class EnergyManager : MonoBehaviour
         if (_currentFbNoEnergy != null) return;
 
         GameObject go = Instantiate(_fbNoEnergy, transform);
+        go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetNoEnergyText());
         _currentFbNoEnergy = go;
     }
 

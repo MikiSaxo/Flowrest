@@ -102,8 +102,8 @@ public class MeshManager : MonoBehaviour
         }
         else if (state == TileState.Bored)
         {
-            _matt[0].SetTexture("_BaseMap", _textureBored);
-            _matt[1].SetTexture("_BaseMap", _textureBored);
+            //_matt[0].SetTexture("_BaseMap", _textureBored);
+            //_matt[1].SetTexture("_BaseMap", _textureBored);
         }
         
         _currentTileState = state;
@@ -121,7 +121,7 @@ public class MeshManager : MonoBehaviour
                 bool hasTexture = _propsMat[i].GetTexture("_BaseMap");
                 if (!hasTexture)
                 {
-                    _propsMat[i].SetColor("_BaseColor", _boredColor);
+                    //_propsMat[i].SetColor("_BaseColor", _boredColor);
                 }
                 else
                 {

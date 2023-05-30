@@ -32,6 +32,10 @@ public class LanguageManager : MonoBehaviour
     [Header("No Energy Text")]
     [SerializeField] private string _noEnergyTextFrench;
     [SerializeField] private string _noEnergyTextEnglish;
+    
+    [Header("Tile Bored Text")]
+    [SerializeField] private string _boredTextFrench;
+    [SerializeField] private string _boredTextEnglish;
 
     
     [Header("Victory - Defeat")] 
@@ -148,6 +152,13 @@ public class LanguageManager : MonoBehaviour
             return _languageTextFrench;
 
         return _languageTextEnglish;
+    }
+    public string GetBoredText()
+    {
+        if (Tongue == Language.Francais)
+            return _boredTextFrench;
+
+        return _boredTextEnglish;
     }
 
     public string GetResumeText()
