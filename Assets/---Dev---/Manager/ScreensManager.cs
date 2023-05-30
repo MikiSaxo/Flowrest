@@ -18,6 +18,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _titlesParent;
     [SerializeField] private GameObject _gameOverParent;
     [SerializeField] private GameObject _nextLevel;
+    [SerializeField] private GameObject _credits;
 
     [Header("Pause")] 
     [SerializeField] private Button _backwardsButton;
@@ -575,5 +576,11 @@ public class ScreensManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         _memoWaveEffect.StartGrowOneTime();
+    }
+
+    public void LaunchCredits()
+    {
+        _credits.SetActive(true);
+        _credits.GetComponent<CreditsMovement>().Init();
     }
 }

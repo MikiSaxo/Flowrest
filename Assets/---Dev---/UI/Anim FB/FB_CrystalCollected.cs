@@ -9,7 +9,7 @@ using DG.Tweening;
 public class FB_CrystalCollected : MonoBehaviour
 {
     [Header("Setup")] [SerializeField] private GameObject _objToMove;
-    [SerializeField] private TMP_Text _text;
+    // [SerializeField] private TMP_Text _text;
     [SerializeField] private float _yOffset;
     
     [Header("Durations")] [SerializeField] private float _durationSpawn;
@@ -17,17 +17,14 @@ public class FB_CrystalCollected : MonoBehaviour
     [SerializeField] private float _durationDispawn;
     [SerializeField] private float _durationWaitToDelete;
     
-    [Header("Durations")]
-    [SerializeField] private Color _earnEnergyColor;
-
     
     private Transform _tpEndPoint;
     private int _value;
 
     public void Init(int value, Transform tpEndPoint)//, float durSpawn, float durWait, float durDispawn)
     {
-        _text.text = $"{value}";
-        _text.color = value <= 0 ? Color.red : _earnEnergyColor;
+        // _text.text = $"{value}";
+        // _text.color = value <= 0 ? Color.red : _earnEnergyColor;
         
         _tpEndPoint = tpEndPoint;
         _value = value;

@@ -89,7 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab48d164cb19784eb3bb374594c73c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  _speed: 0.5
+  _axis: {x: 0, y: 0, z: 360}
 --- !u!1 &1875537695734476903
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,13 +182,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objToMove: {fileID: 1875537695734476903}
-  _text: {fileID: 7168617746514187086}
   _yOffset: 15
   _durationSpawn: 0.75
   _durationWait: 0.1
   _durationDispawn: 1
   _durationWaitToDelete: 3
-  _earnEnergyColor: {r: 0.06666667, g: 0.5019608, b: 0.03529412, a: 0}
 --- !u!1 &2208031866823017103
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6036115541828900682
 RectTransform:
   m_ObjectHideFlags: 0
@@ -409,6 +408,22 @@ PrefabInstance:
     - target: {fileID: 235001470765885041, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
       propertyPath: m_Name
       value: Trails_Energie
+      objectReference: {fileID: 0}
+    - target: {fileID: 235001470765885042, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3e40b1c2ae70d6545b541cb3b1c1d0f0, type: 2}
+    - target: {fileID: 235001470765885043, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 235001470765885043, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 235001470765885043, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 235001470765885044, guid: eb50f51611aaabe4fb30424fa51f7358, type: 3}
       propertyPath: m_RootOrder
