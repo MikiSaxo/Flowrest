@@ -295,7 +295,7 @@ public class ScreensManager : MonoBehaviour
     {
         if (_dialogsPrefabList.Count != _dialogsList.Count)
         {
-            if (MapManager.Instance.OpenMemo && _countDialog == 1)
+            if (MapManager.Instance.OpenMemo && _countDialog == 1 && !_isMemoOpened)
             {
                 _memoMenu.OpenAnim();
                 StartCoroutine(WaitToLaunchMemoOpening());

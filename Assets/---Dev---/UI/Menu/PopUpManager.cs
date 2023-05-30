@@ -12,6 +12,8 @@ public class PopUpManager : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private VideoPlayer _videoPlayer;
 
+    private bool _canOpenPopUp;
+    
     private void Awake()
     {
         Instance = this;
@@ -19,7 +21,8 @@ public class PopUpManager : MonoBehaviour
 
     public void InitPopUp(string fileName)
     {
-        // GetComponent<LegendScroll>().InitLegend(sprites);
+        _canOpenPopUp = false;
+
         if (fileName == String.Empty) return;
         
         string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{fileName}.mp4");
@@ -30,6 +33,7 @@ public class PopUpManager : MonoBehaviour
             return;
         }
 
+        _canOpenPopUp = true;
         _videoPlayer.url = videoPath;
         _videoPlayer.Play();
     }
@@ -37,6 +41,7 @@ public class PopUpManager : MonoBehaviour
 
     public void UpdatePopUp(bool state)
     {
-        _parent.SetActive(state);
+        if(_canOpenPopUp)
+            _parent.SetActive(state);
     }
 }
