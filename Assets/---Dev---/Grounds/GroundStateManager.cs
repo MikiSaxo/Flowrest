@@ -34,6 +34,7 @@ public class GroundStateManager : MonoBehaviour
 
     public bool IsPlayerForceSwapBlocked { get; set; }
     public bool IsPlayerNotForcePose { get; set; }
+    public bool IsBored { get; private set; }
 
     public AllStates StockStatePreview { get; set; }
 
@@ -421,14 +422,15 @@ public class GroundStateManager : MonoBehaviour
         }
 
         _fxTileBored.SetActive(state);
+        IsBored = state;
 
-        if (state)
-        {
-            var ps = _fxTileBored.GetComponent<ParticleSystem>();
-            var main = ps.main;
-            Color tileColor = SetupUIGround.Instance.GetGroundUIData((int)_currentState).ColorIcon;
-            main.startColor = tileColor;
-        }
+        // if (state)
+        // {
+        //     var ps = _fxTileBored.GetComponent<ParticleSystem>();
+        //     var main = ps.main;
+        //     Color tileColor = SetupUIGround.Instance.GetGroundUIData((int)_currentState).ColorIcon;
+        //     main.startColor = tileColor;
+        // }
 
         // print("UpdateFBReloadEnergy " + state);
         if (state)

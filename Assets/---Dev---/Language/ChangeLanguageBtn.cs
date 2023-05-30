@@ -6,15 +6,7 @@ using UnityEngine.UI;
 
 public class ChangeLanguageBtn : MonoBehaviour
 {
-    [SerializeField] private Sprite[] _flags;
-    [SerializeField] private Image _flagIcon;
-
-
-    private void Start()
-    {
-        // LanguageManager.Instance.ChangeLanguageEvent += FrenchOrEnglish;
-    }
-
+    private Language _currentLanguage;
     public void ChangeLanguageButton()
     {
         // if (MapManager.Instance.IsLoading) return;
@@ -33,24 +25,30 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     public void ChangeToFrench()
     {
-        if (MapManager.Instance.IsLoading) return;
-        
-        LanguageManager.Instance.ChangeToFrench();
-        _flagIcon.sprite = _flags[0];
-        MapManager.Instance.RestartLevel();
+        if (MapManager.Instance.IsLoading || LanguageManager.Instance.Tongue == Language.Francais) return;
+
+        _currentLanguage = Language.Francais;
+        StartCoroutine(WaitToChangeLanguage());
     }
 
     public void ChangeToEnglish()
     {
-        if (MapManager.Instance.IsLoading) return;
+        if (MapManager.Instance.IsLoading || LanguageManager.Instance.Tongue == Language.English) return;
 
-        LanguageManager.Instance.ChangeToEnglish();
-        _flagIcon.sprite = _flags[1];
-        MapManager.Instance.RestartLevel();
+        _currentLanguage = Language.English;
+        StartCoroutine(WaitToChangeLanguage());
     }
 
-    private void OnDisable()
+
+    IEnumerator WaitToChangeLanguage()
     {
-        // LanguageManager.Instance.ChangeLanguageEvent -= FrenchOrEnglish;
+        MapManager.Instance.RestartLevel();
+        
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        
+        if(_currentLanguage == Language.Francais)
+            LanguageManager.Instance.ChangeToFrench();
+        else
+            LanguageManager.Instance.ChangeToEnglish();
     }
 }

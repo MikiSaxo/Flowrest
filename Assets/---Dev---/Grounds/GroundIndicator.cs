@@ -9,10 +9,8 @@ using TMPro;
 public class GroundIndicator : MonoBehaviour
 {
     [SerializeField] private GroundStateManager _parent;
-
-    // [SerializeField] private MeshRenderer _mesh;
-    // [SerializeField] private Material[] _mats;
     [SerializeField] private GameObject _meshParent;
+    [SerializeField] private GameObject _fbTextWarning;
 
     [Header("Anim Values")] [SerializeField]
     private float _timeEnter;
@@ -25,19 +23,12 @@ public class GroundIndicator : MonoBehaviour
     private float _hoveredYPos;
     private float _selectedYPos;
     private bool _isSelected;
+    private int _twoClick;
 
     private bool _isEnteredLimited;
     private bool _isEnteredFree;
-    // private Vector2Int _coords;
+    private GameObject _currentFbBoredText;
 
-    // private List<GameObject> _tempEntered = new List<GameObject>();
-    // private List<GroundStateManager> _stockPrevisu = new List<GroundStateManager>();
-
-    // private readonly Vector2Int[] _hexOddDirections = new Vector2Int[]
-    //     { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(-1, 1), new(1, 1) };
-    //
-    // private readonly Vector2Int[] _hexPeerDirections = new Vector2Int[]
-    //     { new(-1, 0), new(1, 0), new(0, -1), new(0, 1), new(1, -1), new(-1, -1) };
 
     private const float HOVERED_Y_POS = 1;
     private const float SELECTED_Y_POS = 2;
@@ -104,7 +95,7 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.IsSwapping) return;
 
         _isEnteredLimited = true;
-
+        AudioManager.Instance.PlaySFX("TileEntered");
 
         if (_isSelected || IsSwapping)
         {
@@ -122,6 +113,8 @@ public class GroundIndicator : MonoBehaviour
                 MapManager.Instance.LastStateButtonSelected);
         }
 
+        _twoClick++;
+
         OnEnterAnim(_timeEnter);
     }
 
@@ -135,7 +128,6 @@ public class GroundIndicator : MonoBehaviour
         if (_isSelected || IsSwapping ||
             MapManager.Instance.IsSwapping) return;
 
-
         _parent.IsProtectedPrevisu = false;
 
         MapManager.Instance.ResetPreview();
@@ -146,12 +138,35 @@ public class GroundIndicator : MonoBehaviour
     private void Update()
     {
         // If no energy
-        if(EnergyManager.Instance.GetCurrentEnergy() <= 0 && Input.GetMouseButtonDown(0) && _isEnteredFree && !MapManager.Instance.IsVictory)
+        if (EnergyManager.Instance.GetCurrentEnergy() <= 0 && Input.GetMouseButtonDown(0) && _isEnteredFree &&
+            !MapManager.Instance.IsVictory)
+        {
             EnergyManager.Instance.SpawnNoEnergyText();
+            return;
+        }
+
+        if (_parent.IsBored && Input.GetMouseButtonDown(0) && _isEnteredFree)
+        {
+            // EnergyManager.Instance.SpawnNoEnergyText();
+            if (_currentFbBoredText != null) return;
+
+            GameObject go = Instantiate(_fbTextWarning, EnergyManager.Instance.transform);
+            go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetBoredText());
+            _currentFbBoredText = go;
+            return;
+        }
 
         // Block
         if (!_isEnteredLimited || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
 
+        if (MapManager.Instance.IsAndroid)
+        {
+            if (MapManager.Instance.LastGroundSelected != null && MapManager.Instance.LastObjButtonSelected == null &&
+                _twoClick < 2) return;
+
+            if (MapManager.Instance.LastObjButtonSelected != null && MapManager.Instance.LastGroundSelected == null &&
+                _twoClick < 2) return;
+        }
 
         // First case: select bloc for swap
         if (MapManager.Instance.LastObjButtonSelected == null)
@@ -171,7 +186,8 @@ public class GroundIndicator : MonoBehaviour
 
             // Useful to block Trigger enter and exit
             _isSelected = true;
-            
+            AudioManager.Instance.PlaySFX("TileSelected");
+
             // Reset Recycle if was selected
             MapManager.Instance.ResetWantToRecycle();
             RecyclingManager.Instance.DeselectRecycle();
@@ -224,6 +240,8 @@ public class GroundIndicator : MonoBehaviour
 
     private void OnLeaveAnim(float duration)
     {
+        // print("ça leave");
+
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_startYPos, duration).SetEase(Ease.OutSine);
 
@@ -231,6 +249,8 @@ public class GroundIndicator : MonoBehaviour
         {
             UpdateTileState(TileState.Normal, false);
         }
+
+        _twoClick = 0;
     }
 
     public void UpdateTileState(TileState state, bool isReset)
@@ -271,7 +291,7 @@ public class GroundIndicator : MonoBehaviour
         MapManager.Instance.DecreaseNumberButton();
 
         MapManager.Instance.ResetButtonSelected();
-        
+
         if (MapManager.Instance.IsPlayerForcePoseBlocAfterSwap)
             MapManager.Instance.UpdateAllGroundTutoForcePose(false);
 
@@ -311,14 +331,13 @@ public class GroundIndicator : MonoBehaviour
         yield return new WaitForSeconds(.01f);
         ResetForNextChange();
         // MapManager.Instance.ResetBig();
-
-       
     }
 
     public void ResetIndicator()
     {
         _isSelected = false;
         _isEnteredLimited = false;
+        _twoClick = 0;
 
         OnLeaveAnim(_timeExit);
         MapManager.Instance.IsGroundFirstSelected = false;

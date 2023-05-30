@@ -24,13 +24,19 @@ public class LanguageManager : MonoBehaviour
     [Space(5)]
     [SerializeField] private string _memoTextFrench;
     [SerializeField] private string _memoTextEnglish;
+    
+    [Header("Recycle Menu")]
+    [SerializeField] private string _recycleTextFrench;
+    [SerializeField] private string _recycleTextEnglish;
+   
+    [Header("No Energy Text")]
+    [SerializeField] private string _noEnergyTextFrench;
+    [SerializeField] private string _noEnergyTextEnglish;
+    
+    [Header("Tile Bored Text")]
+    [SerializeField] private string _boredTextFrench;
+    [SerializeField] private string _boredTextEnglish;
 
-    [Header("Pause Menu")] 
-    [SerializeField] private string _languageTextFrench;
-    [SerializeField] private string _languageTextEnglish;
-    [Space(5)]
-    [SerializeField] private string _resumeTextFrench;
-    [SerializeField] private string _resumeTextEnglish;
     
     [Header("Victory - Defeat")] 
     [SerializeField] private string _victoryTextFrench;
@@ -39,13 +45,45 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] private string _gameOverTextFrench;
     [SerializeField] private string _gameOverTextEnglish;
 
-    [Header("Recycle Menu")]
-    [SerializeField] private string _recycleTextFrench;
-    [SerializeField] private string _recycleTextEnglish;
+    [Space(10f)]
+    [Header("--- Pause Menu ---")]
+    [Space(10f)]
+    
+    [Header("Resume Button")] 
+    [SerializeField] private string _resumeTextFrench;
+    [SerializeField] private string _resumeTextEnglish;
+    [Header("Quit Button")] 
+    [SerializeField] private string _quitButtonTextFrench;
+    [SerializeField] private string _quitButtonTextEnglish;
+    
+    [Space(10f)]
+    [Header("--- Options ---")]
+    [Space(10f)]
+    
+    [Header("Music")]
+    [SerializeField] private string _musicTextFrench;
+    [SerializeField] private string _musicTextEnglish;
+    
+    [Header("SFX")]
+    [SerializeField] private string _sfxTextFrench;
+    [SerializeField] private string _sfxTextEnglish;
+    
+    [Header("Controls")]
+    [SerializeField] private string _controlTextFrench;
+    [SerializeField] private string _controlTextEnglish;
    
-    [Header("No Energy Text")]
-    [SerializeField] private string _noEnergyTextFrench;
-    [SerializeField] private string _noEnergyTextEnglish;
+    [Header("Language")]
+    [SerializeField] private string _languageTextFrench;
+    [SerializeField] private string _languageTextEnglish;
+
+    [Header("Credits")]
+    [SerializeField] private string _creditTextFrench;
+    [SerializeField] private string _creditTextEnglish;
+    
+    [Header("Back Button")]
+    [SerializeField] private string _backButtonTextFrench;
+    [SerializeField] private string _backButtonTextEnglish;
+    
 
     private void Awake()
     {
@@ -115,6 +153,13 @@ public class LanguageManager : MonoBehaviour
 
         return _languageTextEnglish;
     }
+    public string GetBoredText()
+    {
+        if (Tongue == Language.Francais)
+            return _boredTextFrench;
+
+        return _boredTextEnglish;
+    }
 
     public string GetResumeText()
     {
@@ -154,5 +199,47 @@ public class LanguageManager : MonoBehaviour
             return _gameOverTextFrench;
 
         return _gameOverTextEnglish;
+    }
+    public string GetQuitButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _quitButtonTextFrench;
+
+        return _quitButtonTextEnglish;
+    }
+    public string GetMusicText()
+    {
+        if (Tongue == Language.Francais)
+            return _musicTextFrench;
+
+        return _musicTextEnglish;
+    }
+    public string GetSfxText()
+    {
+        if (Tongue == Language.Francais)
+            return _sfxTextFrench;
+
+        return _sfxTextEnglish;
+    }
+    public string GetControlsText()
+    {
+        if (Tongue == Language.Francais)
+            return _controlTextFrench;
+
+        return _controlTextEnglish;
+    }
+    public string GetCreditsText()
+    {
+        if (Tongue == Language.Francais)
+            return _creditTextFrench;
+
+        return _creditTextEnglish;
+    }
+    public string GetBackButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _backButtonTextFrench;
+
+        return _backButtonTextEnglish;
     }
 }

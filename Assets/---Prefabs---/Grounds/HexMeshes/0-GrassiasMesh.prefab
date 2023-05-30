@@ -538,6 +538,20 @@ MonoBehaviour:
   - {fileID: 1954840514382819545}
   - {fileID: 3503938966287005045}
   - {fileID: 3303922637189318346}
+  _specificParticules:
+  - {fileID: 9195972712773649380, guid: bc05ae21e378d424e82e46ae963b2a07, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  _meshVariations:
+  - Props: {fileID: 3957642578655258400}
+    Crystals: {fileID: 1954840514382819545}
+    Particules: {fileID: 9195972712773649380, guid: bc05ae21e378d424e82e46ae963b2a07, type: 3}
+  - Props: {fileID: 6179589387739562488}
+    Crystals: {fileID: 3503938966287005045}
+    Particules: {fileID: 0}
+  - Props: {fileID: 1345506825609820852}
+    Crystals: {fileID: 3303922637189318346}
+    Particules: {fileID: 0}
 --- !u!114 &3225930758344205482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265ac514e25381c40bd5ea36b3f954fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particulePrefab: {fileID: 9195972712773649380, guid: bc05ae21e378d424e82e46ae963b2a07, type: 3}
   _particuleParent: {fileID: 7859999728643351225}
   _timeSpawnMin: 5
   _timeSpawnMax: 30
