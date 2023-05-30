@@ -5403,8 +5403,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280739127
+  m_fontColor: {r: 0.21598595, g: 0.8962264, b: 0.14796188, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5548,9 +5548,9 @@ MonoBehaviour:
       slideAmplitude: 0.12
       slideFrequency: 5
       slideWaveSize: 0
-      bounceAmplitude: 0.08
+      bounceAmplitude: 0.25
       bounceFrequency: 1
-      bounceWaveSize: 0.08
+      bounceWaveSize: 0.1
       hueShiftSpeed: 0.8
       hueShiftWaveSize: 0.08
       fadeDelay: 1.2
@@ -24463,6 +24463,14 @@ PrefabInstance:
     - target: {fileID: 1571688091736075609, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
       propertyPath: _boredTextEnglish
       value: You can't select this tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075609, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: _victoryTextFrench
+      value: "<bounce>Commande compl\xE9t\xE9e !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571688091736075609, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
+      propertyPath: _victoryTextEnglish
+      value: <bounce>Command complete!
       objectReference: {fileID: 0}
     - target: {fileID: 1571688091736075614, guid: d3741eff21e23d54094f9cedc4b9f436, type: 3}
       propertyPath: m_Name

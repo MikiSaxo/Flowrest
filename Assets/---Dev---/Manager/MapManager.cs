@@ -551,18 +551,18 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel(bool nextlevel)
     {
+        if (++_currentLevel >= _levelData.Length)
+        {
+            ScreensManager.Instance.LaunchCredits();
+            return;
+        }
+
         if (_currentLevel < _levelData.Length - 1 && nextlevel)
         {
             _currentLevel++;
 
             if (LevelProgressionManager.Instance != null)
                 LevelProgressionManager.Instance.CurrentLevel++;
-        }
-
-        if (_currentLevel >= _levelData.Length)
-        {
-            ScreensManager.Instance.LaunchCredits();
-            return;
         }
 
         StartCoroutine(CheckFileMap());
