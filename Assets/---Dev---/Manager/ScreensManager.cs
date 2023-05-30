@@ -43,7 +43,9 @@ public class ScreensManager : MonoBehaviour
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
     
-    [Header("Memo")] [SerializeField] private OpenCloseMenu _memoMenu;
+    [Header("Memo")] 
+    [SerializeField] private OpenCloseMenu _memoMenu;
+    [SerializeField] private WaveEffect _memoWaveEffect;
     
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
@@ -296,6 +298,7 @@ public class ScreensManager : MonoBehaviour
             if (MapManager.Instance.OpenMemo && _countDialog == 1)
             {
                 _memoMenu.OpenAnim();
+                StartCoroutine(WaitToLaunchMemoOpening());
                 _isMemoOpened = true;
             }
             
@@ -520,6 +523,7 @@ public class ScreensManager : MonoBehaviour
             if (MapManager.Instance.OpenMemo && !_isMemoOpened)
             {
                 _memoMenu.OpenAnim();
+                StartCoroutine(WaitToLaunchMemoOpening());
                 _isMemoOpened = true;
             }
             if (!_hasPopUp)
@@ -565,5 +569,11 @@ public class ScreensManager : MonoBehaviour
     public void CloseCommandMenu()
     {
         _orderMenu.GetComponent<OpenCloseMenu>().CloseQuick();
+    }
+
+    IEnumerator WaitToLaunchMemoOpening()
+    {
+        yield return new WaitForSeconds(.5f);
+        _memoWaveEffect.StartGrowOneTime();
     }
 }
