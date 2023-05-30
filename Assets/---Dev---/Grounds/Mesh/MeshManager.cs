@@ -112,6 +112,8 @@ public class MeshManager : MonoBehaviour
 
     private void CheckTileColor()
     {
+        return;
+        
         if (_propsStartColor.Length == 0) return;
 
         if (_currentTileState == TileState.Bored)

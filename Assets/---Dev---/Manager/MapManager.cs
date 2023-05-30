@@ -137,6 +137,12 @@ public class MapManager : MonoBehaviour
                 _currentLevel = _levelData.Length - 1;
         }
 
+        if (_currentLevel >= _levelData.Length)
+        {
+            ScreensManager.Instance.LaunchCredits();
+            return;
+        }
+        
         StartCoroutine(CheckFileMap());
     }
 
@@ -551,6 +557,12 @@ public class MapManager : MonoBehaviour
 
             if (LevelProgressionManager.Instance != null)
                 LevelProgressionManager.Instance.CurrentLevel++;
+        }
+
+        if (_currentLevel >= _levelData.Length)
+        {
+            ScreensManager.Instance.LaunchCredits();
+            return;
         }
 
         StartCoroutine(CheckFileMap());

@@ -33,7 +33,6 @@ public class LevelDataEditor : Editor
     private SerializedProperty PreviewMessageEnglish;
     private SerializedProperty HasForcePoseBlocAfterSwap;
     private SerializedProperty ForcePoseBlocCoord;
-    private SerializedProperty PopUpImages;
     private SerializedProperty FileNamePopUp;
 
     private SerializedProperty QuestDescription;
@@ -78,7 +77,6 @@ public class LevelDataEditor : Editor
         PreviewMessageEnglish = serializedObject.FindProperty("PreviewMessageEnglish");
         HasForcePoseBlocAfterSwap = serializedObject.FindProperty("HasForcePoseBlocAfterSwap");
         ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
-        PopUpImages = serializedObject.FindProperty("PopUpImages");
         FileNamePopUp = serializedObject.FindProperty("FileNamePopUp");
 
         QuestDescription = serializedObject.FindProperty("QuestDescription");
@@ -195,7 +193,6 @@ public class LevelDataEditor : Editor
 
             EditorGUILayout.Space(7);
 
-            EditorGUILayout.PropertyField(PopUpImages);
             EditorGUILayout.PropertyField(FileNamePopUp);
 
             EditorGUILayout.Space(10);

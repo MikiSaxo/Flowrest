@@ -6,6 +6,7 @@ using UnityEngine;
 public class StockProps : MonoBehaviour
 {
     [SerializeField] private MeshRenderer[] _propsMesh;
+    [SerializeField] private Animator[] _propsAnim;
     private Material[] _propMat;
 
     private void Awake()
