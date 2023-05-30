@@ -222,9 +222,9 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
-    public void UpdatePopUp(bool state)
+    public void UpdatePopUpState(bool state)
     {
-        PopUpManager.Instance.UpdatePopUp(state);
+        PopUpManager.Instance.UpdatePopUpState(state);
 
         _dialogParent.SetActive(false);
         _hasPopUp = false;
@@ -535,7 +535,7 @@ public class ScreensManager : MonoBehaviour
             }
             else
             {
-                UpdatePopUp(true);
+                UpdatePopUpState(true);
             }
         }
     }
