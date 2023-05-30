@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NoEnergyTextEffect : MonoBehaviour
+public class TextWarning : MonoBehaviour
 {
     [SerializeField] private float _timeFadeOn;
     [SerializeField] private float _timeFadeOff;
@@ -14,19 +14,19 @@ public class NoEnergyTextEffect : MonoBehaviour
 
     private void Awake()
     {
-        _text.DOFade(0, 0);
+        // _text.DOFade(0, 0);
+        _text = GetComponent<TMP_Text>();
     }
 
     private void Start()
     {
-        _text = GetComponent<TMP_Text>();
-        UpdateLanguageText();
+        //UpdateLanguageText();
         ToFadeOn();
     }
 
-    private void UpdateLanguageText()
+    public void Init(string text)
     {
-        _text.text = LanguageManager.Instance.GetNoEnergyText();
+        _text.text = text;
     }
 
     private void ToFadeOn()

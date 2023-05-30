@@ -10,6 +10,7 @@ public class GroundIndicator : MonoBehaviour
 {
     [SerializeField] private GroundStateManager _parent;
     [SerializeField] private GameObject _meshParent;
+    [SerializeField] private GameObject _fbTextWarning;
 
     [Header("Anim Values")] [SerializeField]
     private float _timeEnter;
@@ -26,6 +27,7 @@ public class GroundIndicator : MonoBehaviour
 
     private bool _isEnteredLimited;
     private bool _isEnteredFree;
+    private GameObject _currentFbBoredText;
 
 
     private const float HOVERED_Y_POS = 1;
@@ -138,7 +140,21 @@ public class GroundIndicator : MonoBehaviour
         // If no energy
         if (EnergyManager.Instance.GetCurrentEnergy() <= 0 && Input.GetMouseButtonDown(0) && _isEnteredFree &&
             !MapManager.Instance.IsVictory)
+        {
             EnergyManager.Instance.SpawnNoEnergyText();
+            return;
+        }
+
+        if (_parent.IsBored && Input.GetMouseButtonDown(0) && _isEnteredFree)
+        {
+            // EnergyManager.Instance.SpawnNoEnergyText();
+            if (_currentFbBoredText != null) return;
+
+            GameObject go = Instantiate(_fbTextWarning, EnergyManager.Instance.transform);
+            go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetBoredText());
+            _currentFbBoredText = go;
+            return;
+        }
 
         // Block
         if (!_isEnteredLimited || !Input.GetMouseButtonUp(0) || MapManager.Instance.IsPosing) return;
