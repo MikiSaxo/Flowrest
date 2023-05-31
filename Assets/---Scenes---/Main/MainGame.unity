@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7346216, g: 0.8412794, b: 0.90451986, a: 1}
+  m_IndirectSpecularColor: {r: 0.73465127, g: 0.8411285, b: 0.90449065, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4257,10 +4257,11 @@ MonoBehaviour:
   _skipPopUpButton: {fileID: 0}
   _gridPage: {fileID: 890471412}
   _pagePrefab: {fileID: 7665791168215843389, guid: 9e8a9620a2796cb449484263d9e9f08c, type: 3}
-  _arrows: {fileID: 0}
   _sprPage:
   - {fileID: 21300000, guid: 2f0ddf8f1699455448d60530bfc6b607, type: 3}
   - {fileID: 21300000, guid: aa15fbcd9084cbc4c8ee4133bffe6644, type: 3}
+  _leftArrowButton: {fileID: 0}
+  _rightArrowButton: {fileID: 0}
 --- !u!1 &464938664
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,6 +4462,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464938664}
   m_CullTransparentMesh: 1
+--- !u!1 &465105062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2115146378064997285, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
+  m_PrefabInstance: {fileID: 6572973998062925981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &465701120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9309,7 +9315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 321}
+  m_AnchoredPosition: {x: 0, y: 312}
   m_SizeDelta: {x: 774.1379, y: 96.6305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &763800183
@@ -9359,13 +9365,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 55
+  m_fontSizeBase: 55
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -14303,11 +14309,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144877612}
   m_CullTransparentMesh: 1
---- !u!1 &1153644842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2115146379518302972, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
-  m_PrefabInstance: {fileID: 6572973998062925981}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1153644843 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2115146379518302971, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
@@ -15950,8 +15951,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -17377,10 +17378,11 @@ MonoBehaviour:
   _skipPopUpButton: {fileID: 464938664}
   _gridPage: {fileID: 985972674}
   _pagePrefab: {fileID: 7665791168215843389, guid: 9e8a9620a2796cb449484263d9e9f08c, type: 3}
-  _arrows: {fileID: 1153644842}
   _sprPage:
   - {fileID: 21300000, guid: 2f0ddf8f1699455448d60530bfc6b607, type: 3}
   - {fileID: 21300000, guid: aa15fbcd9084cbc4c8ee4133bffe6644, type: 3}
+  _leftArrowButton: {fileID: 1896590235}
+  _rightArrowButton: {fileID: 465105062}
 --- !u!328 &1446294495
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -21788,6 +21790,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895638880}
   m_CullTransparentMesh: 1
+--- !u!1 &1896590235 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2115146377891947125, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
+  m_PrefabInstance: {fileID: 6572973998062925981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1913230859
 GameObject:
   m_ObjectHideFlags: 0
@@ -23883,10 +23890,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480315729}
     m_Modifications:
-    - target: {fileID: 600711995560458952, guid: 65aac1323027c884289c7887abd558b9, type: 3}
-      propertyPath: m_Spacing
-      value: 250
-      objectReference: {fileID: 0}
     - target: {fileID: 600711995834712280, guid: 65aac1323027c884289c7887abd558b9, type: 3}
       propertyPath: m_Name
       value: -MenuOrderMemo-
@@ -24788,7 +24791,7 @@ PrefabInstance:
       objectReference: {fileID: 686570303}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size

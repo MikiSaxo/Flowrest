@@ -485,7 +485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 372}
+  m_AnchoredPosition: {x: 0, y: 373}
   m_SizeDelta: {x: 0, y: -72.9071}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600711995499937484
@@ -509,10 +509,11 @@ MonoBehaviour:
   _skipPopUpButton: {fileID: 0}
   _gridPage: {fileID: 600711997029200200}
   _pagePrefab: {fileID: 7665791168215843389, guid: 9e8a9620a2796cb449484263d9e9f08c, type: 3}
-  _arrows: {fileID: 0}
   _sprPage:
-  - {fileID: 21300000, guid: 2f0ddf8f1699455448d60530bfc6b607, type: 3}
-  - {fileID: 21300000, guid: aa15fbcd9084cbc4c8ee4133bffe6644, type: 3}
+  - {fileID: 21300000, guid: 75d6952a74290a047873c65fa4c89e4d, type: 3}
+  - {fileID: 21300000, guid: 14e80d26cea37bc4a9a831b3899a5e2d, type: 3}
+  _leftArrowButton: {fileID: 600711997153215047}
+  _rightArrowButton: {fileID: 600711996372061079}
 --- !u!1 &600711995733073698
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +784,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.5898438, y: 151}
+  m_AnchoredPosition: {x: -1.589798, y: 132.6}
   m_SizeDelta: {x: -35.657097, y: -314.07678}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600711996029791875
@@ -2372,7 +2373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -152.64473}
+  m_AnchoredPosition: {x: 0, y: -140}
   m_SizeDelta: {x: 367.72, y: 28.5996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600711997029200202
@@ -2939,6 +2940,14 @@ PrefabInstance:
     - target: {fileID: 2115146377891947122, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 21300000, guid: 2d2e1b0d2baec2547b3d0b8d90b7b146, type: 3}
+    - target: {fileID: 2115146377891947123, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.8584906
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115146377891947123, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.8584906
       objectReference: {fileID: 0}
     - target: {fileID: 2115146377891947123, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
@@ -3019,6 +3028,10 @@ PrefabInstance:
     - target: {fileID: 2115146378930951760, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115146379518302970, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
+      propertyPath: m_Spacing
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 2115146379518302971, guid: 5194958c4e10a1642828d34cef8d6a9e, type: 3}
       propertyPath: m_Pivot.x

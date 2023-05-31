@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,11 @@ public class LegendScroll : MonoBehaviour
 
     [Header("Page")] [SerializeField] private GameObject _gridPage;
     [SerializeField] private GameObject _pagePrefab;
-    [SerializeField] private GameObject _arrows;
     [SerializeField] private Sprite[] _sprPage;
+    
+    [Header("Arrows")]
+    [SerializeField] private GameObject _leftArrowButton;
+    [SerializeField] private GameObject _rightArrowButton;
 
     private List<GameObject> _stockPagePrefab = new List<GameObject>();
     private int _count;
@@ -51,8 +55,11 @@ public class LegendScroll : MonoBehaviour
         else
         {
             _gridPage.SetActive(false);
-            if(_arrows != null)
-                _arrows.SetActive(false);
+            if (_leftArrowButton != null && _rightArrowButton != null)
+            {
+                _leftArrowButton.SetActive(false);
+                _rightArrowButton.SetActive(false);
+            }
         }
     }
 
@@ -80,11 +87,17 @@ public class LegendScroll : MonoBehaviour
         }
         
         _gridPage.SetActive(true);
-        if(_arrows != null)
-            _arrows.SetActive(true);
+        
+        if (_leftArrowButton != null && _rightArrowButton != null)
+        {
+            _leftArrowButton.SetActive(true);
+            _rightArrowButton.SetActive(true);
+        }
 
         // Fill first page
         _stockPagePrefab[0].GetComponent<Image>().sprite = _sprPage[_count];
+        // Deactivate Left Arrow 
+        UpdateStateLeftArrow(false);
 
         CheckIfEndOfLegend();
     }
@@ -93,26 +106,30 @@ public class LegendScroll : MonoBehaviour
     {
         // Change the page indicator to empty 
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[1];
-
+        UpdateStateRightArrow(true);
         _count--;
 
         if (!_isVideoLegend)
         {
-            if (_count < 0)
+            if (_count <= 0)
             {
+                UpdateStateLeftArrow(false);
                 _count = 0;
             }
-                // _count = _sprLegend.Length - 1;
+            else
+                UpdateStateLeftArrow(true);
 
             _imgLegend.sprite = _sprLegend[_count];
         }
         else
         {
-            if (_count < 0)
+            if (_count <= 0)
             {
+                UpdateStateLeftArrow(false);
                 _count = 0;
             }
-            //_count = _popUpInfos.Length - 1;
+            else
+                UpdateStateLeftArrow(true);
 
             GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
                 _popUpInfos[_count].Description);
@@ -128,22 +145,30 @@ public class LegendScroll : MonoBehaviour
     {
         // Change the page indicator to empty 
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[1];
-
+        UpdateStateLeftArrow(true);
         _count++;
 
         if (!_isVideoLegend)
         {
-            if (_count >= _sprLegend.Length)
+            if (_count >= _sprLegend.Length -1)
+            {
+                UpdateStateRightArrow(false);
                 _count = _sprLegend.Length - 1;
-                // _count = 0;
+            }
+            else
+                UpdateStateLeftArrow(true);
 
             _imgLegend.sprite = _sprLegend[_count];
         }
         else
         {
-            if (_count >= _popUpInfos.Length)
-                _count = _sprLegend.Length - 1;
-                // _count = 0;
+            if (_count >= _popUpInfos.Length -1)
+            {
+                UpdateStateRightArrow(false);
+                _count = _popUpInfos.Length - 1;
+            }
+            else
+                UpdateStateLeftArrow(true);
 
             GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
                 _popUpInfos[_count].Description);
@@ -163,5 +188,21 @@ public class LegendScroll : MonoBehaviour
             _skipPopUpButton.SetActive(_count == _sprLegend.Length - 1);
         else
             _skipPopUpButton.SetActive(_count == _popUpInfos.Length - 1);
+    }
+    
+    private void UpdateStateLeftArrow(bool state)
+    {
+        if (_leftArrowButton == null) return;
+        
+        _leftArrowButton.GetComponent<Button>().interactable = state;
+        _leftArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
+    }
+    
+    private void UpdateStateRightArrow(bool state)
+    {
+        if (_rightArrowButton == null) return;
+        
+        _rightArrowButton.GetComponent<Button>().interactable = state;
+        _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
 }
