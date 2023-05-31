@@ -394,14 +394,15 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if PopUp
+        bool hasPopUp = false;
         if (currentLvl.PopUpInfos != null)
         {
             if (currentLvl.PopUpInfos.Length > 0)
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
+            
+            // Update Dialogs
+            hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
-
-        // Update Dialogs
-        bool hasPopUp = currentLvl.PopUpInfos.Length > 0;
 
         if (LanguageManager.Instance.Tongue == Language.Francais)
             ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp);
@@ -565,7 +566,9 @@ public class MapManager : MonoBehaviour
             _currentLevel++;
 
             if (LevelProgressionManager.Instance != null)
+            {
                 LevelProgressionManager.Instance.CurrentLevel++;
+            }
         }
 
         StartCoroutine(CheckFileMap());

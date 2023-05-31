@@ -40,9 +40,17 @@ public class LevelSelectionManager : MonoBehaviour
             }
 
             GameObject go = Instantiate(_levelSelectionPrefab, _currentGridToCreateLevel.transform);
-            
-            if(!_unlockAllLevels)
-                go.GetComponent<LevelButton>().Init(i + 1, i > LevelProgressionManager.Instance.LevelUnlocked);
+
+            if (!_unlockAllLevels)
+            {
+                var lvlUnlocked = 0;
+                if (PlayerPrefs.HasKey("LevelUnlocked"))
+                    lvlUnlocked = PlayerPrefs.GetInt("LevelUnlocked");
+                else
+                    lvlUnlocked = LevelProgressionManager.Instance.LevelUnlocked;
+                
+                go.GetComponent<LevelButton>().Init(i + 1, i > lvlUnlocked);
+            }
             else
                 go.GetComponent<LevelButton>().Init(i + 1, false);
         }

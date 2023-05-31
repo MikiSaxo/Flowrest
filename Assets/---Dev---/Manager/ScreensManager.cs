@@ -219,8 +219,11 @@ public class ScreensManager : MonoBehaviour
 
         if (LevelProgressionManager.Instance != null)
         {
-            if(LevelProgressionManager.Instance.CurrentLevel >= LevelProgressionManager.Instance.LevelUnlocked)  
+            if (LevelProgressionManager.Instance.CurrentLevel >= LevelProgressionManager.Instance.LevelUnlocked)
+            {
                 LevelProgressionManager.Instance.LevelUnlocked++;
+                PlayerPrefs.SetInt("LevelUnlocked", LevelProgressionManager.Instance.LevelUnlocked);
+            }
         }
     }
 
