@@ -99,6 +99,8 @@ public class SetupUIGround : MonoBehaviour
     {
         if (MapManager.Instance.IsGroundFirstSelected) return;
 
+        AudioManager.Instance.PlaySFX("EndDragWithoutPose");
+
         _fBDnd.GetComponent<FollowMouseDND>().AnimDeactivateObject();
     }
 
@@ -112,8 +114,11 @@ public class SetupUIGround : MonoBehaviour
             {
                 currentTile.UpdateNumberLeft(1);
                 currentTile.GetComponent<PointerMotion>().OnLeave();
-                if(!isStart)
+                if (!isStart)
+                {
                     _bigParentInventory.GetComponent<PointerMotion>().Bounce();
+                    AudioManager.Instance.PlaySFX("AddTileToInventory");
+                }
 
                 return;
             }

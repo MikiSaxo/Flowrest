@@ -155,6 +155,8 @@ public class GroundStateManager : MonoBehaviour
         currentGroundBase.EnterState(this);
         StockStatePreview = _currentState;
         _tempCurrentState = _currentState;
+        
+        AudioManager.Instance.PlaySFX("Pop");
     }
 
     public void ChangeStatePrevisu(AllStates state)

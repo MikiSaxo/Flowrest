@@ -105,11 +105,13 @@ public class EnergyManager : MonoBehaviour
     public void ReduceEnergyBySwap()
     {
         StartCoroutine(WaitToUpdate(-_costBySwap));
+        AudioManager.Instance.PlaySFX("EnergyLost");
     }
 
     public void ReduceEnergyByLandingGround()
     {
         StartCoroutine(WaitToUpdate(-_costByLandingGround));
+        AudioManager.Instance.PlaySFX("EnergyLost");
     }
 
     public void EarnEnergyByCrystal()

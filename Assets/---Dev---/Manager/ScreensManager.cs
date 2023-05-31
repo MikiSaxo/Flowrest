@@ -202,6 +202,8 @@ public class ScreensManager : MonoBehaviour
 
     public void VictoryScreen()
     {
+        AudioManager.Instance.PlaySFX("Victory");
+        
         MapManager.Instance.IsVictory = true;
         MapManager.Instance.ResetTwoLastSwapped();
 
@@ -290,6 +292,8 @@ public class ScreensManager : MonoBehaviour
         _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
 
         SpawnAllDialog();
+        
+        AudioManager.Instance.PlaySFX("DialogPop");
     }
 
     private void SpawnAllDialog()
@@ -358,6 +362,8 @@ public class ScreensManager : MonoBehaviour
     }
     public void GameOver()
     {
+        AudioManager.Instance.PlaySFX("Defeat");
+        
         _bg.SetActive(true);
         _gameOverParent.SetActive(true);
         MouseHitRaycast.Instance.IsBlockMouse(true);

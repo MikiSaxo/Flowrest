@@ -45,12 +45,6 @@ public class GroundIndicator : MonoBehaviour
         _selectedYPos = _startYPos + SELECTED_Y_POS;
     }
 
-    // public void ForceEntered()
-    // {
-    //     _isEntered = true;
-    //     MoveYMesh(_hoveredYPos, .3f);
-    // }
-
     private void OnTriggerEnter(Collider other)
     {
         // OnEnterPointer(other);
@@ -142,6 +136,9 @@ public class GroundIndicator : MonoBehaviour
             !MapManager.Instance.IsVictory)
         {
             EnergyManager.Instance.SpawnNoEnergyText();
+            
+            AudioManager.Instance.PlaySFX("BlockedTileWhenClicked");
+            
             return;
         }
 
@@ -153,6 +150,9 @@ public class GroundIndicator : MonoBehaviour
             GameObject go = Instantiate(_fbTextWarning, EnergyManager.Instance.transform);
             go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetBoredText());
             _currentFbBoredText = go;
+            
+            AudioManager.Instance.PlaySFX("BlockedTileWhenClicked");
+            
             return;
         }
 
@@ -178,6 +178,7 @@ public class GroundIndicator : MonoBehaviour
             {
                 ResetIndicator();
                 StartCoroutine(WaitALittleToReset());
+                AudioManager.Instance.PlaySFX("Unselect");
                 return;
             }
 

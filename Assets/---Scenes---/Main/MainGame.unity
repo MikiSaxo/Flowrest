@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.73465127, g: 0.8411285, b: 0.90449065, a: 1}
+  m_IndirectSpecularColor: {r: 0.7346216, g: 0.8412794, b: 0.90451986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23883,6 +23883,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480315729}
     m_Modifications:
+    - target: {fileID: 600711995560458952, guid: 65aac1323027c884289c7887abd558b9, type: 3}
+      propertyPath: m_Spacing
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 600711995834712280, guid: 65aac1323027c884289c7887abd558b9, type: 3}
       propertyPath: m_Name
       value: -MenuOrderMemo-
@@ -25106,10 +25110,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 455817755}
     m_Modifications:
-    - target: {fileID: 8350016003401472120, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857642, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -25154,78 +25154,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: _audioMixer
-      value: 
-      objectReference: {fileID: 24100000, guid: c646e4e0578abb14aacf57059eb55de9, type: 2}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: _musicSlider
-      value: 
-      objectReference: {fileID: 325802269}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[0].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: e78637e6c33d40a4282f136f4ba0b7d5, type: 3}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[1].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b5ed929352eadf241b9a275fcdfcdd40, type: 3}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[1].Name
-      value: TileSelected
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[1].Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[0].Volume
-      value: 0.169
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[1].Volume
-      value: 0.452
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[1].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b5ed929352eadf241b9a275fcdfcdd40, type: 3}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[1].Loop
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[1].Name
-      value: TileEntered
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[1].Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[1].Volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857644, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: m_Name
       value: ---AudioManager---
       objectReference: {fileID: 0}
-    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: -4069436816931336758, guid: c646e4e0578abb14aacf57059eb55de9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
 --- !u!1001 &8966416019397107516

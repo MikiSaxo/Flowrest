@@ -45,8 +45,8 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _distance;
 
     [Header("Android")] public bool IsAndroid;
-    
-    [Header("HTML")][SerializeField] private GameObject _loadingText;
+
+    [Header("HTML")] [SerializeField] private GameObject _loadingText;
 
     [Header("Choose Start Level Index")] [SerializeField]
     private int _currentLevel;
@@ -142,7 +142,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.LaunchCredits();
             return;
         }
-        
+
         StartCoroutine(CheckFileMap());
     }
 
@@ -394,8 +394,11 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if PopUp
-        if(currentLvl.PopUpInfos.Length > 0)
-            PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
+        if (currentLvl.PopUpInfos != null)
+        {
+            if (currentLvl.PopUpInfos.Length > 0)
+                PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
+        }
 
         // Update Dialogs
         bool hasPopUp = currentLvl.PopUpInfos.Length > 0;
@@ -658,6 +661,8 @@ public class MapManager : MonoBehaviour
 
     private IEnumerator GroundSwapCorou(GameObject which, Vector2Int newCoords)
     {
+        AudioManager.Instance.PlaySFX("Swap");
+
         // Update if first swap
         if (!_hasFirstSwap)
         {
@@ -785,6 +790,8 @@ public class MapManager : MonoBehaviour
 
             ResetTwoLastSwapped();
 
+            AudioManager.Instance.PlaySFX("TileBored");
+
             UpdateTwoLastSwapped(gWhich, gLastGroundSelected);
             LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
         }
@@ -888,6 +895,8 @@ public class MapManager : MonoBehaviour
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
+
+        AudioManager.Instance.PlaySFX("EnergyGain");
 
         // Remove 1 from button
         LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
@@ -1082,7 +1091,7 @@ public class MapManager : MonoBehaviour
         ResetButtonSelected();
         ResetPreview();
         ResetGroundSelected();
-        SetupUIGround.Instance.EndFb();
+        //SetupUIGround.Instance.EndFb();
         MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
@@ -1148,7 +1157,7 @@ public class MapManager : MonoBehaviour
         LastGroundSelected = null;
         _lastGroundCoordsSelected = new Vector2Int(-1, -1);
 
-       // MouseHitRaycast.Instance.ResetLastGroundHit();
+        // MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
     public void ResetAllSelection()
