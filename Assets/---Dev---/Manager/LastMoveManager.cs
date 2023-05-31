@@ -91,7 +91,7 @@ public class LastMoveManager : MonoBehaviour
     public void SaveNewMap()
     {
         // print("new current map");
-        ScreensManager.Instance.UpdateBackwardsButton(_stockStateMap.Count != 0);
+        SetupUIGround.Instance.UpdateBackwardButton(_stockStateMap.Count != 0);
 
         // Stock Floor
         AllStates[,] newMapState = new AllStates[_mapSize.x, _mapSize.y];
@@ -230,7 +230,7 @@ public class LastMoveManager : MonoBehaviour
 
         if (_stockStateMap.Count <= 1)
         {
-            ScreensManager.Instance.UpdateBackwardsButton(false);
+            SetupUIGround.Instance.UpdateBackwardButton(false);
         }
         
         MapManager.Instance.ResetBig();

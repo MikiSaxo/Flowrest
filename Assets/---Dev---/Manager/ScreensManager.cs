@@ -21,7 +21,6 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _credits;
 
     [Header("Pause")] 
-    [SerializeField] private Button _backwardsButton;
     [SerializeField] private GameObject _menuPauseParent;
 
     [Header("Order")] 
@@ -565,11 +564,6 @@ public class ScreensManager : MonoBehaviour
     public void UpdateTutoArrow(bool state)
     {
         _tutoArrow.UpdateArrow(state);
-    }
-
-    public void UpdateBackwardsButton(bool state)
-    {
-        _backwardsButton.interactable = state;
     }
 
     public bool GetIsDialogTime()

@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Xml;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SetupUIGround : MonoBehaviour
 {
@@ -164,6 +165,12 @@ public class SetupUIGround : MonoBehaviour
     public void SetActiveBackwardsButton(bool state)
     {
         _buttonBackwards.SetActive(state);
+    }
+
+    public void UpdateBackwardButton(bool state)
+    {
+        _buttonBackwards.GetComponent<Button>().interactable = state;
+        _buttonBackwards.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
 
     public void UpdatePreviewInventory(bool activate, AllStates state)
