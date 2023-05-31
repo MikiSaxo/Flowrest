@@ -26,13 +26,7 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 1
   IsTutoRecycling: 0
-  PreviewMessage:
-  - "Ici, tu vas \xE9changer ta tuile de Grassias avec une tuile de Calcid. La tuile
-    de Grassias va modifier les tuiles de Calcid adjacentes. "
-  - "Comme indiqu\xE9 dans le m\xE9mo, une tuile de Grassias combin\xE9 \xE0 une
-    tuile de Calcid donne une tuile de Grassias."
-  - "Pour faciliter ton travail, nos ing\xE9nieurs ont con\xE7us un syst\xE8me permettant
-    de <b>pr\xE9visualiser</b> les modifications que tes tuiles vont apporter."
+  PreviewMessage: []
   PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 2}
@@ -58,6 +52,8 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning: []
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Maintenant que tu sais comment \xE9changer deux tuiles entre elles, je vais
     t'apporter quelques pr\xE9cisions sur ces \xE9changes."
@@ -66,6 +62,12 @@ MonoBehaviour:
   - "<b>La premi\xE8re tuile</b> que tu vas s\xE9lectionner sera \xE9galement <b>la
     premi\xE8re</b> \xE0 effectuer ses changements. Elle sera ensuite suivie des
     changements de la <b>deuxi\xE8me tuile que tu auras s\xE9lectionn\xE9e</b>."
+  - "Ici, tu vas \xE9changer ta tuile de Grassias avec une tuile de Calcid. La tuile
+    de Grassias va modifier les tuiles de Calcid adjacentes. "
+  - "Comme indiqu\xE9 dans le m\xE9mo, une tuile de Grassias combin\xE9 \xE0 une
+    tuile de Calcid donne une tuile de Grassias."
+  - "Pour faciliter ton travail, nos ing\xE9nieurs ont con\xE7us un syst\xE8me permettant
+    de <b>pr\xE9visualiser</b> les modifications que tes tuiles vont apporter."
   DialogEnd:
   - "Fais attention lors de tes \xE9changes, une tuile qui vient d'\xEAtre d\xE9plac\xE9e
     doit s'adapter \xE0 son nouvel environnement."
