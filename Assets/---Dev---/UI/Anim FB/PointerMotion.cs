@@ -21,6 +21,8 @@ public class PointerMotion : MonoBehaviour
     {
         if (!_canEnter || _isBouncing) return;
         
+        AudioManager.Instance.PlaySFX("MouseOverButton");
+        
         transform.DOKill();
         transform.DOScale(_scaleEnter, _timeEnter).SetEase(Ease.InOutSine);
     }

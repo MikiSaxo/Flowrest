@@ -43,6 +43,8 @@ public class FB_CrystalCollected : MonoBehaviour
     {
         _objToMove.transform.DOMoveY(transform.position.y + _yOffset, _durationSpawn).OnComplete(WaitToDispawnCrystal);
         _objToMove.transform.DOScale(1, _durationSpawn);
+        
+        AudioManager.Instance.PlaySFX("EnergyGain");
     }
 
     private void WaitToDispawnCrystal()
