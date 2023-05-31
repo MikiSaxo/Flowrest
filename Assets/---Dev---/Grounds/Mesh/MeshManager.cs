@@ -124,40 +124,38 @@ public class MeshManager : MonoBehaviour
 
     private void CheckTileColor()
     {
-        return;
-
-        if (_propsStartColor.Length == 0) return;
-
-        if (_currentTileState == TileState.Bored)
-        {
-            for (int i = 0; i < _propsMat.Length; i++)
-            {
-                bool hasTexture = _propsMat[i].GetTexture("_BaseMap");
-                if (!hasTexture)
-                {
-                    //_propsMat[i].SetColor("_BaseColor", _boredColor);
-                }
-                else
-                {
-                    _propsMat[i].SetTexture("_BaseMap", _textureBored);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < _propsMat.Length; i++)
-            {
-                bool hasTexture = _propsMat[i].GetTexture("_BaseMap");
-                if (!hasTexture)
-                {
-                    _propsMat[i].SetColor("_BaseColor", _propsStartColor[i]);
-                }
-                else
-                {
-                    _propsMat[i].SetTexture("_BaseMap", _textureBase);
-                }
-            }
-        }
+        // if (_propsStartColor.Length == 0) return;
+        //
+        // if (_currentTileState == TileState.Bored)
+        // {
+        //     for (int i = 0; i < _propsMat.Length; i++)
+        //     {
+        //         bool hasTexture = _propsMat[i].GetTexture("_BaseMap");
+        //         if (!hasTexture)
+        //         {
+        //             //_propsMat[i].SetColor("_BaseColor", _boredColor);
+        //         }
+        //         else
+        //         {
+        //             _propsMat[i].SetTexture("_BaseMap", _textureBored);
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     for (int i = 0; i < _propsMat.Length; i++)
+        //     {
+        //         bool hasTexture = _propsMat[i].GetTexture("_BaseMap");
+        //         if (!hasTexture)
+        //         {
+        //             _propsMat[i].SetColor("_BaseColor", _propsStartColor[i]);
+        //         }
+        //         else
+        //         {
+        //             _propsMat[i].SetTexture("_BaseMap", _textureBase);
+        //         }
+        //     }
+        // }
     }
 
     public GameObject GetSpecificParticule()
