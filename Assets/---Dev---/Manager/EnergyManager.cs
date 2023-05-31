@@ -12,6 +12,8 @@ public class EnergyManager : MonoBehaviour
 
     [Header("Setup")] [SerializeField] private Slider _energyBar;
     [SerializeField] private Slider _hitEnergyBar;
+    [SerializeField] private Image _energyBarImg;
+    [SerializeField] private Image _hitEnergyBarImg;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
     [SerializeField] private WaveEffect _waveEffect;
     [SerializeField] private Image _vignettage;
@@ -53,8 +55,11 @@ public class EnergyManager : MonoBehaviour
     public void InitEnergy(int startEnergy, int maxEnergy)
     {
         _energyValue = startEnergy;
-        _energyBar.value = 0;
-        _hitEnergyBar.value = 0;
+        //_energyBar.value = 0;
+        _energyBarImg.fillAmount = 0;
+        // _hitEnergyBar.value = 0;
+        _hitEnergyBarImg.fillAmount = 0;
+        
         _numberToDisplay.text = $"0";
         _currentEnergy = _energyValue;
         _maxEnergy = maxEnergy;
@@ -71,8 +76,10 @@ public class EnergyManager : MonoBehaviour
     private void AnimEnergyBar()
     {
         float energyDisplay = (float)_currentEnergy / (float)_maxEnergy;
-        _energyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
-        _hitEnergyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
+        // _energyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
+        _energyBarImg.DOFillAmount(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
+        // _hitEnergyBar.DOValue(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
+        _hitEnergyBarImg.DOFillAmount(energyDisplay, _timeToFillEnergy).SetEase(Ease.Linear);
     }
 
     public void LaunchAnimEnergy()
@@ -153,8 +160,10 @@ public class EnergyManager : MonoBehaviour
 
         _energyValue += value;
 
-        _energyBar.DOKill();
-        _hitEnergyBar.DOKill();
+        // _energyBar.DOKill();
+        _energyBarImg.DOKill();
+        // _hitEnergyBar.DOKill();
+        _hitEnergyBarImg.DOKill();
 
         if (value < 0)
         {
@@ -175,8 +184,10 @@ public class EnergyManager : MonoBehaviour
 
             float energyDisplay = (float)_energyValue / (float)_maxEnergy;
 
-            _energyBar.value = energyDisplay;
-            _hitEnergyBar.DOValue(energyDisplay, .4f).SetDelay(.4f);
+            // _energyBar.value = energyDisplay;
+            _energyBarImg.fillAmount = energyDisplay;
+            // _hitEnergyBar.DOValue(energyDisplay, .4f).SetDelay(.4f);
+            _hitEnergyBarImg.DOFillAmount(energyDisplay, .4f).SetDelay(.4f);
         }
         else
         {
@@ -187,8 +198,10 @@ public class EnergyManager : MonoBehaviour
             StopWaveEffect();
 
             float energyDisplay = (float)_energyValue / (float)_maxEnergy;
-            _hitEnergyBar.DOValue(energyDisplay, .4f);
-            _energyBar.DOValue(energyDisplay, .4f);
+            // _energyBar.DOValue(energyDisplay, .4f);
+            _energyBarImg.DOFillAmount(energyDisplay, .4f);
+            // _hitEnergyBar.DOValue(energyDisplay, .4f);
+            _hitEnergyBarImg.DOFillAmount(energyDisplay, .4f);
         }
 
         // // Bad system to avoid 499 or 501 but 500 
@@ -249,7 +262,9 @@ public class EnergyManager : MonoBehaviour
         _numberToDisplay.text = $"0";
         _currentEnergy = 0;
         _numberToDisplay.color = Color.white;
-        _hitEnergyBar.DOValue(0, 0);
-        _energyBar.DOValue(0, 0);
+        // _energyBar.DOValue(0, 0);
+        _energyBarImg.DOFillAmount(0, 0);
+        // _hitEnergyBar.DOValue(0, 0);
+        _hitEnergyBarImg.DOFillAmount(0, 0);
     }
 }

@@ -29,7 +29,6 @@ public class DialogPrefab : MonoBehaviour
     public void Init(string dialog, float dialogSpeed)
     {
         IsFinish = false;
-        // dialog = $"{dialog}\nblou";
         if (dialog.Contains('$'))
         {
             var replace = dialog.Replace('$', '\n');
@@ -38,7 +37,7 @@ public class DialogPrefab : MonoBehaviour
 
         dialog = UpdateModifierText(dialog);
 
-        dialog += " ";
+        dialog += "  ";
 
         DialogText.text = dialog;
         DialogText.ForceMeshUpdate();
@@ -48,9 +47,6 @@ public class DialogPrefab : MonoBehaviour
         _dialogSpeed = dialogSpeed;
 
         DialogText.SetText(String.Empty);
-        //Vector2 textSize = DialogText.GetRenderedValues(false);
-        //_textSizeY = textSize.y;
-        //gameObject.GetComponent<RectTransform>().DOSizeDelta(textSize + _padding, 0);
 
 
         StartCoroutine(AnimationText());
