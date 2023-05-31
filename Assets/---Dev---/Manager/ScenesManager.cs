@@ -20,6 +20,8 @@ public class ScenesManager : MonoBehaviour
     {
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        AudioManager.Instance.StopMusic("MenuMusic");
+        AudioManager.Instance.StopMusic("MainMusic");
         SceneManager.LoadScene(0);
     }
 }

@@ -94,6 +94,7 @@ public class MeshManager : MonoBehaviour
         {
             _matt[0].SetTexture("_BaseMap", _textureSelected);
             _matt[1].SetTexture("_BaseMap", _textureBase);
+            var propAnim = _meshVariations[_randomNb].Props.GetComponent<StockProps>().GetPropsAnim();
         }
         else if (state == TileState.Normal)
         {
