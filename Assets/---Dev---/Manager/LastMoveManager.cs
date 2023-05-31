@@ -186,11 +186,11 @@ public class LastMoveManager : MonoBehaviour
             {
                 _stockLastGroundSwaped[^2][0].UpdateNoSwap(true);
                 _stockLastGroundSwaped[^2][1].UpdateNoSwap(true);
-
+        
                 MapManager.Instance.UpdateTwoLastSwapped(_stockLastGroundSwaped[^2][0], _stockLastGroundSwaped[^2][1]);
             }
         }
-
+        
         if (_stockLastGroundSwaped[^1][0] != null)
             _stockLastGroundSwaped[^1][0].UpdateNoSwap(false);
         if (_stockLastGroundSwaped[^1][1] != null)

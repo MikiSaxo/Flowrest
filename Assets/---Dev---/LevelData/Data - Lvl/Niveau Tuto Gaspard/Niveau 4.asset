@@ -21,8 +21,9 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 1
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
-  BlockLastSwap: 0
+  BlockLastSwap: 1
   IsTuto: 0
   IsTutoRecycling: 0
   PreviewMessage: []
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 : "
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 481c944fd6756f94b909e722d31bf5dc, type: 3}
   QuestFloor: 
   QuestFlower: 00000000
   QuestNoSpecificTiles: 
@@ -42,6 +42,8 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 12
   CharacterName: Profess.io
+  CharacterSpritesBeginning: []
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Bonne nouvelle ! Le client a appr\xE9ci\xE9 ton travail !"
   - ...

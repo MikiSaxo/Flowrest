@@ -802,20 +802,20 @@ public class MapManager : MonoBehaviour
         }
 
         // Bloc for Next Swap
-        if (_blockLastGroundsSwapped)
-        {
-            gWhich.JustBeenSwaped = true;
-            gLastGroundSelected.JustBeenSwaped = true;
-            gWhich.UpdateFBReloadEnergy(true);
-            gLastGroundSelected.UpdateFBReloadEnergy(true);
+        //if (_blockLastGroundsSwapped)
+        // {
+        gWhich.JustBeenSwaped = true;
+        gLastGroundSelected.JustBeenSwaped = true;
+        gWhich.UpdateNoSwap(true);
+        gLastGroundSelected.UpdateNoSwap(true);
 
-            ResetTwoLastSwapped();
+        ResetTwoLastSwapped();
 
-            AudioManager.Instance.PlaySFX("TileBored");
+        AudioManager.Instance.PlaySFX("TileBored");
 
-            UpdateTwoLastSwapped(gWhich, gLastGroundSelected);
-            LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
-        }
+        UpdateTwoLastSwapped(gWhich, gLastGroundSelected);
+        LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
+        //}
 
 
         // Wait the FX is finished
@@ -902,6 +902,8 @@ public class MapManager : MonoBehaviour
     {
         _lastGroundSwapped[0] = gWhich;
         _lastGroundSwapped[1] = gLastGroundSelected;
+        // _lastGroundSwapped[0].UpdateNoSwap(true);
+        // _lastGroundSwapped[1].UpdateNoSwap(true);
     }
 
     public void UseRecycling()
