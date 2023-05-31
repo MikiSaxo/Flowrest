@@ -26,20 +26,14 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 1
   IsTutoRecycling: 0
-  PreviewMessage:
-  - "Lorsque tu vas \xE9changer deux tuiles entre elles, tu recevras <b>l'addition
-    de ces deux tuiles</b> dans ton inventaire."
-  - "Tu peux t'aider de ton <b>m\xE9mo</b> ou de la <b>pr\xE9visualisation au dessus
-    de ton inventaire</b> si tu as besoin d'informations sur ce que tu vas gagner
-    lors de ces \xE9changes."
+  PreviewMessage: []
   PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 0}
   - {x: 6, y: 4}
   HasForcePoseBlocAfterSwap: 1
   ForcePoseBlocCoord: {x: 4, y: 2}
-  PopUpImages: []
-  FileNamePopUp: Vid_PopUp4
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
@@ -50,9 +44,16 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning: []
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Maintenant que tu es \xE0 l'aise avec les technologies que nous utilisons, je
     vais te donner acc\xE8s \xE0 un inventaire."
+  - "Lorsque tu vas \xE9changer deux tuiles entre elles, tu recevras <b>l'addition
+    de ces deux tuiles</b> dans ton inventaire."
+  - "Tu peux t'aider de ton <b>m\xE9mo</b> ou de la <b>pr\xE9visualisation au dessus
+    de ton inventaire</b> si tu as besoin d'informations sur ce que tu vas gagner
+    lors de ces \xE9changes."
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
