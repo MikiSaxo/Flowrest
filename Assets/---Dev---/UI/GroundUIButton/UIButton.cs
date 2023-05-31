@@ -53,7 +53,7 @@ public class UIButton : MonoBehaviour
     {
         _numberGroundLeft += numberToAdd;
     
-        _textNumber.text = $"{_numberGroundLeft}";
+        _textNumber.text = $"x{_numberGroundLeft}";
 
         if (_numberGroundLeft <= 0)
             SetupUIGround.Instance.GroundEmpty(gameObject);
