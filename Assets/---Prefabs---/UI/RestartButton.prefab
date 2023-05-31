@@ -147,8 +147,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 2dd4300402caaa44d85f26a94508c95c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -176,7 +176,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 0, a: 1}
@@ -186,9 +186,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 6c2c29dbea6621e4e811af0cc3101e38, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 284c9019fe65635488f40c1e437c4792, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 284c9019fe65635488f40c1e437c4792, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -272,10 +272,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeEnter: 0.2
   _timeLeave: 0.5
-  _punchForce: 0.1
   _scaleEnter: 1.1
-  _vibrato: 7
   _canEnter: 1
+  _duration: 1
+  _punchScale: 0.2
+  _vibrato: 7
 --- !u!1 &4579655477069185603
 GameObject:
   m_ObjectHideFlags: 0
