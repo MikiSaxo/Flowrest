@@ -252,13 +252,20 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if has recycling
-        _hasRecycling = currentLvl.HasRecycling;
-        NbOfRecycling = currentLvl.NbOfRecycling;
-        _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
-        SetupUIGround.Instance.SetIfHasRecycling(_hasRecycling);
-        RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
-        if (_hasRecycling)
-            RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
+        if (HasInventory)
+        {
+            _hasRecycling = currentLvl.HasRecycling;
+            NbOfRecycling = currentLvl.NbOfRecycling;
+            _hasInfinitRecycling = currentLvl.HasInfinitRecycling;
+            SetupUIGround.Instance.SetIfHasRecycling(_hasRecycling);
+            RecyclingManager.Instance.UpdateRecycling(_hasRecycling);
+            if (_hasRecycling)
+                RecyclingManager.Instance.InitNbRecycling(_hasInfinitRecycling);
+        }
+        else
+        {
+            RecyclingManager.Instance.UpdateRecycling(false);
+        }
 
         // Update if open memo
         OpenMemo = currentLvl.OpenMemo;
@@ -402,7 +409,7 @@ public class MapManager : MonoBehaviour
         {
             if (currentLvl.PopUpInfos.Length > 0)
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
-            
+
             // Update Dialogs
             hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
@@ -413,9 +420,11 @@ public class MapManager : MonoBehaviour
             _charaSpritesEnd = currentLvl.CharacterSpritesEnd;
 
         if (LanguageManager.Instance.Tongue == Language.Francais)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp, _charaSpritesBegininng);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp,
+                _charaSpritesBegininng);
         else if (LanguageManager.Instance.Tongue == Language.English)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp, _charaSpritesBegininng);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp,
+                _charaSpritesBegininng);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);

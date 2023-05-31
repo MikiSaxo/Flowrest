@@ -195,9 +195,7 @@ public class SetupUIGround : MonoBehaviour
         _bgInventory.GetComponent<RectTransform>().DOKill();
         _bgInventory.GetComponent<RectTransform>().DOSizeDelta(newSize, duration).SetEase(Ease.OutSine);
     }
-
-   
-
+    
     public bool CheckIfStillGround()
     {
         return _stockTileButton.Count > 0;
