@@ -24,4 +24,8 @@ public class StockProps : MonoBehaviour
     {
         return _propMat;
     }
+    public Animator[] GetPropsAnim()
+    {
+        return _propsAnim;
+    }
 }
