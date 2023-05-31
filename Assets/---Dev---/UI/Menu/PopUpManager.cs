@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -8,10 +9,15 @@ public class PopUpManager : MonoBehaviour
 {
     public static PopUpManager Instance;
     
+    [Header("Setup")]
     [SerializeField] private GameObject _parent;
-    [SerializeField] private Image _image;
     [SerializeField] private VideoPlayer _videoPlayer;
+    
+    [Header("Text")]
+    [SerializeField] private TMP_Text _titleText;
+    [SerializeField] private TMP_Text _descriptionText;
 
+    
     private bool _canOpenPopUp;
     
     private void Awake()
@@ -19,13 +25,38 @@ public class PopUpManager : MonoBehaviour
         Instance = this;
     }
 
-    public void InitPopUp(string fileName)
+    public void InitPopUp(PopUpInfos[] popUpInfos)
     {
+        // _canOpenPopUp = false;
+        //
+        // if (filesName.Length <= 0) return;
+        //
+        // string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{filesName[0].VideoName}.mp4");
+        //
+        // if (!File.Exists(videoPath))
+        // {
+        //     Debug.LogError("Video PopUp Name doesn't exist");
+        //     return;
+        // }
+        //
+        // _canOpenPopUp = true;
+        // _videoPlayer.url = videoPath;
+        // _videoPlayer.Play();
+        
+        UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
+        
+        if(GetComponent<LegendScroll>() != null)
+            GetComponent<LegendScroll>().InitVideoLegend(popUpInfos);
+    }
+
+    public void UpdatePopUp(string title, string videoName, string description)
+    {
+        _titleText.text = title;
+        _descriptionText.text = description;
+        
         _canOpenPopUp = false;
 
-        if (fileName == String.Empty) return;
-        
-        string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{fileName}.mp4");
+        string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{videoName}.mp4");
 
         if (!File.Exists(videoPath))
         {
@@ -38,8 +69,7 @@ public class PopUpManager : MonoBehaviour
         _videoPlayer.Play();
     }
 
-
-    public void UpdatePopUp(bool state)
+    public void UpdatePopUpState(bool state)
     {
         if(_canOpenPopUp)
             _parent.SetActive(state);

@@ -222,9 +222,9 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
-    public void UpdatePopUp(bool state)
+    public void UpdatePopUpState(bool state)
     {
-        PopUpManager.Instance.UpdatePopUp(state);
+        PopUpManager.Instance.UpdatePopUpState(state);
 
         _dialogParent.SetActive(false);
         _hasPopUp = false;
@@ -300,7 +300,6 @@ public class ScreensManager : MonoBehaviour
             {
                 _memoMenu.OpenAnim();
                 StartCoroutine(WaitToLaunchMemoOpening());
-                _isMemoOpened = true;
             }
             
             SpawnDialog();
@@ -525,7 +524,6 @@ public class ScreensManager : MonoBehaviour
             {
                 _memoMenu.OpenAnim();
                 StartCoroutine(WaitToLaunchMemoOpening());
-                _isMemoOpened = true;
             }
             if (!_hasPopUp)
             {
@@ -535,7 +533,7 @@ public class ScreensManager : MonoBehaviour
             }
             else
             {
-                UpdatePopUp(true);
+                UpdatePopUpState(true);
             }
         }
     }
@@ -574,6 +572,7 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator WaitToLaunchMemoOpening()
     {
+        _isMemoOpened = true;
         yield return new WaitForSeconds(.5f);
         _memoWaveEffect.StartGrowOneTime();
     }

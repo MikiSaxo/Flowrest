@@ -31,8 +31,7 @@ public class LevelData : ScriptableObject
    public Vector2Int[] PlayerForceSwap;
    public bool HasForcePoseBlocAfterSwap;
    public Vector2Int ForcePoseBlocCoord;
-   public Sprite[] PopUpImages;
-   public string FileNamePopUp;
+   public PopUpInfos[] PopUpInfos;
    
    public string QuestDescription;
    public string QuestDescriptionEnglish;

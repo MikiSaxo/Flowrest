@@ -394,12 +394,11 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if PopUp
-        // if (currentLvl.PopUpImages is { Length: > 0 }) PopUpManager.Instance.InitPopUp(currentLvl.FileNamePopUp);
-        if(currentLvl.FileNamePopUp != String.Empty)
-            PopUpManager.Instance.InitPopUp(currentLvl.FileNamePopUp);
+        if(currentLvl.PopUpInfos.Length > 0)
+            PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
 
         // Update Dialogs
-        bool hasPopUp = currentLvl.FileNamePopUp != String.Empty;
+        bool hasPopUp = currentLvl.PopUpInfos.Length > 0;
 
         if (LanguageManager.Instance.Tongue == Language.Francais)
             ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp);
@@ -551,7 +550,8 @@ public class MapManager : MonoBehaviour
 
     private void ChangeLevel(bool nextlevel)
     {
-        if (++_currentLevel >= _levelData.Length)
+        var checkNextLvl = _currentLevel + 1;
+        if (checkNextLvl >= _levelData.Length && nextlevel)
         {
             ScreensManager.Instance.LaunchCredits();
             return;
