@@ -81,6 +81,9 @@ public class MapManager : MonoBehaviour
     private bool _tileHasCrystal;
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
+    Sprite[] _charaSpritesBegininng = new Sprite[0];
+    Sprite[] _charaSpritesEnd = new Sprite[0];
+
 
     private MapConstructData _mapConstructData;
 
@@ -404,10 +407,15 @@ public class MapManager : MonoBehaviour
             hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
 
+        if (currentLvl.CharacterSpritesBeginning != null)
+            _charaSpritesBegininng = currentLvl.CharacterSpritesBeginning;
+        if (currentLvl.CharacterSpritesEnd != null)
+            _charaSpritesEnd = currentLvl.CharacterSpritesEnd;
+
         if (LanguageManager.Instance.Tongue == Language.Francais)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp, _charaSpritesBegininng);
         else if (LanguageManager.Instance.Tongue == Language.English)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp);
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp, _charaSpritesBegininng);
 
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
@@ -543,7 +551,8 @@ public class MapManager : MonoBehaviour
 
         if (!GetHasFirstSwap())
         {
-            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, false);
+            Sprite[] charaNoChangement = new Sprite[0];
+            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, false, charaNoChangement);
         }
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
@@ -1040,6 +1049,11 @@ public class MapManager : MonoBehaviour
     public int GetCurrentLevel()
     {
         return _currentLevel;
+    }
+
+    public Sprite[] GetCharaSpritesEnd()
+    {
+        return _charaSpritesEnd;
     }
 
     public Vector2Int GetTileStockForceSwap(int index)

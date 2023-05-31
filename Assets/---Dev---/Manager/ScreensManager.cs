@@ -37,6 +37,7 @@ public class ScreensManager : MonoBehaviour
     [Header("Dialogs")] 
     [SerializeField] private GameObject _dialogParent;
     [SerializeField] private TMP_Text _characterName;
+    [SerializeField] private Image _characterImg;
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
@@ -57,7 +58,6 @@ public class ScreensManager : MonoBehaviour
 
     private bool _isPaused;
 
-    // private int _countScreen;
     private int _countDialog;
     private bool _stopCorou;
     private bool _isCorouRunning;
@@ -69,6 +69,7 @@ public class ScreensManager : MonoBehaviour
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
     private bool _isMemoOpened;
+    private Sprite[] _charaSprites;
 
     private void Awake()
     {
@@ -215,7 +216,7 @@ public class ScreensManager : MonoBehaviour
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
-        SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
+        SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false, MapManager.Instance.GetCharaSpritesEnd());
 
         if (LevelProgressionManager.Instance != null)
         {
@@ -240,7 +241,7 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
-    public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool hasPopUp)
+    public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool hasPopUp, Sprite[] chara)
     {
         RemoveLastDialog();
 
@@ -294,6 +295,11 @@ public class ScreensManager : MonoBehaviour
 
         _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
 
+        if (chara != null)
+        {
+            _charaSprites = chara;
+        }
+
         SpawnAllDialog();
         
         AudioManager.Instance.PlaySFX("DialogPop");
@@ -336,6 +342,15 @@ public class ScreensManager : MonoBehaviour
         // Security if no text
         if (newDialog == String.Empty)
             newDialog = " ";
+        
+        // Change Chara
+        if (_charaSprites.Length > 0)
+        {
+            if (_charaSprites[_countDialog] != null)
+            {
+                _characterImg.sprite = _charaSprites[_countDialog];
+            }
+        }
 
         // Init to the dialog prefab with the speed spawn
         goDialog.Init(newDialog, _dialogSpeed);

@@ -47,7 +47,8 @@ public class LevelDataEditor : Editor
     private SerializedProperty NumberTileCount;
 
     private SerializedProperty CharacterName;
-    private SerializedProperty CharacterSprites;
+    private SerializedProperty CharacterSpritesBeginning;
+    private SerializedProperty CharacterSpritesEnd;
     private SerializedProperty DialogBeginning;
     private SerializedProperty DialogEnd;
     private SerializedProperty DialogBeginningEnglish;
@@ -92,7 +93,8 @@ public class LevelDataEditor : Editor
         NumberTileCount = serializedObject.FindProperty("NumberTileCount");
 
         CharacterName = serializedObject.FindProperty("CharacterName");
-        CharacterSprites = serializedObject.FindProperty("CharacterSprites");
+        CharacterSpritesBeginning = serializedObject.FindProperty("CharacterSpritesBeginning");
+        CharacterSpritesEnd = serializedObject.FindProperty("CharacterSpritesEnd");
         DialogBeginning = serializedObject.FindProperty("DialogBeginning");
         DialogEnd = serializedObject.FindProperty("DialogEnd");
         DialogBeginningEnglish = serializedObject.FindProperty("DialogBeginningEnglish");
@@ -270,7 +272,8 @@ public class LevelDataEditor : Editor
         EditorGUILayout.EndFoldoutHeaderGroup();
         if (dialogs)
         {
-            EditorGUILayout.PropertyField(CharacterSprites, true);
+            EditorGUILayout.PropertyField(CharacterSpritesBeginning, true);
+            EditorGUILayout.PropertyField(CharacterSpritesEnd, true);
             
             EditorGUILayout.Space(5);
             
