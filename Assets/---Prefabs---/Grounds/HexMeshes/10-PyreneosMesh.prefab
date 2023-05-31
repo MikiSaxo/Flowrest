@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5731899067108521366}
+  - component: {fileID: 7774555476068242894}
   m_Layer: 0
   m_Name: Props_C
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   m_Father: {fileID: 5759348697692410977}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7774555476068242894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709530935174037477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747cbd93cfa293a4688b03cc52a25e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _propsMesh: []
+  _propsAnim: []
 --- !u!1 &1275056263354241962
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,6 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3024385225691531048}
+  - component: {fileID: 3746754624133953362}
   m_Layer: 0
   m_Name: Props_B
   m_TagString: Untagged
@@ -64,6 +80,20 @@ Transform:
   m_Father: {fileID: 5759348697692410977}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3746754624133953362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275056263354241962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747cbd93cfa293a4688b03cc52a25e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _propsMesh: []
+  _propsAnim: []
 --- !u!1 &2095895294590211638
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3717271152843675801}
+  - component: {fileID: 2198838848632020486}
   m_Layer: 0
   m_Name: Props_A
   m_TagString: Untagged
@@ -162,6 +193,20 @@ Transform:
   m_Father: {fileID: 5759348697692410977}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2198838848632020486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283975932990245843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 747cbd93cfa293a4688b03cc52a25e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _propsMesh: []
+  _propsAnim: []
 --- !u!1 &6787883019459000630
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,11 +303,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a30244e495f9554db080e8aaaab24d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _supportMesh: []
+  _supportMesh:
+  - {fileID: 200716026269437484}
+  - {fileID: 4454851174585937291}
   _textureBase: {fileID: 2800000, guid: e8c6990dad6717b40841a994b267a718, type: 3}
-  _textureSelected: {fileID: 0}
-  _textureBored: {fileID: 0}
-  _boredColor: {r: 0, g: 0, b: 0, a: 0}
+  _textureSelected: {fileID: 2800000, guid: 416455f224df9e14ba501e61a9eb4f2a, type: 3}
+  _textureBored: {fileID: 2800000, guid: 416455f224df9e14ba501e61a9eb4f2a, type: 3}
   _meshVariations:
   - Props: {fileID: 4283975932990245843}
     Crystals: {fileID: 6787883019459000630}
@@ -574,6 +620,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9127971c521e79b4c818d19af1143220, type: 3}
+--- !u!23 &200716026269437484 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6134502125335031323, guid: 9127971c521e79b4c818d19af1143220, type: 3}
+  m_PrefabInstance: {fileID: 6335217807268880439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4454851174585937291 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7654422328793664956, guid: 9127971c521e79b4c818d19af1143220, type: 3}
+  m_PrefabInstance: {fileID: 6335217807268880439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7166653969839475864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3791510642839612591, guid: 9127971c521e79b4c818d19af1143220, type: 3}
