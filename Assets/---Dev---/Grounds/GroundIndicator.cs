@@ -89,6 +89,7 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.IsSwapping) return;
 
         _isEnteredLimited = true;
+        
         AudioManager.Instance.PlaySFX("TileEntered");
 
         if (_isSelected || IsSwapping)

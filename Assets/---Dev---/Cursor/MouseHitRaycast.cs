@@ -28,7 +28,7 @@ public class MouseHitRaycast : MonoBehaviour
 
     void Update()
     {
-        if (_isBlocked || MapManager.Instance.IsPosing) return;
+        if (_isBlocked || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping) return;
 
         if(MapManager.Instance.IsAndroid)
             DetectTileAndroid();
