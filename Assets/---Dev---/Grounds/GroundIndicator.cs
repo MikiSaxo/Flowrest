@@ -146,6 +146,8 @@ public class GroundIndicator : MonoBehaviour
         if (_parent.IsBored && Input.GetMouseButtonDown(0) && _isEnteredFree)
         {
             // EnergyManager.Instance.SpawnNoEnergyText();
+            if (MapManager.Instance.LastObjButtonSelected != null) return;
+            
             if (_currentFbBoredText != null) return;
 
             GameObject go = Instantiate(_fbTextWarning, EnergyManager.Instance.transform);
