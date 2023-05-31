@@ -43,7 +43,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5513764000109460043, guid: c646e4e0578abb14aacf57059eb55de9, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -176,7 +176,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicSource: {fileID: 8350016004720785191}
   _sFXSource: {fileID: 8350016003401472120}
+  _audioMixer: {fileID: 24100000, guid: c646e4e0578abb14aacf57059eb55de9, type: 2}
   Musics:
+  - Name: MenuMusic
+    Clip: {fileID: 8300000, guid: 36cac60641b562346b00ec3543b99537, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
   - Name: MainMusic
     Clip: {fileID: 8300000, guid: 11fd20e114949c2448358878f6108a05, type: 3}
     Volume: 1
@@ -185,8 +192,146 @@ MonoBehaviour:
     Source: {fileID: 0}
   SFX:
   - Name: TileEntered
-    Clip: {fileID: 8300000, guid: b5ed929352eadf241b9a275fcdfcdd40, type: 3}
+    Clip: {fileID: 8300000, guid: e78637e6c33d40a4282f136f4ba0b7d5, type: 3}
+    Volume: 0.09
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: AddTileToInventory
+    Clip: {fileID: 8300000, guid: 0531d1b0b76c20d459486e4f4d476911, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: BlockTileWhenClicked
+    Clip: {fileID: 8300000, guid: 52121c1548fafcd41bd6b8bcf0b2243c, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: ClickButton
+    Clip: {fileID: 8300000, guid: 62ae4989921c77f46ab837db060564cf, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: DialogPop
+    Clip: {fileID: 8300000, guid: 7c02e3a12c2948c439c5611f0eaf0252, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: DragTile
+    Clip: {fileID: 8300000, guid: fab2658cc7ce23a48a88a30d803bc594, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
+  - Name: EndEvent
+    Clip: {fileID: 8300000, guid: bd72804faf57fbf49b265d6388a4f422, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: EnergyGain
+    Clip: {fileID: 8300000, guid: 06611a15ca56f174892062bc082d8db3, type: 3}
+    Volume: 0.169
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: EnergyLost
+    Clip: {fileID: 8300000, guid: 0df3e8c4e96b1e24598f6a78a41729c2, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Defeat
+    Clip: {fileID: 8300000, guid: eda7f2a7070d06445acef49d6360aa3b, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: EndDragWithoutPose
+    Clip: {fileID: 8300000, guid: 1ccb4427e02bbb146b8bef0e60f9347c, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: FxTileChangingEffect
+    Clip: {fileID: 8300000, guid: 1908ff5f825cc4445bea167987047d7d, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: MouseOverButton
+    Clip: {fileID: 8300000, guid: 9c64afaccb21552429d9f12342d25b64, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: PlantGrow
+    Clip: {fileID: 8300000, guid: e786fa728fbf0b8498eed5b63c92f0e9, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Pop
+    Clip: {fileID: 8300000, guid: 8a92184111e5a1c4f8ab845232f63952, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: GoBackwards
+    Clip: {fileID: 8300000, guid: 273e1263e72190345bbb84c01fcfeb9f, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: SaveLoad
+    Clip: {fileID: 8300000, guid: 520e63a8388661f45aa31547209532f9, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TileSelected
+    Clip: {fileID: 8300000, guid: c88196fd444cdae49b5c8cceba9026bb, type: 3}
+    Volume: 0.452
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Swap
+    Clip: {fileID: 8300000, guid: 17bbfb1197a8ef64598927377d241512, type: 3}
     Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TileBored
+    Clip: {fileID: 8300000, guid: b3e7828b7e2d5d5478b7305e42b445fa, type: 3}
+    Volume: 0.394
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TileUnlocked
+    Clip: {fileID: 8300000, guid: 7c4d8ffb75f7e41468d87270747be110, type: 3}
+    Volume: 0.519
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Unselect
+    Clip: {fileID: 8300000, guid: c9a5f81cf4fce9649a155da0375a6a8c, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Victory
+    Clip: {fileID: 8300000, guid: d6d99b59854ab1741a83e91b1c2d4c8a, type: 3}
+    Volume: 0.519
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: WaterBlip
+    Clip: {fileID: 8300000, guid: 130eb62f22924a9499d680ddf8086aec, type: 3}
+    Volume: 0.183
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -233,7 +378,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -4069436816931336758, guid: c646e4e0578abb14aacf57059eb55de9, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

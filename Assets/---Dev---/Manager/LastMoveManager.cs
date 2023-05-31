@@ -135,6 +135,7 @@ public class LastMoveManager : MonoBehaviour
 
         print("go to last move"); //" :  size of _currentStateMapStock before : " + _currentStateMapStock.Count);
 
+        AudioManager.Instance.PlaySFX("GoBackwards");
 
         // Update floor and crystals
         for (int x = 0; x < _mapSize.x; x++)

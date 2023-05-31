@@ -99,14 +99,20 @@ public class LegendScroll : MonoBehaviour
         if (!_isVideoLegend)
         {
             if (_count < 0)
-                _count = _sprLegend.Length - 1;
+            {
+                _count = 0;
+            }
+                // _count = _sprLegend.Length - 1;
 
             _imgLegend.sprite = _sprLegend[_count];
         }
         else
         {
             if (_count < 0)
-                _count = _popUpInfos.Length - 1;
+            {
+                _count = 0;
+            }
+            //_count = _popUpInfos.Length - 1;
 
             GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
                 _popUpInfos[_count].Description);
@@ -128,14 +134,16 @@ public class LegendScroll : MonoBehaviour
         if (!_isVideoLegend)
         {
             if (_count >= _sprLegend.Length)
-                _count = 0;
+                _count = _sprLegend.Length - 1;
+                // _count = 0;
 
             _imgLegend.sprite = _sprLegend[_count];
         }
         else
         {
             if (_count >= _popUpInfos.Length)
-                _count = 0;
+                _count = _sprLegend.Length - 1;
+                // _count = 0;
 
             GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
                 _popUpInfos[_count].Description);
