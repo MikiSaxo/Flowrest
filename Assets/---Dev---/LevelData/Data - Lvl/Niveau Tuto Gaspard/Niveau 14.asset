@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: d3bc2a09cb3c5e3438a952ce090300bb, type: 3}
   QuestFloor: 
   QuestFlower: 0000000009000000
   QuestNoSpecificTiles: 
@@ -42,6 +42,10 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "En mettant une tuile de Grassias sur une tuile de Viscosa, tu r\xE9cup\xE9reras
     une tuile de Grassias."
