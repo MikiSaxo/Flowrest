@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.73465127, g: 0.8411285, b: 0.90449065, a: 1}
+  m_IndirectSpecularColor: {r: 0.7346216, g: 0.8412794, b: 0.90451986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11116,6 +11116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _energyBar: {fileID: 1089502438}
   _hitEnergyBar: {fileID: 101532696}
+  _energyBarImg: {fileID: 0}
+  _hitEnergyBarImg: {fileID: 0}
   _numberToDisplay: {fileID: 1321497134}
   _waveEffect: {fileID: 0}
   _vignettage: {fileID: 0}
@@ -20582,7 +20584,6 @@ MonoBehaviour:
   _gameOverParent: {fileID: 2134788108}
   _nextLevel: {fileID: 0}
   _credits: {fileID: 0}
-  _backwardsButton: {fileID: 0}
   _menuPauseParent: {fileID: 1601367369}
   _orderMenu: {fileID: 0}
   _orderGrid: {fileID: 0}
@@ -20592,6 +20593,7 @@ MonoBehaviour:
   _orderText: []
   _dialogParent: {fileID: 0}
   _characterName: {fileID: 0}
+  _characterImg: {fileID: 0}
   _dialogContent: {fileID: 0}
   _dialogPrefab: {fileID: 0}
   _dialogFBEnd: {fileID: 0}
@@ -26028,12 +26030,20 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835240, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
+      propertyPath: _minMaxPosY.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966416019672835240, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: _minMaxPosZ.x
       value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835240, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: _minMaxPosZ.y
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8966416019672835242, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835244, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: m_Name

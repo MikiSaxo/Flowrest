@@ -57,13 +57,13 @@ public class AudioManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.buildIndex == 0)
         {
+            StopMusic("MainMusic");
+            StopMusic("MenuMusic");
             PlayMusic("MenuMusic");
-            // StopMusic("MainMusic");
         }
         else
         {
-            PlayMusic("MainMusic");
-            // StopMusic("MenuMusic");
+           
         }
 
 
