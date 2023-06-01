@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 32ae3564b94909c48b55ea762599ec1b, type: 3}
   QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
@@ -42,6 +42,10 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 0}
+  - {fileID: 0}
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Aujourd'hui, j'aimerais te tester sur la cr\xE9ation de tuiles de Viscosa mais
     aussi sur la formation de cha\xEEnes."
