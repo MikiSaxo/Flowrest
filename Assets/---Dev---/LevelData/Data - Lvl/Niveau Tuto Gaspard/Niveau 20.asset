@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 668fe0b614e6664428aee5f25d1529a4, type: 3}
   QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
@@ -42,6 +42,10 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+  - {fileID: 21300000, guid: 87f72b507e83b0343b807e1e44067388, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Nous avons eu la chance de recevoir une demande d'un haut dignitaire venant
     de l'oppos\xE9 de notre galaxie."
