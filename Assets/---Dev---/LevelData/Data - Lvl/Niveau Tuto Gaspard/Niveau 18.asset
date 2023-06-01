@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 32ae3564b94909c48b55ea762599ec1b, type: 3}
   QuestFloor: 00000000
   QuestFlower: 
   QuestNoSpecificTiles: 
@@ -42,6 +42,10 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Ta commande du jour sera \xE0 nouveau de remplir ton terrain de Grassias."
   - "La F\xE9d\xE9ration Galactique de Football avait grandement appr\xE9ci\xE9 ton
