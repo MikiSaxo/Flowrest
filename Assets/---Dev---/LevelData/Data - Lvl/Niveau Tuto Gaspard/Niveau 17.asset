@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -30,10 +31,9 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 9fd8e852e3917a34fa7f293802f4e21c, type: 3}
   QuestFloor: 00000000
   QuestFlower: 
   QuestNoSpecificTiles: 
@@ -42,6 +42,9 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Aujourd'hui on augmente la difficult\xE9. $Vu la vitesse avec laquelle tu retiens
     ce que je t'enseigne, ce n'est qu'une question de temps avant que je n'ai plus
