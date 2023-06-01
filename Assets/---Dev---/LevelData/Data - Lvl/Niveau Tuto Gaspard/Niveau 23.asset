@@ -21,6 +21,7 @@ MonoBehaviour:
   HasRecycling: 0
   HasInfinitRecycling: 0
   NbOfRecycling: 0
+  OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
@@ -32,10 +33,13 @@ MonoBehaviour:
   - {x: 6, y: 4}
   HasForcePoseBlocAfterSwap: 1
   ForcePoseBlocCoord: {x: 4, y: 2}
-  PopUpImages: []
+  PopUpInfos:
+  - Title: "Remplacer une tuile fatigu\xE9e"
+    VideoName: Vid_PopUp6
+    Description: "Les tuiles de l'inventaire viennent replacer les tuiles du terrain,
+      il est donc possible de remplacer une tuile fatigu\xE9e par une tuile de l'inventaire."
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestImage: {fileID: 21300000, guid: 98112a698b53b1c4391b79f851dfb009, type: 3}
   QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
@@ -44,6 +48,8 @@ MonoBehaviour:
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
+  CharacterSpritesBeginning: []
+  CharacterSpritesEnd: []
   DialogBeginning:
   - "Maintenant que tu as acc\xE8s \xE0 l'inventaire, tu vas pouvoir utiliser pleinement
     les facilit\xE9s que celui-ci t'offre."
