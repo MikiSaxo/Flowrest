@@ -116,7 +116,7 @@ public class LastMoveManager : MonoBehaviour
         int[] test = new int[10];
         foreach (var but in inventory)
         {
-            var currentTile = but.GetComponent<UIButton>();
+            var currentTile = but.GetComponent<InventoryButton>();
 
             test[(int)currentTile.GetStateButton()] += currentTile.GetNumberLeft();
         }

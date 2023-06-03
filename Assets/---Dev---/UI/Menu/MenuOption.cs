@@ -15,7 +15,8 @@ public class MenuOption : MonoBehaviour
     private void Start()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
-        _saveLastButtonSelected = _firstButtonSelected;
+        _canvasGroup.alpha = 0;
+        //_saveLastButtonSelected = _firstButtonSelected;
     }
 
     public void ActivateMenuOption()
@@ -27,13 +28,13 @@ public class MenuOption : MonoBehaviour
 
     public void KeepSelectedButton()
     {
-        ChangeSelectedButton(_saveLastButtonSelected);
+        // ChangeSelectedButton(_saveLastButtonSelected);
     }
 
     public void ChangeSelectedButton(GameObject buttonObject)
     {
-        var button = buttonObject.GetComponent<Button>();
-        button.Select();
-        _saveLastButtonSelected = buttonObject;
+        // var button = buttonObject.GetComponent<Button>();
+        // button.Select();
+        // _saveLastButtonSelected = buttonObject;
     }
 }

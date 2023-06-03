@@ -46,7 +46,7 @@ public class SetupUIGround : MonoBehaviour
         _widthBGCurrent = new Vector2(bgSize.width, bgSize.height);
 
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
-        _widthIcon = new Vector2(go.GetComponent<UIButton>().GetWidthIcon(), 0);
+        _widthIcon = new Vector2(go.GetComponent<InventoryButton>().GetWidthIcon(), 0);
         Destroy(go);
         UpdateOpacityInventory(0);
     }
@@ -75,7 +75,7 @@ public class SetupUIGround : MonoBehaviour
             _groundData[(int)state].ColorIcon, _groundData[(int)state].Name);
         MapManager.Instance.LastObjButtonSelected = button;
 
-        if (MapManager.Instance.LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0)
+        if (MapManager.Instance.LastObjButtonSelected.GetComponent<InventoryButton>().GetNumberLeft() <= 0)
         {
             MapManager.Instance.LastObjButtonSelected = null;
             return;
@@ -109,7 +109,7 @@ public class SetupUIGround : MonoBehaviour
     {
         foreach (var tile in _stockTileButton)
         {
-            var currentTile = tile.GetComponent<UIButton>();
+            var currentTile = tile.GetComponent<InventoryButton>();
 
             if ((int)currentTile.GetStateButton() == stateNb)
             {
@@ -126,7 +126,7 @@ public class SetupUIGround : MonoBehaviour
         }
 
         GameObject go = Instantiate(_prefabTileButton, _gridParent.transform);
-        go.GetComponent<UIButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon,
+        go.GetComponent<InventoryButton>().Setup(_groundData[stateNb].ColorIcon, _groundData[stateNb].Icon,
             _groundData[stateNb].GroundState);
         go.GetComponent<PointerMotion>().OnLeave();
         _stockTileButton.Add(go);
@@ -143,7 +143,7 @@ public class SetupUIGround : MonoBehaviour
         {
             foreach (var tile in _stockTileButton)
             {
-                var currentTile = tile.GetComponent<UIButton>();
+                var currentTile = tile.GetComponent<InventoryButton>();
 
                 if ((int)currentTile.GetStateButton() == stateNb)
                 {

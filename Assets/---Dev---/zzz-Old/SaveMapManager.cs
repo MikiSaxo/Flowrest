@@ -131,19 +131,19 @@ public class SaveMapManager : MonoBehaviour
 
         if (button != null) // Prevent to use an actual empty button
         {
-            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
+            if (button.GetComponent<InventoryButton>().GetNumberLeft() <= 0)
                 return;
         }
 
         if (LastButtonSelected != null) // Deactivate the last one selected
-            LastButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+            LastButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         LastButtonSelected = button;
 
         if (LastButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
+            LastButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(true);
 
             TemperatureSelected = 0;
             // if (!LastButtonSelected.GetComponent<UIButton>().GetIsTemperature())
@@ -170,17 +170,17 @@ public class SaveMapManager : MonoBehaviour
 
     public bool CanPoseBloc()
     {
-        return LastButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
+        return LastButtonSelected.GetComponent<InventoryButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        LastButtonSelected.GetComponent<InventoryButton>().UpdateNumberLeft(-1);
     }
 
     public bool CheckIfButtonIsEmpty()
     {
-        return LastButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
+        return LastButtonSelected.GetComponent<InventoryButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)

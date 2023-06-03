@@ -293,6 +293,7 @@ public class ScreensManager : MonoBehaviour
         }
 
         _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
+        _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(0, true);
 
         if (chara != null)
         {
@@ -311,6 +312,7 @@ public class ScreensManager : MonoBehaviour
             if (MapManager.Instance.OpenMemo && _countDialog == 1 && !_isMemoOpened)
             {
                 _memoMenu.OpenAnim();
+                _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
                 StartCoroutine(WaitToLaunchMemoOpening());
             }
             
@@ -546,6 +548,7 @@ public class ScreensManager : MonoBehaviour
             if (MapManager.Instance.OpenMemo && !_isMemoOpened)
             {
                 _memoMenu.OpenAnim();
+                _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
                 StartCoroutine(WaitToLaunchMemoOpening());
             }
             if (!_hasPopUp)
@@ -586,6 +589,7 @@ public class ScreensManager : MonoBehaviour
     public void CloseCommandMenu()
     {
         _orderMenu.GetComponent<OpenCloseMenu>().CloseQuick();
+        _orderMenu.GetComponent<ButtonManager>().UpdateButton(0, false);
     }
 
     IEnumerator WaitToLaunchMemoOpening()

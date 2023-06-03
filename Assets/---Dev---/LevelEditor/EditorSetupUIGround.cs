@@ -34,7 +34,7 @@ public class EditorSetupUIGround : MonoBehaviour
     public void AddNewGround(int which)
     {
         _groundButtons[which].SetActive(true);
-        _groundButtons[which].GetComponent<UIButton>().UpdateNumberLeft(1);
+        _groundButtons[which].GetComponent<InventoryButton>().UpdateNumberLeft(1);
     }
 
     public void GroundEmpty(int which)

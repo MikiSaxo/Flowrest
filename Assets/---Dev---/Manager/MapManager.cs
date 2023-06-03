@@ -635,13 +635,13 @@ public class MapManager : MonoBehaviour
         // Prevent to use an actual empty button
         if (button != null)
         {
-            if (button.GetComponent<UIButton>().GetNumberLeft() <= 0)
+            if (button.GetComponent<InventoryButton>().GetNumberLeft() <= 0)
                 return;
         }
 
         // Deactivate the last one selected
         if (LastObjButtonSelected != null)
-            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+            LastObjButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(false);
 
         // Update the current selected or if no one was selected -> can be null
         LastObjButtonSelected = button;
@@ -649,8 +649,8 @@ public class MapManager : MonoBehaviour
         if (LastObjButtonSelected != null)
         {
             _isDragNDrop = false;
-            LastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
-            LastStateButtonSelected = LastObjButtonSelected.GetComponent<UIButton>().GetStateButton();
+            LastObjButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(true);
+            LastStateButtonSelected = LastObjButtonSelected.GetComponent<InventoryButton>().GetStateButton();
         }
         else
         {
@@ -661,12 +661,12 @@ public class MapManager : MonoBehaviour
 
     public bool CanPoseBloc()
     {
-        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() > 0;
+        return LastObjButtonSelected.GetComponent<InventoryButton>().GetNumberLeft() > 0;
     }
 
     public void DecreaseNumberButton()
     {
-        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        LastObjButtonSelected.GetComponent<InventoryButton>().UpdateNumberLeft(-1);
     }
 
     private void GroundSwap(GameObject which, Vector2Int newCoords)
@@ -925,7 +925,7 @@ public class MapManager : MonoBehaviour
         AudioManager.Instance.PlaySFX("EnergyGain");
 
         // Remove 1 from button
-        LastObjButtonSelected.GetComponent<UIButton>().UpdateNumberLeft(-1);
+        LastObjButtonSelected.GetComponent<InventoryButton>().UpdateNumberLeft(-1);
         // Add 1 to number of interaction
         EnergyManager.Instance.EarnEnergyByRecycling();
         // Deactivate Follow Dnd
@@ -976,7 +976,7 @@ public class MapManager : MonoBehaviour
     {
         if (LastObjButtonSelected == null) return true;
 
-        return LastObjButtonSelected.GetComponent<UIButton>().GetNumberLeft() <= 0;
+        return LastObjButtonSelected.GetComponent<InventoryButton>().GetNumberLeft() <= 0;
     }
 
     public void CheckIfGroundSelected(GameObject which, Vector2Int newCoords)

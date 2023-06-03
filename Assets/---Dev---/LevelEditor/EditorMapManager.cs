@@ -204,12 +204,12 @@ public class EditorMapManager : MonoBehaviour
     {
         // Deactivate the last one selected
         if (_lastObjButtonSelected != null)
-            _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(false);
+            _lastObjButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(false);
         // Update the current selected or if no one was selected -> can be null
         _lastObjButtonSelected = button;
 
         if (_lastObjButtonSelected != null)
-            _lastObjButtonSelected.GetComponent<UIButton>().ActivateSelectedIcon(true);
+            _lastObjButtonSelected.GetComponent<InventoryButton>().ActivateSelectedIcon(true);
     }
 
     public void ResetAllMap()

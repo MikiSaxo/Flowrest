@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIButton : MonoBehaviour
+public class InventoryButton : MonoBehaviour
 {
     [Header("Setup")] public AllStates _stateButton;
-    [SerializeField] private TextMeshProUGUI _textButton;
     [SerializeField] private Image _iconButton;
     [SerializeField] private GameObject _selectedIcon;
     [SerializeField] private TextMeshProUGUI _textNumber;
