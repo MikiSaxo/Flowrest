@@ -55,14 +55,29 @@ public class PopUpManager : MonoBehaviour
         _descriptionText.text = description;
         
         _canOpenPopUp = false;
+        
+        var mapPath = $"PopUpVideo/{videoName}.mp4";
 
-        string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{videoName}.mp4");
+        // Initialize
+        BetterStreamingAssets.Initialize();
 
-        if (!File.Exists(videoPath))
+        // Get the video path
+        string videoPath = Path.Combine(BetterStreamingAssets.Root, mapPath);
+        // print(videoPath);
+        if (!BetterStreamingAssets.FileExists(mapPath))
         {
-            Debug.LogError("Video PopUp Name doesn't exist");
-            return;
+            ScreensManager.Instance.UpdatePopUpState(false);
+            Debug.LogErrorFormat("Streaming asset not found: {0}", mapPath);
         }
+        
+        
+        // string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{videoName}.mp4");
+        //
+        // if (!File.Exists(videoPath))
+        // {
+        //     Debug.LogError("Video PopUp Name doesn't exist");
+        //     return;
+        // }
 
         _canOpenPopUp = true;
         _videoPlayer.url = videoPath;

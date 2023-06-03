@@ -408,7 +408,10 @@ public class MapManager : MonoBehaviour
         if (currentLvl.PopUpInfos != null)
         {
             if (currentLvl.PopUpInfos.Length > 0)
+            {
+                
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
+            }
 
             // Update Dialogs
             hasPopUp = currentLvl.PopUpInfos.Length > 0;
