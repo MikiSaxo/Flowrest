@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public enum Language
 {
-    Francais,
-    English
+    Francais = 0,
+    English = 1
 }
 
 public class LanguageManager : MonoBehaviour
@@ -94,14 +94,22 @@ public class LanguageManager : MonoBehaviour
 
     private void Start()
     {
-        // ChangeToEnglish();
-        StartCoroutine(TempWaitToChangeLanguage());
+        if (PlayerPrefs.HasKey("Tongue"))
+        {
+            if(PlayerPrefs.GetInt("Tongue") == (int)Language.English)
+                StartCoroutine(TempWaitToChangeLanguage(Language.English));
+        }
+        else
+            StartCoroutine(TempWaitToChangeLanguage(Language.Francais));
     }
 
-    IEnumerator TempWaitToChangeLanguage()
+    IEnumerator TempWaitToChangeLanguage(Language tongue)
     {
         yield return new WaitForSeconds(.3f);
-        ChangeToFrench();
+        if(tongue == Language.Francais)
+            ChangeToFrench();
+        else
+            ChangeToEnglish();
     }
 
     public void ChooseLanguage(Language newLanguage)
@@ -121,12 +129,14 @@ public class LanguageManager : MonoBehaviour
     public void ChangeToFrench()
     {
         Tongue = Language.Francais;
+        PlayerPrefs.SetInt("Tongue", (int)Language.Francais);
         ChangeLanguageEvent?.Invoke();
     }
 
     public void ChangeToEnglish()
     {
         Tongue = Language.English;
+        PlayerPrefs.SetInt("Tongue", (int)Language.English);
         ChangeLanguageEvent?.Invoke();
     }
 
