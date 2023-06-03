@@ -711,6 +711,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -719,6 +731,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UIButtonV2, Assembly-CSharp
           m_MethodName: OnLeave
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1282,7 +1306,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 21300000, guid: 6c2c29dbea6621e4e811af0cc3101e38, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 284c9019fe65635488f40c1e437c4792, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 6c2c29dbea6621e4e811af0cc3101e38, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -13837,30 +13861,6 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: OpenCloseMenu, Assembly-CSharp
-          m_MethodName: OnMouseEntered
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: OpenCloseMenu, Assembly-CSharp
-          m_MethodName: KeepOpen
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1393227159}
           m_TargetAssemblyTypeName: UIButtonV2, Assembly-CSharp
           m_MethodName: OnEnter
@@ -13873,13 +13873,25 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - eventID: 1
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: OpenCloseMenu, Assembly-CSharp
-          m_MethodName: LeaveKeepOpen
+        - m_Target: {fileID: 1393227159}
+          m_TargetAssemblyTypeName: UIButtonV2, Assembly-CSharp
+          m_MethodName: OnLeave
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -13889,10 +13901,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1393227159}
-          m_TargetAssemblyTypeName: UIButtonV2, Assembly-CSharp
-          m_MethodName: OnLeave
-          m_Mode: 1
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16526,7 +16538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bg: {fileID: 2125585167}
-  _titlesParent: {fileID: 51693967}
+  _victoryParent: {fileID: 51693967}
   _gameOverParent: {fileID: 2134788108}
   _nextLevel: {fileID: 1617169145}
   _credits: {fileID: 1171821178}
@@ -20089,6 +20101,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -20097,6 +20121,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UIButtonV2, Assembly-CSharp
           m_MethodName: OnLeave
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 205250336}
+          m_TargetAssemblyTypeName: MapManager, Assembly-CSharp
+          m_MethodName: set_IsOnUI
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -20587,7 +20623,7 @@ PrefabInstance:
       objectReference: {fileID: 29539077}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: IsAndroid
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _loadingText
@@ -20595,7 +20631,7 @@ PrefabInstance:
       objectReference: {fileID: 686570303}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
@@ -22217,6 +22253,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: --EnergyManager--
       objectReference: {fileID: 0}
+    - target: {fileID: 8084888582913593004, guid: e7023709c89eae948a343f5d9311f110, type: 3}
+      propertyPath: _vignettage
+      value: 
+      objectReference: {fileID: 815065984}
     - target: {fileID: 8084888582913593005, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -413,15 +413,16 @@ public class MapManager : MonoBehaviour
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
             }
 
-            // Update Dialogs
             hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
 
+        // Update Dialogs sprites
         if (currentLvl.CharacterSpritesBeginning != null)
             _charaSpritesBegininng = currentLvl.CharacterSpritesBeginning;
         if (currentLvl.CharacterSpritesEnd != null)
             _charaSpritesEnd = currentLvl.CharacterSpritesEnd;
 
+        // Update Dialogs depend on current tongue
         if (LanguageManager.Instance.Tongue == Language.Francais)
             ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp,
                 _charaSpritesBegininng);
@@ -429,6 +430,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp,
                 _charaSpritesBegininng);
 
+        // Update Chara Name
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
 

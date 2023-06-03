@@ -229,7 +229,7 @@ public class EnergyManager : MonoBehaviour
 
     public void SpawnNoEnergyText()
     {
-        if (_currentFbNoEnergy != null) return;
+        if (_currentFbNoEnergy != null || MapManager.Instance.IsOnUI) return;
 
         GameObject go = Instantiate(_fbNoEnergy, transform);
         go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetNoEnergyText());
