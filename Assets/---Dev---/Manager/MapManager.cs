@@ -609,6 +609,7 @@ public class MapManager : MonoBehaviour
         if (LastObjButtonSelected != null && button == LastObjButtonSelected)
         {
             ChangeActivatedButton(null);
+            RecyclingManager.Instance.DeselectRecycle();
             return;
         }
 
@@ -954,6 +955,7 @@ public class MapManager : MonoBehaviour
     private void WantToRecycle()
     {
         _wantToRecycle = true;
+        RecyclingManager.Instance.OpenRecycling();
     }
 
     public void CheckIfWantToRecycle(GameObject which)
