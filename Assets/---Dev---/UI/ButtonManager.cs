@@ -9,6 +9,7 @@ public class ButtonManager : MonoBehaviour
     [Header("Setup")] [SerializeField] private GameObject[] _buttons;
     [SerializeField] private bool _keepButtonOn;
     [SerializeField] private bool _hasFirstButtonSelected;
+    [SerializeField] private bool _isLanguage;
 
     [Header("Sprites Button")] [SerializeField]
     private Sprite _buttonIdle;
@@ -27,7 +28,17 @@ public class ButtonManager : MonoBehaviour
         _buttonsIsEntered = new bool[_buttons.Length];
 
         if (_hasFirstButtonSelected)
-            UpdateButton(0, true);
+        {
+            if (_isLanguage)
+            {
+                if(LanguageManager.Instance.Tongue == Language.English)
+                    UpdateButton(1, true);
+                else
+                    UpdateButton(0, true);
+            }
+            else
+                UpdateButton(0, true);
+        }
     }
 
     public void OnEnter(GameObject button)

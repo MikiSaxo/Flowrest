@@ -32,6 +32,8 @@ public class TransiManager : MonoBehaviour
 
     IEnumerator GrownOn()
     {
+        print("start grow on");
+        
         if(MapManager.Instance != null)
             MapManager.Instance.IsLoading = true;
         foreach (var column in _columns)

@@ -25,7 +25,9 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     public void ChangeToFrench()
     {
-        if (MapManager.Instance.IsLoading || LanguageManager.Instance.Tongue == Language.Francais) return;
+        if (MapManager.Instance != null && MapManager.Instance.IsLoading) return;
+        
+        if (LanguageManager.Instance.Tongue == Language.Francais) return;
 
         _currentLanguage = Language.Francais;
         StartCoroutine(WaitToChangeLanguage());
@@ -33,7 +35,9 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     public void ChangeToEnglish()
     {
-        if (MapManager.Instance.IsLoading || LanguageManager.Instance.Tongue == Language.English) return;
+        if (MapManager.Instance != null && MapManager.Instance.IsLoading) return;
+        
+        if (LanguageManager.Instance.Tongue == Language.English) return;
 
         _currentLanguage = Language.English;
         StartCoroutine(WaitToChangeLanguage());
@@ -42,13 +46,21 @@ public class ChangeLanguageBtn : MonoBehaviour
 
     IEnumerator WaitToChangeLanguage()
     {
-        MapManager.Instance.RestartLevel();
+        if (MapManager.Instance != null)
+            MapManager.Instance.RestartLevel();
+        else
+            TransiManager.Instance.LaunchGrownOn();
+        
         
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        
         
         if(_currentLanguage == Language.Francais)
             LanguageManager.Instance.ChangeToFrench();
         else
             LanguageManager.Instance.ChangeToEnglish();
+        
+        if(MapManager.Instance == null)
+            TransiManager.Instance.LaunchShrink();
     }
 }

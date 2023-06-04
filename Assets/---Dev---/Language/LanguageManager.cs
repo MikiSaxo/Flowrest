@@ -36,7 +36,6 @@ public class LanguageManager : MonoBehaviour
     [Header("Tile Bored Text")]
     [SerializeField] private string _boredTextFrench;
     [SerializeField] private string _boredTextEnglish;
-
     
     [Header("Victory - Defeat")] 
     [SerializeField] private string _victoryTextFrench;
@@ -84,7 +83,15 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] private string _backButtonTextFrench;
     [SerializeField] private string _backButtonTextEnglish;
     
+    [Space(10f)]
+    [Header("--- Menu Main Screen ---")]
+    [Space(10f)]
+    
+    [Header("Play Button")]
+    [SerializeField] private string _playButtonTextFrench;
+    [SerializeField] private string _playButtonTextEnglish;
 
+    
     private void Awake()
     {
         Instance = this;
@@ -128,6 +135,8 @@ public class LanguageManager : MonoBehaviour
 
     public void ChangeToFrench()
     {
+        print("Change To French");
+
         Tongue = Language.Francais;
         PlayerPrefs.SetInt("Tongue", (int)Language.Francais);
         ChangeLanguageEvent?.Invoke();
@@ -135,6 +144,8 @@ public class LanguageManager : MonoBehaviour
 
     public void ChangeToEnglish()
     {
+        print("Change To English");
+
         Tongue = Language.English;
         PlayerPrefs.SetInt("Tongue", (int)Language.English);
         ChangeLanguageEvent?.Invoke();
@@ -147,7 +158,6 @@ public class LanguageManager : MonoBehaviour
 
         return _orderTextEnglish;
     }
-
     public string GetMemoText()
     {
         if (Tongue == Language.Francais)
@@ -155,7 +165,6 @@ public class LanguageManager : MonoBehaviour
 
         return _memoTextEnglish;
     }
-
     public string GetLanguageText()
     {
         if (Tongue == Language.Francais)
@@ -170,7 +179,6 @@ public class LanguageManager : MonoBehaviour
 
         return _boredTextEnglish;
     }
-
     public string GetResumeText()
     {
         if (Tongue == Language.Francais)
@@ -178,7 +186,6 @@ public class LanguageManager : MonoBehaviour
 
         return _resumeTextEnglish;
     }
-    
     public string GetRecycleText()
     {
         if (Tongue == Language.Francais)
@@ -186,7 +193,6 @@ public class LanguageManager : MonoBehaviour
 
         return _recycleTextEnglish;
     }
-    
     public string GetNoEnergyText()
     {
         if (Tongue == Language.Francais)
@@ -194,7 +200,6 @@ public class LanguageManager : MonoBehaviour
 
         return _noEnergyTextEnglish;
     }
-    
     public string GetVictoryText()
     {
         if (Tongue == Language.Francais)
@@ -202,7 +207,6 @@ public class LanguageManager : MonoBehaviour
 
         return _victoryTextEnglish;
     }
-    
     public string GetGameOverText()
     {
         if (Tongue == Language.Francais)
@@ -251,5 +255,12 @@ public class LanguageManager : MonoBehaviour
             return _backButtonTextFrench;
 
         return _backButtonTextEnglish;
+    }
+    public string GetPlayButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _playButtonTextFrench;
+
+        return _playButtonTextEnglish;
     }
 }

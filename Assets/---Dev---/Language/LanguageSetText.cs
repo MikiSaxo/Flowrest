@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LanguageSetText : MonoBehaviour
 {
@@ -24,8 +25,11 @@ public class LanguageSetText : MonoBehaviour
     [SerializeField] private TMP_Text _controlsTextButton;
     [SerializeField] private TMP_Text _languageTextButton;
     [SerializeField] private TMP_Text _creditsTextButton;
-    [SerializeField] private TMP_Text _backButtonTextButton;
+    [SerializeField] private TMP_Text _backTextButton;
     
+    [Header("Main Menu")]
+    [SerializeField] private TMP_Text _playButtonTextButton;
+    [SerializeField] private TMP_Text _backLvlSelectTextButton;
 
 
     // [Header("Recycle")]
@@ -42,20 +46,31 @@ public class LanguageSetText : MonoBehaviour
 
     private void ChangeLanguage()
     {
-        _orderTextButton.text = _languageManager.GetOrderText();
-        _memoTextButton.text = _languageManager.GetMemoText();
-        _languageTextButton.text = _languageManager.GetLanguageText();
-        _resumeTextButton.text = _languageManager.GetResumeText();
-        RecyclingManager.Instance.UpdateDisplayRecyclingNbLeft();
-        // _recycleTextButton.text = _languageManager.GetRecycleText();
-        _victoryText.text = _languageManager.GetVictoryText();
-        _gameOverText.text = _languageManager.GetGameOverText();
-        _quitTextButton.text = _languageManager.GetQuitButtonText();
         _musicTextButton.text = _languageManager.GetMusicText();
         _sfxTextButton.text = _languageManager.GetSfxText();
         _controlsTextButton.text = _languageManager.GetControlsText();
+        _languageTextButton.text = _languageManager.GetLanguageText();
         _creditsTextButton.text = _languageManager.GetCreditsText();
-        _backButtonTextButton.text = _languageManager.GetBackButtonText();
+        _backTextButton.text = _languageManager.GetBackButtonText();
+        
+
+        var sceneIndex = SceneManager.GetActiveScene();
+
+        if (sceneIndex.buildIndex == 0)
+        {
+            _playButtonTextButton.text = _languageManager.GetPlayButtonText();
+            _backLvlSelectTextButton.text = _languageManager.GetBackButtonText();   
+        }
+        else
+        {
+            _orderTextButton.text = _languageManager.GetOrderText();
+            _memoTextButton.text = _languageManager.GetMemoText();
+            _victoryText.text = _languageManager.GetVictoryText();
+            _gameOverText.text = _languageManager.GetGameOverText();
+            _resumeTextButton.text = _languageManager.GetResumeText();
+            _quitTextButton.text = _languageManager.GetQuitButtonText();
+            RecyclingManager.Instance.UpdateDisplayRecyclingNbLeft();
+        }
     }
 
     private void OnDisable()
