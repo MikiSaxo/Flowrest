@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 7614459207405979692}
   - component: {fileID: 77867915388978050}
   - component: {fileID: 5772255063168817146}
+  - component: {fileID: 4470137277748597027}
   m_Layer: 0
   m_Name: 2-HydrosMesh
   m_TagString: Untagged
@@ -447,6 +448,21 @@ MonoBehaviour:
   - Props: {fileID: 6375759716854579827}
     Crystals: {fileID: 2426895258513921637}
     Particules: {fileID: 0}
+--- !u!114 &4470137277748597027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614459207405979688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265ac514e25381c40bd5ea36b3f954fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particuleParent: {fileID: 423306798161876305}
+  _timeSpawnMin: 5
+  _timeSpawnMax: 30
 --- !u!1 &8145102485903829931
 GameObject:
   m_ObjectHideFlags: 0

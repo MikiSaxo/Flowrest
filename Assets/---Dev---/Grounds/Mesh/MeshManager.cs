@@ -40,6 +40,7 @@ public class MeshManager : MonoBehaviour
         randomNumber = Random.Range(0, _meshVariations.Length);
         _randomNb = randomNumber;
 
+        // Get the good crystal
         if (_meshVariations.Length > 0)
         {
             _currentCrystal = _meshVariations[randomNumber].Crystals;
@@ -49,15 +50,17 @@ public class MeshManager : MonoBehaviour
             }
         }
 
+        // Activate the right Props
         _meshVariations[randomNumber].Props.SetActive(true);
 
+        // Get materials
         if (_supportMesh.Length > 0)
         {
             _matt[0] = _supportMesh[0].material;
             _matt[1] = _supportMesh[1].material;
         }
 
-
+        // Get Props mat and anim
         if (_meshVariations.Length > 0)
         {
             _propsMat = _meshVariations[randomNumber].Props.GetComponent<StockProps>().GetProps();
@@ -73,6 +76,10 @@ public class MeshManager : MonoBehaviour
             }
         }
 
+        // Launch anim at spawn
+        LaunchPropsAnims();
+
+        // Destroy other because they're not important
         DestroyOtherObjects(randomNumber);
     }
 
@@ -90,7 +97,7 @@ public class MeshManager : MonoBehaviour
         }
     }
 
-    public void UpdateTexture(TileState state, bool isReset)
+    public void UpdateMeshState(TileState state, bool isReset)
     {
         if (_matt == null) return;
 
@@ -105,11 +112,7 @@ public class MeshManager : MonoBehaviour
                 _matt[0].SetTexture("_BaseMap", _textureSelected);
                 _matt[1].SetTexture("_BaseMap", _textureBase);
 
-                // Launch anim for current props when tile selected
-                foreach (var prop in _propsAnim)
-                {
-                    prop.SetTrigger("Launch");
-                }
+                LaunchPropsAnims();
             }
         }
         // If tile is Normal
@@ -167,6 +170,15 @@ public class MeshManager : MonoBehaviour
         return _meshVariations[_randomNb].Particules;
     }
 
+    private void LaunchPropsAnims()
+    {
+        // Launch anim for current props when tile selected
+        foreach (var prop in _propsAnim)
+        {
+            prop.SetTrigger("Launch");
+        }
+    }
+    
     private void DestroyOtherObjects(int indexToNotDestroy)
     {
         for (int i = 0; i < _meshVariations.Length; i++)
