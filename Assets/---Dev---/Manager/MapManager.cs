@@ -604,7 +604,10 @@ public class MapManager : MonoBehaviour
     public void ChangeActivatedButton(GameObject button)
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
-        if (IsGroundFirstSelected || ScreensManager.Instance.GetIsDialogTime()) return;
+        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        
+        if(IsGroundFirstSelected)
+            ResetGroundSelected();
 
         if (LastObjButtonSelected != null && button == LastObjButtonSelected)
         {
@@ -916,11 +919,14 @@ public class MapManager : MonoBehaviour
     {
         if (ScreensManager.Instance.GetIsDialogTime()) return;
 
+        ResetGroundSelected();
+        
         if (LastObjButtonSelected == null || NbOfRecycling <= 0)
         {
             WantToRecycle();
             return;
         }
+        
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;

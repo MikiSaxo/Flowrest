@@ -119,14 +119,18 @@ public class RecyclingManager : MonoBehaviour
 
     public void DeselectRecycle()
     {
+        _recyclingImg.transform.DOKill();
         _recyclingImg.transform.DORotate(new Vector3(0,0,_minRecyclingRotate), _timeClose);
 
+        MapManager.Instance.ResetWantToRecycle();
+        
         _isSelected = false;
         OnExit();
     }
 
     public void OpenRecycling()
     {
+        _recyclingImg.transform.DOKill();
         _recyclingImg.transform.DORotate(new Vector3(0,0,-_maxRecyclingRotate), _timeOpen).SetEase(Ease.OutBounce);
     }
 
