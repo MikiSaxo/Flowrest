@@ -47,6 +47,7 @@ public class LegendScroll : MonoBehaviour
     {
         _popUpInfos = popUpInfos;
         _isVideoLegend = true;
+        ResetPopUp();
 
         if (popUpInfos.Length > 1)
         {
@@ -204,5 +205,16 @@ public class LegendScroll : MonoBehaviour
         
         _rightArrowButton.GetComponent<Button>().interactable = state;
         _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(!state);
+    }
+
+    private void ResetPopUp()
+    {
+        foreach (var page in _stockPagePrefab)
+        {
+            Destroy(page);
+        }
+        _stockPagePrefab.Clear();
+        
+        UpdateStateRightArrow(true);
     }
 }
