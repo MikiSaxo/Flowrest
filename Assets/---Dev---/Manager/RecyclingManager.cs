@@ -141,7 +141,7 @@ public class RecyclingManager : MonoBehaviour
         {
             Color newAlpha = Color.white;
             newAlpha.a = .5f;
-            GetComponentInChildren<Image>().color = newAlpha;
+            _recyclingImg.GetComponent<Image>().color = newAlpha;
             GetComponent<PointerMotion>().UpdateCanEnter(false);
         }
     }
