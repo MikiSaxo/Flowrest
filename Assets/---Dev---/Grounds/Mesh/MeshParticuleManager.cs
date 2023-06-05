@@ -31,7 +31,6 @@ public class MeshParticuleManager : MonoBehaviour
         Instantiate(getParticule, _particuleParent.transform);
         float randomCooldown = Random.Range(_timeSpawnMin, _timeSpawnMax);
         _cooldown = randomCooldown;
-        print("ça spawn");
     }
 
     private void Update()

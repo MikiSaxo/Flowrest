@@ -215,7 +215,9 @@ public class GroundIndicator : MonoBehaviour
             }
         }
         else // Second case: Change state of pose with a new one
+        {
             PoseBloc();
+        }
     }
 
     IEnumerator WaitALittleToReset()
@@ -273,6 +275,8 @@ public class GroundIndicator : MonoBehaviour
         // Avoid to update by same ground
         // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
         //     (int)MapManager.Instance.LastStateButtonSelected) return;
+        
+        if (MapManager.Instance.IsLoading || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping) return;
 
         MapManager.Instance.IsPosing = true;
 

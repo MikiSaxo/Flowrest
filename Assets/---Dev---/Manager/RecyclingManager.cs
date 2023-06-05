@@ -81,8 +81,10 @@ public class RecyclingManager : MonoBehaviour
 
     private void Update()
     {
-        if (MapManager.Instance.LastObjButtonSelected == null) return;
+        if (MapManager.Instance.LastObjButtonSelected == null ) return;
         
+        if (MapManager.Instance.IsLoading || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping) return;
+
         var distance = _minDistancePoint.position.x - Input.mousePosition.x;
         var invertDistance = (1 / distance) * 2000;
 

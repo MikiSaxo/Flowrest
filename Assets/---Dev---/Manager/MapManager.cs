@@ -409,7 +409,6 @@ public class MapManager : MonoBehaviour
         {
             if (currentLvl.PopUpInfos.Length > 0)
             {
-                
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
             }
 
@@ -605,8 +604,8 @@ public class MapManager : MonoBehaviour
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
         if (ScreensManager.Instance.GetIsDialogTime()) return;
-        
-        if(IsGroundFirstSelected)
+
+        if (IsGroundFirstSelected && !IsLoading && !IsPosing && !IsSwapping)
             ResetGroundSelected();
 
         if (LastObjButtonSelected != null && button == LastObjButtonSelected)
@@ -631,16 +630,13 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        // Activate Trash can
         if (button != null)
         {
+            // Activate Trash can
             if (_hasRecycling && NbOfRecycling > 0)
                 RecyclingManager.Instance.UpdateRecycling(true);
-        }
-
-        // Prevent to use an actual empty button
-        if (button != null)
-        {
+            
+            // Prevent to use an actual empty button
             if (button.GetComponent<InventoryButton>().GetNumberLeft() <= 0)
                 return;
         }
@@ -919,14 +915,16 @@ public class MapManager : MonoBehaviour
     {
         if (ScreensManager.Instance.GetIsDialogTime()) return;
 
+        if (IsLoading || IsPosing || IsSwapping) return;
+
         ResetGroundSelected();
-        
+
         if (LastObjButtonSelected == null || NbOfRecycling <= 0)
         {
             WantToRecycle();
             return;
         }
-        
+
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
@@ -960,6 +958,8 @@ public class MapManager : MonoBehaviour
 
     private void WantToRecycle()
     {
+        if (IsLoading || IsPosing || IsSwapping) return;
+
         _wantToRecycle = true;
         RecyclingManager.Instance.OpenRecycling();
     }
@@ -967,6 +967,8 @@ public class MapManager : MonoBehaviour
     public void CheckIfWantToRecycle(GameObject which)
     {
         if (!_wantToRecycle) return;
+
+        if (IsLoading || IsPosing || IsSwapping) return;
 
         LastObjButtonSelected = which;
 
