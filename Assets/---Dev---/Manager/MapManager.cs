@@ -57,8 +57,6 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeWaitBetweenDropFX;
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
     
-    [Header("FX")] [SerializeField] private GameObject _fxWaterWaveClick;
-
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private bool _hasRecycling;
@@ -1033,19 +1031,6 @@ public class MapManager : MonoBehaviour
             // If has Inventory and has recycling and no recycling left
             else if (HasInventory && _hasRecycling && NbOfRecycling <= 0)
                 ScreensManager.Instance.GameOver();
-        }
-    }
-
-    public void SpawnFXWaterWave(Ray ray)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            GameObject go = Instantiate(_fxWaterWaveClick, hit.point, Quaternion.identity);
-            
-            var position = go.transform.position;
-            position = new Vector3(position.x, 2, position.z-2);
-            go.transform.position = position;
         }
     }
 
