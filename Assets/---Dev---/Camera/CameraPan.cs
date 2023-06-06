@@ -27,6 +27,8 @@ public class CameraPan : MonoBehaviour
     private Vector2Int _minMaxPosZ;
 
     private Vector3 _camPosStartDrag;
+    private Vector3 _lastdiffPan;
+    private float _timeToAndroidPan;
 
     private void Start()
     {
@@ -47,24 +49,43 @@ public class CameraPan : MonoBehaviour
 
     private void PanCamera()
     {
+        // Change to the good click depending of if is Android
+        var mouseIndex = 0;
+        mouseIndex = MapManager.Instance.IsAndroid ? 0 : 2;
+
         // Get the startPos of the mouse
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(mouseIndex))
         {
             groundZ = _cam.transform.position.z;
-            // _camPosStartDrag = _cam.transform.position;
+
             var getPos = GetWorldPosition(groundZ);
-            // if (getPos.y < 0)
             getPos = new Vector3(getPos.x, 10, getPos.z);
 
             _dragOrigin = getPos;
         }
 
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(mouseIndex))
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
+            //
+            _timeToAndroidPan += Time.deltaTime;
+            if (dif != _lastdiffPan && MapManager.Instance.IsAndroid && _timeToAndroidPan > .15f && MapManager.Instance.LastObjButtonSelected == null)
+            {
+                MouseHitRaycast.Instance.IsOnGround = true;
+                if(MapManager.Instance.LastGroundEntered != null)
+                    MapManager.Instance.LastGroundEntered.GetComponent<GroundIndicator>().OnExitPointer();
+                MapManager.Instance.ResetBig();
+            }
+            _lastdiffPan = dif;
             // Add the dif to the cam pos and check if it's clamped
             _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.z));
+        }
+
+        if (Input.GetMouseButtonUp(mouseIndex))
+        {
+            MouseHitRaycast.Instance.IsOnGround = false;
+            _timeToAndroidPan = 0;
         }
     }
 

@@ -24,6 +24,7 @@ public class MapManager : MonoBehaviour
     public AllStates LastStateButtonSelected { get; set; }
     public GameObject LastObjButtonSelected { get; set; }
     public GameObject LastGroundSelected { get; set; }
+    public GameObject LastGroundEntered { get; set; }
     public bool IsGroundFirstSelected { get; set; }
     public bool IsVictory { get; set; }
     public QuestManager QuestsManager { get; private set; }

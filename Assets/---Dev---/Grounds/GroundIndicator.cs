@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using TMPro;
+using UnityEditor;
 
 public class GroundIndicator : MonoBehaviour
 {
@@ -237,9 +238,11 @@ public class GroundIndicator : MonoBehaviour
         _meshParent.transform.DOKill();
         _meshParent.transform.DOMoveY(_hoveredYPos, duration);
 
+        if (MapManager.Instance.IsAndroid)
+            MapManager.Instance.LastGroundEntered = gameObject;
+
         if (_parent.CurrentMeshManager != null)
         {
-            // print(_parent.CurrentMeshManager);
             UpdateTileState(TileState.Selected, false);
         }
     }
