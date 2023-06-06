@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
@@ -54,6 +55,8 @@ public class MouseHitRaycast : MonoBehaviour
 
                     if (!MapManager.Instance.IsOnUI)
                         StartCoroutine(WaitToResetRecycle());
+
+                    MapManager.Instance.SpawnFXWaterWave(ray);
                 }
 
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
