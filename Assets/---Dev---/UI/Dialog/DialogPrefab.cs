@@ -96,7 +96,7 @@ public class DialogPrefab : MonoBehaviour
         return dialog;
     }
 
-    public void InitDescOrder(string text)
+    public void InitDescOrder(string text, bool hasToResize)
     {
         text = UpdateModifierText(text);
         
@@ -117,7 +117,9 @@ public class DialogPrefab : MonoBehaviour
 
         Vector2 textSize = DialogText.GetRenderedValues(false);
         _textSizeY = textSize.y;
-        gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY - 20), 0);
+        
+        if(gameObject.GetComponent<RectTransform>() != null && hasToResize)
+            gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY - 20), 0);
     }
 
     public void InitOrder(string desc, int nbToReach)

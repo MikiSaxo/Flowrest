@@ -12634,6 +12634,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8772892609230911160, guid: 176b7eb2b7a3e094186d88c86a524e6a, type: 3}
+      propertyPath: _fxWaterWaveClick
+      value: 
+      objectReference: {fileID: 2447704906612498519, guid: f9d70e09dbdc2b749b940b1ed477d08e, type: 3}
     - target: {fileID: 8772892609230911161, guid: 176b7eb2b7a3e094186d88c86a524e6a, type: 3}
       propertyPath: m_Name
       value: MouseRaycastHit
@@ -13268,7 +13272,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335795171}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.080017, y: -4.2, z: 20.25}
+  m_LocalPosition: {x: 20.080017, y: 0, z: 20.25}
   m_LocalScale: {x: 88.07233, y: 7.4436, z: 36.78092}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14285,6 +14289,7 @@ GameObject:
   - component: {fileID: 1446294493}
   - component: {fileID: 1446294494}
   - component: {fileID: 1446294495}
+  - component: {fileID: 1446294496}
   m_Layer: 5
   m_Name: PopUp
   m_TagString: Untagged
@@ -14386,6 +14391,66 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &1446294496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446294491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5c88bbabb5e254d891603dd2a277ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DialogText: {fileID: 1315166112}
+  _textModifier:
+  - Text: Grassias
+    IsColor: 1
+    Color: {r: 0.8901961, g: 0.29803923, b: 0.47843137, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: Hydros
+    IsColor: 1
+    Color: {r: 0.12156863, g: 0.8901961, b: 0.8117647, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: Calcid
+    IsColor: 1
+    Color: {r: 1, g: 0.827451, b: 0.07450981, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: Viscosa
+    IsColor: 1
+    Color: {r: 0.6627451, g: 0.36078432, b: 0.9843137, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: "\xE9nergie"
+    IsColor: 1
+    Color: {r: 0.1254902, g: 0.67058825, b: 0.08627451, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: "d'\xE9nergie"
+    IsColor: 1
+    Color: {r: 0.1254902, g: 0.67058825, b: 0.08627451, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: cristaux
+    IsColor: 1
+    Color: {r: 0.1254902, g: 0.67058825, b: 0.08627451, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: cristal
+    IsColor: 1
+    Color: {r: 0.06666667, g: 0.5019608, b: 0.03529412, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  - Text: "l'\xE9nergie"
+    IsColor: 1
+    Color: {r: 0.06666667, g: 0.5019608, b: 0.03529412, a: 1}
+    IsBold: 0
+    IsItalic: 0
+  _padding: {x: 0, y: 0}
 --- !u!4 &1449897792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8494882442127450092, guid: 467ba7fbe0c0317449377845e63b237e, type: 3}
@@ -20258,8 +20323,12 @@ PrefabInstance:
       objectReference: {fileID: 686570303}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _fxWaterWaveClick
+      value: 
+      objectReference: {fileID: 2447704906612498519, guid: f9d70e09dbdc2b749b940b1ed477d08e, type: 3}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.size
       value: 31

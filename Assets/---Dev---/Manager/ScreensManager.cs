@@ -91,7 +91,7 @@ public class ScreensManager : MonoBehaviour
 
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
-        desc.InitDescOrder($"{text}\n ");
+        desc.InitDescOrder($"{text}\n ", true);
         _stockOrderText.Add(desc);
 
         // _descriptionQuest.text = text;
