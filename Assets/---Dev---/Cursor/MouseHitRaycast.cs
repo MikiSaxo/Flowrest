@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class MouseHitRaycast : MonoBehaviour
     {
         if (_isBlocked || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping) return;
 
-        if(MapManager.Instance.IsAndroid)
+        if (MapManager.Instance.IsAndroid)
             DetectTileAndroid();
         else
             DetectTile();
@@ -54,6 +55,8 @@ public class MouseHitRaycast : MonoBehaviour
 
                     if (!MapManager.Instance.IsOnUI)
                         StartCoroutine(WaitToResetRecycle());
+
+                    MapManager.Instance.SpawnFXWaterWave(ray);
                 }
 
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
@@ -77,47 +80,59 @@ public class MouseHitRaycast : MonoBehaviour
 
     private void DetectTileAndroid()
     {
+        // If player click
         if (!Input.GetMouseButtonDown(0)) return;
 
+        // Create a raycast to the floor
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _layerToHit))
         {
+            // Get what is hits
             var newBloc = hit.collider.gameObject.GetComponentInParent<GroundIndicator>();
 
+            // If touch anything
             if (newBloc == null)
             {
+                // If has a ground selected, unselected it
                 if (_lastGroundHit != null)
                 {
                     _lastGroundHit.OnExitPointer();
                 }
 
+                // Big Reset
                 MapManager.Instance.ResetBig();
 
+                // If has not clicked on UI reset want to recycle
                 if (!MapManager.Instance.IsOnUI)
                     StartCoroutine(WaitToResetRecycle());
 
+                // Put the last coord far far away
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
 
                 return;
             }
 
+            // If click on the same
             if (MapManager.Instance.LastObjButtonSelected == null)
             {
-                if (_lastGroundHit != null && _lastCoordsHit == newBloc.GetParentCoords() &&
-                    _lastGroundHit == newBloc &&
-                    MapManager.Instance.LastGroundSelected.GetComponent<GroundStateManager>().GetCoords() ==
-                    _lastCoordsHit)
+                if (_lastGroundHit != null
+                    && _lastCoordsHit == newBloc.GetParentCoords()
+                    && _lastGroundHit == newBloc
+                    && MapManager.Instance.LastGroundSelected.GetComponent<GroundStateManager>().GetCoords() == _lastCoordsHit)
                 {
+                    // Reset the tile
                     _lastGroundHit.OnExitPointer();
+                    // Reset big
                     MapManager.Instance.ResetBig();
                     return;
                 }
             }
 
-
+            // If has clicked on another tile
             if (_lastGroundHit != null && _lastCoordsHit != newBloc.GetParentCoords())
                 _lastGroundHit.OnExitPointer();
 
+            // Update last ground hit
             _lastCoordsHit = newBloc.GetParentCoords();
             _lastGroundHit = newBloc;
             _lastGroundHit.OnEnterPointer();
