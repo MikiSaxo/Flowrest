@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 23
   m_EditorClassIdentifier: 
-  LevelName: Niveau 6.2
+  LevelName: Niveau 10
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 1
   HasInventory: 1
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  HasRecycling: 1
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   OpenMemo: 0
@@ -28,38 +28,38 @@ MonoBehaviour:
   IsTutoRecycling: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap:
-  - {x: 2, y: 0}
-  - {x: 6, y: 4}
-  HasForcePoseBlocAfterSwap: 1
-  ForcePoseBlocCoord: {x: 4, y: 2}
+  PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos:
-  - Title: "Remplacer une tuile fatigu\xE9e"
-    VideoName: Vid_PopUp6
-    Description: "Les tuiles de l'inventaire viennent remplacer les tuiles du terrain,
-      il est donc possible de remplacer une tuile fatigu\xE9e par une tuile de l'inventaire."
+  - Title: "Tuiles cristalis\xE9es"
+    VideoName: Vid_PopUp_Energy
+    Description: "Lorsqu'une tuile cristal\xE9e est \xE9chang\xE9e ou remplac\xE9e,
+      elle donne 2 \xE9nergies suppl\xE9mentaires "
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 
+  QuestFlower: 0000000009000000
   QuestNoSpecificTiles: 
-  QuestTileChain: 09000000
-  NumberTileChain: 8
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
   - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
   CharacterSpritesEnd: []
   DialogBeginning:
-  - "Maintenant que tu as acc\xE8s \xE0 l'inventaire, tu vas pouvoir utiliser pleinement
-    les facilit\xE9s que celui-ci t'offre."
-  - "En pla\xE7ant une tuile de ton inventaire sur le terrain tu vas pouvoir la placer
-    sur <b>toutes</b> les tuiles except\xE9s <b>les tuiles de Pyreneos</b>."
-  - "Les tuiles que tu ne peux pas d\xE9placer peuvent \xE9galement \xEAtre remplac\xE9es
-    par une tuile de l'inventaire."
-  DialogEnd: []
+  - Les cristaux devant toi sont un avantage important lors d'une production.
+  - "En effet, ils te permettent de r\xE9cup\xE9rer de l'\xE9nergie sans avoir \xE0
+    recycler de tiles. $Pour les r\xE9cup\xE9rer, il te suffit <b>d'interagir avec
+    la tuile</b>."
+  - "Chaque tuile va te faire gagner <b>deux \xE9nergies</b>."
+  DialogEnd:
+  - "Bien jou\xE9 \xE0 toi."
+  - "Je vais essayer de te trouver pour demain un terrain similaire pour pouvoir
+    adapter ton utilisation des cristaux \xE0 ton workflow."
   DialogBeginningEnglish: []
   DialogEndEnglish: []
