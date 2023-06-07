@@ -17,6 +17,8 @@ public class FXWaveClic : MonoBehaviour
 
     public void SpawnFXWaterWave(Ray ray)
     {
+        if (MapManager.Instance.IsOnUI) return;
+        
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {

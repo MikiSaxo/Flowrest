@@ -379,7 +379,7 @@ public class ScreensManager : MonoBehaviour
 
         // Init to the dialog prefab with the speed spawn
         if (MapManager.Instance.IsAndroid)
-            goDialog.Init(newDialog, _dialogSpeed * 3);
+            goDialog.Init(newDialog, _dialogSpeed * 2);
         else
             goDialog.Init(newDialog, _dialogSpeed);
 
