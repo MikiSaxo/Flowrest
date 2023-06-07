@@ -12,59 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 21
   m_EditorClassIdentifier: 
-  LevelName: Niveau 6
+  LevelName: Niveau 8
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 1
   HasInventory: 1
-  StartNbState: 0
+  StartNbState: 4
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 0
+  NbOfRecycling: 1
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  IsTuto: 1
-  IsTutoRecycling: 0
+  IsTuto: 0
+  IsTutoRecycling: 1
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap:
-  - {x: 2, y: 0}
-  - {x: 6, y: 4}
-  HasForcePoseBlocAfterSwap: 1
-  ForcePoseBlocCoord: {x: 4, y: 2}
+  PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos:
-  - Title: Obtention d'une tuile
-    VideoName: Vid_PopUp4
-    Description: "La combinaison des deux tuiles \xE9chang\xE9es se cr\xE9e dans
-      l'inventaire"
-  - Title: Placement de tuile
-    VideoName: Vid_PopUp5
-    Description: "La tuile plac\xE9e depuis l'inventaire va venir modifier les environnements
-      adjacents"
+  - Title: Recyclage
+    VideoName: Vid_PopUp_Recyclage
+    Description: "Recycler une tuile de ton inventaire te permet de r\xE9cup\xE9rer
+      1 \xE9nergie"
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 
+  QuestFlower: 000000000200000004000000
   QuestNoSpecificTiles: 
-  QuestTileChain: 09000000
-  NumberTileChain: 6
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
   CharacterSpritesEnd: []
   DialogBeginning:
-  - "Maintenant que tu es \xE0 l'aise avec les technologies que nous utilisons, je
-    vais te donner acc\xE8s \xE0 un inventaire."
-  - "Lorsque tu vas \xE9changer deux tuiles entre elles, tu recevras <b>l'addition
-    de ces deux tuiles</b> dans ton inventaire."
-  - "Tu peux t'aider de ton <b>m\xE9mo</b> ou de la <b>pr\xE9visualisation au dessus
-    de ton inventaire</b> si tu as besoin d'informations sur ce que tu vas gagner
-    lors de ces \xE9changes."
+  - "Tu peux recycler des tuiles dans ton inventaire pour r\xE9cup\xE9rer de l'\xE9nergie
+    et ainsi travailler sur des projets o\xF9 l'EKorp ne t'en donnes pas."
+  - "Fais attention car c'est <b>une ressource limit\xE9e</b>."
+  - "Pour recycler, il te suffit de prendre une tuile de ton inventaire et de la
+    d\xE9placer au dessus de ton \xE9nergie."
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

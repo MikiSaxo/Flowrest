@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 3
   m_EditorClassIdentifier: 
-  LevelName: Niveau 1
+  LevelName: Niveau 2.5
   LevelFolder: Level Editor
-  EnergyAtStart: 1
+  EnergyAtStart: 5
   HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 0
-  HasInfinitRecycling: 1
+  HasInfinitRecycling: 0
   NbOfRecycling: 0
   OpenMemo: 0
   HasPrevisu: 1
@@ -34,32 +34,20 @@ MonoBehaviour:
   PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestFloor: 
-  QuestFlower: 0000000004000000
+  QuestFloor: 00000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 12
+  NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
-  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-  CharacterSpritesEnd:
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
-  - "Aujourd'hui je vais te laisser seul sur ta premi\xE8re commande, tu peux r\xE9cup\xE9rer
-    toutes les informations n\xE9cessaires \xE0 sa r\xE9alisation en haut \xE0 gauche
-    de ton interface."
-  - "Un client souhaite une plan\xE8te recouverte de Grassias et de Calcid. $Pour
-    cela, tu vas cr\xE9er deux fleurs d'environnements diff\xE9rents."
-  - "Une fleur est compos\xE9e de 6 tuiles dispos\xE9es circulairement et d'une tuile
-    plac\xE9e en son centre. Elles sont toutes du m\xEAme environnement."
-  - "Je ne serais pas disponible aujourd'hui. Je suis aux fourneaux pour la nouvelle
-    ann\xE9e lumi\xE8re. Bon courage !"
-  DialogEnd:
-  - "Tu t'es bien d\xE9brouill\xE9 pour un premier travail seul. Continue comme \xE7a."
+  - "Aujourd'hui tu es en autonomie. Tu n'as qu'\xE0 suivre la directive de ta commande
+    et tout ira bien."
+  DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 24
   m_EditorClassIdentifier: 
-  LevelName: Niveau 7
+  LevelName: Niveau 11
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 1
   HasInventory: 1
   StartNbState: 4
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  HasRecycling: 1
   HasInfinitRecycling: 0
   NbOfRecycling: 0
   OpenMemo: 0
   HasPrevisu: 1
-  BlockLastSwap: 0
+  BlockLastSwap: 1
   IsTuto: 0
   IsTutoRecycling: 0
   PreviewMessage: []
@@ -35,19 +35,23 @@ MonoBehaviour:
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 000000000200000009000000
+  QuestFlower: 0000000009000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
-  NumberTileChain: 13
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-  CharacterSpritesEnd: []
+  CharacterSpritesEnd:
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
   DialogBeginning:
-  - "Cette commande n'est pas tr\xE8s compliqu\xE9 donc je vais te faire une fleur
-    et te laisser t'en occuper."
-  DialogEnd: []
+  - "Je t'ai trouv\xE9 de quoi continuer \xE0 t'exercer."
+  - "Tes t\xE2ches d'aujourd'hui consisteront donc \xE0 terraformer cet environnement
+    \xE0 l'aide de ces cristaux."
+  DialogEnd:
+  - Bon travail aujourd'hui, on se revoit demain.
   DialogBeginningEnglish: []
   DialogEndEnglish: []

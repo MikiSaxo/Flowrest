@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 28
+  m_Name: Niveau 0
   m_EditorClassIdentifier: 
-  LevelName: Niveau 11
+  LevelName: Niveau 1
   LevelFolder: Level Editor
   EnergyAtStart: 1
-  HasInventory: 1
-  StartNbState: 4
-  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 1
-  HasInfinitRecycling: 0
+  HasInventory: 0
+  StartNbState: 0
+  StartNbAllState: 
+  HasRecycling: 0
+  HasInfinitRecycling: 1
   NbOfRecycling: 0
   OpenMemo: 0
   HasPrevisu: 1
@@ -35,23 +35,31 @@ MonoBehaviour:
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 0000000009000000
+  QuestFlower: 0000000004000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 0
+  NumberTileCount: 12
   CharacterName: Profess.io
   CharacterSpritesBeginning:
   - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
   CharacterSpritesEnd:
-  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
   DialogBeginning:
-  - "Je t'ai trouv\xE9 de quoi continuer \xE0 t'exercer."
-  - "Tes t\xE2ches d'aujourd'hui consisteront donc \xE0 terraformer cet environnement
-    \xE0 l'aide de ces cristaux."
+  - "Aujourd'hui je vais te laisser seul sur ta premi\xE8re commande, tu peux r\xE9cup\xE9rer
+    toutes les informations n\xE9cessaires \xE0 sa r\xE9alisation en haut \xE0 gauche
+    de ton interface."
+  - "Un client souhaite une plan\xE8te recouverte de Grassias et de Calcid. $Pour
+    cela, tu vas cr\xE9er deux fleurs d'environnements diff\xE9rents."
+  - "Une fleur est compos\xE9e de 6 tuiles dispos\xE9es circulairement et d'une tuile
+    plac\xE9e en son centre. Elles sont toutes du m\xEAme environnement."
+  - "Je ne serais pas disponible aujourd'hui. Je suis aux fourneaux pour la nouvelle
+    ann\xE9e lumi\xE8re. Bon courage !"
   DialogEnd:
-  - Bon travail aujourd'hui, on se revoit demain.
+  - "Tu t'es bien d\xE9brouill\xE9 pour un premier travail seul. Continue comme \xE7a."
   DialogBeginningEnglish: []
   DialogEndEnglish: []
