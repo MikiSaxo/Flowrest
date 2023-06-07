@@ -85,7 +85,8 @@ public class MeshManager : MonoBehaviour
 
     public void UpdateCrystal(bool state)
     {
-        _currentCrystal.SetActive(state);
+        if(_currentCrystal != null)
+            _currentCrystal.SetActive(state);
     }
 
     private void DeactivateAllProps8Crystal()

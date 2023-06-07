@@ -50,8 +50,9 @@ public class CameraPan : MonoBehaviour
     private void PanCamera()
     {
         // Change to the good click depending of if is Android
-        var mouseIndex = 0;
-        mouseIndex = MapManager.Instance.IsAndroid ? 0 : 2;
+        var mouseIndex = 2;
+        if(MapManager.Instance != null)
+            mouseIndex = MapManager.Instance.IsAndroid ? 0 : 2;
 
         // Get the startPos of the mouse
         if (Input.GetMouseButtonDown(mouseIndex))
@@ -70,7 +71,7 @@ public class CameraPan : MonoBehaviour
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
             //
             _timeToAndroidPan += Time.deltaTime;
-            if (dif != _lastdiffPan && MapManager.Instance.IsAndroid && _timeToAndroidPan > .15f && MapManager.Instance.LastObjButtonSelected == null)
+            if (MapManager.Instance != null  && dif != _lastdiffPan && MapManager.Instance.IsAndroid && _timeToAndroidPan > .15f && MapManager.Instance.LastObjButtonSelected == null)
             {
                 MouseHitRaycast.Instance.IsOnGround = true;
                 if(MapManager.Instance.LastGroundEntered != null)
@@ -84,7 +85,8 @@ public class CameraPan : MonoBehaviour
 
         if (Input.GetMouseButtonUp(mouseIndex))
         {
-            MouseHitRaycast.Instance.IsOnGround = false;
+            if(MouseHitRaycast.Instance != null)
+                MouseHitRaycast.Instance.IsOnGround = false;
             _timeToAndroidPan = 0;
         }
     }

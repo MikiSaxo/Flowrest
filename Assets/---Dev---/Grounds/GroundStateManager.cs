@@ -58,8 +58,8 @@ public class GroundStateManager : MonoBehaviour
 
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
-    [SerializeField] private GameObject _fxTileBored;
     [SerializeField] private GameObject _fxTileFree;
+    [SerializeField] private GameObject _fxTileBored;
 
 
     private AllStates _currentState;
@@ -119,11 +119,9 @@ public class GroundStateManager : MonoBehaviour
 
     private void Start()
     {
-        // MapManager.Instance.CheckBiome += LaunchCheckForBiome;
         MapManager.Instance.ResetSelection += ResetIndicator;
 
         _startYPosMeshParent = 0;
-        // _indicator.GetComponent<GroundIndicator>().SetStartYPos(_startYPosMeshParent);
     }
 
     public void InitState(AllStates state)
@@ -155,7 +153,7 @@ public class GroundStateManager : MonoBehaviour
         currentGroundBase.EnterState(this);
         StockStatePreview = _currentState;
         _tempCurrentState = _currentState;
-        
+
         AudioManager.Instance.PlaySFX("Pop");
     }
 
@@ -406,7 +404,7 @@ public class GroundStateManager : MonoBehaviour
         UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
         //
-        if(!state)
+        if (!state)
             _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, true);
     }
 
@@ -417,13 +415,13 @@ public class GroundStateManager : MonoBehaviour
 
     public void UpdateFBReloadEnergy(bool state)
     {
-        if (!state && _fxTileBored.activeSelf)
+        if (!state && IsBored)
         {
             Instantiate(_fxTileFree, transform);
         }
 
-        _fxTileBored.SetActive(state);
         IsBored = state;
+        _fxTileBored.GetComponent<Fx_BoredTile>().UpdateBored(state);
 
         if (state)
         {
