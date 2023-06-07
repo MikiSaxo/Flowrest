@@ -91,7 +91,7 @@ public class ScreensManager : MonoBehaviour
 
         GameObject txt = Instantiate(_orderTextPrefab, _orderTextGrid.transform);
         var desc = txt.GetComponent<DialogPrefab>();
-        desc.InitDescOrder($"{text}\n ");
+        desc.InitDescOrder($"{text}\n ", true);
         _stockOrderText.Add(desc);
 
         // _descriptionQuest.text = text;
@@ -379,7 +379,7 @@ public class ScreensManager : MonoBehaviour
 
         // Init to the dialog prefab with the speed spawn
         if (MapManager.Instance.IsAndroid)
-            goDialog.Init(newDialog, _dialogSpeed * 3);
+            goDialog.Init(newDialog, _dialogSpeed * 2);
         else
             goDialog.Init(newDialog, _dialogSpeed);
 

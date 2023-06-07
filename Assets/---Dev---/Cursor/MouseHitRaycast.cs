@@ -56,7 +56,7 @@ public class MouseHitRaycast : MonoBehaviour
                     if (!MapManager.Instance.IsOnUI)
                         StartCoroutine(WaitToResetRecycle());
 
-                    MapManager.Instance.SpawnFXWaterWave(ray);
+                    FXWaveClic.Instance.SpawnFXWaterWave(ray);
                 }
 
                 _lastCoordsHit = new Vector2Int(-1000, -1000);
@@ -93,6 +93,8 @@ public class MouseHitRaycast : MonoBehaviour
             // If touch anything
             if (newBloc == null)
             {
+                FXWaveClic.Instance.SpawnFXWaterWave(ray);
+
                 // If has a ground selected, unselected it
                 if (_lastGroundHit != null)
                 {

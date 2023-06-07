@@ -52,7 +52,9 @@ public class PopUpManager : MonoBehaviour
     public void UpdatePopUp(string title, string videoName, string description)
     {
         _titleText.text = title;
-        _descriptionText.text = description;
+        
+        gameObject.GetComponent<DialogPrefab>().InitDescOrder(description, false);
+        // _descriptionText.text = description;
         
         _canOpenPopUp = false;
         

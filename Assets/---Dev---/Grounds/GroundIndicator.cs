@@ -290,6 +290,10 @@ public class GroundIndicator : MonoBehaviour
     {
         // Reset Preview
         MapManager.Instance.ResetPreview();
+        
+        // Liberate from bored if bored
+        if (_parent.IsBored)
+            _parent.UpdateFBReloadEnergy(false);
 
         // Init the new State
         _parent.InitState(MapManager.Instance.LastStateButtonSelected);
