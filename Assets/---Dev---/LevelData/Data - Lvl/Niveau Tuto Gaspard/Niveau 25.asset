@@ -12,51 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 25
   m_EditorClassIdentifier: 
-  LevelName: Niveau 8
+  LevelName: Niveau 12
   LevelFolder: Level Editor
   EnergyAtStart: 1
   HasInventory: 1
-  StartNbState: 4
+  StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 1
+  NbOfRecycling: 0
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
-  IsTutoRecycling: 1
+  IsTutoRecycling: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpInfos:
-  - Title: Recyclage
-    VideoName: Vid_PopUp_Recyclage
-    Description: "Recycler une tuile de ton inventaire te permet de r\xE9cup\xE9rer
-      1 \xE9nergie"
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestFloor: 
-  QuestFlower: 000000000200000004000000
+  QuestFloor: 00000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
-  CharacterSpritesBeginning:
-  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  CharacterSpritesBeginning: []
   CharacterSpritesEnd: []
-  DialogBeginning:
-  - "Tu peux recycler des tuiles dans ton inventaire pour r\xE9cup\xE9rer de l'\xE9nergie
-    et ainsi travailler sur des projets o\xF9 l'EKorp ne t'en donnes pas."
-  - "Fais attention car c'est <b>une ressource limit\xE9e</b>."
-  - "Pour recycler, il te suffit de prendre une tuile de ton inventaire et de la
-    d\xE9placer au dessus de ton \xE9nergie."
+  DialogBeginning: []
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

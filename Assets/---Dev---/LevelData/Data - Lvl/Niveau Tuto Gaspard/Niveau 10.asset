@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 10
   m_EditorClassIdentifier: 
-  LevelName: Tuto 9
+  LevelName: Tuto 11.1
   LevelFolder: Level Editor
-  EnergyAtStart: 1
+  EnergyAtStart: 4
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -24,23 +24,21 @@ MonoBehaviour:
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  IsTuto: 1
+  IsTuto: 0
   IsTutoRecycling: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap:
-  - {x: 2, y: 2}
-  - {x: 5, y: 2}
+  PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos: []
-  QuestDescription: "Niveau \xB5 :$Cr\xE9er une chaine de 8 Grassias."
+  QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 
+  QuestFlower: 0000000009000000
   QuestNoSpecificTiles: 
-  QuestTileChain: 00000000
-  NumberTileChain: 8
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
@@ -49,9 +47,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
   CharacterSpritesEnd: []
   DialogBeginning:
-  - "Un terme technique que nous utilisons r\xE9guli\xE8rement est le terme de \"cha\xEEne\"."
-  - "Tu peux former une cha\xEEne en reliant entre elles des tuiles <b>d'un m\xEAme
-    environnement</b>."
+  - "En mettant une tuile de Grassias sur une tuile de Viscosa, tu r\xE9cup\xE9reras
+    une tuile de Grassias."
+  - Inversement, une tuile de Viscosa sur une tuile de Grassias te donneras une tuile
+    de Viscosa.
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

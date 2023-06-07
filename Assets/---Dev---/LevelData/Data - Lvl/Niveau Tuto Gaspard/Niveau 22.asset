@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 22
   m_EditorClassIdentifier: 
-  LevelName: Niveau 6.1
+  LevelName: Niveau 9
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 0
   HasInventory: 1
-  StartNbState: 0
-  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  StartNbState: 9
+  StartNbAllState: 00000000000000000000000000000000010000000000000000000000000000000000000001000000
+  HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 0
+  NbOfRecycling: 2
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
@@ -28,28 +28,29 @@ MonoBehaviour:
   IsTutoRecycling: 0
   PreviewMessage: []
   PreviewMessageEnglish: []
-  PlayerForceSwap:
-  - {x: 2, y: 0}
-  - {x: 6, y: 4}
-  HasForcePoseBlocAfterSwap: 1
-  ForcePoseBlocCoord: {x: 4, y: 2}
+  PlayerForceSwap: []
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestFloor: 02000000
-  QuestFlower: 
+  QuestFloor: 
+  QuestFlower: 020000000400000004000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
-  NumberTileChain: 6
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
-  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
   CharacterSpritesEnd: []
   DialogBeginning:
-  - "Notre client a insist\xE9 sur la confidentialit\xE9 de ce projet, il ne faut
-    pas que tu l'hydro-leak"
+  - "Le recyclage de tuile est un des points qui font que notre entreprise est l'une
+    des plus \xE9cologiques du march\xE9."
+  - "Les ressources que t'offre l'entreprise vont \xEAtre r\xE9fl\xE9chi pour r\xE9duire
+    les co\xFBts alors fait attention \xE0 ce que tu vas recycler."
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []

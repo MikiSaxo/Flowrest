@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 4
   m_EditorClassIdentifier: 
-  LevelName: Tuto 4
+  LevelName: Tuto 7.1
   LevelFolder: Level Editor
-  EnergyAtStart: 3
+  EnergyAtStart: 6
   HasInventory: 0
   StartNbState: 0
-  StartNbAllState: 
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   HasRecycling: 0
-  HasInfinitRecycling: 1
+  HasInfinitRecycling: 0
   NbOfRecycling: 0
   OpenMemo: 0
   HasPrevisu: 1
@@ -32,31 +32,24 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos: []
-  QuestDescription: "Commande \xB5 : "
+  QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestFloor: 
-  QuestFlower: 00000000
+  QuestFloor: 00000000
+  QuestFlower: 
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 12
+  NumberTileCount: 0
   CharacterName: Profess.io
   CharacterSpritesBeginning:
   - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-  - {fileID: 21300000, guid: e4bad93669f03644cac2e53de601a621, type: 3}
-  - {fileID: 21300000, guid: 87f72b507e83b0343b807e1e44067388, type: 3}
-  - {fileID: 21300000, guid: 261a6a9248cd949409fa023c40c626ff, type: 3}
-  CharacterSpritesEnd:
-  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  CharacterSpritesEnd: []
   DialogBeginning:
-  - "Bonne nouvelle ! Le client a appr\xE9ci\xE9 ton travail !"
-  - ...
-  - "La mauvaise nouvelle c'est qu'il a dit que ce n'\xE9tait \"pas assez feng shui
-    pour lui\". "
-  - Enfin, on va juste lui renvoyer une fleur de Grassias et il sera content.
-  DialogEnd:
-  - "Parfait je vais envoyer \xE7a. $Ne t'en fais pas, il y a toujours des clients
-    qui sont plus  ... <i>\"particuliers\"</i> que d'autres."
+  - "La F\xE9d\xE9ration Galactique de Football est \xE0 la recherche d'un nouveau
+    terrain pour entrainer ses joueurs."
+  - "Fais attention \xE0 ce que tu vas produire, ce sont des bons clients."
+  DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
