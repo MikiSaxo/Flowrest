@@ -266,7 +266,6 @@ public class GroundIndicator : MonoBehaviour
     {
         if (_parent.JustBeenSwaped && state != TileState.Bored) return;
 
-        // print("blabla blaa bored " + _parent.GetCoords() + " / " + state);
         _parent.CurrentMeshManager.UpdateMeshState(state, isReset);
     }
 
