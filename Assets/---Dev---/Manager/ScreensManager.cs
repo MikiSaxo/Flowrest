@@ -23,6 +23,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _credits;
 
     [Header("Pause")] [SerializeField] private GameObject _menuPauseParent;
+    [SerializeField] private GameObject _menuOption;
 
     [Header("Order")] [SerializeField] private GameObject _orderMenu;
     [SerializeField] private GameObject _orderGrid;
@@ -107,7 +108,6 @@ public class ScreensManager : MonoBehaviour
 
         if (_saveLastState == whichState)
         {
-            // print("salut");
             if (isMultiple)
             {
                 var dialog = _stockOrderMultipleText.Last();
@@ -140,10 +140,20 @@ public class ScreensManager : MonoBehaviour
         else
             _stockOrderText.Add(order);
 
-        order.InitOrder(
-            LanguageManager.Instance.Tongue == Language.Francais
-                ? $"{_orderText[whichOrder].OrderDescription[(int)whichState]}"
-                : $"{_orderText[whichOrder].OrderDescriptionEnglish[(int)whichState]}", nbToReach);
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+        {
+            var orderDesc = _orderText[whichOrder].OrderDescription[(int)whichState];
+            if (orderDesc == null)
+                orderDesc = " ";
+            order.InitOrder($"{orderDesc}", nbToReach);
+        }
+        else
+        {
+            var orderDesc = _orderText[whichOrder].OrderDescriptionEnglish[(int)whichState];
+            if (orderDesc == null)
+                orderDesc = " ";
+            order.InitOrder($"{orderDesc}", nbToReach);
+        }
 
         // Image
         GameObject go = Instantiate(_orderPrefab, _orderGrid.transform);
@@ -202,6 +212,9 @@ public class ScreensManager : MonoBehaviour
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
+
+        if (!state)
+            _menuOption.SetActive(false);
 
         if (!state && MapManager.Instance.IsVictory)
             _victoryParent.SetActive(true);
@@ -619,7 +632,7 @@ public class ScreensManager : MonoBehaviour
 
         _isMemoOpened = true;
         yield return new WaitForSeconds(.5f);
-        
+
         _memoWaveEffect.StartGrowOneTime();
     }
 

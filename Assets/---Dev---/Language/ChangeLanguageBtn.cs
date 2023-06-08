@@ -54,6 +54,7 @@ public class ChangeLanguageBtn : MonoBehaviour
         
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
         
+        ScreensManager.Instance.UpdatePause(false);
         
         if(_currentLanguage == Language.Francais)
             LanguageManager.Instance.ChangeToFrench();

@@ -17,6 +17,7 @@ public class LanguageSetText : MonoBehaviour
     
     [Header("Pause Menu")]
     [SerializeField] private TMP_Text _resumeTextButton;
+    [SerializeField] private TMP_Text _restartTextButton;
     [SerializeField] private TMP_Text _quitTextButton;
 
     [Header("Option Menu")]
@@ -73,6 +74,7 @@ public class LanguageSetText : MonoBehaviour
             _victoryText.text = _languageManager.GetVictoryText();
             _gameOverText.text = _languageManager.GetGameOverText();
             _resumeTextButton.text = _languageManager.GetResumeText();
+            _restartTextButton.text = _languageManager.GetRestartText();
             _quitTextButton.text = _languageManager.GetQuitButtonText();
             RecyclingManager.Instance.UpdateDisplayRecyclingNbLeft();
             _thxForPlayinText.text = _languageManager.GetThxForPlayingText();

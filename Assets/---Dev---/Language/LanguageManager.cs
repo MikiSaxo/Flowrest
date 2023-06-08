@@ -51,6 +51,11 @@ public class LanguageManager : MonoBehaviour
     [Header("Resume Button")] 
     [SerializeField] private string _resumeTextFrench;
     [SerializeField] private string _resumeTextEnglish;
+    
+    [Header("Restart Button")] 
+    [SerializeField] private string _restartTextFrench;
+    [SerializeField] private string _restartTextEnglish;
+    
     [Header("Quit Button")] 
     [SerializeField] private string _quitButtonTextFrench;
     [SerializeField] private string _quitButtonTextEnglish;
@@ -121,6 +126,8 @@ public class LanguageManager : MonoBehaviour
         {
             if(PlayerPrefs.GetInt("Tongue") == (int)Language.English)
                 StartCoroutine(TempWaitToChangeLanguage(Language.English));
+            else
+                StartCoroutine(TempWaitToChangeLanguage(Language.Francais));
         }
         else
             StartCoroutine(TempWaitToChangeLanguage(Language.Francais));
@@ -128,7 +135,7 @@ public class LanguageManager : MonoBehaviour
 
     IEnumerator TempWaitToChangeLanguage(Language tongue)
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.1f);
         if(tongue == Language.Francais)
             ChangeToFrench();
         else
@@ -199,6 +206,13 @@ public class LanguageManager : MonoBehaviour
             return _resumeTextFrench;
 
         return _resumeTextEnglish;
+    }
+    public string GetRestartText()
+    {
+        if (Tongue == Language.Francais)
+            return _restartTextFrench;
+
+        return _restartTextEnglish;
     }
     public string GetRecycleText()
     {

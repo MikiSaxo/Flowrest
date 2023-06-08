@@ -17,6 +17,7 @@ public class CameraPan : MonoBehaviour
 
     [SerializeField] private float _durationAnimRota;
 
+    [Header("Pan")] [SerializeField] private float _panSpeed;
     [Header("Block Cam")] [Tooltip("It represents the min and max value for the X position")] [SerializeField]
     private Vector2Int _minMaxPosX;
 
