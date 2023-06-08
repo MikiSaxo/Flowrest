@@ -25,11 +25,6 @@ public class CreditsMovement : MonoBehaviour
         Init();
     }
 
-    public void LaunchMovement()
-    {
-        //_elementsToMove.transform.DOMoveY(_endPos, _timeToEnd).SetEase(Ease.Linear).OnComplete(_scenesManager.GoToMainMenu);
-    }
-
     public void Init()
     {
         _canGo = true;

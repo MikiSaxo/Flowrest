@@ -91,6 +91,22 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] private string _playButtonTextFrench;
     [SerializeField] private string _playButtonTextEnglish;
 
+    [Space(10f)]
+    [Header("--- Credits Screen ---")]
+    [Space(10f)]
+    
+    [Header("Thanks for Playing")]
+    [SerializeField] private string _thxForPlayinTextFrench;
+    [SerializeField] private string _thxForPlayinTextEnglish;
+    
+    [Header("With Help of")]
+    [SerializeField] private string _withHelpTextFrench;
+    [SerializeField] private string _withHelpTextEnglish;
+    
+    [Header("Special Thanks")]
+    [SerializeField] private string _specialThanksTextFrench;
+    [SerializeField] private string _specialThanksTextEnglish;
+    
     
     private void Awake()
     {
@@ -141,7 +157,6 @@ public class LanguageManager : MonoBehaviour
         PlayerPrefs.SetInt("Tongue", (int)Language.Francais);
         ChangeLanguageEvent?.Invoke();
     }
-
     public void ChangeToEnglish()
     {
         print("Change To English");
@@ -150,7 +165,6 @@ public class LanguageManager : MonoBehaviour
         PlayerPrefs.SetInt("Tongue", (int)Language.English);
         ChangeLanguageEvent?.Invoke();
     }
-
     public string GetOrderText()
     {
         if (Tongue == Language.Francais)
@@ -262,5 +276,26 @@ public class LanguageManager : MonoBehaviour
             return _playButtonTextFrench;
 
         return _playButtonTextEnglish;
+    }
+    public string GetThxForPlayingText()
+    {
+        if (Tongue == Language.Francais)
+            return _thxForPlayinTextFrench;
+
+        return _thxForPlayinTextEnglish;
+    }
+    public string GetWithHelpText()
+    {
+        if (Tongue == Language.Francais)
+            return _withHelpTextFrench;
+
+        return _withHelpTextEnglish;
+    }
+    public string GetSpecialThanksText()
+    {
+        if (Tongue == Language.Francais)
+            return _specialThanksTextFrench;
+
+        return _specialThanksTextEnglish;
     }
 }

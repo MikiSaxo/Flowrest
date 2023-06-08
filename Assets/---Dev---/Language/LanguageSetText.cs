@@ -30,6 +30,11 @@ public class LanguageSetText : MonoBehaviour
     [Header("Main Menu")]
     [SerializeField] private TMP_Text _playButtonTextButton;
     [SerializeField] private TMP_Text _backLvlSelectTextButton;
+    
+    [Header("Credits Screen")]
+    [SerializeField] private TMP_Text _thxForPlayinText;
+    [SerializeField] private TMP_Text _withHelpText;
+    [SerializeField] private TMP_Text _specialThanksText;
 
 
     // [Header("Recycle")]
@@ -70,6 +75,9 @@ public class LanguageSetText : MonoBehaviour
             _resumeTextButton.text = _languageManager.GetResumeText();
             _quitTextButton.text = _languageManager.GetQuitButtonText();
             RecyclingManager.Instance.UpdateDisplayRecyclingNbLeft();
+            _thxForPlayinText.text = _languageManager.GetThxForPlayingText();
+            _withHelpText.text = _languageManager.GetWithHelpText();
+            _specialThanksText.text = _languageManager.GetSpecialThanksText();
         }
     }
 
