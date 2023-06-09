@@ -664,8 +664,11 @@ public class MapManager : MonoBehaviour
 
         if (button != null)
         {
-            _lastGroundSwapped[0].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
-            _lastGroundSwapped[1].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
+            if (_lastGroundSwapped[0] != null)
+            {
+                _lastGroundSwapped[0].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
+                _lastGroundSwapped[1].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
+            }
         }
         else
         {
@@ -974,7 +977,7 @@ public class MapManager : MonoBehaviour
 
     private void WantToRecycle()
     {
-        if (IsLoading || IsPosing || IsSwapping) return;
+        if (IsLoading || IsPosing || IsSwapping || NbOfRecycling <= 0) return;
 
         _wantToRecycle = true;
         RecyclingManager.Instance.OpenRecycling();
