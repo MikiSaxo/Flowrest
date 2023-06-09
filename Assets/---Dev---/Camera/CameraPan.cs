@@ -35,8 +35,7 @@ public class CameraPan : MonoBehaviour
     {
         _cam = GetComponent<Camera>();
         _canZoom = true;
-
-
+        
         _cam.transform.DORotate(new Vector3(_rotaXStartEnd.x, 0, 0), 0);
         _cam.transform.DORotate(new Vector3(_rotaXStartEnd.y, 0, 0), _durationAnimRota);
     }
@@ -58,7 +57,7 @@ public class CameraPan : MonoBehaviour
         // Get the startPos of the mouse
         if (Input.GetMouseButtonDown(mouseIndex))
         {
-            groundZ = _cam.transform.position.z;
+            groundZ = _cam.transform.position.y;
 
             var getPos = GetWorldPosition(groundZ);
             getPos = new Vector3(getPos.x, 10, getPos.z);
@@ -124,6 +123,10 @@ public class CameraPan : MonoBehaviour
         var posX = pos.x;
         pos = pos.normalized * zoom;
         pos = new Vector3(posX, pos.y, pos.z);
+
+        if (_cam.transform.position.y >= _minMaxPosY.y && pos.y > _minMaxPosY.y) return;
+        
+        if (_cam.transform.position.y <= _minMaxPosY.x && pos.y < _minMaxPosY.x) return;
 
         _cam.transform.position = ClampCamera(pos);
 
