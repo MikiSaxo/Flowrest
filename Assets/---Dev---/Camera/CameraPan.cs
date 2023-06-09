@@ -70,15 +70,19 @@ public class CameraPan : MonoBehaviour
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
+            print(dif);
             //
             _timeToAndroidPan += Time.deltaTime;
             if (MapManager.Instance != null  && dif != _lastdiffPan && MapManager.Instance.IsAndroid && _timeToAndroidPan > .15f && MapManager.Instance.LastObjButtonSelected == null)
             {
                 MouseHitRaycast.Instance.IsOnGround = true;
+                
                 if(MapManager.Instance.LastGroundEntered != null)
                     MapManager.Instance.LastGroundEntered.GetComponent<GroundIndicator>().OnExitPointer();
+                
                 MapManager.Instance.ResetBig();
             }
+            
             _lastdiffPan = dif;
             // Add the dif to the cam pos and check if it's clamped
             _cam.transform.position = ClampCamera(_cam.transform.position + new Vector3(dif.x, 0, dif.z));
@@ -95,10 +99,11 @@ public class CameraPan : MonoBehaviour
     private Vector3 GetWorldPosition(float z)
     {
         Ray mousePos = _cam.ScreenPointToRay(Input.mousePosition);
+        
         Plane ground = new Plane(_cam.transform.forward, new Vector3(0, 0, z));
-        //Plane ground = new Plane(Vector3.forward, new Vector3(0,0,z));
         ground.Raycast(mousePos, out var distance);
-        return mousePos.GetPoint(distance);
+        
+        return mousePos.GetPoint(distance*_panSpeed);
     }
 
     private void Zoom()
