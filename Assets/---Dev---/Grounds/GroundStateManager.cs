@@ -489,6 +489,11 @@ public class GroundStateManager : MonoBehaviour
         return _fbArrow;
     }
 
+    public GameObject GetTileBored()
+    {
+        return _fxTileBored;
+    }
+
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
     {
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();

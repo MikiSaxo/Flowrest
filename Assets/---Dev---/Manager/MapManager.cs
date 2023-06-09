@@ -56,7 +56,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeToSpawnMap;
     [SerializeField] private float _timeWaitBetweenDropFX;
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
-    
+
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
 
     private bool _hasRecycling;
@@ -637,7 +637,7 @@ public class MapManager : MonoBehaviour
             // Activate Trash can
             if (_hasRecycling && NbOfRecycling > 0)
                 RecyclingManager.Instance.UpdateRecycling(true);
-            
+
             // Prevent to use an actual empty button
             if (button.GetComponent<InventoryButton>().GetNumberLeft() <= 0)
                 return;
@@ -660,6 +660,20 @@ public class MapManager : MonoBehaviour
         {
             _isDragNDrop = true;
             LastStateButtonSelected = AllStates.None;
+        }
+
+        if (button != null)
+        {
+            _lastGroundSwapped[0].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
+            _lastGroundSwapped[1].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(true);
+        }
+        else
+        {
+            if (_lastGroundSwapped[0] != null)
+            {
+                _lastGroundSwapped[0].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(false);
+                _lastGroundSwapped[1].GetTileBored().GetComponent<Fx_BoredTile>().UpdateCanPoseTile(false);
+            }
         }
     }
 
@@ -1077,6 +1091,11 @@ public class MapManager : MonoBehaviour
     public int GetCurrentLevel()
     {
         return _currentLevel;
+    }
+
+    public GroundStateManager[] GetTwoLastSwap()
+    {
+        return _lastGroundSwapped;
     }
 
     public Sprite[] GetCharaSpritesEnd()
