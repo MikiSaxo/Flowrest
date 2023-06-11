@@ -63,7 +63,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-           
+            StopMusic("MainMusic");
+            StopMusic("MenuMusic");
+            //PlayMusic("MainMusic");
         }
 
 
@@ -76,9 +78,6 @@ public class AudioManager : MonoBehaviour
             SetMusicVolume(.5f);
             SetSFXVolume(.5f);
         }
-
-        // PlayMusic("MenuMusic");
-        // PlayMusic("MainMusic");
     }
 
     public void PlayMusic(string name)

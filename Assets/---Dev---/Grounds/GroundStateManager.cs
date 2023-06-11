@@ -154,7 +154,7 @@ public class GroundStateManager : MonoBehaviour
         StockStatePreview = _currentState;
         _tempCurrentState = _currentState;
 
-        AudioManager.Instance.PlaySFX("Pop");
+        // AudioManager.Instance.PlaySFX("PopTiles");
     }
 
     public void ChangeStatePrevisu(AllStates state)
@@ -162,11 +162,6 @@ public class GroundStateManager : MonoBehaviour
         if (IsProtectedPrevisu) return;
 
         _fbPrevisu.ActivateIcon((int)state);
-        // if (state == _currentState)
-        //     _fbPrevisu.transform.DOScale(2, 0);
-        // else
-        //     _fbPrevisu.transform.DOScale(3, 0);
-        //     _fbPrevisu.DeactivateIcon();
     }
 
     public void ChangeMesh(int meshNb)

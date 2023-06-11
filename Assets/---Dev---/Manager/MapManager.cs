@@ -451,6 +451,8 @@ public class MapManager : MonoBehaviour
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink() / 2);
         _countNbOfTile = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
+        
+        AudioManager.Instance.PlaySFX("SpawnMap");
 
         for (int x = 0; x < sizeMap.x; x++)
         {
@@ -944,11 +946,12 @@ public class MapManager : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySFX("UseRecycling");
 
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
 
-        AudioManager.Instance.PlaySFX("EnergyGain");
+        // AudioManager.Instance.PlaySFX("EnergyGain");
 
         // Remove 1 from button
         LastObjButtonSelected.GetComponent<InventoryButton>().UpdateNumberLeft(-1);
@@ -1199,6 +1202,7 @@ public class MapManager : MonoBehaviour
 
     IEnumerator WaitToRestart()
     {
+        AudioManager.Instance.PlaySFX("Restart");
         TransiManager.Instance.LaunchGrownOn();
 
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
