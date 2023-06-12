@@ -50,6 +50,8 @@ public class Fx_BoredTile : MonoBehaviour
 
     IEnumerator SpawnAnim()
     {
+        if (!_isBored) yield break;
+
         _sphere.material.DOKill();
         _boudinDown.transform.DOKill();
         _boudinTop.transform.DOKill();
@@ -57,6 +59,9 @@ public class Fx_BoredTile : MonoBehaviour
         _sphere.material.DOFloat(.62f, "_DissolveStep", _timeDissolveOn).SetEase(Ease.InOutSine);
         _boudinDown.transform.DOScale(1, _timeBoudinOn).SetEase(Ease.InBack);
         yield return new WaitForSeconds(_timeBetweenTwo);
+        
+        if (!_isBored) yield break;
+
         _boudinTop.transform.DOScale(1, _timeBoudinOn).SetEase(Ease.InBack);
     }
 
@@ -68,6 +73,8 @@ public class Fx_BoredTile : MonoBehaviour
 
     IEnumerator DispawnAnim()
     {
+        if (_isBored) yield break;
+
         _sphere.material.DOKill();
         _boudinTop.transform.DOKill();
         _boudinDown.transform.DOKill();
@@ -92,11 +99,15 @@ public class Fx_BoredTile : MonoBehaviour
 
         if (state)
         {
+            if (!_isBored) return;
+            
             _sphere.material.DOFloat(.78f, "_DissolveStep", _timeDissolveOff).SetEase(Ease.OutSine);
             _boudinTop.transform.DOMoveY(_startYPos - .5f, _timeDissolveOff);
         }
         else
         {
+            if (!_isBored) return;
+            
             _sphere.material.DOFloat(.62f, "_DissolveStep", _timeDissolveOff);
             _boudinTop.transform.DOMoveY(_startYPos, _timeDissolveOff);
         }
