@@ -154,7 +154,7 @@ public class GroundStateManager : MonoBehaviour
         StockStatePreview = _currentState;
         _tempCurrentState = _currentState;
 
-        // AudioManager.Instance.PlaySFX("PopTiles");
+        AudioManager.Instance.PlaySFX("PopTiles");
     }
 
     public void ChangeStatePrevisu(AllStates state)

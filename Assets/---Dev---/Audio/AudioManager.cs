@@ -35,20 +35,24 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sounds music in Musics)
         {
+            music.Source = gameObject.AddComponent<AudioSource>();
             music.Source = _musicSource;
             music.Source.clip = music.Clip;
             music.Source.volume = music.Volume;
             music.Source.pitch = music.Pitch;
             music.Source.loop = music.Loop;
+            music.Source.outputAudioMixerGroup = _musicSource.outputAudioMixerGroup;
+
         }
 
         foreach (Sounds sfx in SFX)
         {
-            sfx.Source = _sFXSource;
+            sfx.Source = gameObject.AddComponent<AudioSource>();
             sfx.Source.clip = sfx.Clip;
             sfx.Source.volume = sfx.Volume;
             sfx.Source.pitch = sfx.Pitch;
             sfx.Source.loop = sfx.Loop;
+            sfx.Source.outputAudioMixerGroup = _sFXSource.outputAudioMixerGroup;
         }
     }
 
@@ -65,7 +69,7 @@ public class AudioManager : MonoBehaviour
         {
             StopMusic("MainMusic");
             StopMusic("MenuMusic");
-            //PlayMusic("MainMusic");
+            PlayMusic("MainMusic");
         }
 
 
