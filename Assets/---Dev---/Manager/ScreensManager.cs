@@ -41,6 +41,11 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private float _dialogSpeed = .01f;
+    [Header("DialogsAnim")]
+    [SerializeField] private GameObject _dialogGlobal;
+    [SerializeField] private float _punchPower;
+    [SerializeField] private float _punchDuration;
+    [SerializeField] private int _punchVibrato;
 
     [Header("Tuto")] [SerializeField] private FB_Arrow _tutoArrow;
 
@@ -281,7 +286,6 @@ public class ScreensManager : MonoBehaviour
 
         _hasPopUp = hasPopUp;
 
-
         // Set isDialoging and Reset count old dialog
         _isDialogTime = true;
         _countDialog = 0;
@@ -289,6 +293,7 @@ public class ScreensManager : MonoBehaviour
 
         // Open Dialog Menu
         _dialogParent.SetActive(true);
+        _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
 
         // Block mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
@@ -329,8 +334,7 @@ public class ScreensManager : MonoBehaviour
             return;
         }
 
-        _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
-        _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(0, true);
+        StartCoroutine(WaitToOpenOrder());
 
         if (chara != null)
         {
@@ -348,9 +352,9 @@ public class ScreensManager : MonoBehaviour
         {
             if (MapManager.Instance.OpenMemo && _countDialog == 1 && !_isMemoOpened)
             {
-                _memoMenu.OpenAnim();
-                _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
-                StartCoroutine(WaitToLaunchMemoOpening());
+                //_memoMenu.OpenAnim();
+                // _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
+                // StartCoroutine(WaitToLaunchMemoOpening());
             }
 
             SpawnDialog();
@@ -564,6 +568,13 @@ public class ScreensManager : MonoBehaviour
         MapManager.Instance.ForceResetBig();
         MapManager.Instance.ResetAllMap(true);
         // StartCoroutine(UnlockMouse());
+    }
+
+    IEnumerator WaitToOpenOrder()
+    {
+        yield return new WaitForSeconds(1f);
+        _orderMenu.GetComponent<OpenCloseMenu>().OpenAnim();
+        _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(0, true);
     }
 
     public void UpdateButtonGoLevelSupp(bool state)

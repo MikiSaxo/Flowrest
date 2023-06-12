@@ -16,7 +16,7 @@ public class LastMoveManager : MonoBehaviour
     private List<AllStates[,]> _stockStateMap = new List<AllStates[,]>();
     private List<bool[,]> _stockCrystals = new List<bool[,]>();
     private List<int> _stockEnergy = new List<int>();
-    private List<GroundStateManager[]> _stockLastGroundSwaped = new List<GroundStateManager[]>();
+    private List<GroundStateManager[]> _stockLastGroundSwapped = new List<GroundStateManager[]>();
     private List<List<int>> _stockTileButtonTest = new List<List<int>>();
     private List<int> _stockNbRecycle = new List<int>();
 
@@ -109,7 +109,7 @@ public class LastMoveManager : MonoBehaviour
         // Stock Last Block Swapped
         GroundStateManager[] newLastBlocked = new GroundStateManager[2];
         Array.Copy(_lastGroundSwapped, newLastBlocked, _lastGroundSwapped.Length);
-        _stockLastGroundSwaped.Add(newLastBlocked);
+        _stockLastGroundSwapped.Add(newLastBlocked);
 
         // Get Inventory
         List<GameObject> inventory = SetupUIGround.Instance.GetStockTileButton();
@@ -168,7 +168,6 @@ public class LastMoveManager : MonoBehaviour
         }
 
         // Update Energy
-        // print($"_stockEnergy[^2] : {_stockEnergy[^2]} -  Current Energy : {EnergyManager.Instance.GetCurrentEnergy()}");
         int getOldEnergy = 0;
 
         if (_stockEnergy.Count == 1)
@@ -180,21 +179,21 @@ public class LastMoveManager : MonoBehaviour
 
 
         // Update Last Swapped Block
-        if (_stockLastGroundSwaped.Count > 1)
+        if (_stockLastGroundSwapped[^1][0] != null)
+            _stockLastGroundSwapped[^1][0].UpdateNoSwap(false);
+        if (_stockLastGroundSwapped[^1][1] != null)
+            _stockLastGroundSwapped[^1][1].UpdateNoSwap(false);
+
+        if (_stockLastGroundSwapped.Count > 1)
         {
-            if (_stockLastGroundSwaped[^2][0] != null && _stockLastGroundSwaped[^2][1] != null)
+            if (_stockLastGroundSwapped[^2][0] != null && _stockLastGroundSwapped[^2][1] != null)
             {
-                _stockLastGroundSwaped[^2][0].UpdateNoSwap(true);
-                _stockLastGroundSwaped[^2][1].UpdateNoSwap(true);
+                _stockLastGroundSwapped[^2][0].UpdateNoSwap(true);
+                _stockLastGroundSwapped[^2][1].UpdateNoSwap(true);
         
-                MapManager.Instance.UpdateTwoLastSwapped(_stockLastGroundSwaped[^2][0], _stockLastGroundSwaped[^2][1]);
+                MapManager.Instance.UpdateTwoLastSwapped(_stockLastGroundSwapped[^2][0], _stockLastGroundSwapped[^2][1]);
             }
         }
-        
-        if (_stockLastGroundSwaped[^1][0] != null)
-            _stockLastGroundSwaped[^1][0].UpdateNoSwap(false);
-        if (_stockLastGroundSwaped[^1][1] != null)
-            _stockLastGroundSwaped[^1][1].UpdateNoSwap(false);
 
 
         // Update Inventory
@@ -220,7 +219,7 @@ public class LastMoveManager : MonoBehaviour
         {
             _stockStateMap.RemoveAt(_stockStateMap.Count - 1);
             _stockEnergy.RemoveAt(_stockEnergy.Count - 1);
-            _stockLastGroundSwaped.RemoveAt(_stockLastGroundSwaped.Count - 1);
+            _stockLastGroundSwapped.RemoveAt(_stockLastGroundSwapped.Count - 1);
             _stockTileButtonTest.RemoveAt(_stockTileButtonTest.Count - 1);
             _stockNbRecycle.RemoveAt(_stockNbRecycle.Count - 1);
             _stockCrystals.RemoveAt(_stockCrystals.Count - 1);
@@ -240,7 +239,7 @@ public class LastMoveManager : MonoBehaviour
     {
         _stockStateMap.Clear();
         _stockEnergy.Clear();
-        _stockLastGroundSwaped.Clear();
+        _stockLastGroundSwapped.Clear();
         _stockTileButtonTest.Clear();
         _stockNbRecycle.Clear();
         _stockCrystals.Clear();

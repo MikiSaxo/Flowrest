@@ -83,6 +83,7 @@ public class MapManager : MonoBehaviour
     private bool _tileHasCrystal;
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
+    private bool _hasPopUp;
     Sprite[] _charaSpritesBegininng = new Sprite[0];
     Sprite[] _charaSpritesEnd = new Sprite[0];
 
@@ -406,7 +407,7 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if PopUp
-        bool hasPopUp = false;
+        _hasPopUp = false;
         if (currentLvl.PopUpInfos != null)
         {
             if (currentLvl.PopUpInfos.Length > 0)
@@ -414,7 +415,7 @@ public class MapManager : MonoBehaviour
                 PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
             }
 
-            hasPopUp = currentLvl.PopUpInfos.Length > 0;
+            _hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
 
         // Update Dialogs sprites
@@ -423,17 +424,11 @@ public class MapManager : MonoBehaviour
         if (currentLvl.CharacterSpritesEnd != null)
             _charaSpritesEnd = currentLvl.CharacterSpritesEnd;
 
-        // Update Dialogs depend on current tongue
-        if (LanguageManager.Instance.Tongue == Language.Francais)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, hasPopUp,
-                _charaSpritesBegininng);
-        else if (LanguageManager.Instance.Tongue == Language.English)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, hasPopUp,
-                _charaSpritesBegininng);
-
         // Update Chara Name
         if (_levelData[_currentLevel].CharacterName != String.Empty)
             ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
+
+        MouseHitRaycast.Instance.IsBlockMouse(true);
 
         // Init Level
         InitializeFloor(_mapSize);
@@ -491,6 +486,14 @@ public class MapManager : MonoBehaviour
 
 
         IsLoading = false;
+        
+        // Update Dialogs depend on current tongue
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, _hasPopUp,
+                _charaSpritesBegininng);
+        else if (LanguageManager.Instance.Tongue == Language.English)
+            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, _hasPopUp,
+                _charaSpritesBegininng);
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
@@ -827,12 +830,13 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
+        ResetTwoLastSwapped();
+        
         gWhich.JustBeenSwaped = true;
         gLastGroundSelected.JustBeenSwaped = true;
         gWhich.UpdateNoSwap(true);
         gLastGroundSelected.UpdateNoSwap(true);
 
-        ResetTwoLastSwapped();
 
         AudioManager.Instance.PlaySFX("TileBored");
 
