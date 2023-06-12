@@ -34,6 +34,8 @@ public class TransiManager : MonoBehaviour
     {
         print("start grow on");
         
+        AudioManager.Instance.PlaySFX("Transition");
+        
         if(MapManager.Instance != null)
             MapManager.Instance.IsLoading = true;
         foreach (var column in _columns)

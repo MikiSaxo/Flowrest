@@ -17,7 +17,6 @@ public class CameraPan : MonoBehaviour
 
     [SerializeField] private float _durationAnimRota;
 
-    [Header("Pan")] [SerializeField] private float _panSpeed;
     [Header("Block Cam")] [Tooltip("It represents the min and max value for the X position")] [SerializeField]
     private Vector2Int _minMaxPosX;
 
@@ -102,7 +101,7 @@ public class CameraPan : MonoBehaviour
         Plane ground = new Plane(_cam.transform.forward, new Vector3(0, 0, z));
         ground.Raycast(mousePos, out var distance);
         
-        return mousePos.GetPoint(distance*_panSpeed);
+        return mousePos.GetPoint(distance);
     }
 
     private void Zoom()
