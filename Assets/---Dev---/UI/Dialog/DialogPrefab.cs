@@ -251,7 +251,6 @@ public class DialogPrefab : MonoBehaviour
     public void EndAnimationText()
     {
         AudioManager.Instance.StopSFX("TextDialog");
-        AudioManager.Instance.PlaySFX("NExtDialog");
         _stopCorou = true;
         DialogText.text = _saveDialog;
         StopCoroutine(AnimationText());

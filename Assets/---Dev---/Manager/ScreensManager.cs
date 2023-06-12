@@ -437,6 +437,8 @@ public class ScreensManager : MonoBehaviour
     {
         if (CheckIfDialogEnded())
             return;
+        
+        AudioManager.Instance.PlaySFX("NextDialog");
 
         if (_dialogsPrefabList[^1].IsFinish)
         {

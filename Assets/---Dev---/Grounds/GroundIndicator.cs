@@ -90,8 +90,11 @@ public class GroundIndicator : MonoBehaviour
         if (MapManager.Instance.IsSwapping) return;
 
         _isEnteredLimited = true;
-        
-        AudioManager.Instance.PlaySFX("TileEntered");
+
+        if (GetComponentInParent<CrystalsGround>().GetIfHasCrystal())
+            AudioManager.Instance.PlaySFX("TileEnteredCrystal");
+        else
+            AudioManager.Instance.PlaySFX("TileEntered");
 
         if (_isSelected || IsSwapping)
         {
@@ -138,9 +141,9 @@ public class GroundIndicator : MonoBehaviour
             !MapManager.Instance.IsVictory)
         {
             EnergyManager.Instance.SpawnNoEnergyText();
-            
+
             AudioManager.Instance.PlaySFX("BlockedTileWhenClicked");
-            
+
             return;
         }
 
@@ -148,15 +151,15 @@ public class GroundIndicator : MonoBehaviour
         {
             // EnergyManager.Instance.SpawnNoEnergyText();
             if (MapManager.Instance.LastObjButtonSelected != null) return;
-            
+
             if (_currentFbBoredText != null) return;
 
             GameObject go = Instantiate(_fbTextWarning, EnergyManager.Instance.transform);
             go.GetComponent<TextWarning>().Init(LanguageManager.Instance.GetBoredText());
             _currentFbBoredText = go;
-            
+
             AudioManager.Instance.PlaySFX("BlockedTileWhenClicked");
-            
+
             return;
         }
 
@@ -276,7 +279,7 @@ public class GroundIndicator : MonoBehaviour
         // Avoid to update by same ground
         // if (gameObject.GetComponentInParent<GroundStateManager>().IdOfBloc ==
         //     (int)MapManager.Instance.LastStateButtonSelected) return;
-        
+
         if (MapManager.Instance.IsLoading || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping) return;
 
         MapManager.Instance.IsPosing = true;
@@ -288,7 +291,7 @@ public class GroundIndicator : MonoBehaviour
     {
         // Reset Preview
         MapManager.Instance.ResetPreview();
-        
+
         // Liberate from bored if bored
         if (_parent.IsBored)
             _parent.UpdateFBReloadEnergy(false);
@@ -324,6 +327,8 @@ public class GroundIndicator : MonoBehaviour
             gameObject.GetComponentInParent<CrystalsGround>().UpdateCrystals(false, false);
         }
 
+        AudioManager.Instance.PlaySFX("TilePose");
+
         yield return new WaitForSeconds(1.5f);
 
         // Launch Quest
@@ -348,9 +353,9 @@ public class GroundIndicator : MonoBehaviour
 
     public void ResetIndicator()
     {
-        if(_isEnteredFree || _isSelected)
+        if (_isEnteredFree || _isSelected)
             AudioManager.Instance.PlaySFX("TileUnselect");
-        
+
         _isSelected = false;
         _isEnteredLimited = false;
         _twoClick = 0;

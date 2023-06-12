@@ -45,6 +45,7 @@ public class FB_CrystalCollected : MonoBehaviour
         _objToMove.transform.DOScale(1, _durationSpawn);
         
         // AudioManager.Instance.PlaySFX("EnergyGain");
+        AudioManager.Instance.PlaySFX("EnergyTrail");
     }
 
     private void WaitToDispawnCrystal()
