@@ -94,13 +94,13 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // s.Source.Play();
         s.Source.PlayOneShot(s.Clip);
     }
 
     public void PlaySFX(string name)
     {
         // print($"Launch {name} sfx");
+        
         Sounds s = Array.Find(SFX, sound => sound.Name == name);
         if (s == null)
         {
@@ -109,7 +109,19 @@ public class AudioManager : MonoBehaviour
         }
 
         s.Source.PlayOneShot(s.Clip);
-        // s.Source.Play();
+    }
+    public void PlaySFXLong(string name)
+    {
+        // print($"Launch {name} sfx");
+        
+        Sounds s = Array.Find(SFX, sound => sound.Name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound : " + name + " not found");
+            return;
+        }
+
+        s.Source.Play();
     }
 
     public void StopMusic(string name)

@@ -167,6 +167,8 @@ public class DialogPrefab : MonoBehaviour
 
     IEnumerator AnimationText()
     {
+        AudioManager.Instance.PlaySFXLong("TextDialog");
+        
         int charIndex = 0;
 
         foreach (char c in _saveDialog)
@@ -248,6 +250,8 @@ public class DialogPrefab : MonoBehaviour
 
     public void EndAnimationText()
     {
+        AudioManager.Instance.StopSFX("TextDialog");
+        AudioManager.Instance.PlaySFX("NExtDialog");
         _stopCorou = true;
         DialogText.text = _saveDialog;
         StopCoroutine(AnimationText());

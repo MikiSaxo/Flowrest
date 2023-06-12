@@ -64,6 +64,7 @@ public class FB_GroundCollected : MonoBehaviour
 
     private void DispawnAnimGround()
     {
+        AudioManager.Instance.PlaySFX("TileGoingToInventory");
         SetupUIGround.Instance.ChangeSizeBGBeforeNewGround((int)_state, false);
         
         _objToMove.transform.DOMove(_tpPoints[2].position, _durationDispawn);

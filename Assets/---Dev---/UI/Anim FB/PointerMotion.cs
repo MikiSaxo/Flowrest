@@ -36,6 +36,11 @@ public class PointerMotion : MonoBehaviour
         transform.DOScale(1, _timeLeave);
     }
 
+    public void OnClick()
+    {
+        AudioManager.Instance.PlaySFX("ClickButton");
+    }
+
     public void UpdateCanEnter(bool state)
     {
         if (!state)

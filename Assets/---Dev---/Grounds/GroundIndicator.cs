@@ -182,7 +182,6 @@ public class GroundIndicator : MonoBehaviour
             {
                 ResetIndicator();
                 StartCoroutine(WaitALittleToReset());
-                AudioManager.Instance.PlaySFX("Unselect");
                 return;
             }
 
@@ -349,9 +348,13 @@ public class GroundIndicator : MonoBehaviour
 
     public void ResetIndicator()
     {
+        if(_isEnteredFree || _isSelected)
+            AudioManager.Instance.PlaySFX("TileUnselect");
+        
         _isSelected = false;
         _isEnteredLimited = false;
         _twoClick = 0;
+
 
         OnLeaveAnim(_timeExit);
         MapManager.Instance.IsGroundFirstSelected = false;
