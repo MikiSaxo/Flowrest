@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7339642, g: 0.8405959, b: 0.90448195, a: 1}
+  m_IndirectSpecularColor: {r: 0.7346216, g: 0.8412794, b: 0.90451986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -137,7 +137,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 29539078}
-  - component: {fileID: 29539079}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -160,22 +159,10 @@ Transform:
   - {fileID: 185814943}
   - {fileID: 233412663}
   - {fileID: 1938472296}
+  - {fileID: 263522234}
   m_Father: {fileID: 709628392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &29539079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29539077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78d148b8af058ee44ba1e1070edd1476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fxWaterWaveClick: {fileID: 2447704906612498519, guid: f9d70e09dbdc2b749b940b1ed477d08e, type: 3}
 --- !u!1 &51693967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,6 +1361,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261037161}
   m_CullTransparentMesh: 1
+--- !u!1 &263522233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 263522234}
+  - component: {fileID: 263522235}
+  m_Layer: 0
+  m_Name: WaveClic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263522234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263522233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 29539078}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &263522235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263522233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d148b8af058ee44ba1e1070edd1476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fxWaterWaveClick: {fileID: 2447704906612498519, guid: f9d70e09dbdc2b749b940b1ed477d08e, type: 3}
 --- !u!1 &268033028
 GameObject:
   m_ObjectHideFlags: 0

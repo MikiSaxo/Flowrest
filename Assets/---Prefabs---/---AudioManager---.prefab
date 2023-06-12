@@ -259,7 +259,13 @@ MonoBehaviour:
     Source: {fileID: 0}
   - Name: GoBackwards
     Clip: {fileID: 8300000, guid: f5afbf3c4dafc4748931cf35c5b8c488, type: 3}
-    Volume: 0.452
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Restart
+    Clip: {fileID: 8300000, guid: 05d769bfa3af7c7458803adcb16e26dc, type: 3}
+    Volume: 1
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -269,21 +275,9 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: Swap
-    Clip: {fileID: 8300000, guid: 17bbfb1197a8ef64598927377d241512, type: 3}
-    Volume: 1
-    Pitch: 1
-    Loop: 0
-    Source: {fileID: 0}
   - Name: TileEntered
     Clip: {fileID: 8300000, guid: e78637e6c33d40a4282f136f4ba0b7d5, type: 3}
     Volume: 0.09
-    Pitch: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: TileBored
-    Clip: {fileID: 8300000, guid: b3e7828b7e2d5d5478b7305e42b445fa, type: 3}
-    Volume: 0.394
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -325,7 +319,7 @@ MonoBehaviour:
     Source: {fileID: 0}
   - Name: Defeat
     Clip: {fileID: 8300000, guid: 64911dd9b93c7cd458a8809bdca7f086, type: 3}
-    Volume: 0.183
+    Volume: 1
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -337,6 +331,12 @@ MonoBehaviour:
     Source: {fileID: 0}
   - Name: SpawnMap
     Clip: {fileID: 8300000, guid: e77b9bfaa9c6f9243a02051a4021a49c, type: 3}
+    Volume: 0.183
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: UseRecycling
+    Clip: {fileID: 8300000, guid: c7aa7a2286ae8894f95f06a7d054440b, type: 3}
     Volume: 0.183
     Pitch: 1
     Loop: 0

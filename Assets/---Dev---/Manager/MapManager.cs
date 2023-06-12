@@ -827,9 +827,6 @@ public class MapManager : MonoBehaviour
                 String.Empty, tileToAdd);
         }
 
-        // Bloc for Next Swap
-        //if (_blockLastGroundsSwapped)
-        // {
         gWhich.JustBeenSwaped = true;
         gLastGroundSelected.JustBeenSwaped = true;
         gWhich.UpdateNoSwap(true);
@@ -841,7 +838,6 @@ public class MapManager : MonoBehaviour
 
         UpdateTwoLastSwapped(gWhich, gLastGroundSelected);
         LastMoveManager.Instance.UpdateLastGroundSwapped(gWhich, gLastGroundSelected);
-        //}
 
 
         // Wait the FX is finished
@@ -868,8 +864,6 @@ public class MapManager : MonoBehaviour
 
         // Allow next Swap
         IsSwapping = false;
-
-        // ResetBig();
     }
 
     public void GroundSwapPreview(GameObject which)
