@@ -40,6 +40,7 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
+    [SerializeField] private GameObject _dialogBG;
     [SerializeField] private float _dialogSpeed = .01f;
     [Header("DialogsAnim")]
     [SerializeField] private GameObject _dialogGlobal;
@@ -203,7 +204,8 @@ public class ScreensManager : MonoBehaviour
     {
         PopUpManager.Instance.UpdatePopUpState(state);
 
-        _dialogParent.SetActive(false);
+        _dialogGlobal.SetActive(false);
+        UpdateDialogBG(false);
         _hasPopUp = false;
 
         if (!state)
@@ -280,6 +282,11 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
+    public void UpdateDialogBG(bool state)
+    {
+        _dialogBG.SetActive(state);
+    }
+
     public void SpawnNewDialogs(string[] dialogs, bool isTheEnd, bool hasPopUp, Sprite[] chara)
     {
         RemoveLastDialog();
@@ -292,7 +299,8 @@ public class ScreensManager : MonoBehaviour
         _isMemoOpened = false;
 
         // Open Dialog Menu
-        _dialogParent.SetActive(true);
+        // _dialogParent.SetActive(true);
+        _dialogGlobal.SetActive(true);
         _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
 
         // Block mouse
@@ -414,7 +422,8 @@ public class ScreensManager : MonoBehaviour
     {
         MouseHitRaycast.Instance.IsBlockMouse(false);
 
-        _dialogParent.SetActive(false);
+        _dialogGlobal.SetActive(false);
+        UpdateDialogBG(false);
 
         // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
 
@@ -582,7 +591,8 @@ public class ScreensManager : MonoBehaviour
     public void UpdateButtonGoLevelSupp(bool state)
     {
         _nextLevel.SetActive(state);
-        _dialogParent.SetActive(!state);
+        _dialogGlobal.SetActive(!state);
+        UpdateDialogBG(!state);
     }
 
     public void CheckIfEnd()

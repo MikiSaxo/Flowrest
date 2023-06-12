@@ -4204,7 +4204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &581427682
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5856,7 +5856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8494882442127450092, guid: 467ba7fbe0c0317449377845e63b237e, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8494882442127450092, guid: 467ba7fbe0c0317449377845e63b237e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7504,7 +7504,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1764261894}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11118,7 +11118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1092695893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15964,12 +15964,12 @@ GameObject:
   - component: {fileID: 1551592057}
   - component: {fileID: 1551592056}
   m_Layer: 5
-  m_Name: 'BG '
+  m_Name: 'DialogBG '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1551592055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17406,6 +17406,7 @@ MonoBehaviour:
   _dialogContent: {fileID: 7050394040245848421}
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
   _dialogFBEnd: {fileID: 67852414}
+  _dialogBG: {fileID: 1551592054}
   _dialogSpeed: 0.02
   _dialogGlobal: {fileID: 581427681}
   _punchPower: 0.2
@@ -17492,9 +17493,9 @@ RectTransform:
   - {fileID: 2134788109}
   - {fileID: 1092695893}
   - {fileID: 1601367370}
+  - {fileID: 686570306}
   - {fileID: 1838706110}
   - {fileID: 1449897792}
-  - {fileID: 686570306}
   - {fileID: 2071598751}
   - {fileID: 1171821179}
   m_Father: {fileID: 0}
@@ -21301,7 +21302,7 @@ PrefabInstance:
       objectReference: {fileID: 686570303}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _currentLevel
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _fxWaterWaveClick
@@ -21956,7 +21957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7322484763097517751, guid: 795c7127e9d9514418953775d930de33, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7322484763097517751, guid: 795c7127e9d9514418953775d930de33, type: 3}
       propertyPath: m_AnchorMax.x
@@ -22280,9 +22281,73 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[1].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d7347261470e63a44a09a8a1b8752fa9, type: 3}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[1].Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[1].Name
+      value: Wave1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[2].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: eacfdb7b105d0784cb91920bcfbd930d, type: 3}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[2].Name
+      value: Wave2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[3].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f98ed686115e8f44ad0006b3ddc20f7, type: 3}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[3].Name
+      value: Wave3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[4].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 11fd20e114949c2448358878f6108a05, type: 3}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[4].Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[4].Name
+      value: MainMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[1].Volume
+      value: 0.177
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[2].Volume
+      value: 0.143
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[3].Volume
+      value: 0.143
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[4].Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857644, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: m_Name
       value: ---AudioManager---
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}

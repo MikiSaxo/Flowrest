@@ -25,7 +25,7 @@ public class MainMenuManager : MonoBehaviour
     {
         AudioManager.Instance.StopMusic("MainMusic");
         AudioManager.Instance.StopMusic("MenuMusic");
-        AudioManager.Instance.PlayMusic("MainMusic");
+        AudioManager.Instance.PlayMusicLong("MainMusic");
         StartCoroutine(WaitToLaunchMainScene());
     }
 

@@ -418,6 +418,9 @@ public class MapManager : MonoBehaviour
             _hasPopUp = currentLvl.PopUpInfos.Length > 0;
         }
 
+        // Activate BG
+        ScreensManager.Instance.UpdateDialogBG(true);
+
         // Update Dialogs sprites
         if (currentLvl.CharacterSpritesBeginning != null)
             _charaSpritesBegininng = currentLvl.CharacterSpritesBeginning;
