@@ -190,10 +190,28 @@ MonoBehaviour:
     Pitch: 1
     Loop: 1
     Source: {fileID: 0}
+  - Name: Wave1
+    Clip: {fileID: 8300000, guid: d7347261470e63a44a09a8a1b8752fa9, type: 3}
+    Volume: 0.324
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Wave2
+    Clip: {fileID: 8300000, guid: eacfdb7b105d0784cb91920bcfbd930d, type: 3}
+    Volume: 0.324
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Wave3
+    Clip: {fileID: 8300000, guid: 7f98ed686115e8f44ad0006b3ddc20f7, type: 3}
+    Volume: 0.324
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
   SFX:
   - Name: ClickButton
     Clip: {fileID: 8300000, guid: dc805734915e1f44b9668a7568422dce, type: 3}
-    Volume: 1
+    Volume: 0.366
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -259,7 +277,7 @@ MonoBehaviour:
     Source: {fileID: 0}
   - Name: GoBackwards
     Clip: {fileID: 8300000, guid: f5afbf3c4dafc4748931cf35c5b8c488, type: 3}
-    Volume: 1
+    Volume: 0.526
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -276,14 +294,26 @@ MonoBehaviour:
     Loop: 0
     Source: {fileID: 0}
   - Name: TileEntered
-    Clip: {fileID: 8300000, guid: f500a343490e1974783084cc8a066356, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: fc9e29e4c98d1524f87267c83fc69923, type: 3}
+    Volume: 0.394
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TileEnteredCrystal
+    Clip: {fileID: 8300000, guid: 5038e712abff9dd4f8069dca887a44d4, type: 3}
+    Volume: 0.135
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
   - Name: TileSelected
     Clip: {fileID: 8300000, guid: da2bf680cf8613a4a89651dea6b7cef7, type: 3}
-    Volume: 1
+    Volume: 0.421
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TilePose
+    Clip: {fileID: 8300000, guid: 8abfbd840640b07408b583408789783d, type: 3}
+    Volume: 0.84
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -294,20 +324,20 @@ MonoBehaviour:
     Loop: 0
     Source: {fileID: 0}
   - Name: AddTileToInventory
-    Clip: {fileID: 8300000, guid: 0531d1b0b76c20d459486e4f4d476911, type: 3}
-    Volume: 0.452
+    Clip: {fileID: 8300000, guid: 9eef644670cc9a343a1d1257b9821d2a, type: 3}
+    Volume: 0.407
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: Unselect
+  - Name: TileGoingToInventory
+    Clip: {fileID: 8300000, guid: 26e19bbf392ea594886b5a943c52f54a, type: 3}
+    Volume: 0.157
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
+  - Name: TileUnselect
     Clip: {fileID: 8300000, guid: c9a5f81cf4fce9649a155da0375a6a8c, type: 3}
     Volume: 1
-    Pitch: 1
-    Loop: 0
-    Source: {fileID: 0}
-  - Name: BlockTileWhenClicked
-    Clip: {fileID: 8300000, guid: 52121c1548fafcd41bd6b8bcf0b2243c, type: 3}
-    Volume: 0.452
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
@@ -338,6 +368,48 @@ MonoBehaviour:
   - Name: UseRecycling
     Clip: {fileID: 8300000, guid: 2c8386f0971123f4b94aab86443da0ea, type: 3}
     Volume: 0.288
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: BlockedTileWhenClicked
+    Clip: {fileID: 8300000, guid: 97e8c01ce39f1164ca36a08e60c0e95e, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Swap
+    Clip: {fileID: 8300000, guid: 34b339add22f0ba41a9a174f917ddee0, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: TextDialog
+    Clip: {fileID: 8300000, guid: f24e3af07b3ac6a4c990ef891a1b4c7c, type: 3}
+    Volume: 0.066
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
+  - Name: Transition
+    Clip: {fileID: 8300000, guid: eddcfbac6eb625c41b04a29e61bb080c, type: 3}
+    Volume: 0.198
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: Fountain
+    Clip: {fileID: 8300000, guid: 37e0a94186cc6b546a9b75d2595c8f7f, type: 3}
+    Volume: 0.463
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: NextDialog
+    Clip: {fileID: 8300000, guid: e962da4f1ae325841a6406ce579e3f2d, type: 3}
+    Volume: 0.958
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: EnergyTrail
+    Clip: {fileID: 8300000, guid: 739afaa717efaf04db11c255e42f3ff5, type: 3}
+    Volume: 0.157
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}

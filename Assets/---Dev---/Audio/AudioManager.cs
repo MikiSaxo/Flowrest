@@ -96,6 +96,18 @@ public class AudioManager : MonoBehaviour
 
         s.Source.PlayOneShot(s.Clip);
     }
+    public void PlayMusicLong(string name)
+    {
+        // print($"Launch {name} music");
+        Sounds s = Array.Find(Musics, sound => sound.Name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound : " + name + " not found");
+            return;
+        }
+
+        s.Source.Play();
+    }
 
     public void PlaySFX(string name)
     {
