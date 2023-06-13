@@ -58,6 +58,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
 
     [Header("Data")] [SerializeField] private LevelData[] _levelData;
+    [SerializeField] private DialogData[] _dialogData;
 
     private bool _hasRecycling;
     private bool _hasInfinitRecycling;
@@ -952,7 +953,6 @@ public class MapManager : MonoBehaviour
         if (!_hasInfinitRecycling)
             NbOfRecycling--;
 
-        // AudioManager.Instance.PlaySFX("EnergyGain");
 
         // Remove 1 from button
         LastObjButtonSelected.GetComponent<InventoryButton>().UpdateNumberLeft(-1);
