@@ -420,7 +420,7 @@ public class MapManager : MonoBehaviour
         }
 
         // Activate BG
-        ScreensManager.Instance.UpdateDialogBG(true);
+        DialogManager.Instance.UpdateDialogBG(true);
 
         // Update Dialogs sprites
         if (currentLvl.CharacterSpritesBeginning != null)
@@ -430,7 +430,7 @@ public class MapManager : MonoBehaviour
 
         // Update Chara Name
         if (_levelData[_currentLevel].CharacterName != String.Empty)
-            ScreensManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
+            DialogManager.Instance.InitCharaName(_levelData[_currentLevel].CharacterName);
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
@@ -493,10 +493,10 @@ public class MapManager : MonoBehaviour
         
         // Update Dialogs depend on current tongue
         if (LanguageManager.Instance.Tongue == Language.Francais)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, _hasPopUp,
+            DialogManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginning, false, _hasPopUp,
                 _charaSpritesBegininng);
         else if (LanguageManager.Instance.Tongue == Language.English)
-            ScreensManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, _hasPopUp,
+            DialogManager.Instance.SpawnNewDialogs(_levelData[_currentLevel].DialogBeginningEnglish, false, _hasPopUp,
                 _charaSpritesBegininng);
     }
 
@@ -576,7 +576,7 @@ public class MapManager : MonoBehaviour
         if (!GetHasFirstSwap())
         {
             Sprite[] charaNoChangement = new Sprite[0];
-            ScreensManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, false, charaNoChangement);
+            DialogManager.Instance.SpawnNewDialogs(_previewMessageTuto, false, false, charaNoChangement);
         }
 
         var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
@@ -614,7 +614,7 @@ public class MapManager : MonoBehaviour
     public void ChangeActivatedButton(GameObject button)
     {
         // Activate or not the UI Button's indicator and update if one was selected or not
-        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        if (DialogManager.Instance.GetIsDialogTime()) return;
 
         if (IsGroundFirstSelected && !IsLoading && !IsPosing && !IsSwapping)
             ResetGroundSelected();
@@ -936,7 +936,7 @@ public class MapManager : MonoBehaviour
 
     public void UseRecycling()
     {
-        if (ScreensManager.Instance.GetIsDialogTime()) return;
+        if (DialogManager.Instance.GetIsDialogTime()) return;
 
         if (IsLoading || IsPosing || IsSwapping) return;
 
@@ -1144,7 +1144,7 @@ public class MapManager : MonoBehaviour
 
     public void ResetBig()
     {
-        if (ScreensManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI ||
+        if (DialogManager.Instance.GetIsDialogTime() || IsSwapping || IsPosing || IsOnUI ||
             MouseHitRaycast.Instance.IsOnGround) return;
 
         //ScreensManager.Instance.UpdateTutoArrow(false);

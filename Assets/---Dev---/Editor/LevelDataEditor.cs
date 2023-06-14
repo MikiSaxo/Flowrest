@@ -1,5 +1,6 @@
 using System;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor((typeof(LevelData)))]
 public class LevelDataEditor : Editor
@@ -46,6 +47,7 @@ public class LevelDataEditor : Editor
     private SerializedProperty QuestTileCount;
     private SerializedProperty NumberTileCount;
 
+    private SerializedProperty DialogLevel;
     private SerializedProperty CharacterName;
     private SerializedProperty CharacterSpritesBeginning;
     private SerializedProperty CharacterSpritesEnd;
@@ -92,6 +94,7 @@ public class LevelDataEditor : Editor
         QuestTileCount = serializedObject.FindProperty("QuestTileCount");
         NumberTileCount = serializedObject.FindProperty("NumberTileCount");
 
+        DialogLevel = serializedObject.FindProperty("DialogLevel");
         CharacterName = serializedObject.FindProperty("CharacterName");
         CharacterSpritesBeginning = serializedObject.FindProperty("CharacterSpritesBeginning");
         CharacterSpritesEnd = serializedObject.FindProperty("CharacterSpritesEnd");
@@ -266,6 +269,10 @@ public class LevelDataEditor : Editor
         dialogs = EditorGUILayout.BeginFoldoutHeaderGroup(dialogs, "-  Dialogs Infos  -");
         if (dialogs)
         {
+            EditorGUILayout.PropertyField(DialogLevel);
+            
+            EditorGUILayout.Space(5);
+            
             EditorGUILayout.PropertyField(CharacterName);
         }
 

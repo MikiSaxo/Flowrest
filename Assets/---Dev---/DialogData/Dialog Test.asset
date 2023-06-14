@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
   m_Name: Dialog Test
   m_EditorClassIdentifier: 
-  CoreDialog:
-  - 
-  - 
-  - 
-  - 
-  Answers: []
+  CharacterName: Michelou
+  CoreDialogFrench:
+  - CharacterSprites: {fileID: 21300000, guid: 083c60343791ac94e94ac77ad19b8196, type: 3}
+    CoreDialog: Bnjour
+  - CharacterSprites: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    CoreDialog: NAnnnnnnnnn
+  CoreDialogEnglish: []
+  Answers:
+  - Choice: 
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}

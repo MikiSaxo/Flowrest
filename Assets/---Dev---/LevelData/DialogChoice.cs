@@ -7,5 +7,12 @@ using UnityEngine;
 public class DialogChoice
 {
     public string Choice;
+    
+    [Space(5f)]
+    
+    public string ChoiceEnglish;
+
+    [Space(10f)]
+
     public DialogData NextDialogData;
 }
