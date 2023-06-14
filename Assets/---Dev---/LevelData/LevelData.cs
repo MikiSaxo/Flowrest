@@ -46,7 +46,8 @@ public class LevelData : ScriptableObject
    public int NumberTileCount;
 
    
-   public DialogData DialogLevel;
+   public DialogData DialogLevelStart;
+   public DialogData DialogLevelEnd;
    public string CharacterName;
    public Sprite[] CharacterSpritesBeginning;
    public Sprite[] CharacterSpritesEnd;

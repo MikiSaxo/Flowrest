@@ -236,8 +236,7 @@ public class ScreensManager : MonoBehaviour
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
-        DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false,
-            MapManager.Instance.GetCharaSpritesEnd());
+        DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
 
         if (LevelProgressionManager.Instance != null)
         {
@@ -357,7 +356,7 @@ public class ScreensManager : MonoBehaviour
         
     }
 
-    public void UpdateTutoArrow(bool state)
+    public void UpdateTutoArrowInventory(bool state)
     {
         _tutoArrow.UpdateArrow(state);
     }

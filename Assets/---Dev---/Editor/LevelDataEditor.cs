@@ -47,7 +47,8 @@ public class LevelDataEditor : Editor
     private SerializedProperty QuestTileCount;
     private SerializedProperty NumberTileCount;
 
-    private SerializedProperty DialogLevel;
+    private SerializedProperty DialogLevelStart;
+    private SerializedProperty DialogLevelEnd;
     private SerializedProperty CharacterName;
     private SerializedProperty CharacterSpritesBeginning;
     private SerializedProperty CharacterSpritesEnd;
@@ -94,7 +95,8 @@ public class LevelDataEditor : Editor
         QuestTileCount = serializedObject.FindProperty("QuestTileCount");
         NumberTileCount = serializedObject.FindProperty("NumberTileCount");
 
-        DialogLevel = serializedObject.FindProperty("DialogLevel");
+        DialogLevelStart = serializedObject.FindProperty("DialogLevelStart");
+        DialogLevelEnd = serializedObject.FindProperty("DialogLevelEnd");
         CharacterName = serializedObject.FindProperty("CharacterName");
         CharacterSpritesBeginning = serializedObject.FindProperty("CharacterSpritesBeginning");
         CharacterSpritesEnd = serializedObject.FindProperty("CharacterSpritesEnd");
@@ -269,9 +271,11 @@ public class LevelDataEditor : Editor
         dialogs = EditorGUILayout.BeginFoldoutHeaderGroup(dialogs, "-  Dialogs Infos  -");
         if (dialogs)
         {
-            EditorGUILayout.PropertyField(DialogLevel);
-            
+            EditorGUILayout.PropertyField(DialogLevelStart);
             EditorGUILayout.Space(5);
+            EditorGUILayout.PropertyField(DialogLevelEnd);
+            
+            EditorGUILayout.Space(25);
             
             EditorGUILayout.PropertyField(CharacterName);
         }

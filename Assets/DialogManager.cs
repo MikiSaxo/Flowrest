@@ -10,23 +10,28 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour
 {
     public static DialogManager Instance;
-    
 
-    [Space(5)] [Header("Character Dialogs")]
-    [SerializeField] private TMP_Text _characterName;
+
+    [Space(5)] [Header("Character Dialogs")] [SerializeField]
+    private TMP_Text _characterName;
+
     [SerializeField] private Image _characterImg;
-    [Header("Dialogs")]
-    [SerializeField] private GameObject _dialogParent;
+
+    [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
     [SerializeField] private GameObject _dialogBG;
     [SerializeField] private float _dialogSpeed = .01f;
-    [Header("Dialogs Answer")]
-    [SerializeField] private GameObject _dialogChoiceParent;
+
+    [Header("Dialogs Answer")] [SerializeField]
+    private GameObject _dialogChoiceParent;
+
     [SerializeField] private GameObject _dialogChoicePrefab;
-    [Header("Dialogs Anim")]
-    [SerializeField] private GameObject _dialogGlobal;
+
+    [Header("Dialogs Anim")] [SerializeField]
+    private GameObject _dialogGlobal;
+
     [SerializeField] private float _punchPower;
     [SerializeField] private float _punchDuration;
     [SerializeField] private int _punchVibrato;
@@ -38,19 +43,18 @@ public class DialogManager : MonoBehaviour
     private int _countDialog;
     private bool _isTheEnd;
     private Sprite[] _charaSprites;
-    
+
 
     private void Awake()
     {
         Instance = this;
     }
 
-
     public void InitCharaName(string charaName)
     {
         _characterName.text = charaName;
     }
-    
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) ||
@@ -64,17 +68,54 @@ public class DialogManager : MonoBehaviour
     {
         _dialogBG.SetActive(state);
     }
+
     public void UpdateDialogFBEnd(bool state)
     {
         _dialogFBEnd.SetActive(state);
     }
+
     public void UpdateDialogGlobal(bool state)
     {
         _dialogGlobal.SetActive(state);
     }
 
-    public void SpawnNewDialogs(string[] dialogsText, bool isTheEnd, bool hasPopUp, Sprite[] chara)
+    public void SpawnNewDialogs(DialogData _dialogData, bool isTheEnd, bool hasPopUp)
     {
+        Sprite[] chara = Array.Empty<Sprite>();
+        string[] dialogsText = Array.Empty<string>();
+
+        if (_dialogData != null)
+        {
+            if (LanguageManager.Instance.Tongue == Language.Francais)
+            {
+                if (_dialogData.CoreDialogFrench != null && _dialogData.CoreDialogFrench.Length > 0)
+                {
+                    chara = new Sprite[_dialogData.CoreDialogFrench.Length];
+                    dialogsText = new string[_dialogData.CoreDialogFrench.Length];
+
+                    for (int i = 0; i < _dialogData.CoreDialogFrench.Length; i++)
+                    {
+                        chara[i] = _dialogData.CoreDialogFrench[i].CharacterSprites;
+                        dialogsText[i] = _dialogData.CoreDialogFrench[i].CoreDialog;
+                    }
+                }
+            }
+            else
+            {
+                if (_dialogData.CoreDialogEnglish != null && _dialogData.CoreDialogEnglish.Length > 0)
+                {
+                    chara = new Sprite[_dialogData.CoreDialogEnglish.Length];
+                    dialogsText = new string[_dialogData.CoreDialogEnglish.Length];
+
+                    for (int i = 0; i < _dialogData.CoreDialogEnglish.Length; i++)
+                    {
+                        chara[i] = _dialogData.CoreDialogEnglish[i].CharacterSprites;
+                        dialogsText[i] = _dialogData.CoreDialogEnglish[i].CoreDialog;
+                    }
+                }
+            }
+        }
+
         RemoveLastDialog();
 
         ScreensManager.Instance._hasPopUp = hasPopUp;
@@ -152,7 +193,7 @@ public class DialogManager : MonoBehaviour
     {
         if (_dialogsPrefabList.Count != _dialogsList.Count)
         {
-           SpawnDialog();
+            SpawnDialog();
         }
         else
             print("all dialogs have spawned");
@@ -219,12 +260,12 @@ public class DialogManager : MonoBehaviour
         if (MapManager.Instance.HasInventory)
             SetupUIGround.Instance.UpdateOpacityInventory(1);
     }
-    
+
     public void OnClick()
     {
         if (CheckIfDialogEnded())
             return;
-        
+
         AudioManager.Instance.PlaySFX("NextDialog");
 
         if (_dialogsPrefabList[^1].IsFinish)
@@ -253,13 +294,13 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    public void CheckIfEnd()  
+    public void CheckIfEnd()
     {
         if (_isTheEnd)
             UpdateButtonGoLevelSupp(true);
         else
         {
-           ScreensManager.Instance.CheckIfMemoOpen();
+            ScreensManager.Instance.CheckIfMemoOpen();
 
             if (!ScreensManager.Instance._hasPopUp)
             {
@@ -281,7 +322,7 @@ public class DialogManager : MonoBehaviour
 
         CheckIfEnd();
     }
-    
+
     private void RemoveLastDialog()
     {
         if (_dialogsPrefabList.Count > 0)
@@ -293,7 +334,7 @@ public class DialogManager : MonoBehaviour
                 Destroy(txt.gameObject);
         }
     }
-    
+
     public bool GetIsDialogTime()
     {
         return IsDialogTime;
@@ -303,6 +344,7 @@ public class DialogManager : MonoBehaviour
     {
         _countDialog = 0;
     }
+
     IEnumerator ResetAfterSkipDialog()
     {
         yield return new WaitForSeconds(.001f);
