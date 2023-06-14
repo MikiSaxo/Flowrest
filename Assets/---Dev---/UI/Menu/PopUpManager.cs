@@ -27,22 +27,6 @@ public class PopUpManager : MonoBehaviour
 
     public void InitPopUp(PopUpInfos[] popUpInfos)
     {
-        // _canOpenPopUp = false;
-        //
-        // if (filesName.Length <= 0) return;
-        //
-        // string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{filesName[0].VideoName}.mp4");
-        //
-        // if (!File.Exists(videoPath))
-        // {
-        //     Debug.LogError("Video PopUp Name doesn't exist");
-        //     return;
-        // }
-        //
-        // _canOpenPopUp = true;
-        // _videoPlayer.url = videoPath;
-        // _videoPlayer.Play();
-        
         UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
         
         if(GetComponent<LegendScroll>() != null)
@@ -54,8 +38,7 @@ public class PopUpManager : MonoBehaviour
         _titleText.text = title;
         
         gameObject.GetComponent<DialogPrefab>().InitDescOrder(description, false);
-        // _descriptionText.text = description;
-        
+
         _canOpenPopUp = false;
         
         var mapPath = $"PopUpVideo/{videoName}.mp4";
@@ -71,15 +54,6 @@ public class PopUpManager : MonoBehaviour
             ScreensManager.Instance.UpdatePopUpState(false);
             Debug.LogErrorFormat("Streaming asset not found: {0}", mapPath);
         }
-        
-        
-        // string videoPath = Path.Combine(Application.streamingAssetsPath, $"PopUpVideo/{videoName}.mp4");
-        //
-        // if (!File.Exists(videoPath))
-        // {
-        //     Debug.LogError("Video PopUp Name doesn't exist");
-        //     return;
-        // }
 
         _canOpenPopUp = true;
         _videoPlayer.url = videoPath;

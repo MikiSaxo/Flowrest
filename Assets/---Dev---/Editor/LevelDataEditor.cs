@@ -275,7 +275,7 @@ public class LevelDataEditor : Editor
             EditorGUILayout.Space(5);
             EditorGUILayout.PropertyField(DialogLevelEnd);
             
-            EditorGUILayout.Space(25);
+            EditorGUILayout.Space(50);
             
             EditorGUILayout.PropertyField(CharacterName);
         }

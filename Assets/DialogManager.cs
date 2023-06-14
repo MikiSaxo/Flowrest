@@ -43,6 +43,8 @@ public class DialogManager : MonoBehaviour
     private int _countDialog;
     private bool _isTheEnd;
     private Sprite[] _charaSprites;
+    private DialogChoice[] _choices;
+    private List<GameObject> _stockChoiceButtons = new List<GameObject>();
 
 
     private void Awake()
@@ -79,42 +81,48 @@ public class DialogManager : MonoBehaviour
         _dialogGlobal.SetActive(state);
     }
 
-    public void SpawnNewDialogs(DialogData _dialogData, bool isTheEnd, bool hasPopUp)
+    public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
     {
+      // Init dialogs
         Sprite[] chara = Array.Empty<Sprite>();
         string[] dialogsText = Array.Empty<string>();
 
-        if (_dialogData != null)
+        if (dialogData != null)
         {
             if (LanguageManager.Instance.Tongue == Language.Francais)
             {
-                if (_dialogData.CoreDialogFrench != null && _dialogData.CoreDialogFrench.Length > 0)
+                if (dialogData.CoreDialogFrench != null && dialogData.CoreDialogFrench.Length > 0)
                 {
-                    chara = new Sprite[_dialogData.CoreDialogFrench.Length];
-                    dialogsText = new string[_dialogData.CoreDialogFrench.Length];
+                    chara = new Sprite[dialogData.CoreDialogFrench.Length];
+                    dialogsText = new string[dialogData.CoreDialogFrench.Length];
 
-                    for (int i = 0; i < _dialogData.CoreDialogFrench.Length; i++)
+                    for (int i = 0; i < dialogData.CoreDialogFrench.Length; i++)
                     {
-                        chara[i] = _dialogData.CoreDialogFrench[i].CharacterSprites;
-                        dialogsText[i] = _dialogData.CoreDialogFrench[i].CoreDialog;
+                        chara[i] = dialogData.CoreDialogFrench[i].CharacterSprites;
+                        dialogsText[i] = dialogData.CoreDialogFrench[i].CoreDialog;
                     }
                 }
             }
             else
             {
-                if (_dialogData.CoreDialogEnglish != null && _dialogData.CoreDialogEnglish.Length > 0)
+                if (dialogData.CoreDialogEnglish != null && dialogData.CoreDialogEnglish.Length > 0)
                 {
-                    chara = new Sprite[_dialogData.CoreDialogEnglish.Length];
-                    dialogsText = new string[_dialogData.CoreDialogEnglish.Length];
+                    chara = new Sprite[dialogData.CoreDialogEnglish.Length];
+                    dialogsText = new string[dialogData.CoreDialogEnglish.Length];
 
-                    for (int i = 0; i < _dialogData.CoreDialogEnglish.Length; i++)
+                    for (int i = 0; i < dialogData.CoreDialogEnglish.Length; i++)
                     {
-                        chara[i] = _dialogData.CoreDialogEnglish[i].CharacterSprites;
-                        dialogsText[i] = _dialogData.CoreDialogEnglish[i].CoreDialog;
+                        chara[i] = dialogData.CoreDialogEnglish[i].CharacterSprites;
+                        dialogsText[i] = dialogData.CoreDialogEnglish[i].CoreDialog;
                     }
                 }
             }
         }
+
+        if (dialogData != null)
+            _choices = dialogData.Choices;
+        else
+            _choices = null;
 
         RemoveLastDialog();
 
@@ -279,13 +287,11 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public bool CheckIfDialogEnded()
+    private bool CheckIfDialogEnded()
     {
         if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinish)
         {
             IsDialogTime = false;
-            //GoToBottomScrollBar();
-
             CheckIfEnd();
 
             return true;
@@ -296,6 +302,26 @@ public class DialogManager : MonoBehaviour
 
     public void CheckIfEnd()
     {
+        if (_choices != null && _choices.Length > 0)
+        {
+            _dialogChoiceParent.SetActive(true);
+
+            for (int i = 0; i < _choices.Length; i++)
+            {
+                GameObject go = Instantiate(_dialogChoicePrefab, _dialogChoiceParent.transform);
+                go.GetComponent<DialogChoiceButton>().InitChoiceIndex(i);
+                _stockChoiceButtons.Add(go);
+
+                if (LanguageManager.Instance.Tongue == Language.Francais)
+                    go.GetComponent<DialogPrefab>().Init(_choices[i].Choice, 0);
+                else
+                    go.GetComponent<DialogPrefab>().Init(_choices[i].ChoiceEnglish, 0);
+            }
+
+            return;
+        }
+
+
         if (_isTheEnd)
             UpdateButtonGoLevelSupp(true);
         else
@@ -312,6 +338,22 @@ public class DialogManager : MonoBehaviour
             {
                 ScreensManager.Instance.UpdatePopUpState(true);
             }
+        }
+    }
+
+    public void ChangeDialog(int index)
+    {
+        SpawnNewDialogs(_choices[index].NextDialogData, false, false);
+
+        _dialogChoiceParent.SetActive(false);
+        if (_stockChoiceButtons.Count > 0)
+        {
+            foreach (var choiceBut in _stockChoiceButtons)
+            {
+                Destroy(choiceBut);
+            }
+
+            _stockChoiceButtons.Clear();
         }
     }
 

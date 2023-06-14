@@ -7,7 +7,6 @@ public class DialogData : ScriptableObject
 {
     [Header("Character Infos")]
     public string CharacterName;
-    // public Sprite[] CharacterSprites;
 
     [Header("Core Dialog")]
     
@@ -16,10 +15,8 @@ public class DialogData : ScriptableObject
     [Space(5f)]
     
     public DialogCore[] CoreDialogEnglish;
-    // public string[] CoreDialog;
-    // public string[] CoreDialogEnglish;
 
     [Space(10f)]
 
-    public DialogChoice[] Answers;
+    public DialogChoice[] Choices;
 }
