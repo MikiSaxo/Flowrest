@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 27
+  m_Name: Niveau 7a
   m_EditorClassIdentifier: 
-  LevelName: Niveau 27
+  LevelName: Niveau 7a
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 5
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -35,16 +35,24 @@ MonoBehaviour:
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 09000000
+  QuestFlower: 090000000900000009000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
-  NumberTileCount: 0
-  CharacterName: Profess.io
-  CharacterSpritesBeginning: []
+  NumberTileCount: 1
+  DialogLevelStart: {fileID: 0}
+  DialogLevelEnd: {fileID: 0}
+  CharacterName: Profess.Io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
   CharacterSpritesEnd: []
-  DialogBeginning: []
+  DialogBeginning:
+  - "En combinant une tuile d'Hydros et de Grassias tu vas pouvoir cr\xE9er une tuile
+    de Viscosa. "
+  - "C'est un environnement r\xE9put\xE9 pour ses gaz et affectueusement surnomm\xE9
+    par son cr\xE9ateur le P.E.T, abr\xE9viation de\"Pression Exub\xE9rante sur Tuile\"."
   DialogEnd: []
   DialogBeginningEnglish: []
   DialogEndEnglish: []
