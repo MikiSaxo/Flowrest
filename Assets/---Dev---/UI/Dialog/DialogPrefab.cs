@@ -52,6 +52,49 @@ public class DialogPrefab : MonoBehaviour
         StartCoroutine(AnimationText());
     }
 
+    public void InitDescOrder(string text, bool hasToResize)
+    {
+        text = UpdateModifierText(text);
+        
+        if (text.Contains('$'))
+        {
+            var replace = text.Replace('$', '\n');
+            text = replace;
+        }
+        
+        if (text.Contains('µ'))
+        {
+            var replace = text.Replace("µ", $"{MapManager.Instance.GetCurrentLevel()+1}");
+            text = replace;
+        }
+
+        DialogText.text = text;
+        DialogText.ForceMeshUpdate();
+
+        Vector2 textSize = DialogText.GetRenderedValues(false);
+        _textSizeY = textSize.y;
+        
+        if(gameObject.GetComponent<RectTransform>() != null && hasToResize)
+            gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY - 20), 0);
+    }
+
+    public void InitOrder(string desc, int nbToReach)
+    {
+        desc = UpdateModifierText(desc);
+
+        _currentOrder = desc;
+        _maxNb = nbToReach;
+
+        DialogText.text = desc;
+        DialogText.ForceMeshUpdate();
+
+        Vector2 textSize = DialogText.GetRenderedValues(false);
+        _textSizeY = textSize.y;
+        gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY + _padding.y), 0);
+
+        UpdateText();
+    }
+    
     private string UpdateModifierText(string dialog)
     {
         string replace = dialog;
@@ -95,50 +138,6 @@ public class DialogPrefab : MonoBehaviour
 
         return dialog;
     }
-
-    public void InitDescOrder(string text, bool hasToResize)
-    {
-        text = UpdateModifierText(text);
-        
-        if (text.Contains('$'))
-        {
-            var replace = text.Replace('$', '\n');
-            text = replace;
-        }
-        
-        if (text.Contains('µ'))
-        {
-            var replace = text.Replace("µ", $"{MapManager.Instance.GetCurrentLevel()+1}");
-            text = replace;
-        }
-
-        DialogText.text = text;
-        DialogText.ForceMeshUpdate();
-
-        Vector2 textSize = DialogText.GetRenderedValues(false);
-        _textSizeY = textSize.y;
-        
-        if(gameObject.GetComponent<RectTransform>() != null && hasToResize)
-            gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY - 20), 0);
-    }
-
-    public void InitOrder(string desc, int nbToReach)
-    {
-        desc = UpdateModifierText(desc);
-
-        _currentOrder = desc;
-        _maxNb = nbToReach;
-
-        DialogText.text = desc;
-        DialogText.ForceMeshUpdate();
-
-        Vector2 textSize = DialogText.GetRenderedValues(false);
-        _textSizeY = textSize.y;
-        gameObject.GetComponent<RectTransform>().DOSizeDelta(new Vector2(_widthOrder, _textSizeY + _padding.y), 0);
-
-        UpdateText();
-    }
-
     public void UpdateCurrentNbOrder(int nb)
     {
         _currentNb = nb;
@@ -256,7 +255,7 @@ public class DialogPrefab : MonoBehaviour
         StopCoroutine(AnimationText());
         IsFinish = true;
 
-        ScreensManager.Instance.UpdateDialogFB(true);
+        DialogManager.Instance.UpdateDialogFBEnd(true);
         // ScreensManager.Instance.CheckIfDialogEnded();
         // ScreensManager.Instance.SpawnAllDialog();
     }

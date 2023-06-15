@@ -26,9 +26,6 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void OpenAnim()
     {
-        // _objToMove.transform.DOKill();
-        // _objToMove.transform.DOMove(_tpPoints[1].position, _openDuration);
-
         if (_arrowIcon != null)
             _arrowIcon.transform.DORotate(new Vector3(0, 0, 180), _timeRotateArrow);
         
@@ -37,9 +34,6 @@ public class OpenCloseMenu : MonoBehaviour
 
     public void CloseAnim()
     {
-        // _objToMove.transform.DOKill();
-        // _objToMove.transform.DOMove(_tpPoints[0].position, _closeDuration);
-
         if (_arrowIcon != null)
             _arrowIcon.transform.DORotate(new Vector3(0, 0, 0), _timeRotateArrow);
         
@@ -50,7 +44,7 @@ public class OpenCloseMenu : MonoBehaviour
     {
         if (ScreensManager.Instance != null)
         {
-            if (ScreensManager.Instance.GetIsDialogTime()) return;
+            if (DialogManager.Instance.GetIsDialogTime()) return;
         }
 
         if (_isClosed)
@@ -63,7 +57,7 @@ public class OpenCloseMenu : MonoBehaviour
     {
         if (ScreensManager.Instance != null)
         {
-            if (ScreensManager.Instance.GetIsDialogTime()) return;
+            if (DialogManager.Instance.GetIsDialogTime()) return;
         }
         
         if (!_isTriggered) return;

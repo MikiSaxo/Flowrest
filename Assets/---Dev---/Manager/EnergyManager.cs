@@ -160,7 +160,7 @@ public class EnergyManager : MonoBehaviour
 
                 if (MapManager.Instance.IsTutoRecycling && !RecyclingManager.Instance.HasInitTutoRecycling)
                 {
-                    ScreensManager.Instance.UpdateTutoArrow(true);
+                    ScreensManager.Instance.UpdateTutoArrowInventory(true);
                 }
             }
             else

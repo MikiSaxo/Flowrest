@@ -61,6 +61,8 @@ public class LegendScroll : MonoBehaviour
                 _leftArrowButton.SetActive(false);
                 _rightArrowButton.SetActive(false);
             }
+
+            CheckIfEndOfLegend();
         }
     }
 

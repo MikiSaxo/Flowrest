@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     [Header("----- Musics -----")] public Sounds[] Musics;
     [Header("----- SFX -----")] public Sounds[] SFX;
 
+    private float _waveCooldown;
+    private float _waveTime;
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,7 +39,6 @@ public class AudioManager : MonoBehaviour
         foreach (Sounds music in Musics)
         {
             music.Source = gameObject.AddComponent<AudioSource>();
-            music.Source = _musicSource;
             music.Source.clip = music.Clip;
             music.Source.volume = music.Volume;
             music.Source.pitch = music.Pitch;
@@ -63,13 +65,14 @@ public class AudioManager : MonoBehaviour
         {
             StopMusic("MainMusic");
             StopMusic("MenuMusic");
-            PlayMusic("MenuMusic");
+            PlayMusicLong("MenuMusic");
         }
         else
         {
             StopMusic("MainMusic");
             StopMusic("MenuMusic");
-            PlayMusic("MainMusic");
+            PlayMusicLong("MainMusic");
+            PlayMusic("Wave1");
         }
 
 
@@ -83,6 +86,10 @@ public class AudioManager : MonoBehaviour
             SetSFXVolume(.5f);
         }
     }
+
+    // private void Update()
+    // {
+    // }
 
     public void PlayMusic(string name)
     {
@@ -98,7 +105,7 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayMusicLong(string name)
     {
-        // print($"Launch {name} music");
+        print($"Launch {name} music");
         Sounds s = Array.Find(Musics, sound => sound.Name == name);
         if (s == null)
         {
