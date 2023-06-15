@@ -16868,6 +16868,10 @@ MonoBehaviour:
   _dialogPrefab: {fileID: 4767527837402950982, guid: 9af70df0b7eb45b408b4a3dfee1b2666, type: 3}
   _dialogFBEnd: {fileID: 67852414}
   _dialogSpeed: 0.02
+  _dialogGlobal: {fileID: 0}
+  _punchPower: 0
+  _punchDuration: 0
+  _punchVibrato: 0
   _tutoArrow: {fileID: 1309480015}
   _memoMenu: {fileID: 2091401758}
   _memoWaveEffect: {fileID: 241374818}
@@ -20579,7 +20583,7 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 608dc92aa0c66bc47bbbbb4d82c71910, type: 2}
+      objectReference: {fileID: 11400000, guid: f9e66842618bf214198169cfca756392, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _levelData.Array.data[1]
       value: 
@@ -21212,7 +21216,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8966416019672835240, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: _panSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8966416019672835244, guid: 07d19761a8ae5c545acfa4c7a95a810a, type: 3}
       propertyPath: m_Name
