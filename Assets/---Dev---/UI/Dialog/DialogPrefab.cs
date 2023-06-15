@@ -10,7 +10,7 @@ public class DialogPrefab : MonoBehaviour
 {
     public TMP_Text DialogText;
 
-    public bool IsFinish { get; set; }
+    public bool IsFinishDialoging { get; set; }
 
     [SerializeField] private TextReplace[] _textModifier;
     [SerializeField] private Vector2 _padding;
@@ -28,7 +28,7 @@ public class DialogPrefab : MonoBehaviour
 
     public void Init(string dialog, float dialogSpeed)
     {
-        IsFinish = false;
+        IsFinishDialoging = false;
         if (dialog.Contains('$'))
         {
             var replace = dialog.Replace('$', '\n');
@@ -253,7 +253,7 @@ public class DialogPrefab : MonoBehaviour
         _stopCorou = true;
         DialogText.text = _saveDialog;
         StopCoroutine(AnimationText());
-        IsFinish = true;
+        IsFinishDialoging = true;
 
         DialogManager.Instance.UpdateDialogFBEnd(true);
         // ScreensManager.Instance.CheckIfDialogEnded();

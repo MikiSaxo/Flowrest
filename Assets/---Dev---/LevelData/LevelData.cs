@@ -47,7 +47,7 @@ public class LevelData : ScriptableObject
 
    
    public DialogData DialogLevelStart;
-   public DialogData DialogLevelEnd;
+   // public DialogData DialogLevelEnd;
    public string CharacterName;
    public Sprite[] CharacterSpritesBeginning;
    public Sprite[] CharacterSpritesEnd;

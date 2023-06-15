@@ -39,8 +39,9 @@ public class ScreensManager : MonoBehaviour
 
     private bool _isTheEnd;
     private bool _isFirstScreen;
-    public bool _hasPopUp { get; set; }
-    public bool _isMemoOpened { get; set; }
+    public bool HasPopUp { get; set; }
+    public bool IsMemoOpened { get; set; }
+    public LevelData NewLevelData { get; set; }
 
     private bool _isPaused;
 
@@ -53,6 +54,7 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
+    
 
     private void Awake()
     {
@@ -173,11 +175,11 @@ public class ScreensManager : MonoBehaviour
 
         DialogManager.Instance.UpdateDialogGlobal(false);
         DialogManager.Instance.UpdateDialogBG(false);
-        _hasPopUp = false;
+        HasPopUp = false;
 
         if (!state)
         {
-            DialogManager.Instance.CheckIfEnd();
+            DialogManager.Instance.EndDialog();
         }
     }
 
@@ -236,7 +238,8 @@ public class ScreensManager : MonoBehaviour
 
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
-        DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
+        // DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
+        UpdateButtonGoLevelSupp(true);
 
         if (LevelProgressionManager.Instance != null)
         {
@@ -336,7 +339,7 @@ public class ScreensManager : MonoBehaviour
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();
-        MapManager.Instance.ResetAllMap(true);
+        MapManager.Instance.ResetAllMap(NewLevelData);
     }
 
     public void LaunchOpenOrder()
@@ -353,7 +356,6 @@ public class ScreensManager : MonoBehaviour
     public void UpdateButtonGoLevelSupp(bool state)
     {
         _nextLevel.SetActive(state);
-        
     }
 
     public void UpdateTutoArrowInventory(bool state)
@@ -369,9 +371,9 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator WaitToLaunchMemoOpening()
     {
-        if (_isMemoOpened) yield break;
+        if (IsMemoOpened) yield break;
 
-        _isMemoOpened = true;
+        IsMemoOpened = true;
         yield return new WaitForSeconds(.5f);
 
         _memoWaveEffect.StartGrowOneTime();
@@ -385,7 +387,7 @@ public class ScreensManager : MonoBehaviour
 
     public void CheckIfMemoOpen()
     {
-        if (MapManager.Instance.OpenMemo && !_isMemoOpened)
+        if (MapManager.Instance.OpenMemo && !IsMemoOpened)
         {
             _memoMenu.OpenAnim();
             _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);

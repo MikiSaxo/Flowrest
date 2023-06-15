@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: T_Niv2_d1
+  m_EditorClassIdentifier: 
+  CharacterName: Michelou
+  DialogFrench:
+  - CharacterSprites: {fileID: 0}
+    CoreDialog: Je suis dans le niv 2
+  - CharacterSprites: {fileID: 0}
+    CoreDialog: fait ton choix 2
+  DialogEnglish: []
+  Choices:
+  - Choice: Choix niv 2
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    NextLevelNoDialog: {fileID: 11400000, guid: 0a50b6340ffe9a442b6d244609655fa5, type: 2}
+  - Choice: Choix niv 2 aussi
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    NextLevelNoDialog: {fileID: 11400000, guid: 0a50b6340ffe9a442b6d244609655fa5, type: 2}
+  NextDialogNoChoice: {fileID: 11400000, guid: 1edb4b285183806489884e811d258e28, type: 2}
+  LevelToLoad: {fileID: 0}

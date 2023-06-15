@@ -68,7 +68,7 @@ public class CameraPan : MonoBehaviour
         {
             // Get the delta between startPos and ActualPos
             Vector3 dif = _dragOrigin - GetWorldPosition(groundZ);
-            print(dif);
+            // print(dif);
             //
             _timeToAndroidPan += Time.deltaTime;
             if (MapManager.Instance != null  && dif != _lastdiffPan && MapManager.Instance.IsAndroid && _timeToAndroidPan > .15f && MapManager.Instance.LastObjButtonSelected == null)

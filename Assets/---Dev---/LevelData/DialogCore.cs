@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class DialogCore 
 {
-    public Sprite CharacterSprites;
+    public string CharacterName;
+    public Sprite CharacterSprite;
     public string CoreDialog;
 }
