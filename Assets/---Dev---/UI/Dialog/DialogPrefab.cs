@@ -256,8 +256,6 @@ public class DialogPrefab : MonoBehaviour
         IsFinishDialoging = true;
 
         DialogManager.Instance.UpdateDialogFBEnd(true);
-        // ScreensManager.Instance.CheckIfDialogEnded();
-        // ScreensManager.Instance.SpawnAllDialog();
     }
 
     public float GetDialogSizeY()

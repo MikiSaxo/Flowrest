@@ -11,6 +11,7 @@ public class PopUpManager : MonoBehaviour
     
     [Header("Setup")]
     [SerializeField] private GameObject _parent;
+    [SerializeField] private GameObject _popUpBg;
     [SerializeField] private VideoPlayer _videoPlayer;
     
     [Header("Text")]
@@ -62,7 +63,13 @@ public class PopUpManager : MonoBehaviour
 
     public void UpdatePopUpState(bool state)
     {
-        if(_canOpenPopUp)
+        if (_canOpenPopUp)
+        {
             _parent.SetActive(state);
+            _popUpBg.SetActive(state);
+            
+            if(state)
+                _parent.GetComponent<PointerMotion>().Bounce();
+        }
     }
 }

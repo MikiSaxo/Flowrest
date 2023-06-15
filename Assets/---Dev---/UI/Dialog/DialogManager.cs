@@ -18,7 +18,8 @@ public class DialogManager : MonoBehaviour
 
     [SerializeField] private Image _characterImg;
 
-    [Header("Dialogs")] [SerializeField] private GameObject _dialogParent;
+    [Header("Dialogs")]
+    [SerializeField] private GameObject _dialogGlobal;
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
@@ -30,12 +31,6 @@ public class DialogManager : MonoBehaviour
 
     [SerializeField] private GameObject _dialogChoicePrefab;
 
-    [Header("Dialogs Anim")] [SerializeField]
-    private GameObject _dialogGlobal;
-
-    [SerializeField] private float _punchPower;
-    [SerializeField] private float _punchDuration;
-    [SerializeField] private int _punchVibrato;
 
     public bool IsDialogTime { get; set; }
 
@@ -54,12 +49,6 @@ public class DialogManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    public void ChangeCharaName(string charaName)
-    {
-        if(charaName != String.Empty)
-            _characterName.text = charaName;
     }
 
     private void Update()
@@ -89,6 +78,12 @@ public class DialogManager : MonoBehaviour
     public void UpdateDialogGlobal(bool state)
     {
         _dialogGlobal.SetActive(state);
+    }
+    
+    public void UpdateCharaName(string charaName)
+    {
+        if(charaName != String.Empty)
+            _characterName.text = charaName;
     }
 
     public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
@@ -166,8 +161,9 @@ public class DialogManager : MonoBehaviour
 
         // Open Dialog Menu
         _dialogGlobal.SetActive(true);
-        _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
-
+        // _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
+        _dialogGlobal.GetComponent<PointerMotion>().Bounce();
+        
         // Block mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
@@ -236,6 +232,24 @@ public class DialogManager : MonoBehaviour
         UpdateDialogBG(!state);
     }
 
+    private void UpdateCharaSprite()
+    {
+        if (_charaSprites.Length > 0)
+        {
+            if (_charaSprites[_countDialog] != null)
+            {
+                _characterImg.enabled = true;
+                _characterImg.sprite = _charaSprites[_countDialog];
+            }
+            else
+            {
+                _characterImg.enabled = false;
+            }
+        }
+        
+        _characterImg.gameObject.GetComponent<CharaMovement>().LaunchMovement();
+    }
+
     private void SpawnAllDialog()
     {
         if (_dialogsPrefabList.Count != _dialogsList.Count)
@@ -269,20 +283,9 @@ public class DialogManager : MonoBehaviour
             newDialog = " ";
 
         // Change Chara
-        if (_charaSprites.Length > 0)
-        {
-            if (_charaSprites[_countDialog] != null)
-            {
-                _characterImg.enabled = true;
-                _characterImg.sprite = _charaSprites[_countDialog];
-            }
-            else
-            {
-                _characterImg.enabled = false;
-            }
-        }
+        UpdateCharaSprite();
         
-        ChangeCharaName(_charaNames[_countDialog]);
+        UpdateCharaName(_charaNames[_countDialog]);
 
         // Init to the dialog prefab with the speed spawn
         if (MapManager.Instance.IsAndroid)
