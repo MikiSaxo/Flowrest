@@ -525,6 +525,9 @@ public class MapManager : MonoBehaviour
         
         // If Tuto
         ActivateArrowIfForceSwap();
+
+        yield return new WaitForSeconds(.5f);
+        ScreensManager.Instance.CheckIfMemoOpen();
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
