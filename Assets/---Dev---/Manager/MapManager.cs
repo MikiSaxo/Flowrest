@@ -157,12 +157,18 @@ public class MapManager : MonoBehaviour
 
         // _currentLevelData = _firstLevelData;
         CurrentDialogData = _firstDialogData;
+        _currentLevel = 0;
         
         InitializeDialog();
     }
 
     public void LaunchCheckFileMap(LevelData level)
     {
+        if (level != _currentLevelData)
+        {
+            _currentLevel++;
+        }
+        
         _currentLevelData = level;
         StartCoroutine(CheckFileMap());
     }
@@ -271,9 +277,14 @@ public class MapManager : MonoBehaviour
         EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
         EnergyManager.Instance.LaunchAnimEnergy();
 
+        
         // Update if has inventory
         HasInventory = currentLvl.HasInventory;
-        SetupUIGround.Instance.UpdateOpacityInventory(0);
+        // Update Inventory Opacity
+        if (HasInventory)
+            SetupUIGround.Instance.UpdateOpacityInventory(1);
+        else
+            SetupUIGround.Instance.UpdateOpacityInventory(0);
 
         // Update if tile at start
         if (currentLvl.StartNbAllState != null && HasInventory)
@@ -620,13 +631,19 @@ public class MapManager : MonoBehaviour
         //         LevelProgressionManager.Instance.CurrentLevel++;
         //     }
         // }
-
-        if(newLevelData != null)
-            _currentLevelData = newLevelData;
+        //
+        // if(newLevelData != null)
+        //     _currentLevelData = newLevelData;
 
         // StartCoroutine(CheckFileMap());
         
-        InitializeDialog();
+        //InitializeDialog();
+    }
+
+    public void UpdateLevelToLoad(LevelData newLevelData)
+    {
+        if(newLevelData != null)
+            _currentLevelData = newLevelData;
     }
 
     public void ChangeActivatedButton(GameObject button)
@@ -1110,10 +1127,10 @@ public class MapManager : MonoBehaviour
     //     return _currentLevelData.DialogLevelEnd;
     // }
 
-    // public int GetCurrentLevel()
-    // {
-    //     return _currentLevel;
-    // }
+    public int GetCurrentLevel()
+    {
+        return _currentLevel;
+    }
     //
     // public GroundStateManager[] GetTwoLastSwap()
     // {
@@ -1181,7 +1198,7 @@ public class MapManager : MonoBehaviour
         MouseHitRaycast.Instance.ResetLastGroundHit();
     }
 
-    public void ResetAllMap(LevelData nextLevelData)
+    public void ResetAllMap()
     {
         for (int x = 0; x < _mapSize.x; x++)
         {
@@ -1200,7 +1217,8 @@ public class MapManager : MonoBehaviour
         IsVictory = false;
         _isFullFloorOrder = false;
 
-        ChangeLevel(nextLevelData);
+        
+        InitializeDialog();
     }
 
     public void RestartLevel()
@@ -1228,7 +1246,7 @@ public class MapManager : MonoBehaviour
         ResetGroundSelected();
         SetupUIGround.Instance.ResetAllButtons();
         ScreensManager.Instance.RestartSceneOrLevel();
-        ResetAllMap(null);
+        ResetAllMap();
     }
 
     public void ResetButtonSelected()

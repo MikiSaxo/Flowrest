@@ -14,9 +14,9 @@ public class DialogChoice
 
     public DialogData NextDialogData;
 
-    [Space(5f)]
+    [FormerlySerializedAs("LevelNoDiaData")] [FormerlySerializedAs("LevelNoDialog")] [FormerlySerializedAs("NextLevelNoDialog")] [Space(5f)]
     
-    public LevelData NextLevelNoDialog;
+    public LevelData LevelToLoad;
     
     [Space(10f)]
     

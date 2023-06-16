@@ -41,7 +41,6 @@ public class ScreensManager : MonoBehaviour
     private bool _isFirstScreen;
     public bool HasPopUp { get; set; }
     public bool IsMemoOpened { get; set; }
-    public LevelData NewLevelData { get; set; }
 
     private bool _isPaused;
 
@@ -327,6 +326,8 @@ public class ScreensManager : MonoBehaviour
 
     IEnumerator WaitToGoLevelSupp()
     {
+        MapManager.Instance.CurrentDialogData = DialogManager.Instance.NextDialogToLoad;
+        
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
 
@@ -339,7 +340,7 @@ public class ScreensManager : MonoBehaviour
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();
-        MapManager.Instance.ResetAllMap(NewLevelData);
+        MapManager.Instance.ResetAllMap();
     }
 
     public void LaunchOpenOrder()

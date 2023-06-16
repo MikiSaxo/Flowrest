@@ -33,6 +33,9 @@ public class DialogManager : MonoBehaviour
 
     public bool IsDialogTime { get; set; }
 
+    // public LevelData NextLevelToLoad { get; private set; }
+    public DialogData NextDialogToLoad { get; private set; }
+
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
     private int _countDialog;
@@ -43,7 +46,6 @@ public class DialogManager : MonoBehaviour
     private List<GameObject> _stockChoiceButtons = new List<GameObject>();
     private DialogData _currentDialogData;
     private LevelData _levelToLoad;
-
 
     private void Awake()
     {
@@ -310,17 +312,16 @@ public class DialogManager : MonoBehaviour
         _dialogGlobal.SetActive(false);
         UpdateDialogBG(false);
 
-        // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
 
         MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
-
-        if (_currentDialogData.NextDialogEndLvl != null)
-            MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
-        // MapManager.Instance.ActivateArrowIfForceSwap();
-
-        if (MapManager.Instance.HasInventory)
-            SetupUIGround.Instance.UpdateOpacityInventory(1);
+        if (_currentDialogData.EndDialog != null)
+        {
+            print("ça updte nextdialog");
+            NextDialogToLoad = _currentDialogData.EndDialog;
+        }
+        
+        // MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
     }
 
     public void OnClick()
@@ -419,15 +420,19 @@ public class DialogManager : MonoBehaviour
 
     public void MakeAChoice(int index)
     {
-        if (_choices[index].NextLevelNoDialog != null)
+        if (_choices[index].LevelToLoad != null)
         {
-            ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
-            UpdateLevelToLoad(_choices[index].NextLevelNoDialog);
+            // ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
+            // UpdateLevelToLoad(_choices[index].NextLevelNoDialog);
+            print("update le niveau to load");
+            _levelToLoad = _choices[index].LevelToLoad;
+            // MapManager.Instance.UpdateLevelToLoad(NextLevelToLoad);
         }
 
         if (_choices[index].EndDialog != null)
         {
-            MapManager.Instance.CurrentDialogData = _choices[index].EndDialog;
+            print("ça update le choixe");
+            NextDialogToLoad = _choices[index].EndDialog;
         }
 
         SpawnNewDialogs(_choices[index].NextDialogData, false, false);
