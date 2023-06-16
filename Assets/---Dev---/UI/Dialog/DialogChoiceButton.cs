@@ -13,6 +13,6 @@ public class DialogChoiceButton : MonoBehaviour
 
     public void OnClick()
     {
-        DialogManager.Instance.ChangeDialog(_choiceIndex);
+        DialogManager.Instance.MakeAChoice(_choiceIndex);
     }
 }

@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
   m_Name: Sam0_Dia
   m_EditorClassIdentifier: 
-  CharacterName: Michelou
   DialogFrench:
-  - CharacterName: Prof
-    CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
-    CoreDialog: aled
-  - CharacterName: Il est raciste
-    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
-    CoreDialog: fait ton choix
+  - CharacterName: 
+    CharacterSprite: {fileID: 0}
+    Text: 
   DialogEnglish: []
-  Choices: []
-  NextDialogNoChoice: {fileID: 0}
+  Choices:
+  - Choice: 
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    NextLevelNoDialog: {fileID: 0}
+    EndDialog: {fileID: 0}
   LevelToLoad: {fileID: 11400000, guid: c1f51ebeb5f736b47a3490b6a30d34bf, type: 2}
+  NextDialogEndLvl: {fileID: 0}

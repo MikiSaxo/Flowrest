@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
   m_Name: Dialog X
   m_EditorClassIdentifier: 
-  CharacterName: 
-  DialogFrench: []
+  DialogFrench:
+  - CharacterName: 
+    CharacterSprite: {fileID: 0}
+    Text: 
   DialogEnglish: []
-  Choices: []
-  NextDialogNoChoice: {fileID: 0}
+  Choices:
+  - Choice: 
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    NextLevelNoDialog: {fileID: 0}
+    EndDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}
+  NextDialogEndLvl: {fileID: 0}

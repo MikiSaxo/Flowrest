@@ -18,11 +18,11 @@ public class DialogData : ScriptableObject
     [FormerlySerializedAs("NextDialogNoChoice")]
     [Space(10f)]
     
-    [Header("If no choice")]
+    [Header("-- If no Next Level --")]
     public LevelData LevelToLoad;
     
     [Space(10f)]
     
-    [Header("------ Vital Infos ------")]
+    [Header("-- If no End Dialog --")]
     public DialogData NextDialogEndLvl;
 }

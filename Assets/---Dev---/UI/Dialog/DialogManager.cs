@@ -18,8 +18,7 @@ public class DialogManager : MonoBehaviour
 
     [SerializeField] private Image _characterImg;
 
-    [Header("Dialogs")]
-    [SerializeField] private GameObject _dialogGlobal;
+    [Header("Dialogs")] [SerializeField] private GameObject _dialogGlobal;
     [SerializeField] private GameObject _dialogContent;
     [SerializeField] private GameObject _dialogPrefab;
     [SerializeField] private GameObject _dialogFBEnd;
@@ -44,7 +43,7 @@ public class DialogManager : MonoBehaviour
     private List<GameObject> _stockChoiceButtons = new List<GameObject>();
     private DialogData _currentDialogData;
     private LevelData _levelToLoad;
- 
+
 
     private void Awake()
     {
@@ -79,10 +78,10 @@ public class DialogManager : MonoBehaviour
     {
         _dialogGlobal.SetActive(state);
     }
-    
+
     public void UpdateCharaName(string charaName)
     {
-        if(charaName != String.Empty)
+        if (charaName != String.Empty)
             _characterName.text = charaName;
     }
 
@@ -110,7 +109,7 @@ public class DialogManager : MonoBehaviour
                     {
                         charaNames[i] = dialogData.DialogFrench[i].CharacterName;
                         charaSprites[i] = dialogFrench[i].CharacterSprite;
-                        dialogsText[i] = dialogFrench[i].CoreDialog;
+                        dialogsText[i] = dialogFrench[i].Text;
                     }
                 }
             }
@@ -126,12 +125,12 @@ public class DialogManager : MonoBehaviour
                     {
                         charaNames[i] = dialogData.DialogEnglish[i].CharacterName;
                         charaSprites[i] = dialogData.DialogEnglish[i].CharacterSprite;
-                        dialogsText[i] = dialogData.DialogEnglish[i].CoreDialog;
+                        dialogsText[i] = dialogData.DialogEnglish[i].Text;
                     }
                 }
             }
         }
-        
+
 
         if (dialogData != null)
         {
@@ -163,7 +162,7 @@ public class DialogManager : MonoBehaviour
         _dialogGlobal.SetActive(true);
         // _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
         _dialogGlobal.GetComponent<PointerMotion>().Bounce();
-        
+
         // Block mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
@@ -210,6 +209,7 @@ public class DialogManager : MonoBehaviour
         {
             _charaSprites = charaSprites;
         }
+
         if (charaNames != null)
         {
             _charaNames = charaNames;
@@ -246,7 +246,7 @@ public class DialogManager : MonoBehaviour
                 _characterImg.enabled = false;
             }
         }
-        
+
         _characterImg.gameObject.GetComponent<CharaMovement>().LaunchMovement();
     }
 
@@ -284,7 +284,7 @@ public class DialogManager : MonoBehaviour
 
         // Change Chara
         UpdateCharaSprite();
-        
+
         UpdateCharaName(_charaNames[_countDialog]);
 
         // Init to the dialog prefab with the speed spawn
@@ -313,8 +313,7 @@ public class DialogManager : MonoBehaviour
         // _orderMenu.GetComponent<MenuOrderMemoManager>().OnActivateOrder();
 
         MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
-       
-        
+
 
         if (_currentDialogData.NextDialogEndLvl != null)
             MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
@@ -374,14 +373,14 @@ public class DialogManager : MonoBehaviour
         // {
         ScreensManager.Instance.CheckIfMemoOpen();
 
-        
+
         if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0)
         {
             ScreensManager.Instance.HasPopUp = true;
             PopUpManager.Instance.InitPopUp(_levelToLoad.PopUpInfos);
         }
 
-        
+
         if (!ScreensManager.Instance.HasPopUp)
         {
             EndDialog();
@@ -398,7 +397,7 @@ public class DialogManager : MonoBehaviour
     private void SpawnChoices()
     {
         if (_stockChoiceButtons.Count > 0) return;
-        
+
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 1 || _currentDialogData.DialogFrench.Length > 1))
         {
@@ -418,12 +417,17 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void ChangeDialog(int index)
+    public void MakeAChoice(int index)
     {
         if (_choices[index].NextLevelNoDialog != null)
         {
             ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
             UpdateLevelToLoad(_choices[index].NextLevelNoDialog);
+        }
+
+        if (_choices[index].EndDialog != null)
+        {
+            MapManager.Instance.CurrentDialogData = _choices[index].EndDialog;
         }
 
         SpawnNewDialogs(_choices[index].NextDialogData, false, false);

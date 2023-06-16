@@ -17,4 +17,8 @@ public class DialogChoice
     [Space(5f)]
     
     public LevelData NextLevelNoDialog;
+    
+    [Space(10f)]
+    
+    public DialogData EndDialog;
 }
