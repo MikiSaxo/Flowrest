@@ -11,6 +11,7 @@ public class CameraPan : MonoBehaviour
     private float groundZ = 0;
 
     [Header("Zoom")] [SerializeField] private float _zoomSpeed;
+    [Header("Pan Speed")] [SerializeField] private float _panSpeed;
 
     [Header("Anim Rotation")] [SerializeField]
     private Vector2Int _rotaXStartEnd;
@@ -59,7 +60,7 @@ public class CameraPan : MonoBehaviour
             groundZ = _cam.transform.position.y;
 
             var getPos = GetWorldPosition(groundZ);
-            getPos = new Vector3(getPos.x, 10, getPos.z);
+            // getPos = new Vector3(getPos.x, 10, getPos.z);
 
             _dragOrigin = getPos;
         }
@@ -101,7 +102,7 @@ public class CameraPan : MonoBehaviour
         Plane ground = new Plane(_cam.transform.forward, new Vector3(0, 0, z));
         ground.Raycast(mousePos, out var distance);
         
-        return mousePos.GetPoint(distance);
+        return mousePos.GetPoint(distance * _panSpeed);
     }
 
     private void Zoom()

@@ -50,8 +50,6 @@ public class MapManager : MonoBehaviour
 
     [Header("HTML")] [SerializeField] private GameObject _loadingText;
 
-    [Header("Choose Start Level Index")] [SerializeField]
-    private int _currentLevel;
 
     [Header("Timing")] [SerializeField] private float _timeToSwap;
     [SerializeField] private float _timeToSpawnMap;
@@ -61,6 +59,8 @@ public class MapManager : MonoBehaviour
     [Header("Data")] 
     //[SerializeField] private LevelData _firstLevelData;
     [SerializeField] private DialogData _firstDialogData;
+    
+    [Header("Choose Start Level Index")] [SerializeField] private int _currentLevel;
     [SerializeField] private LevelData[] _levelData;
 
     private bool _hasRecycling;
@@ -1110,25 +1110,25 @@ public class MapManager : MonoBehaviour
     //     return _currentLevelData.DialogLevelEnd;
     // }
 
-    public int GetCurrentLevel()
-    {
-        return _currentLevel;
-    }
-
-    public GroundStateManager[] GetTwoLastSwap()
-    {
-        return _lastGroundSwapped;
-    }
-
-    public Sprite[] GetCharaSpritesEnd()
-    {
-        return _charaSpritesEnd;
-    }
-
-    public Vector2Int GetTileStockForceSwap(int index)
-    {
-        return _stockPlayerForceSwap[index];
-    }
+    // public int GetCurrentLevel()
+    // {
+    //     return _currentLevel;
+    // }
+    //
+    // public GroundStateManager[] GetTwoLastSwap()
+    // {
+    //     return _lastGroundSwapped;
+    // }
+    //
+    // public Sprite[] GetCharaSpritesEnd()
+    // {
+    //     return _charaSpritesEnd;
+    // }
+    //
+    // public Vector2Int GetTileStockForceSwap(int index)
+    // {
+    //     return _stockPlayerForceSwap[index];
+    // }
 
     public void ActivateArrowIfForceSwap()
     {

@@ -62,11 +62,11 @@ public class DialogPrefab : MonoBehaviour
             text = replace;
         }
         
-        if (text.Contains('µ'))
-        {
-            var replace = text.Replace("µ", $"{MapManager.Instance.GetCurrentLevel()+1}");
-            text = replace;
-        }
+        // if (text.Contains('µ'))
+        // {
+        //     var replace = text.Replace("µ", $"{MapManager.Instance.GetCurrentLevel()+1}");
+        //     text = replace;
+        // }
 
         DialogText.text = text;
         DialogText.ForceMeshUpdate();
