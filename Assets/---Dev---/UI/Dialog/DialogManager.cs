@@ -316,8 +316,8 @@ public class DialogManager : MonoBehaviour
        
         
 
-        if (_currentDialogData.NextDialogNoChoice != null)
-            MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogNoChoice;
+        if (_currentDialogData.NextDialogEndLvl != null)
+            MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
         // MapManager.Instance.ActivateArrowIfForceSwap();
 
         if (MapManager.Instance.HasInventory)
