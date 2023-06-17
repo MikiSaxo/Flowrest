@@ -30,8 +30,6 @@ public class LevelDataEditor : Editor
     private SerializedProperty IsTuto;
     private SerializedProperty IsTutoRecycling;
     private SerializedProperty PlayerForceSwap;
-    private SerializedProperty PreviewMessage;
-    private SerializedProperty PreviewMessageEnglish;
     private SerializedProperty HasForcePoseBlocAfterSwap;
     private SerializedProperty ForcePoseBlocCoord;
     private SerializedProperty PopUpInfos;
@@ -78,8 +76,6 @@ public class LevelDataEditor : Editor
         IsTuto = serializedObject.FindProperty("IsTuto");
         IsTutoRecycling = serializedObject.FindProperty("IsTutoRecycling");
         PlayerForceSwap = serializedObject.FindProperty("PlayerForceSwap");
-        PreviewMessage = serializedObject.FindProperty("PreviewMessage");
-        PreviewMessageEnglish = serializedObject.FindProperty("PreviewMessageEnglish");
         HasForcePoseBlocAfterSwap = serializedObject.FindProperty("HasForcePoseBlocAfterSwap");
         ForcePoseBlocCoord = serializedObject.FindProperty("ForcePoseBlocCoord");
         PopUpInfos = serializedObject.FindProperty("PopUpInfos");
@@ -193,11 +189,6 @@ public class LevelDataEditor : Editor
             if (IsTuto.boolValue)
             {
                 EditorGUILayout.PropertyField(PlayerForceSwap, true);
-                EditorGUILayout.PropertyField(PreviewMessage);
-
-                EditorGUILayout.Space(5);
-
-                EditorGUILayout.PropertyField(PreviewMessageEnglish);
             }
 
             EditorGUILayout.Space(7);

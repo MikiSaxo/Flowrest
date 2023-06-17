@@ -18,7 +18,6 @@ public class PopUpManager : MonoBehaviour
     [SerializeField] private TMP_Text _titleText;
     [SerializeField] private TMP_Text _descriptionText;
 
-    
     private bool _canOpenPopUp;
     
     private void Awake()
@@ -28,7 +27,12 @@ public class PopUpManager : MonoBehaviour
 
     public void InitPopUp(PopUpInfos[] popUpInfos)
     {
-        UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
+        
+        
+        if(LanguageManager.Instance.Tongue == Language.Francais)
+            UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
+        else
+            UpdatePopUp(popUpInfos[0].TitleEnglish, popUpInfos[0].VideoName, popUpInfos[0].DescriptionEnglish);
         
         if(GetComponent<LegendScroll>() != null)
             GetComponent<LegendScroll>().InitVideoLegend(popUpInfos);
