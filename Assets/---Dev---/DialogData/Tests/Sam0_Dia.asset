@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
   m_Name: Sam0_Dia
   m_EditorClassIdentifier: 
-  DialogFrench:
-  - CharacterName: 
-    CharacterSprite: {fileID: 0}
-    Text: 
+  DialogFrench: []
   DialogEnglish: []
   Choices:
-  - Choice: 
+  - Choice: ezfrgerg
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 11400000}
+    LevelToLoad: {fileID: 0}
+    EndDialog: {fileID: 0}
+  - Choice: 2
     ChoiceEnglish: 
     NextDialogData: {fileID: 0}
     LevelToLoad: {fileID: 0}

@@ -46,6 +46,7 @@ public class DialogManager : MonoBehaviour
     private List<GameObject> _stockChoiceButtons = new List<GameObject>();
     private DialogData _currentDialogData;
     private LevelData _levelToLoad;
+    private bool _hasMadeChoices;
 
     private void Awake()
     {
@@ -87,10 +88,41 @@ public class DialogManager : MonoBehaviour
             _characterName.text = charaName;
     }
 
+    private void UpdateLevelToLoad(LevelData level)
+    {
+        _levelToLoad = level;
+    }
+
+    private void UpdateButtonGoLevelSupp(bool state)
+    {
+        ScreensManager.Instance.UpdateButtonGoLevelSupp(state);
+        _dialogGlobal.SetActive(!state);
+        UpdateDialogBG(!state);
+    }
+
+    private void UpdateCharaSprite()
+    {
+        if (_charaSprites.Length > 0)
+        {
+            if (_charaSprites[_countDialog] != null)
+            {
+                _characterImg.enabled = true;
+                _characterImg.sprite = _charaSprites[_countDialog];
+            }
+            else
+            {
+                _characterImg.enabled = false;
+            }
+        }
+
+        _characterImg.gameObject.GetComponent<CharaMovement>().LaunchMovement();
+    }
+
     public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
     {
         TransiManager.Instance.LaunchShrink();
 
+        _hasMadeChoices = false;
         // Init dialogs
         string[] charaNames = Array.Empty<string>();
         Sprite[] charaSprites = Array.Empty<Sprite>();
@@ -222,36 +254,6 @@ public class DialogManager : MonoBehaviour
         AudioManager.Instance.PlaySFX("DialogPop");
     }
 
-    private void UpdateLevelToLoad(LevelData level)
-    {
-        _levelToLoad = level;
-    }
-
-    private void UpdateButtonGoLevelSupp(bool state)
-    {
-        ScreensManager.Instance.UpdateButtonGoLevelSupp(state);
-        _dialogGlobal.SetActive(!state);
-        UpdateDialogBG(!state);
-    }
-
-    private void UpdateCharaSprite()
-    {
-        if (_charaSprites.Length > 0)
-        {
-            if (_charaSprites[_countDialog] != null)
-            {
-                _characterImg.enabled = true;
-                _characterImg.sprite = _charaSprites[_countDialog];
-            }
-            else
-            {
-                _characterImg.enabled = false;
-            }
-        }
-
-        _characterImg.gameObject.GetComponent<CharaMovement>().LaunchMovement();
-    }
-
     private void SpawnAllDialog()
     {
         if (_dialogsPrefabList.Count != _dialogsList.Count)
@@ -320,7 +322,7 @@ public class DialogManager : MonoBehaviour
             print("ça updte nextdialog");
             NextDialogToLoad = _currentDialogData.EndDialog;
         }
-        
+
         // MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
     }
 
@@ -357,13 +359,18 @@ public class DialogManager : MonoBehaviour
 
     public void CheckIfEnd()
     {
+        // print("_choices : " + _choices.Length);
+
         if (_choices != null && _choices.Length > 0 &&
-            (_currentDialogData.DialogEnglish.Length > 1 || _currentDialogData.DialogFrench.Length > 1))
+            (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) && !_hasMadeChoices)
         {
+            print("hello spawn choices");
             SpawnChoices();
 
             return;
         }
+        
+        
 
         // if (_currentDialogData != null)
         //     ScreensManager.Instance.NewLevelData = _currentDialogData.NextLevelNoChoice;
@@ -399,11 +406,14 @@ public class DialogManager : MonoBehaviour
     {
         if (_stockChoiceButtons.Count > 0) return;
 
+        print("je fais spawn les choice");
+
         if (_choices != null && _choices.Length > 0 &&
-            (_currentDialogData.DialogEnglish.Length > 1 || _currentDialogData.DialogFrench.Length > 1))
+            (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
         {
             _dialogChoiceParent.SetActive(true);
 
+            print("oui baguette");
             for (int i = 0; i < _choices.Length; i++)
             {
                 GameObject go = Instantiate(_dialogChoicePrefab, _dialogChoiceParent.transform);
@@ -420,6 +430,8 @@ public class DialogManager : MonoBehaviour
 
     public void MakeAChoice(int index)
     {
+        _hasMadeChoices = true;
+        
         if (_choices[index].LevelToLoad != null)
         {
             // ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
