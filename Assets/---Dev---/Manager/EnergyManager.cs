@@ -205,9 +205,8 @@ public class EnergyManager : MonoBehaviour
         //     EarnEnergyByCrystal();
     }
 
-    public void BounceEnergy()
+    private void BounceEnergy()
     {
-        print("bounce");
         // _maskParent.transform.DOScale(1, 0);
         // _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
         gameObject.GetComponent<PointerMotion>().Bounce();

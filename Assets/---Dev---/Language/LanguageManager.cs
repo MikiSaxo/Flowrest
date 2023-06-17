@@ -43,7 +43,11 @@ public class LanguageManager : MonoBehaviour
     [Space(5)]
     [SerializeField] private string _gameOverTextFrench;
     [SerializeField] private string _gameOverTextEnglish;
-
+    
+    [Header("Menu Victory - Defeat")] 
+    [SerializeField] private string _nextTextFrench;
+    [SerializeField] private string _nextTextEnglish;
+    
     [Space(10f)]
     [Header("--- Pause Menu ---")]
     [Space(10f)]
@@ -311,5 +315,12 @@ public class LanguageManager : MonoBehaviour
             return _specialThanksTextFrench;
 
         return _specialThanksTextEnglish;
+    }
+    public string GetNextText()
+    {
+        if (Tongue == Language.Francais)
+            return _nextTextFrench;
+
+        return _nextTextEnglish;
     }
 }
