@@ -8,7 +8,7 @@ using UnityEngine.Video;
 public class PopUpManager : MonoBehaviour
 {
     public static PopUpManager Instance;
-    
+
     [Header("Setup")]
     [SerializeField] private GameObject _parent;
     [SerializeField] private GameObject _popUpBg;
@@ -27,8 +27,6 @@ public class PopUpManager : MonoBehaviour
 
     public void InitPopUp(PopUpInfos[] popUpInfos)
     {
-        
-        
         if(LanguageManager.Instance.Tongue == Language.Francais)
             UpdatePopUp(popUpInfos[0].Title, popUpInfos[0].VideoName, popUpInfos[0].Description);
         else
@@ -75,5 +73,10 @@ public class PopUpManager : MonoBehaviour
             if(state)
                 _parent.GetComponent<PointerMotion>().Bounce();
         }
+    }
+
+    public void GoToPageOnePopUp()
+    {
+        GetComponent<LegendScroll>().GoToPageOne();
     }
 }

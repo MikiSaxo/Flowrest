@@ -174,11 +174,13 @@ public class ScreensManager : MonoBehaviour
 
         DialogManager.Instance.UpdateDialogGlobal(false);
         DialogManager.Instance.UpdateDialogBG(false);
-        HasPopUp = false;
 
         if (!state)
         {
-            DialogManager.Instance.EndDialog();
+            if(!MapManager.Instance.IsRestart)
+                DialogManager.Instance.EndDialog();
+            
+            MapManager.Instance.IsRestart = false;
         }
     }
 

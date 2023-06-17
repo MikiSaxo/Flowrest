@@ -15,7 +15,8 @@ public class TransiManager : MonoBehaviour
     [SerializeField] private float _timeShrink;
     [SerializeField] private TransiColumn[] _columns;
 
-    private bool _isTransOff;
+    private bool _isTransiOff;
+    private bool _isShrinking;
 
     private void Awake()
     {
@@ -50,17 +51,19 @@ public class TransiManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenColumnGrowOn);
         }
 
-        _isTransOff = false;
+        _isTransiOff = false;
     }
     
     public void LaunchShrink()
     {
-        if(!_isTransOff)
+        if(!_isTransiOff && !_isShrinking)
             StartCoroutine(Shrink());
     }
 
     IEnumerator Shrink()
     {
+        _isShrinking = true;
+
         foreach (var column in _columns)
         {
             foreach (var hexa in column.Column)
@@ -73,7 +76,8 @@ public class TransiManager : MonoBehaviour
         if(MapManager.Instance != null)
             MapManager.Instance.IsLoading = false;
 
-        _isTransOff = true;
+        _isTransiOff = true;
+        _isShrinking = false;
     }
 
     private void Update()

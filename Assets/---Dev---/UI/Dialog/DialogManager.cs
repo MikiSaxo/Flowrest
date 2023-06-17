@@ -321,8 +321,6 @@ public class DialogManager : MonoBehaviour
         {
             NextDialogToLoad = _currentDialogData.EndDialog;
         }
-
-        // MapManager.Instance.CurrentDialogData = _currentDialogData.NextDialogEndLvl;
     }
 
     public void OnClick()
@@ -358,8 +356,6 @@ public class DialogManager : MonoBehaviour
 
     public void CheckIfEnd()
     {
-        // print("_choices : " + _choices.Length);
-
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) && !_hasMadeChoices)
         {
@@ -369,15 +365,6 @@ public class DialogManager : MonoBehaviour
             return;
         }
         
-        
-
-        // if (_currentDialogData != null)
-        //     ScreensManager.Instance.NewLevelData = _currentDialogData.NextLevelNoChoice;
-
-        // if (_isTheEnd)
-        //     UpdateButtonGoLevelSupp(true);
-        // else
-        // {
         ScreensManager.Instance.CheckIfMemoOpen();
 
 
@@ -398,7 +385,6 @@ public class DialogManager : MonoBehaviour
         {
             ScreensManager.Instance.UpdatePopUpState(true);
         }
-        // }
     }
 
     private void SpawnChoices()

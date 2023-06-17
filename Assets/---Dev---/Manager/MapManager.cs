@@ -39,6 +39,7 @@ public class MapManager : MonoBehaviour
     public bool IsPlayerForcePoseBlocAfterSwap { get; private set; }
     public bool OpenMemo { get; private set; }
     public DialogData CurrentDialogData { get; set; }
+    public bool IsRestart { get; set; }
 
     #endregion
 
@@ -88,8 +89,6 @@ public class MapManager : MonoBehaviour
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
     private bool _hasPopUp;
-    Sprite[] _charaSpritesBegininng = new Sprite[0];
-    Sprite[] _charaSpritesEnd = new Sprite[0];
     
     private LevelData _currentLevelData;
 
@@ -164,12 +163,14 @@ public class MapManager : MonoBehaviour
 
     public void LaunchCheckFileMap(LevelData level)
     {
-        if (level != _currentLevelData)
+        if (level != null && level != _currentLevelData)
         {
             _currentLevel++;
         }
         
-        _currentLevelData = level;
+        if(level != null)
+            _currentLevelData = level;
+        
         StartCoroutine(CheckFileMap());
     }
 
@@ -252,6 +253,8 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMap()
     {
+        TransiManager.Instance.LaunchShrink();
+        
         var currentLvl = _currentLevelData;
         _mapInfo = _mapConstructData.Map.Split("\n");
 
@@ -1220,8 +1223,20 @@ public class MapManager : MonoBehaviour
         IsVictory = false;
         _isFullFloorOrder = false;
 
-        
-        InitializeDialog();
+        if(!IsRestart)
+            InitializeDialog();
+        else
+        {
+            if (ScreensManager.Instance.HasPopUp)
+            {
+                PopUpManager.Instance.UpdatePopUpState(true);
+                PopUpManager.Instance.GoToPageOnePopUp();
+            }
+            else
+                IsRestart = false;
+            
+            LaunchCheckFileMap(null);
+        }
     }
 
     public void RestartLevel()
@@ -1249,6 +1264,7 @@ public class MapManager : MonoBehaviour
         ResetGroundSelected();
         SetupUIGround.Instance.ResetAllButtons();
         ScreensManager.Instance.RestartSceneOrLevel();
+        IsRestart = true;
         ResetAllMap();
     }
 
