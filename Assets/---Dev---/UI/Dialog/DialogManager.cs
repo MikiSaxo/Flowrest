@@ -319,7 +319,6 @@ public class DialogManager : MonoBehaviour
 
         if (_currentDialogData.EndDialog != null)
         {
-            print("ça updte nextdialog");
             NextDialogToLoad = _currentDialogData.EndDialog;
         }
 
