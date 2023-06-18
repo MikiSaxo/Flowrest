@@ -35,6 +35,8 @@ public class DialogManager : MonoBehaviour
 
     // public LevelData NextLevelToLoad { get; private set; }
     public DialogData NextDialogToLoad { get; private set; }
+    public bool NoNextEndDialog { get; private set; }
+    public bool NoNextEndDialogChoice { get; private set; }
 
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
@@ -123,6 +125,7 @@ public class DialogManager : MonoBehaviour
         TransiManager.Instance.LaunchShrink();
 
         _hasMadeChoices = false;
+
         // Init dialogs
         string[] charaNames = Array.Empty<string>();
         Sprite[] charaSprites = Array.Empty<Sprite>();
@@ -215,7 +218,7 @@ public class DialogManager : MonoBehaviour
             dialogsText = new[] { " " };
             IsDialogTime = false;
             ScreensManager.Instance.IsMemoOpened = true;
-            CheckIfEnd();
+            CheckIfEndDialog();
 
             return;
         }
@@ -235,7 +238,7 @@ public class DialogManager : MonoBehaviour
         {
             IsDialogTime = false;
             ScreensManager.Instance.IsMemoOpened = true;
-            CheckIfEnd();
+            CheckIfEndDialog();
             return;
         }
 
@@ -248,6 +251,8 @@ public class DialogManager : MonoBehaviour
         {
             _charaNames = charaNames;
         }
+
+        NoNextEndDialogChoice = true;
 
         SpawnAllDialog();
 
@@ -319,7 +324,12 @@ public class DialogManager : MonoBehaviour
 
         if (_currentDialogData.EndDialog != null)
         {
+            NoNextEndDialog = false;
             NextDialogToLoad = _currentDialogData.EndDialog;
+        }
+        else
+        {
+            NoNextEndDialog = true;
         }
     }
 
@@ -346,7 +356,7 @@ public class DialogManager : MonoBehaviour
         if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinishDialoging)
         {
             IsDialogTime = false;
-            CheckIfEnd();
+            CheckIfEndDialog();
 
             return true;
         }
@@ -354,7 +364,7 @@ public class DialogManager : MonoBehaviour
         return false;
     }
 
-    public void CheckIfEnd()
+    public void CheckIfEndDialog()
     {
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) && !_hasMadeChoices)
@@ -364,7 +374,7 @@ public class DialogManager : MonoBehaviour
 
             return;
         }
-        
+
         ScreensManager.Instance.CheckIfMemoOpen();
 
 
@@ -429,7 +439,12 @@ public class DialogManager : MonoBehaviour
         if (_choices[index].EndDialog != null)
         {
             print("ça update le choixe");
+            NoNextEndDialogChoice = false;
             NextDialogToLoad = _choices[index].EndDialog;
+        }
+        else
+        {
+            NoNextEndDialogChoice = true;
         }
 
         SpawnNewDialogs(_choices[index].NextDialogData, false, false);
@@ -451,7 +466,7 @@ public class DialogManager : MonoBehaviour
         _dialogsPrefabList[^1].EndAnimationText();
         IsDialogTime = false;
 
-        CheckIfEnd();
+        CheckIfEndDialog();
     }
 
     private void RemoveLastDialog()
@@ -469,6 +484,11 @@ public class DialogManager : MonoBehaviour
     public bool GetIsDialogTime()
     {
         return IsDialogTime;
+    }
+
+    public DialogData GetCurrentDialogData()
+    {
+        return _currentDialogData;
     }
 
     public void ResetCountDialog()
