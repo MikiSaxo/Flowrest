@@ -369,9 +369,7 @@ public class DialogManager : MonoBehaviour
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) && !_hasMadeChoices)
         {
-            print("hello spawn choices");
             SpawnChoices();
-
             return;
         }
 
@@ -401,12 +399,11 @@ public class DialogManager : MonoBehaviour
     {
         if (_stockChoiceButtons.Count > 0) return;
 
-        print("je fais spawn les choice");
-
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
         {
             _dialogChoiceParent.SetActive(true);
+            _dialogChoiceParent.GetComponent<SpawnAnimButtons>().ClearButtonList();
 
             print("oui baguette");
             for (int i = 0; i < _choices.Length; i++)
@@ -414,12 +411,15 @@ public class DialogManager : MonoBehaviour
                 GameObject go = Instantiate(_dialogChoicePrefab, _dialogChoiceParent.transform);
                 go.GetComponent<DialogChoiceButton>().InitChoiceIndex(i);
                 _stockChoiceButtons.Add(go);
+                _dialogChoiceParent.GetComponent<SpawnAnimButtons>().AddToButtonList(go);
 
                 if (LanguageManager.Instance.Tongue == Language.Francais)
                     go.GetComponent<DialogPrefab>().Init(_choices[i].Choice, 0);
                 else
                     go.GetComponent<DialogPrefab>().Init(_choices[i].ChoiceEnglish, 0);
             }
+            
+            _dialogChoiceParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
         }
     }
 

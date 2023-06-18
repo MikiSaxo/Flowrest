@@ -204,6 +204,7 @@ public class ScreensManager : MonoBehaviour
         if (DialogManager.Instance.IsDialogTime) return;
 
         StartCoroutine(WaitToUnlockMouse(state));
+        _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
     }
 
     public void UpdateMultipleOrder(AllStates whichOrder, int newNb)
@@ -276,7 +277,7 @@ public class ScreensManager : MonoBehaviour
         _gameOverParent.SetActive(true);
         MouseHitRaycast.Instance.IsBlockMouse(true);
     }
-    
+
     IEnumerator WaitToUnlockMouse(bool state)
     {
         yield return new WaitForSeconds(.1f);
