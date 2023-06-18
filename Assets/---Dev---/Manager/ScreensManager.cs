@@ -194,7 +194,10 @@ public class ScreensManager : MonoBehaviour
             _menuOption.SetActive(false);
 
         if (!state && MapManager.Instance.IsVictory)
+        {
             _victoryParent.SetActive(true);
+            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+        }
 
         if (state)
             MapManager.Instance.IsOnUI = true;
@@ -241,9 +244,12 @@ public class ScreensManager : MonoBehaviour
             LaunchCredits();
             return;
         }
-        
+
         if (!_isPaused)
+        {
             _victoryParent.SetActive(true);
+            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+        }
         // _titlesText.text = _titlesString[0];
 
         
@@ -297,6 +303,7 @@ public class ScreensManager : MonoBehaviour
 
         _menuPauseParent.SetActive(false);
   
+        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
         _victoryParent.SetActive(false);
         ResetOrder();
     }
@@ -356,6 +363,8 @@ public class ScreensManager : MonoBehaviour
         ResetOrder();
  
         _bg.SetActive(false);
+        
+        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();

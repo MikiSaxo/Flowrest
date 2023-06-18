@@ -216,7 +216,7 @@ public class LegendScroll : MonoBehaviour
         if (_leftArrowButton == null) return;
 
         _leftArrowButton.GetComponent<Button>().interactable = state;
-        _leftArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(!state);
+        _leftArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
 
     private void UpdateStateRightArrow(bool state)
@@ -224,7 +224,7 @@ public class LegendScroll : MonoBehaviour
         if (_rightArrowButton == null) return;
 
         _rightArrowButton.GetComponent<Button>().interactable = state;
-        _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(!state);
+        _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
 
     private void ResetPopUp()

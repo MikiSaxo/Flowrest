@@ -7,6 +7,7 @@ public class SpawnAnimButtons : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _buttonsList;
     [SerializeField] private float _timeBetweenEachButtons;
+    [SerializeField] private float _timeSpawnDelay = 1f;
 
     private float _timeWaitToSpawnAnim;
     
@@ -18,7 +19,12 @@ public class SpawnAnimButtons : MonoBehaviour
 
     public void LaunchSpawnAnimDelay()
     {
-        _timeWaitToSpawnAnim = 1;
+        _timeWaitToSpawnAnim = _timeSpawnDelay;
+        foreach (var but in _buttonsList)
+        {
+            but.transform.DOScale(0, 0);
+        }
+        
         StartCoroutine(SpawnAnim());
     }
 
@@ -40,6 +46,21 @@ public class SpawnAnimButtons : MonoBehaviour
         }
     }
 
+    public void ResetScaleButtons()
+    {
+        foreach (var but in _buttonsList)
+        {
+            but.transform.DOScale(0, 0);
+        }
+    }
+
+    public void UpdateCanEnter(bool state)
+    {
+        foreach (var but in _buttonsList)
+        {
+            but.GetComponent<PointerMotion>().UpdateCanEnter(state);
+        }
+    }
     public void AddToButtonList(GameObject newObj)
     {
         _buttonsList.Add(newObj);

@@ -31,6 +31,11 @@ public class PointerMotion : MonoBehaviour
     {
         if (!_canEnter || _isBouncing) return;
 
+        ForceOnLeave();
+    }
+
+    private void ForceOnLeave()
+    {
         transform.DOKill();
         transform.DOScale(_scaleEnter, 0);
         transform.DOScale(1, _timeLeave);
@@ -43,10 +48,10 @@ public class PointerMotion : MonoBehaviour
 
     public void UpdateCanEnter(bool state)
     {
-        if (!state)
-            OnLeave();
-        
         _canEnter = state;
+        
+        if (!_canEnter)
+            ForceOnLeave();
     }
 
     public void Bounce()
