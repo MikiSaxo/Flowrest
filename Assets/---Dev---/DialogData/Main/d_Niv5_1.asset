@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv5_1
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "Comme tous les ans, l'entreprise organise un concours interne pour \xE9lire
+      l'employ\xE9 du mois ! C'est un super moment pour attiser les rivalit\xE9s
+      et \xE9craser les coll\xE8gues ! "
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 53afc548191b32b4693f09d25aea991e, type: 3}
+    Text: "Celui qui obtiendra les meilleurs r\xE9sultats remportera une <b>SUUUUUUUPER</b>
+      r\xE9compense d'apr\xE8s le comit\xE9 de direction."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Comme tu es mon stagiaire, on participera \xE0 2 ! T'en penses quoi ?"
+  DialogEnglish: []
+  Choices:
+  - Choice: "Ca me va. On va les d\xE9truire !"
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 11400000, guid: 48f9ceba49fd27d43b725c166d304661, type: 2}
+    LevelToLoad: {fileID: 0}
+    EndDialog: {fileID: 0}
+  - Choice: Est ce que j'ai vraiment le choix ?
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 11400000, guid: 16ead5a45b2d0b147b3ffb3044646147, type: 2}
+    LevelToLoad: {fileID: 0}
+    EndDialog: {fileID: 0}
+  NextDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  EndDialog: {fileID: 0}

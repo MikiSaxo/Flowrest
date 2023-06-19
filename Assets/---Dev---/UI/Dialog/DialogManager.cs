@@ -372,6 +372,12 @@ public class DialogManager : MonoBehaviour
             SpawnChoices();
             return;
         }
+        
+        if (_currentDialogData.NextDialog != null && (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
+        {
+            SpawnNewDialogs(_currentDialogData.NextDialog, false, false);
+            return;
+        }
 
         ScreensManager.Instance.CheckIfMemoOpen();
 
