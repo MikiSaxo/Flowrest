@@ -6,7 +6,11 @@ using UnityEngine;
 [Serializable]
 public class PopUpInfos
 {
+    public Sprite[] ImgPopUp;
+    [Header("French")]
     public string Title;
-    public string VideoName;
     public string Description;
+    [Header("English")]
+    public string TitleEnglish;
+    public string DescriptionEnglish;
 }

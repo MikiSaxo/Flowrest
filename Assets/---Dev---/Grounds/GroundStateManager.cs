@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
@@ -35,6 +36,7 @@ public class GroundStateManager : MonoBehaviour
     public bool IsPlayerForceSwapBlocked { get; set; }
     public bool IsPlayerNotForcePose { get; set; }
     public bool IsBored { get; private set; }
+    public bool IsInFlower { get; set; }
 
     public AllStates StockStatePreview { get; set; }
 
@@ -120,6 +122,7 @@ public class GroundStateManager : MonoBehaviour
     private void Start()
     {
         MapManager.Instance.ResetSelection += ResetIndicator;
+        MapManager.Instance.QuestsManager.ResetFlower += ResetFlower;
 
         _startYPosMeshParent = 0;
     }
@@ -198,11 +201,24 @@ public class GroundStateManager : MonoBehaviour
                 continue;
             // Check if same as itself
             if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>()
-                    .GetCurrentStateEnum() != GetCurrentStateEnum())
+                    .GetCurrentStateEnum() != GetCurrentStateEnum()) 
+                continue;
+            if (mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsInFlower)
                 continue;
 
             // Good
             count++;
+        }
+
+        if (count >= 6)
+        {
+            foreach (var hexPos in hexDirections)
+            {
+                Vector2Int newPos = new Vector2Int(_coords.x + hexPos.x, _coords.y + hexPos.y);
+                var mapGrid = MapManager.Instance.GetMapGrid();
+                
+                mapGrid[newPos.x, newPos.y].GetComponent<GroundStateManager>().IsInFlower = true;
+            }
         }
 
         // print(gameObject.name + " count " + count);
@@ -309,7 +325,7 @@ public class GroundStateManager : MonoBehaviour
     public void LaunchDropFX()
     {
         AudioManager.Instance.PlaySFX("Fountain");
-        
+
         _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
         _colorOtherSwap = Color.white;
         // _colorOtherSwap.r -= .1f;
@@ -400,7 +416,7 @@ public class GroundStateManager : MonoBehaviour
     {
         UpdateFBReloadEnergy(state);
         JustBeenSwaped = state;
-        //
+        
         if (!state)
             _indicator.GetComponent<GroundIndicator>().UpdateTileState(TileState.Normal, true);
     }
@@ -496,6 +512,11 @@ public class GroundStateManager : MonoBehaviour
         _indicator.GetComponent<GroundIndicator>().ResetIndicator();
     }
 
+    private void ResetFlower()
+    {
+        IsInFlower = false;
+    }
+
     public void ResetCountTileChain()
     {
         foreach (var grn in _stockTileChain)
@@ -532,5 +553,6 @@ public class GroundStateManager : MonoBehaviour
     {
         // MapManager.Instance.CheckBiome -= LaunchCheckForBiome;
         MapManager.Instance.ResetSelection -= ResetIndicator;
+        MapManager.Instance.QuestsManager.ResetFlower -= ResetFlower;
     }
 }

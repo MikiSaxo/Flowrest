@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    public event Action ResetFlower;
+
     private bool _isFullFloor;
     private bool _isFlower;
     private bool _isNoSpecificTiles;
@@ -172,6 +174,8 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }
+        
+        ResetFlower?.Invoke();
 
         _flowerStateDone.Sort();
         int countDone = 0;

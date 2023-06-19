@@ -174,11 +174,13 @@ public class ScreensManager : MonoBehaviour
 
         DialogManager.Instance.UpdateDialogGlobal(false);
         DialogManager.Instance.UpdateDialogBG(false);
-        HasPopUp = false;
 
         if (!state)
         {
-            DialogManager.Instance.EndDialog();
+            if(!MapManager.Instance.IsRestart)
+                DialogManager.Instance.EndDialog();
+            
+            MapManager.Instance.IsRestart = false;
         }
     }
 
@@ -192,7 +194,10 @@ public class ScreensManager : MonoBehaviour
             _menuOption.SetActive(false);
 
         if (!state && MapManager.Instance.IsVictory)
+        {
             _victoryParent.SetActive(true);
+            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+        }
 
         if (state)
             MapManager.Instance.IsOnUI = true;
@@ -202,6 +207,7 @@ public class ScreensManager : MonoBehaviour
         if (DialogManager.Instance.IsDialogTime) return;
 
         StartCoroutine(WaitToUnlockMouse(state));
+        _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
     }
 
     public void UpdateMultipleOrder(AllStates whichOrder, int newNb)
@@ -229,13 +235,24 @@ public class ScreensManager : MonoBehaviour
         // Reset Wave Energy
         EnergyManager.Instance.StopWaveEffect();
 
+        MapManager.Instance.IsOnUI = true;
+        MouseHitRaycast.Instance.IsBlockMouse(true);
+        
+        if (CheckIfEndGame())
+        {
+            print("it's end game");
+            LaunchCredits();
+            return;
+        }
+
         if (!_isPaused)
+        {
             _victoryParent.SetActive(true);
+            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+        }
         // _titlesText.text = _titlesString[0];
 
-        MapManager.Instance.IsOnUI = true;
-
-        MouseHitRaycast.Instance.IsBlockMouse(true);
+        
 
         // DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
         UpdateButtonGoLevelSupp(true);
@@ -250,6 +267,14 @@ public class ScreensManager : MonoBehaviour
         }
     }
 
+    public bool CheckIfEndGame()
+    {
+        if (DialogManager.Instance.NoNextEndDialogChoice && DialogManager.Instance.NoNextEndDialog)
+            return true;
+        
+        return false;
+    }
+
     public void GameOver()
     {
         AudioManager.Instance.PlaySFX("Defeat");
@@ -258,7 +283,7 @@ public class ScreensManager : MonoBehaviour
         _gameOverParent.SetActive(true);
         MouseHitRaycast.Instance.IsBlockMouse(true);
     }
-    
+
     IEnumerator WaitToUnlockMouse(bool state)
     {
         yield return new WaitForSeconds(.1f);
@@ -278,6 +303,7 @@ public class ScreensManager : MonoBehaviour
 
         _menuPauseParent.SetActive(false);
   
+        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
         _victoryParent.SetActive(false);
         ResetOrder();
     }
@@ -337,6 +363,8 @@ public class ScreensManager : MonoBehaviour
         ResetOrder();
  
         _bg.SetActive(false);
+        
+        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();
@@ -382,6 +410,15 @@ public class ScreensManager : MonoBehaviour
 
     public void LaunchCredits()
     {
+        StartCoroutine(WaitToLaunchCredit());
+    }
+
+    IEnumerator WaitToLaunchCredit()
+    {
+        TransiManager.Instance.LaunchGrownOn();
+        
+        yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+        
         _credits.SetActive(true);
         _credits.GetComponent<CreditsMovement>().Init();
     }

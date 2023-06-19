@@ -10,16 +10,14 @@ public class EnergyManager : MonoBehaviour
     public static EnergyManager Instance;
 
 
-    [Header("Setup")] [SerializeField] private Slider _energyBar;
-    [SerializeField] private Slider _hitEnergyBar;
+    [Header("Setup")] 
+
     [SerializeField] private Image _energyBarImg;
     [SerializeField] private Image _hitEnergyBarImg;
     [SerializeField] private TextMeshProUGUI _numberToDisplay;
     [SerializeField] private WaveEffect _waveEffect;
     [SerializeField] private Image _vignettage;
-    [SerializeField] private GameObject _maskParent;
     [SerializeField] private GameObject _fbNoEnergy;
-    [SerializeField] private float _timeToFillEnergy;
 
     // [Header("Energy Base")]
     // [SerializeField] private int _howBase;
@@ -34,7 +32,8 @@ public class EnergyManager : MonoBehaviour
 
     [SerializeField] private int _costByLandingGround;
 
-    [Header("Timing")] [SerializeField] private float _timeInitAnim;
+    [Header("Timing")]
+    [SerializeField] private float _timeToFillEnergy;
     [SerializeField] private float _timeVignettage;
 
     private int _energyValue;
@@ -208,8 +207,9 @@ public class EnergyManager : MonoBehaviour
 
     private void BounceEnergy()
     {
-        _maskParent.transform.DOScale(1, 0);
-        _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+        // _maskParent.transform.DOScale(1, 0);
+        // _maskParent.transform.DOPunchScale(Vector3.one * .2f, 1f, 4);
+        gameObject.GetComponent<PointerMotion>().Bounce();
     }
 
     public void SpawnNoEnergyText()

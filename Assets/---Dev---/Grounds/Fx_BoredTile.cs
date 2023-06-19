@@ -38,7 +38,10 @@ public class Fx_BoredTile : MonoBehaviour
         }
         else
         {
-            LaunchDispawnAnim();
+            if(!MapManager.Instance.IsVictory)
+                LaunchDispawnAnim();
+            else
+                LaunchDispawnAnimQuick();
         }
     }
 
@@ -67,7 +70,6 @@ public class Fx_BoredTile : MonoBehaviour
 
     private void LaunchDispawnAnim()
     {
-        // StopCoroutine(SpawnAnim());
         StartCoroutine(DispawnAnim());
     }
 
@@ -90,6 +92,32 @@ public class Fx_BoredTile : MonoBehaviour
 
         if (_isBored) yield break;
         _boudinDown.transform.DOScale(0, _timeBoudinOff).SetEase(Ease.OutBack);
+    }
+    
+    private void LaunchDispawnAnimQuick()
+    {
+        StartCoroutine(DispawnAnimQuick());
+    }
+
+    IEnumerator DispawnAnimQuick()
+    {
+        if (_isBored) yield break;
+
+        _sphere.material.DOKill();
+        _boudinTop.transform.DOKill();
+        _boudinDown.transform.DOKill();
+
+        _sphere.material.DOFloat(1.1f, "_DissolveStep", _timeDissolveOff/5);
+
+        yield return new WaitForSeconds(_timeBeforeDispawnBoudins/5);
+
+        if (_isBored) yield break;
+        _boudinTop.transform.DOScale(0, _timeBoudinOff/5).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(_timeBetweenTwo/5);
+
+        if (_isBored) yield break;
+        _boudinDown.transform.DOScale(0, _timeBoudinOff/5).SetEase(Ease.OutBack);
     }
 
     public void UpdateCanPoseTile(bool state)

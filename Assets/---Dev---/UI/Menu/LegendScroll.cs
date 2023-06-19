@@ -18,9 +18,8 @@ public class LegendScroll : MonoBehaviour
     [Header("Page")] [SerializeField] private GameObject _gridPage;
     [SerializeField] private GameObject _pagePrefab;
     [SerializeField] private Sprite[] _sprPage;
-    
-    [Header("Arrows")]
-    [SerializeField] private GameObject _leftArrowButton;
+
+    [Header("Arrows")] [SerializeField] private GameObject _leftArrowButton;
     [SerializeField] private GameObject _rightArrowButton;
 
     private List<GameObject> _stockPagePrefab = new List<GameObject>();
@@ -71,7 +70,7 @@ public class LegendScroll : MonoBehaviour
     private void UpdateLegend()
     {
         _count = 0;
-        
+
         if (!_isVideoLegend)
         {
             for (int i = 0; i < _sprLegend.Length; i++)
@@ -90,9 +89,9 @@ public class LegendScroll : MonoBehaviour
                 _stockPagePrefab.Add(go);
             }
         }
-        
+
         _gridPage.SetActive(true);
-        
+
         if (_leftArrowButton != null && _rightArrowButton != null)
         {
             _leftArrowButton.SetActive(true);
@@ -136,8 +135,7 @@ public class LegendScroll : MonoBehaviour
             else
                 UpdateStateLeftArrow(true);
 
-            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
-                _popUpInfos[_count].Description);
+            UpdatePopUpText();
         }
 
         // Fill the new page indicator
@@ -155,7 +153,7 @@ public class LegendScroll : MonoBehaviour
 
         if (!_isVideoLegend)
         {
-            if (_count >= _sprLegend.Length -1)
+            if (_count >= _sprLegend.Length - 1)
             {
                 UpdateStateRightArrow(false);
                 _count = _sprLegend.Length - 1;
@@ -167,7 +165,7 @@ public class LegendScroll : MonoBehaviour
         }
         else
         {
-            if (_count >= _popUpInfos.Length -1)
+            if (_count >= _popUpInfos.Length - 1)
             {
                 UpdateStateRightArrow(false);
                 _count = _popUpInfos.Length - 1;
@@ -175,14 +173,32 @@ public class LegendScroll : MonoBehaviour
             else
                 UpdateStateLeftArrow(true);
 
-            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
-                _popUpInfos[_count].Description);
+            UpdatePopUpText();
         }
 
         // Fill the new page indicator
         _stockPagePrefab[_count].GetComponent<Image>().sprite = _sprPage[0];
 
         CheckIfEndOfLegend();
+    }
+
+    public void GoToPageOne()
+    {
+        // Change the page indicator to empty 
+        if (_stockPagePrefab.Count <= 1) return;
+
+        foreach (var page in _stockPagePrefab)
+        {
+            page.GetComponent<Image>().sprite = _sprPage[1];
+        }
+
+        _stockPagePrefab[0].GetComponent<Image>().sprite = _sprPage[0];
+
+        _count = 0;
+
+        UpdateStateLeftArrow(false);
+        UpdateStateRightArrow(true);
+        UpdatePopUpText();
     }
 
     private void CheckIfEndOfLegend()
@@ -194,21 +210,21 @@ public class LegendScroll : MonoBehaviour
         else
             _skipPopUpButton.SetActive(_count == _popUpInfos.Length - 1);
     }
-    
+
     private void UpdateStateLeftArrow(bool state)
     {
         if (_leftArrowButton == null) return;
-        
+
         _leftArrowButton.GetComponent<Button>().interactable = state;
-        _leftArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(!state);
+        _leftArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
-    
+
     private void UpdateStateRightArrow(bool state)
     {
         if (_rightArrowButton == null) return;
-        
+
         _rightArrowButton.GetComponent<Button>().interactable = state;
-        _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(!state);
+        _rightArrowButton.GetComponent<PointerMotion>().UpdateCanEnter(state);
     }
 
     private void ResetPopUp()
@@ -217,8 +233,19 @@ public class LegendScroll : MonoBehaviour
         {
             Destroy(page);
         }
+
         _stockPagePrefab.Clear();
-        
+
         UpdateStateRightArrow(true);
+    }
+
+    private void UpdatePopUpText()
+    {
+        if (LanguageManager.Instance.Tongue == Language.Francais)
+            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].ImgPopUp,
+                _popUpInfos[_count].Description);
+        else
+            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].TitleEnglish, _popUpInfos[_count].ImgPopUp,
+                _popUpInfos[_count].DescriptionEnglish);
     }
 }

@@ -37,10 +37,18 @@ public class RecyclingManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
+        _recyclingNbText.DOFade(0, 0);
+    }
+
     public void UpdateRecycling(bool activateOrNot)
     {
-        _recyclingParent.SetActive(activateOrNot);
+        // _recyclingParent.SetActive(activateOrNot);
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
+
+        _recyclingNbText.DOFade(activateOrNot ? 1 : 0, 0.25f);
     }
 
     public void InitNbRecycling(bool hasInfinit)

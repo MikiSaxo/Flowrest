@@ -11,6 +11,8 @@ public class MainMenuManager : MonoBehaviour
     public static MainMenuManager Instance;
     public bool IsLoading { get; set; }
 
+    [SerializeField] private SpawnAnimButtons _mainScreen;
+
     private void Awake()
     {
         Instance = this;
@@ -19,6 +21,8 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         TransiManager.Instance.LaunchShrink();
+        
+        _mainScreen.LaunchSpawnAnimDelay();
     }
 
     public void LaunchMainScene()

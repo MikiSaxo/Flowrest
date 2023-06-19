@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 2582818297900597226}
   - component: {fileID: 2582818297900597229}
   - component: {fileID: 1815101736}
+  - component: {fileID: 1896499176906774518}
   m_Layer: 5
   m_Name: Chara
   m_TagString: Untagged
@@ -562,6 +563,22 @@ MonoBehaviour:
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!114 &1815101736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2582818297900597231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d17a69e460c854690001807158c7f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tpPoints:
+  - {fileID: 1528286583}
+  - {fileID: 389978405}
+  _timeMove: 0.3
+--- !u!114 &1896499176906774518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -823,7 +840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2582818298637115828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -910,7 +927,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -291.92105, y: 143.96194}
-  m_SizeDelta: {x: 170.5366, y: 75.4073}
+  m_SizeDelta: {x: 200, y: 75.4073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2582818298758163847
 CanvasRenderer:
@@ -1150,7 +1167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2582818298933862723
 RectTransform:
   m_ObjectHideFlags: 0

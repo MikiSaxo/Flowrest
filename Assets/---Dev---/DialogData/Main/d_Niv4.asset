@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv4
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Dis-moi Petri, tu connais le nouveau sport populaire actuellement ?
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: "Il faut faire passer des raquettes de l'autre c\xF4t\xE9 d'un filet en
+      tapant dedans avec des balles je crois ?"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Enfin bref, les d\xE9veloppeurs de ce sport ont d\xE9cid\xE9 de se faire
+      cr\xE9er un terrain pour une comp\xE9tition spatiale. Ce sont, ou plut\xF4t
+      c'est un client siamois \xE0 2 t\xEAtes."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Il a insist\xE9 pour que tu travailles sur le projet (parce que les stagiaires
+      co\xFBtent moins cher) mais il t'as, enfin ils t'ont laiss\xE9 quelques indications
+      chacun... Je vais te les lire :"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "Bonjour ! Je souhaiterais recouvrir notre futur terrain de Calcid, vous
+      serez \xE9videmment r\xE9compens\xE9 <b>grassement</b>. Pas besoin de pr\xE9venir
+      mon fr\xE8re ou quoi ne t'en fais pas je g\xE8re (s\xE9rieusement ne le pr\xE9viens
+      pas)."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "Salut ! J'ai de grand projets pour ce sport, et pour \xE7a il me faut
+      un terrain de Grassias ! N'\xE9coutez pas mon fr\xE8re, il a toujours eu le
+      don d'avoir des id\xE9es de merde."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Est-ce qu'ils se rendent compte qu'ils peuvent lire les lettres l'un de
+      l'autre ? Ils partagent un seul corps ce n'est pas la meilleure fa\xE7on d'avoir
+      un secret..."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: "Enfin, qu'est-ce que tu comptes faire ? Apr\xE8s tout c'est ta commande."
+  DialogEnglish: []
+  Choices:
+  - Choice: "Roland Grassias \xE9videmment !"
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 3735f25fc55257f42bd24193332e1152, type: 2}
+    EndDialog: {fileID: 11400000, guid: 445cb3a8ecd94b04d8afd59a0752c788, type: 2}
+  - Choice: L'Open de Calcid sonne mieux.
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: a25cea704d76f4a48aff5d048b38518b, type: 2}
+    EndDialog: {fileID: 11400000, guid: 445cb3a8ecd94b04d8afd59a0752c788, type: 2}
+  LevelToLoad: {fileID: 0}
+  EndDialog: {fileID: 0}
