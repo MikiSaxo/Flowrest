@@ -242,10 +242,10 @@ public class LegendScroll : MonoBehaviour
     private void UpdatePopUpText()
     {
         if (LanguageManager.Instance.Tongue == Language.Francais)
-            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].VideoName,
+            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].Title, _popUpInfos[_count].ImgPopUp,
                 _popUpInfos[_count].Description);
         else
-            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].TitleEnglish, _popUpInfos[_count].VideoName,
+            GetComponent<PopUpManager>().UpdatePopUp(_popUpInfos[_count].TitleEnglish, _popUpInfos[_count].ImgPopUp,
                 _popUpInfos[_count].DescriptionEnglish);
     }
 }
