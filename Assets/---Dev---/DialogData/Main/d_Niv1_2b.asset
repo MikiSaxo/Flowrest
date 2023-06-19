@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv1_2b
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: "Je n'aime pourtant pas me r\xE9p\xE9ter..."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Tu es s\xFBr de vouloir que je te r\xE9explique ?"
+  DialogEnglish: []
+  Choices:
+  - Choice: "Finalement \xE7a ira, je suis pr\xEAt \xE0 essayer"
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 5e9ea6ff03dffab4f926c4b52b84b709, type: 2}
+    EndDialog: {fileID: 11400000, guid: 74565ae878e5d064caf27279770d3c38, type: 2}
+  - Choice: "Oui j'ai besoin qu'on me r\xE9p\xE8te..."
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 11400000, guid: ceb9830adcfac1148abc4aae9f3a7613, type: 2}
+    LevelToLoad: {fileID: 0}
+    EndDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  EndDialog: {fileID: 0}
