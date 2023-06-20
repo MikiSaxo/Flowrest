@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,7 @@ public class MainMenuManager : MonoBehaviour
     public bool IsLoading { get; set; }
 
     [SerializeField] private SpawnAnimButtons _mainScreen;
+    [SerializeField] private GameObject _continueButton;
 
     private void Awake()
     {
@@ -20,11 +22,27 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        if (string.IsNullOrEmpty(PlayerPrefs.GetString("CurrentDialogData")))
+        {
+            _continueButton.GetComponent<Button>().interactable = false;
+            _continueButton.GetComponent<PointerMotion>().UpdateCanEnter(false);
+        }
+        else
+        {
+            _continueButton.GetComponent<Button>().interactable = true;
+            _continueButton.GetComponent<PointerMotion>().UpdateCanEnter(true);
+        }
+           
         TransiManager.Instance.LaunchShrink();
         
         _mainScreen.LaunchSpawnAnimDelay();
     }
 
+    public void LauncNewGame()
+    {
+        PlayerPrefs.SetString("CurrentDialogData", String.Empty);
+        LaunchMainScene();
+    }
     public void LaunchMainScene()
     {
         AudioManager.Instance.StopMusic("MainMusic");

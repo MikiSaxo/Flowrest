@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public enum Language
@@ -92,13 +93,18 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] private string _backButtonTextFrench;
     [SerializeField] private string _backButtonTextEnglish;
     
+    [FormerlySerializedAs("_playButtonTextFrench")]
     [Space(10f)]
     [Header("--- Menu Main Screen ---")]
     [Space(10f)]
     
-    [Header("Play Button")]
-    [SerializeField] private string _playButtonTextFrench;
-    [SerializeField] private string _playButtonTextEnglish;
+    [Header("Continue Button")]
+    [SerializeField] private string _continueButtonTextFrench;
+    [SerializeField] private string _continueButtonTextEnglish;
+    
+    [Header("New Game Button")]
+    [SerializeField] private string _newGameButtonTextFrench;
+    [SerializeField] private string _newGameButtonTextEnglish;
 
     [Space(10f)]
     [Header("--- Credits Screen ---")]
@@ -288,12 +294,19 @@ public class LanguageManager : MonoBehaviour
 
         return _backButtonTextEnglish;
     }
-    public string GetPlayButtonText()
+    public string GetContinueButtonText()
     {
         if (Tongue == Language.Francais)
-            return _playButtonTextFrench;
+            return _continueButtonTextFrench;
 
-        return _playButtonTextEnglish;
+        return _continueButtonTextEnglish;
+    }
+    public string GetNewGameButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _newGameButtonTextFrench;
+
+        return _newGameButtonTextEnglish;
     }
     public string GetThxForPlayingText()
     {
