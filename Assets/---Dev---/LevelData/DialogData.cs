@@ -15,13 +15,16 @@ public class DialogData : ScriptableObject
     [Header("Choices")]
     public DialogChoice[] Choices;
     
-    [FormerlySerializedAs("NextDialogNoChoice")]
+    [Space(10f)]
+    
+    [Header("-- If no choice Next Dialog --")]
+    public DialogData NextDialog;
+    
     [Space(10f)]
     
     [Header("-- If no choice Level To Load --")]
     public LevelData LevelToLoad;
     
-    [FormerlySerializedAs("NextDialogEndLvl")]
     [Space(10f)]
     
     [Header("-- If no choice End Dialog --")]

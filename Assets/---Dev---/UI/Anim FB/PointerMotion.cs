@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class PointerMotion : MonoBehaviour
 {
-    [Header("Enter / Exit")]
-    [SerializeField] private float _timeEnter;
+    [Header("Enter / Exit")] [SerializeField]
+    private float _timeEnter;
+
     [SerializeField] private float _timeLeave, _scaleEnter;
     [SerializeField] private bool _canEnter;
 
@@ -16,13 +17,16 @@ public class PointerMotion : MonoBehaviour
     [SerializeField] private int _vibrato = 4;
 
     private bool _isBouncing;
-    
+    private bool _isEnter;
+
     public void OnEnter()
     {
         if (!_canEnter || _isBouncing) return;
-        
+
         AudioManager.Instance.PlaySFX("MouseOverButton");
-        
+
+        _isEnter = true;
+
         transform.DOKill();
         transform.DOScale(_scaleEnter, _timeEnter).SetEase(Ease.InOutSine);
     }
@@ -36,9 +40,13 @@ public class PointerMotion : MonoBehaviour
 
     private void ForceOnLeave()
     {
+        if (!_isEnter) return;
+
         transform.DOKill();
         transform.DOScale(_scaleEnter, 0);
         transform.DOScale(1, _timeLeave);
+
+        _isEnter = false;
     }
 
     public void OnClick()
@@ -49,7 +57,7 @@ public class PointerMotion : MonoBehaviour
     public void UpdateCanEnter(bool state)
     {
         _canEnter = state;
-        
+
         if (!_canEnter)
             ForceOnLeave();
     }
