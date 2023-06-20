@@ -57,12 +57,10 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeWaitBetweenDropFX;
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
 
-    [Header("Data")] 
-    //[SerializeField] private LevelData _firstLevelData;
+    [Header("Data")]
+    [SerializeField] private bool _resetSave;
     [SerializeField] private DialogData _firstDialogData;
-    
-    [Header("Choose Start Level Index")] [SerializeField] private int _currentLevel;
-    [SerializeField] private LevelData[] _levelData;
+    [SerializeField] private DialogData[] _dialogDataSave;
 
     private bool _hasRecycling;
     private bool _hasInfinitRecycling;
@@ -89,7 +87,8 @@ public class MapManager : MonoBehaviour
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
     private bool _hasPopUp;
-    
+    private int _currentLevel;
+
     private LevelData _currentLevelData;
 
 
@@ -157,7 +156,7 @@ public class MapManager : MonoBehaviour
         // _currentLevelData = _firstLevelData;
         CurrentDialogData = _firstDialogData;
         _currentLevel = 0;
-        
+
         InitializeDialog();
     }
 
@@ -167,10 +166,10 @@ public class MapManager : MonoBehaviour
         {
             _currentLevel++;
         }
-        
-        if(level != null)
+
+        if (level != null)
             _currentLevelData = level;
-        
+
         StartCoroutine(CheckFileMap());
     }
 
@@ -231,10 +230,10 @@ public class MapManager : MonoBehaviour
     {
         // Activate BG
         DialogManager.Instance.UpdateDialogBG(true);
-        
+
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
-        
+
         // Update if PopUp
         _hasPopUp = false;
         // if (currentLvl.PopUpInfos != null)
@@ -246,7 +245,28 @@ public class MapManager : MonoBehaviour
         //
         //     _hasPopUp = currentLvl.PopUpInfos.Length > 0;
         // }
-        
+        var dName = PlayerPrefs.GetString("CurrentDialogData");
+        if (!string.IsNullOrEmpty(dName) && !_resetSave)
+        {
+            // foreach (var dialogData in _dialogDataSave)
+            // {
+            //     if (dName == dialogData.name)
+            //     {
+            //         CurrentDialogData = dialogData;
+            //         break;
+            //     }
+            // }
+            for (int i = 0; i < _dialogDataSave.Length; i++)
+            {
+                if (dName == _dialogDataSave[i].name)
+                {
+                    CurrentDialogData = _dialogDataSave[i];
+                    _currentLevel = ++i;
+                    break;
+                }
+            }
+        }
+
         // Update Dialogs
         DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, _hasPopUp);
     }
@@ -254,7 +274,7 @@ public class MapManager : MonoBehaviour
     private void InitializeMap()
     {
         TransiManager.Instance.LaunchShrink();
-        
+
         var currentLvl = _currentLevelData;
         _mapInfo = _mapConstructData.Map.Split("\n");
 
@@ -280,7 +300,7 @@ public class MapManager : MonoBehaviour
         EnergyManager.Instance.InitEnergy(startEnergy, maxEnergy);
         EnergyManager.Instance.LaunchAnimEnergy();
 
-        
+
         // Update if has inventory
         HasInventory = currentLvl.HasInventory;
         // Update Inventory Opacity
@@ -453,9 +473,6 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        
-
-        
 
         // // Update Dialogs sprites
         // if (currentLvl.CharacterSpritesBeginning != null)
@@ -485,7 +502,7 @@ public class MapManager : MonoBehaviour
         // yield return new WaitForSeconds(TransiManager.Instance.GetTimeForShrink() / 2);
         _countNbOfTile = 0;
         LastMoveManager.Instance.InitCurrentStateMap(_mapSize);
-        
+
         AudioManager.Instance.PlaySFX("SpawnMap");
 
         for (int x = 0; x < sizeMap.x; x++)
@@ -525,7 +542,7 @@ public class MapManager : MonoBehaviour
 
 
         IsLoading = false;
-        
+
         // If Tuto
         ActivateArrowIfForceSwap();
 
@@ -614,7 +631,8 @@ public class MapManager : MonoBehaviour
 
         ActivateArrowIfForceSwap();
 
-        var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y].GetComponent<GroundStateManager>();
+        var secondGround = _mapGrid[_stockPlayerForceSwap[1].x, _stockPlayerForceSwap[1].y]
+            .GetComponent<GroundStateManager>();
         // secondGround.UpdatePrevisuArrow(true);
         secondGround.IsPlayerForceSwapBlocked = false;
     }
@@ -642,13 +660,13 @@ public class MapManager : MonoBehaviour
         //     _currentLevelData = newLevelData;
 
         // StartCoroutine(CheckFileMap());
-        
+
         //InitializeDialog();
     }
 
     public void UpdateLevelToLoad(LevelData newLevelData)
     {
-        if(newLevelData != null)
+        if (newLevelData != null)
             _currentLevelData = newLevelData;
     }
 
@@ -876,7 +894,7 @@ public class MapManager : MonoBehaviour
         }
 
         ResetTwoLastSwapped();
-        
+
         gWhich.JustBeenSwaped = true;
         gLastGroundSelected.JustBeenSwaped = true;
         gWhich.UpdateNoSwap(true);
@@ -1223,7 +1241,7 @@ public class MapManager : MonoBehaviour
         IsVictory = false;
         _isFullFloorOrder = false;
 
-        if(!IsRestart)
+        if (!IsRestart)
             InitializeDialog();
         else
         {
@@ -1234,7 +1252,7 @@ public class MapManager : MonoBehaviour
             }
             else
                 IsRestart = false;
-            
+
             LaunchCheckFileMap(null);
         }
     }

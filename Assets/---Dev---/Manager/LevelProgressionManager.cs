@@ -9,6 +9,7 @@ public class LevelProgressionManager : MonoBehaviour
 
     public int CurrentLevel { get; set; }
     public int LevelUnlocked { get; set; }
+    public DialogData CurrentDialogData { get; set; }
 
     private void Awake()
     {
