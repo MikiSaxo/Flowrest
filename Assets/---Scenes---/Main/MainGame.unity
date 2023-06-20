@@ -163,6 +163,70 @@ Transform:
   m_Father: {fileID: 709628392}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &44834465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44834466}
+  - component: {fileID: 44834467}
+  m_Layer: 0
+  m_Name: VisualModifier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44834466
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44834465}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 709628392}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44834467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44834465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e80fb71c7ea9f4ebfb492e582cf702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _level4Img: {fileID: 0}
+  _blindFoldGrassias: {fileID: 0}
+  _blindFoldCalcid: {fileID: 0}
+  _level7Img: {fileID: 0}
+  _clothesPeg: {fileID: 0}
+  _makeUpArmy: {fileID: 0}
+  _water: {fileID: 0}
+  _postKohLanta: {fileID: 0}
+  _waterColored: {fileID: 0}
+  _level12Img: {fileID: 0}
+  _goMuscu: {fileID: 0}
+  _poorProf: {fileID: 0}
+  _level14Img: {fileID: 0}
+  _nbTen: {fileID: 0}
+  _goldRocks: []
+  _fXBlingBling: {fileID: 0}
+  _goldMat: {fileID: 0}
+  _level15Img: {fileID: 0}
+  _nbIceProf: {fileID: 0}
+  _icebergs: {fileID: 0}
 --- !u!1 &51693967
 GameObject:
   m_ObjectHideFlags: 0
@@ -5586,6 +5650,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 29539078}
+  - {fileID: 44834466}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11261,9 +11326,14 @@ MonoBehaviour:
   _languageTextButton: {fileID: 872363962}
   _creditsTextButton: {fileID: 1315935187}
   _backTextButton: {fileID: 894076852}
+  _playButtonTextButton: {fileID: 0}
   _continueButtonTextButton: {fileID: 0}
   _newGameButtonTextButton: {fileID: 0}
-  _backLvlSelectTextButton: {fileID: 0}
+  _quitButton: {fileID: 0}
+  _popUpNewGameText: {fileID: 0}
+  _backTextButtonMain: {fileID: 0}
+  _yesButton: {fileID: 0}
+  _noButton: {fileID: 0}
   _thxForPlayinText: {fileID: 1863363761}
   _withHelpText: {fileID: 782564986}
   _specialThanksText: {fileID: 78884500}
@@ -14248,7 +14318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _resetSave
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _loadingText

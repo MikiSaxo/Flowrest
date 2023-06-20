@@ -246,7 +246,6 @@ public class MapManager : MonoBehaviour
         //     _hasPopUp = currentLvl.PopUpInfos.Length > 0;
         // }
         var dName = PlayerPrefs.GetString("CurrentDialogData");
-        print(dName);
         if (!string.IsNullOrEmpty(dName) && !_resetSave)
         {
             // foreach (var dialogData in _dialogDataSave)

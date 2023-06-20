@@ -93,10 +93,13 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] private string _backButtonTextFrench;
     [SerializeField] private string _backButtonTextEnglish;
     
-    [FormerlySerializedAs("_playButtonTextFrench")]
     [Space(10f)]
     [Header("--- Menu Main Screen ---")]
     [Space(10f)]
+    
+    [Header("Play Button")]
+    [SerializeField] private string _playButtonTextFrench;
+    [SerializeField] private string _playButtonTextEnglish;
     
     [Header("Continue Button")]
     [SerializeField] private string _continueButtonTextFrench;
@@ -105,6 +108,18 @@ public class LanguageManager : MonoBehaviour
     [Header("New Game Button")]
     [SerializeField] private string _newGameButtonTextFrench;
     [SerializeField] private string _newGameButtonTextEnglish;
+    
+    [Header("Warning PopUp Button")]
+    [SerializeField] private string _popUpNewGameTextFrench;
+    [SerializeField] private string _popUpNewGameTextEnglish;
+    
+    [Header("Yes")]
+    [SerializeField] private string _yesTextFrench;
+    [SerializeField] private string _yesTextEnglish;
+    
+    [Header("No")]
+    [SerializeField] private string _noTextFrench;
+    [SerializeField] private string _noTextEnglish;
 
     [Space(10f)]
     [Header("--- Credits Screen ---")]
@@ -294,6 +309,13 @@ public class LanguageManager : MonoBehaviour
 
         return _backButtonTextEnglish;
     }
+    public string GetPlayButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _playButtonTextFrench;
+
+        return _playButtonTextEnglish;
+    }
     public string GetContinueButtonText()
     {
         if (Tongue == Language.Francais)
@@ -307,6 +329,27 @@ public class LanguageManager : MonoBehaviour
             return _newGameButtonTextFrench;
 
         return _newGameButtonTextEnglish;
+    }
+    public string GetPopUpNewGameButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _popUpNewGameTextFrench;
+
+        return _popUpNewGameTextEnglish;
+    }
+    public string GetYesText()
+    {
+        if (Tongue == Language.Francais)
+            return _yesTextFrench;
+
+        return _yesTextEnglish;
+    }
+    public string GetNoText()
+    {
+        if (Tongue == Language.Francais)
+            return _noTextFrench;
+
+        return _noTextEnglish;
     }
     public string GetThxForPlayingText()
     {
