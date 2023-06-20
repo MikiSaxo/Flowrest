@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 11
   m_EditorClassIdentifier: 
-  LevelName: Tuto 11.2
+  LevelName: Niveau 11
   LevelFolder: Level Editor
-  EnergyAtStart: 4
+  EnergyAtStart: 1
   HasInventory: 0
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -31,17 +31,20 @@ MonoBehaviour:
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpImages: []
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
-  QuestFloor: 00000000
+  QuestFloor: 
   QuestFlower: 
   QuestNoSpecificTiles: 
-  QuestTileChain: 
-  NumberTileChain: 0
+  QuestTileChain: 00000000
+  NumberTileChain: 9
   QuestTileCount: 
   NumberTileCount: 0
+  DialogLevelStart: {fileID: 0}
   CharacterName: Profess.io
+  CharacterSpritesBeginning: []
+  CharacterSpritesEnd: []
   DialogBeginning: []
   DialogEnd: []
   DialogBeginningEnglish: []

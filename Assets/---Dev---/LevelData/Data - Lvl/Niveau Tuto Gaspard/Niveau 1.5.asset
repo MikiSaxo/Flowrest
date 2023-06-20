@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
+  m_Name: Niveau 1.5
+  m_EditorClassIdentifier: 
+  LevelName: Niveau 1.5
+  LevelFolder: Level Editor
+  EnergyAtStart: 1
+  HasInventory: 0
+  StartNbState: 0
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  HasRecycling: 0
+  HasInfinitRecycling: 0
+  NbOfRecycling: 0
+  OpenMemo: 0
+  HasPrevisu: 1
+  BlockLastSwap: 1
+  IsTuto: 1
+  IsTutoRecycling: 0
+  PlayerForceSwap:
+  - {x: 2, y: 2}
+  - {x: 6, y: 2}
+  HasForcePoseBlocAfterSwap: 0
+  ForcePoseBlocCoord: {x: 0, y: 0}
+  PopUpInfos:
+  - ImgPopUp:
+    - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    - {fileID: 21300000, guid: 261a6a9248cd949409fa023c40c626ff, type: 3}
+    Title: Switch Tiles
+    Description: "S\xE9lectionne une tuile puis une deuxi\xE8me pour \xE9changer
+      leurs positions"
+    TitleEnglish: Switch english
+    DescriptionEnglish: select miechel
+  - ImgPopUp: []
+    Title: Interaction
+    Description: 'La nouvelle position de la tuile va venir modifier les environnements
+      adjacents '
+    TitleEnglish: 
+    DescriptionEnglish: 
+  QuestDescription: "Commande \xB5 :"
+  QuestDescriptionEnglish: 
+  QuestFloor: 
+  QuestFlower: 00000000
+  QuestNoSpecificTiles: 
+  QuestTileChain: 
+  NumberTileChain: 0
+  QuestTileCount: 
+  NumberTileCount: 0
+  DialogLevelStart: {fileID: 11400000, guid: efe9d22a9c8298542b8ec95ebd797d8e, type: 2}
+  CharacterName: Profess.io
+  CharacterSpritesBeginning:
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+  - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+  CharacterSpritesEnd:
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+  - {fileID: 21300000, guid: e4bad93669f03644cac2e53de601a621, type: 3}
+  DialogBeginning:
+  - "Maintenant que tu sais comment \xE9changer deux tuiles entre elles, je vais
+    t'apporter quelques pr\xE9cisions sur ces \xE9changes."
+  - "Apr\xE8s avoir \xE9chang\xE9es deux tuiles, <b>les tuiles adjacentes</b> aux
+    tuiles \xE9chang\xE9es se voient <b>modifi\xE9es</b>."
+  - "<b>La premi\xE8re tuile</b> que tu vas s\xE9lectionner sera \xE9galement <b>la
+    premi\xE8re</b> \xE0 effectuer ses changements. Elle sera ensuite suivie des
+    changements de la <b>deuxi\xE8me tuile que tu auras s\xE9lectionn\xE9e</b>."
+  - "Ici, tu vas \xE9changer ta tuile de Grassias avec une tuile de Calcid. La tuile
+    de Grassias va modifier les tuiles de Calcid adjacentes. "
+  - "Comme indiqu\xE9 dans le m\xE9mo, une tuile de Grassias combin\xE9 \xE0 une
+    tuile de Calcid donne une tuile de Grassias."
+  - "Pour faciliter ton travail, nos ing\xE9nieurs ont con\xE7us un syst\xE8me permettant
+    de <b>pr\xE9visualiser</b> les modifications que tes tuiles vont apporter."
+  DialogEnd:
+  - "Fais attention lors de tes \xE9changes, une tuile qui vient d'\xEAtre d\xE9plac\xE9e
+    doit s'adapter \xE0 son nouvel environnement."
+  - "Tu ne pourras donc pas d\xE9placer deux fois d'affil\xE9e la m\xEAme tuile."
+  DialogBeginningEnglish: []
+  DialogEndEnglish: []
