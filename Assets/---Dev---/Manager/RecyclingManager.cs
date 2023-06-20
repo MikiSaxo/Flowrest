@@ -11,22 +11,25 @@ public class RecyclingManager : MonoBehaviour
 {
     public static RecyclingManager Instance;
 
-    
+
     public bool HasInitTutoRecycling { get; set; }
 
     [SerializeField] private GameObject _recyclingParent;
     [SerializeField] private FB_Arrow _arrowTuto;
     [SerializeField] private TextMeshProUGUI _recyclingNbText;
-    
-    [Header("Anim Rotation")]
-    [SerializeField] private GameObject _recyclingImg;
+
+    [Header("Anim Rotation")] [SerializeField]
+    private GameObject _recyclingImg;
+
     [SerializeField] private Transform _minDistancePoint;
     [SerializeField] private float _minDistanceToClose = 2f;
     [SerializeField] private float _timeClose = .5f;
     [SerializeField] private float _timeOpen = 1f;
 
     private bool _hasInfinitRecycling;
+
     private int _maxRecycling;
+
     // private int _currentLeftRecycling;
     private bool _isSelected;
     private float _minRecyclingRotate = 0;
@@ -72,9 +75,9 @@ public class RecyclingManager : MonoBehaviour
             gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
             // gameObject.GetComponentInChildren<Button>().interactable = false;
         }
-        
-        GetComponent<PointerMotion>().Bounce();
-        
+
+        //GetComponent<PointerMotion>().Bounce();
+
         UpdateDisplayRecyclingNbLeft();
     }
 
@@ -91,40 +94,40 @@ public class RecyclingManager : MonoBehaviour
     {
         if (MapManager.Instance.LastObjButtonSelected == null)
         {
-            _recyclingImg.transform.DORotate(new Vector3(0,0,0), 0);
+            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
             return;
         }
 
         if (MapManager.Instance.IsLoading || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping)
         {
-            _recyclingImg.transform.DORotate(new Vector3(0,0,0), 0);
+            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
             return;
         }
 
         if (MapManager.Instance.NbOfRecycling <= 0)
         {
-            _recyclingImg.transform.DORotate(new Vector3(0,0,0), 0);
+            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
             return;
         }
-        
+
 
         var distance = _minDistancePoint.position.x - Input.mousePosition.x;
         var invertDistance = (1 / distance) * 2000;
 
         var angle = Mathf.Clamp(invertDistance, _minRecyclingRotate, _maxRecyclingRotate);
-        
+
         if (invertDistance < 0)
             angle = _maxRecyclingRotate;
-        if(invertDistance < _minDistanceToClose && invertDistance > 0f)
+        if (invertDistance < _minDistanceToClose && invertDistance > 0f)
             angle = _minRecyclingRotate;
-        
-        _recyclingImg.transform.DORotate(new Vector3(0,0,-angle), 0);
+
+        _recyclingImg.transform.DORotate(new Vector3(0, 0, -angle), 0);
     }
 
     public void ActivateButton()
     {
         if (DialogManager.Instance.GetIsDialogTime()) return;
-        
+
         _isSelected = true;
         OnEnter();
     }
@@ -145,10 +148,10 @@ public class RecyclingManager : MonoBehaviour
     public void DeselectRecycle()
     {
         _recyclingImg.transform.DOKill();
-        _recyclingImg.transform.DORotate(new Vector3(0,0,_minRecyclingRotate), _timeClose);
+        _recyclingImg.transform.DORotate(new Vector3(0, 0, _minRecyclingRotate), _timeClose);
 
         MapManager.Instance.ResetWantToRecycle();
-        
+
         _isSelected = false;
         OnExit();
     }
@@ -156,7 +159,7 @@ public class RecyclingManager : MonoBehaviour
     public void OpenRecycling()
     {
         _recyclingImg.transform.DOKill();
-        _recyclingImg.transform.DORotate(new Vector3(0,0,-_maxRecyclingRotate), _timeOpen).SetEase(Ease.OutBounce);
+        _recyclingImg.transform.DORotate(new Vector3(0, 0, -_maxRecyclingRotate), _timeOpen).SetEase(Ease.OutBounce);
     }
 
     private void UpdateVisualState()
