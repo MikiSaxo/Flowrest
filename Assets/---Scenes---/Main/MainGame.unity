@@ -11261,7 +11261,8 @@ MonoBehaviour:
   _languageTextButton: {fileID: 872363962}
   _creditsTextButton: {fileID: 1315935187}
   _backTextButton: {fileID: 894076852}
-  _playButtonTextButton: {fileID: 0}
+  _continueButtonTextButton: {fileID: 0}
+  _newGameButtonTextButton: {fileID: 0}
   _backLvlSelectTextButton: {fileID: 0}
   _thxForPlayinText: {fileID: 1863363761}
   _withHelpText: {fileID: 782564986}
@@ -14246,6 +14247,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _resetSave
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _loadingText
       value: 
       objectReference: {fileID: 686570303}
@@ -14260,7 +14265,7 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _firstDialogData
       value: 
-      objectReference: {fileID: 11400000, guid: 74565ae878e5d064caf27279770d3c38, type: 2}
+      objectReference: {fileID: 11400000, guid: ceb9830adcfac1148abc4aae9f3a7613, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _fxWaterWaveClick
       value: 
@@ -14401,6 +14406,58 @@ PrefabInstance:
       propertyPath: _levelData.Array.data[30]
       value: 
       objectReference: {fileID: 11400000, guid: 0ec91859b4cbff74fbaaac21d80f2cca, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ceb9830adcfac1148abc4aae9f3a7613, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d1c105ef1397a64abe9b13ca2eff00f, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7fd9150769c17cd449319ae2229ca412, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: a2bf3bf48c4027346911be581dbe4995, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 74565ae878e5d064caf27279770d3c38, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5bbe9da7a7d49af47a16d6af14ab2dbf, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 37a1402ce9af89a4d84d88277e908b47, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 445cb3a8ecd94b04d8afd59a0752c788, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: 48f9ceba49fd27d43b725c166d304661, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 16ead5a45b2d0b147b3ffb3044646147, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 008386c7fc29f174e82907f1a02d7975, type: 2}
+    - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
+      propertyPath: _dialogDataSave.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: 75e816ddf266c43499c7931b748d4941, type: 2}
     - target: {fileID: 6942186750416081795, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: m_RootOrder
       value: 3

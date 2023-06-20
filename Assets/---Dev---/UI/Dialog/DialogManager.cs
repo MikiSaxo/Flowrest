@@ -326,6 +326,9 @@ public class DialogManager : MonoBehaviour
         {
             NoNextEndDialog = false;
             NextDialogToLoad = _currentDialogData.EndDialog;
+            // if (LevelProgressionManager.Instance != null)
+            //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
+            PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
         }
         else
         {
@@ -444,9 +447,12 @@ public class DialogManager : MonoBehaviour
 
         if (_choices[index].EndDialog != null)
         {
-            print("ça update le choixe");
+            print("ça update le choice");
             NoNextEndDialogChoice = false;
             NextDialogToLoad = _choices[index].EndDialog;
+            // if (LevelProgressionManager.Instance != null)
+            //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
+            PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
         }
         else
         {

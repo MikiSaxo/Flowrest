@@ -66,6 +66,11 @@ public class SpawnAnimButtons : MonoBehaviour
         _buttonsList.Add(newObj);
     }
 
+    public void RemoveButtonToList(int index)
+    {
+        _buttonsList.RemoveAt(index);
+    }
+
     public void ClearButtonList()
     {
         _buttonsList.Clear();
