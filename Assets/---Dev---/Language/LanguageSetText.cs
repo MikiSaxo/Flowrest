@@ -35,9 +35,14 @@ public class LanguageSetText : MonoBehaviour
     [SerializeField] private TMP_Text _backTextButton;
     
     [Header("Main Menu")]
+    [SerializeField] private TMP_Text _playButtonTextButton;
     [SerializeField] private TMP_Text _continueButtonTextButton;
     [SerializeField] private TMP_Text _newGameButtonTextButton;
-    [SerializeField] private TMP_Text _backLvlSelectTextButton;
+    [SerializeField] private TMP_Text _quitButton;
+    [SerializeField] private TMP_Text _popUpNewGameText;
+    [SerializeField] private TMP_Text _backTextButtonMain;
+    [SerializeField] private TMP_Text _yesButton;
+    [SerializeField] private TMP_Text _noButton;
     
     [Header("Credits Screen")]
     [SerializeField] private TMP_Text _thxForPlayinText;
@@ -71,9 +76,14 @@ public class LanguageSetText : MonoBehaviour
 
         if (sceneIndex.buildIndex == 0)
         {
+            _playButtonTextButton.text = _languageManager.GetPlayButtonText();
             _continueButtonTextButton.text = _languageManager.GetContinueButtonText();
             _newGameButtonTextButton.text = _languageManager.GetNewGameButtonText();
-            _backLvlSelectTextButton.text = _languageManager.GetBackButtonText();   
+            _quitButton.text = _languageManager.GetQuitButtonText();   
+            _popUpNewGameText.text = _languageManager.GetPopUpNewGameButtonText();   
+            _yesButton.text = _languageManager.GetYesText();   
+            _noButton.text = _languageManager.GetNoText();   
+            _backTextButtonMain.text = _languageManager.GetBackButtonText();
         }
         else
         {

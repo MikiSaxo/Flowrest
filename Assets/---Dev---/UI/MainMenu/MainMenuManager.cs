@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
 
     [SerializeField] private SpawnAnimButtons _mainScreen;
     [SerializeField] private GameObject _continueButton;
+    [SerializeField] private GameObject _popUpNewGame;
 
     private void Awake()
     {
@@ -38,6 +39,19 @@ public class MainMenuManager : MonoBehaviour
         _mainScreen.LaunchSpawnAnimDelay();
     }
 
+    public void PopUpIfNewGame()
+    {
+        var hasGame = PlayerPrefs.GetString("CurrentDialogData");
+        if (!string.IsNullOrEmpty(hasGame))
+        {
+            _popUpNewGame.SetActive(true);
+            _popUpNewGame.GetComponent<PointerMotion>().Bounce();
+        }
+        else
+        {
+            LauncNewGame();
+        }
+    }
     public void LauncNewGame()
     {
         PlayerPrefs.SetString("CurrentDialogData", String.Empty);

@@ -28,6 +28,9 @@ public class DialogPrefab : MonoBehaviour
 
     public void Init(string dialog, float dialogSpeed)
     {
+        if (string.IsNullOrEmpty(dialog))
+            dialog = DialogText.text;
+            
         IsFinishDialoging = false;
         if (dialog.Contains('$'))
         {
@@ -255,7 +258,8 @@ public class DialogPrefab : MonoBehaviour
         StopCoroutine(AnimationText());
         IsFinishDialoging = true;
 
-        DialogManager.Instance.UpdateDialogFBEnd(true);
+        if(DialogManager.Instance != null)
+            DialogManager.Instance.UpdateDialogFBEnd(true);
     }
 
     public float GetDialogSizeY()
