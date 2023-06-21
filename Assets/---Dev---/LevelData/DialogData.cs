@@ -29,4 +29,9 @@ public class DialogData : ScriptableObject
     
     [Header("-- If no choice End Dialog --")]
     public DialogData EndDialog;
+    
+    [Space(20f)]
+    
+    [Header("---- Upgrades ----")]
+    public DialogUpgrades VisualUpgrades;
 }

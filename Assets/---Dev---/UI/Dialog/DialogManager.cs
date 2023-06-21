@@ -16,7 +16,7 @@ public class DialogManager : MonoBehaviour
     [Space(5)] [Header("Character Dialogs")] [SerializeField]
     private TMP_Text _characterName;
 
-    [SerializeField] private Image _characterImg;
+    [SerializeField] private GameObject _characterObj;
 
     [Header("Dialogs")] [SerializeField] private GameObject _dialogGlobal;
     [SerializeField] private GameObject _dialogContent;
@@ -108,16 +108,13 @@ public class DialogManager : MonoBehaviour
         {
             if (_charaSprites[_countDialog] != null)
             {
-                _characterImg.enabled = true;
-                _characterImg.sprite = _charaSprites[_countDialog];
+                _characterObj.GetComponent<CharaMovement>().UpdateChara( _charaSprites[_countDialog]);
             }
             else
             {
-                _characterImg.enabled = false;
+                _characterObj.GetComponent<CharaMovement>().UpdateChara(null);
             }
         }
-
-        _characterImg.gameObject.GetComponent<CharaMovement>().LaunchMovement();
     }
 
     public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
@@ -319,6 +316,7 @@ public class DialogManager : MonoBehaviour
         _dialogGlobal.SetActive(false);
         UpdateDialogBG(false);
 
+        CheckUpgrades();
 
         MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
@@ -326,14 +324,20 @@ public class DialogManager : MonoBehaviour
         {
             NoNextEndDialog = false;
             NextDialogToLoad = _currentDialogData.EndDialog;
-            // if (LevelProgressionManager.Instance != null)
-            //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
+
             PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
         }
         else
         {
             NoNextEndDialog = true;
         }
+    }
+
+    private void CheckUpgrades()
+    {
+        if (_currentDialogData.VisualUpgrades._Upgrades == Upgrades.Nothing) return;
+        
+        VisualModifier.Instance.UpdateUpgrades(_currentDialogData.VisualUpgrades._Upgrades);
     }
 
     public void OnClick()
