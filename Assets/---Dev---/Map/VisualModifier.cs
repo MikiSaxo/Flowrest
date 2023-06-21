@@ -31,28 +31,27 @@ public class VisualModifier : MonoBehaviour
 
     [Header("Level 7")] 
     [SerializeField] private Image _level7Img_ClothesPeg;
-    [SerializeField] private Image _level7Img_MakeUpArmy;
+    [SerializeField] private GameObject _level7_StinkingMussel;
+    [SerializeField] private Image _level7Img_Rambo;
 
     [Header("Level 10")] 
     [SerializeField] private GameObject _water;
     [SerializeField] private GameObject _potoKohLanta;
     [SerializeField] private Material _waterColored;
 
-    [Header("Level 12")] 
-    [SerializeField] private Image _level12Img;
-    [SerializeField] private Sprite _goMuscu;
-    [SerializeField] private Sprite _poorProf;
+    [Header("Level 13")] 
+    [SerializeField] private Image _level13Img_GoMuscu;
+    [SerializeField] private Image _level13Img_MakeUp;
+    [SerializeField] private Image _level13Img_PoorProf;
 
-    [Header("Level 14")] 
-    [SerializeField] private Image _level14Img;
-    [SerializeField] private Sprite _nbTen;
+    [Header("Level 15")] 
+    [SerializeField] private Image _level15Img_Supporter;
     [SerializeField] private GameObject[] _goldRocks;
     [SerializeField] private GameObject _fXBlingBling;
     [SerializeField] private Material _goldMat;
 
-    [Header("Level 15")] 
-    [SerializeField] private Image _level15Img;
-    [SerializeField] private Sprite _nbIceProf;
+    [Header("Level 16")] 
+    [SerializeField] private Image _level15Img_MouthIce;
     [SerializeField] private GameObject _icebergs;
 
     private GameObject _stockIceberg;
@@ -67,9 +66,9 @@ public class VisualModifier : MonoBehaviour
         Level4();
         Level7();
         // Level10();
-        // Level12();
-        // Level14();
-        // Level15();
+        Level13();
+        Level15();
+        Level16();
     }
 
     public void UpdateUpgrades(Upgrades newUpgrade)
@@ -91,19 +90,6 @@ public class VisualModifier : MonoBehaviour
             _level4Img.enabled = true;
             _level4Img.sprite = _blindFoldCalcid;
         }
-        
-        // _level4Img.enabled = false;
-        // if (IsBlindFoldGrassias && !IsBlindFoldCalcid)
-        // {
-        //     _level4Img.enabled = true;
-        //     _level4Img.sprite = _blindFoldGrassias;
-        // }
-        //
-        // if (!IsBlindFoldGrassias && IsBlindFoldCalcid)
-        // {
-        //     _level4Img.enabled = true;
-        //     _level4Img.sprite = _blindFoldCalcid;
-        // }
     }
 
     private void Level7()
@@ -111,25 +97,16 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsStinking)
         {
             _level7Img_ClothesPeg.enabled = true;
+            _level7Img_Rambo.enabled = false;
+            _level7_StinkingMussel.SetActive(true);
         }
 
         if (CurrentUpgrade == Upgrades.IsRambo)
         {
-            _level7Img_MakeUpArmy.enabled = true;
+            _level7Img_ClothesPeg.enabled = false;
+            _level7Img_Rambo.enabled = true;
+            _level7_StinkingMussel.SetActive(false);
         }
-        
-        // _level7Img.enabled = false;
-        // if (IsStinking && !IsRambo)
-        // {
-        //     _level7Img.enabled = true;
-        //     _level7Img.sprite = _clothesPeg;
-        // }
-        //
-        // if (!IsStinking && IsRambo)
-        // {
-        //     _level7Img.enabled = true;
-        //     _level7Img.sprite = _makeUpArmy;
-        // }
     }
 
     private void Level10()
@@ -147,123 +124,50 @@ public class VisualModifier : MonoBehaviour
             var waterMat = _water.GetComponent<MeshRenderer>();
             _potoKohLanta.SetActive(true);
         }
-        
-        // if (IsWaterColor && !IsKohLanta)
-        // {
-        //     // Change Material Water
-        //     var waterMat = _water.GetComponent<MeshRenderer>();
-        //     _potoKohLanta.SetActive(false);
-        // }
-        //
-        // if (!IsWaterColor && IsKohLanta)
-        // {
-        //     // Change Material Water
-        //     var waterMat = _water.GetComponent<MeshRenderer>();
-        //     _potoKohLanta.SetActive(true);
-        // }
     }
 
-    private void Level12()
+    private void Level13()
     {
-        _level12Img.enabled = false;
-
         if (CurrentUpgrade == Upgrades.IsGoMuscu)
         {
-            _level12Img.enabled = true;
-            _level12Img.sprite = _goMuscu;
+            _level13Img_GoMuscu.enabled = true;
+            _level13Img_MakeUp.enabled = true;
+            _level13Img_PoorProf.enabled = false;
         }
 
         if (CurrentUpgrade == Upgrades.IsPoor)
         {
-            _level12Img.enabled = true;
-            _level12Img.sprite = _poorProf;
+            _level13Img_GoMuscu.enabled = false;
+            _level13Img_MakeUp.enabled = false;
+            _level13Img_PoorProf.enabled = true;
         }
-        
-        // if (IsGoMuscu && !IsPoor)
-        // {
-        //     _level12Img.enabled = true;
-        //     _level12Img.sprite = _goMuscu;
-        // }
-        //
-        // if (!IsGoMuscu && IsPoor)
-        // {
-        //     _level12Img.enabled = true;
-        //     _level12Img.sprite = _poorProf;
-        // }
-    }
-
-    private void Level14()
-    {
-        if (CurrentUpgrade == Upgrades.IsFootball)
-        {
-            _level14Img.enabled = true;
-            _level14Img.sprite = _nbTen;
-        }
-
-        if (CurrentUpgrade == Upgrades.IsGold)
-        {
-            _level14Img.enabled = false;
-            // Change Material Rocks, Water, Cursor and FX Bling Bling 
-        }
-        
-        // _level14Img.enabled = false;
-        //
-        // if (IsFootball && !IsGold)
-        // {
-        //     _level14Img.enabled = true;
-        //     _level14Img.sprite = _nbTen;
-        // }
-        //
-        // if (!IsFootball && IsGold)
-        // {
-        //     _level14Img.enabled = false;
-        //     // Change Material Rocks, Water, Cursor and FX Bling Bling 
-        // }
-        
-        // if(_currentUpgrade == Upgrades.IsFootball || _currentUpgrade == Upgrades.IsGold)
-            // _level14Img.enabled = false;
-
-     
     }
 
     private void Level15()
     {
-        // _level15Img.enabled = false;
+        if (CurrentUpgrade == Upgrades.IsFootball)
+        {
+            _level15Img_Supporter.enabled = true;
+        }
 
+        if (CurrentUpgrade == Upgrades.IsGold)
+        {
+            // Change Material Rocks, Water, Cursor and FX Bling Bling 
+        }
+    }
+
+    private void Level16()
+    {
         if (CurrentUpgrade == Upgrades.IsIceberg)
         {
-            _level15Img.enabled = true;
-            _level15Img.sprite = _nbIceProf;
+            _level15Img_MouthIce.enabled = true;
+            _icebergs.SetActive(false);
         }
 
         if (CurrentUpgrade == Upgrades.IsIcePig)
         {
-            _level15Img.enabled = false;
-            
-            if (_stockIceberg == null)
-            {
-                GameObject go = Instantiate(_icebergs, transform);
-                _stockIceberg = go;
-            }
+            _level15Img_MouthIce.enabled = false;
+            _icebergs.SetActive(true);
         }
-        
-        // _level15Img.enabled = false;
-        //
-        // if (IsIceberg && !IsIcePig)
-        // {
-        //     _level15Img.enabled = true;
-        //     _level15Img.sprite = _nbIceProf;
-        // }
-        //
-        // if (!IsIceberg && IsIcePig)
-        // {
-        //     _level15Img.enabled = false;
-        //     
-        //     if (_stockIceberg == null)
-        //     {
-        //         GameObject go = Instantiate(_icebergs, transform);
-        //         _stockIceberg = go;
-        //     }
-        // }
     }
 }
