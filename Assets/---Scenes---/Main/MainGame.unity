@@ -2856,9 +2856,9 @@ RectTransform:
   - {fileID: 1315756158}
   - {fileID: 2121142950}
   - {fileID: 1223352064}
-  - {fileID: 1588833880}
   - {fileID: 762752804}
   - {fileID: 1269609029}
+  - {fileID: 1588833880}
   - {fileID: 1446294492}
   m_Father: {fileID: 0}
   m_RootOrder: 8
@@ -10551,7 +10551,7 @@ RectTransform:
   - {fileID: 1635874098}
   - {fileID: 2066737927}
   m_Father: {fileID: 480315729}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13782,6 +13782,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480315729}
     m_Modifications:
+    - target: {fileID: 2821811327857433954, guid: b5d56625f20dc0a49998bd4a99233901, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 275.7486
+      objectReference: {fileID: 0}
     - target: {fileID: 2821811328557468866, guid: b5d56625f20dc0a49998bd4a99233901, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13792,7 +13796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2821811328557468866, guid: b5d56625f20dc0a49998bd4a99233901, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2821811328557468866, guid: b5d56625f20dc0a49998bd4a99233901, type: 3}
       propertyPath: m_AnchorMax.x
@@ -14335,7 +14339,7 @@ PrefabInstance:
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _firstDialogData
       value: 
-      objectReference: {fileID: 11400000, guid: ceb9830adcfac1148abc4aae9f3a7613, type: 2}
+      objectReference: {fileID: 11400000, guid: d023a6048eb103c4cab344aedd394ea2, type: 2}
     - target: {fileID: 6942186750416081794, guid: c071ef971269aba44bb569d6ceb9743f, type: 3}
       propertyPath: _fxWaterWaveClick
       value: 
@@ -14973,7 +14977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8084888582913593005, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8084888582913593005, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_AnchorMax.x
@@ -15047,6 +15051,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8084888583356763353, guid: e7023709c89eae948a343f5d9311f110, type: 3}
+      propertyPath: _timeClose
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8084888583356763355, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -15055,6 +15063,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 205250336}
+    - target: {fileID: 8084888583423172453, guid: e7023709c89eae948a343f5d9311f110, type: 3}
+      propertyPath: m_Name
+      value: RecyclingButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8084888583423172472, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -32,8 +32,9 @@ public class RecyclingManager : MonoBehaviour
 
     // private int _currentLeftRecycling;
     private bool _isSelected;
-    private float _minRecyclingRotate = 0;
-    private float _maxRecyclingRotate = 60;
+    private bool _isClosed;
+    private const float _minRecyclingRotate = 0;
+    private const float _maxRecyclingRotate = 60;
 
     private void Awake()
     {
@@ -92,24 +93,18 @@ public class RecyclingManager : MonoBehaviour
 
     private void Update()
     {
-        if (MapManager.Instance.LastObjButtonSelected == null)
+        if (MapManager.Instance.WantToRecycle)
+            return;
+
+        if (MapManager.Instance.LastObjButtonSelected == null
+            || MapManager.Instance.IsLoading
+            || MapManager.Instance.IsPosing
+            || MapManager.Instance.IsSwapping
+            || MapManager.Instance.NbOfRecycling <= 0)
         {
-            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
+            CloseRecycling();
             return;
         }
-
-        if (MapManager.Instance.IsLoading || MapManager.Instance.IsPosing || MapManager.Instance.IsSwapping)
-        {
-            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
-            return;
-        }
-
-        if (MapManager.Instance.NbOfRecycling <= 0)
-        {
-            _recyclingImg.transform.DORotate(new Vector3(0, 0, 0), 0);
-            return;
-        }
-
 
         var distance = _minDistancePoint.position.x - Input.mousePosition.x;
         var invertDistance = (1 / distance) * 2000;
@@ -147,17 +142,30 @@ public class RecyclingManager : MonoBehaviour
 
     public void DeselectRecycle()
     {
-        _recyclingImg.transform.DOKill();
-        _recyclingImg.transform.DORotate(new Vector3(0, 0, _minRecyclingRotate), _timeClose);
-
+        CloseRecycling();
         MapManager.Instance.ResetWantToRecycle();
 
         _isSelected = false;
         OnExit();
     }
 
+    private void CloseRecycling()
+    {
+        if (_isClosed) return;
+
+        _isClosed = true;
+        _recyclingImg.transform.DOKill();
+        _recyclingImg.transform.DORotate(Vector3.zero, _timeClose).SetEase(Ease.OutBounce).OnComplete(ResetClosing);
+    }
+
+    private void ResetClosing()
+    {
+        _isClosed = false;
+    }
+
     public void OpenRecycling()
     {
+        _isClosed = false;
         _recyclingImg.transform.DOKill();
         _recyclingImg.transform.DORotate(new Vector3(0, 0, -_maxRecyclingRotate), _timeOpen).SetEase(Ease.OutBounce);
     }

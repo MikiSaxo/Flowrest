@@ -40,6 +40,7 @@ public class MapManager : MonoBehaviour
     public bool OpenMemo { get; private set; }
     public DialogData CurrentDialogData { get; set; }
     public bool IsRestart { get; set; }
+    public bool WantToRecycle { get; private set; }
 
     #endregion
 
@@ -57,8 +58,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private float _timeWaitBetweenDropFX;
     [SerializeField] private float _timeWaitEndSwap = 1.5f;
 
-    [Header("Data")]
-    [SerializeField] private bool _resetSave;
+    [Header("Data")] [SerializeField] private bool _resetSave;
     [SerializeField] private DialogData _firstDialogData;
     [SerializeField] private DialogData[] _dialogDataSave;
 
@@ -70,7 +70,6 @@ public class MapManager : MonoBehaviour
     private bool _hasFirstSwap;
     private List<Vector2Int> _stockPlayerForceSwap = new List<Vector2Int>();
     private bool _isDragNDrop;
-    private bool _wantToRecycle;
     private string[] _mapInfo;
     private string[] _previewMessageTuto;
     private bool _isFullFloorOrder;
@@ -236,7 +235,7 @@ public class MapManager : MonoBehaviour
 
         // Update if PopUp
         // _hasPopUp = false;
-     
+
         var dName = PlayerPrefs.GetString("CurrentDialogData");
         if (!string.IsNullOrEmpty(dName) && !_resetSave)
         {
@@ -987,7 +986,7 @@ public class MapManager : MonoBehaviour
 
         if (LastObjButtonSelected == null || NbOfRecycling <= 0)
         {
-            WantToRecycle();
+            WantToRecycleTrash();
             return;
         }
 
@@ -1009,7 +1008,7 @@ public class MapManager : MonoBehaviour
         // Reset
         ResetButtonSelected();
         ResetTwoLastSwapped();
-        _wantToRecycle = false;
+        WantToRecycle = false;
 
         RecyclingManager.Instance.DeselectRecycle();
         if (IsTutoRecycling)
@@ -1022,17 +1021,17 @@ public class MapManager : MonoBehaviour
         LastMoveManager.Instance.SaveNewMap();
     }
 
-    private void WantToRecycle()
+    private void WantToRecycleTrash()
     {
         if (IsLoading || IsPosing || IsSwapping || NbOfRecycling <= 0) return;
 
-        _wantToRecycle = true;
+        WantToRecycle = true;
         RecyclingManager.Instance.OpenRecycling();
     }
 
     public void CheckIfWantToRecycle(GameObject which)
     {
-        if (!_wantToRecycle) return;
+        if (!WantToRecycle) return;
 
         if (IsLoading || IsPosing || IsSwapping) return;
 
@@ -1328,7 +1327,7 @@ public class MapManager : MonoBehaviour
 
     public void ResetWantToRecycle()
     {
-        _wantToRecycle = false;
+        WantToRecycle = false;
     }
 
     private void ResetAllPlayerForceSwapped(bool isTutoEnded)
