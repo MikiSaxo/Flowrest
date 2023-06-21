@@ -235,27 +235,11 @@ public class MapManager : MonoBehaviour
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
         // Update if PopUp
-        _hasPopUp = false;
-        // if (currentLvl.PopUpInfos != null)
-        // {
-        //     if (currentLvl.PopUpInfos.Length > 0)
-        //     {
-        //         PopUpManager.Instance.InitPopUp(currentLvl.PopUpInfos);
-        //     }
-        //
-        //     _hasPopUp = currentLvl.PopUpInfos.Length > 0;
-        // }
+        // _hasPopUp = false;
+     
         var dName = PlayerPrefs.GetString("CurrentDialogData");
         if (!string.IsNullOrEmpty(dName) && !_resetSave)
         {
-            // foreach (var dialogData in _dialogDataSave)
-            // {
-            //     if (dName == dialogData.name)
-            //     {
-            //         CurrentDialogData = dialogData;
-            //         break;
-            //     }
-            // }
             for (int i = 0; i < _dialogDataSave.Length; i++)
             {
                 if (dName == _dialogDataSave[i].name)
@@ -268,7 +252,7 @@ public class MapManager : MonoBehaviour
         }
 
         // Update Dialogs
-        DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, _hasPopUp);
+        DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, false);
     }
 
     private void InitializeMap()

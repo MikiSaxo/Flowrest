@@ -119,6 +119,21 @@ public class Fx_BoredTile : MonoBehaviour
         if (_isBored) yield break;
         _boudinDown.transform.DOScale(0, _timeBoudinOff/5).SetEase(Ease.OutBack);
     }
+    
+    public void LaunchDispawnInstant()
+    {
+        _sphere.material.DOKill();
+        _boudinTop.transform.DOKill();
+        _boudinDown.transform.DOKill();
+
+        _sphere.material.DOFloat(1.1f, "_DissolveStep", 0);
+        _boudinTop.transform.DOScale(0, 0);
+        _boudinDown.transform.DOScale(0, 0);
+
+        _sphere.material.DOComplete();
+        _boudinTop.transform.DOComplete();
+        _boudinDown.transform.DOComplete();
+    }
 
     public void UpdateCanPoseTile(bool state)
     {

@@ -55,8 +55,7 @@ public class GroundStateManager : MonoBehaviour
 
     [SerializeField] private float _timeBounceValue;
 
-    [Header("Temp coords just to see them")] [SerializeField]
-    private Vector2Int _coords;
+    [Header("Temp coords just to see them")] [SerializeField] private Vector2Int _coords;
 
     [Header("FX")] [SerializeField] private GameObject _fXDrop = null;
     [SerializeField] private float _paddingFXDrop;
@@ -505,6 +504,11 @@ public class GroundStateManager : MonoBehaviour
     public GameObject GetTileBored()
     {
         return _fxTileBored;
+    }
+
+    public void ResetBoredTile()
+    {
+        _fxTileBored.GetComponent<Fx_BoredTile>().LaunchDispawnInstant();
     }
 
     public void ResetIndicator() // Bridge to the indicator and Map_Manager
