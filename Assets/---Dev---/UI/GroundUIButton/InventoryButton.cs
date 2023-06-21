@@ -34,12 +34,16 @@ public class InventoryButton : MonoBehaviour
 
     public void ChangeActivatedButton()
     {
+        if (MapManager.Instance.IsSwapping || MapManager.Instance.IsPosing) return;
+        
         MapManager.Instance.ChangeActivatedButton(gameObject);
         MapManager.Instance.CheckIfWantToRecycle(gameObject);
     }
 
     public void UpdateFbGround()
     {
+        if (MapManager.Instance.IsSwapping || MapManager.Instance.IsPosing) return;
+
         SetupUIGround.Instance.UpdateFbGround((int)_stateButton, gameObject);
     }
 
