@@ -12,19 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
   m_Name: Sam0_DiaEnd
   m_EditorClassIdentifier: 
-  DialogFrench: []
+  DialogFrench:
+  - CharacterName: ouisdtitit
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: la fin fin
   DialogEnglish: []
-  Choices:
-  - Choice: pas end game
-    ChoiceEnglish: 
-    NextDialogData: {fileID: 0}
-    LevelToLoad: {fileID: 0}
-    NextLevelDialog: {fileID: 0}
-  - Choice: end game
-    ChoiceEnglish: 
-    NextDialogData: {fileID: 0}
-    LevelToLoad: {fileID: 0}
-    NextLevelDialog: {fileID: 0}
+  Choices: []
   DialogOfEnd: {fileID: 0}
   NextDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}

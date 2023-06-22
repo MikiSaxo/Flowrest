@@ -238,6 +238,16 @@ public class ScreensManager : MonoBehaviour
         MapManager.Instance.IsOnUI = true;
         MouseHitRaycast.Instance.IsBlockMouse(true);
         
+        
+        var dialogOfEnd = DialogManager.Instance.DialogOfEnd;
+        
+        if (dialogOfEnd != null)
+        {
+            DialogManager.Instance.SpawnNewDialogs(dialogOfEnd, true, false);
+            return;
+        }
+        
+        
         if (CheckIfEndGame())
         {
             print("it's end game");
@@ -250,11 +260,8 @@ public class ScreensManager : MonoBehaviour
             _victoryParent.SetActive(true);
             _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
         }
-        // _titlesText.text = _titlesString[0];
-
         
 
-        // DialogManager.Instance.SpawnNewDialogs(MapManager.Instance.GetDialogAtVictory(), true, false);
         UpdateButtonGoLevelSupp(true);
 
         if (LevelProgressionManager.Instance != null)
