@@ -23,7 +23,7 @@ public class DialogData : ScriptableObject
     [Space(20f)]
     
     [Header("-- If no choice Next Dialog --")]
-    public DialogData NextDialog;
+    public DialogData AddDialog;
     
     [Space(10f)]
     

@@ -12,7 +12,7 @@ public class DialogChoice
 
     [Space(10f)]
 
-    public DialogData NextDialogData;
+    public DialogData AddDialog;
 
     [Space(5f)]
     

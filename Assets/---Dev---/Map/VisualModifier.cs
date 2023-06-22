@@ -9,20 +9,8 @@ public class VisualModifier : MonoBehaviour
 {
     public static VisualModifier Instance;
 
-    public bool IsBlindFoldGrassias { get; set; }
-    public bool IsBlindFoldCalcid { get; set; }
-    public bool IsStinking { get; set; }
-    public bool IsRambo { get; set; }
-    public bool IsWaterColor { get; set; }
-    public bool IsKohLanta { get; set; }
-    public bool IsGoMuscu { get; set; }
-    public bool IsPoor { get; set; }
-    public bool IsFootball { get; set; }
-    public bool IsGold { get; set; }
-    public bool IsIceberg { get; set; }
-    public bool IsIcePig { get; set; }
-    
     Upgrades CurrentUpgrade{ get; set; }
+    Characters CurrentCharacter{ get; set; }
 
     [Header("Level 4")] 
     [SerializeField] private Image _level4Img;
@@ -51,16 +39,63 @@ public class VisualModifier : MonoBehaviour
     [SerializeField] private Material _goldMat;
 
     [Header("Level 16")] 
-    [SerializeField] private Image _level15Img_MouthIce;
+    [SerializeField] private Image _level16Img_MouthIce;
     [SerializeField] private GameObject _icebergs;
 
     private GameObject _stockIceberg;
+    private bool _hasUnlockedLvl4;
+    private bool _hasUnlockedLvl7;
+    private bool _hasUnlockedLvl10;
+    private bool _hasUnlockedLvl13;
+    private bool _hasUnlockedLvl15;
+    private bool _hasUnlockedLvl16;
 
     private void Awake()
     {
         Instance = this;
     }
 
+    public void UpdateCharacters(Characters whichChara)
+    {
+        if (whichChara == Characters.Profess)
+        {
+            if(_hasUnlockedLvl4)
+                _level4Img.enabled = true;
+            if (_hasUnlockedLvl7)
+            {
+                _level7Img_ClothesPeg.enabled = true;
+                _level7Img_Rambo.enabled = false;
+            }
+            if (_hasUnlockedLvl13)
+            {
+                _level13Img_GoMuscu.enabled = true;
+                _level13Img_MakeUp.enabled = true;
+            }
+            if (_hasUnlockedLvl15)
+                _level15Img_Supporter.enabled = true;
+            if (_hasUnlockedLvl16)
+                _level16Img_MouthIce.enabled = false;
+        }
+        if (whichChara == Characters.DG)
+        {
+            if(_hasUnlockedLvl4)
+                _level4Img.enabled = false;
+            if (_hasUnlockedLvl7)
+            {
+                _level7Img_ClothesPeg.enabled = false;
+                _level7Img_Rambo.enabled = true;
+            }
+            if (_hasUnlockedLvl13)
+            {
+                _level13Img_GoMuscu.enabled = false;
+                _level13Img_MakeUp.enabled = false;
+            }
+            if (_hasUnlockedLvl15)
+                _level15Img_Supporter.enabled = false;
+            if (_hasUnlockedLvl16)
+                _level16Img_MouthIce.enabled = true;
+        }
+    }
     private void UpdateModification()
     {
         Level4();
@@ -83,12 +118,14 @@ public class VisualModifier : MonoBehaviour
         {
             _level4Img.enabled = true;
             _level4Img.sprite = _blindFoldGrassias;
+            _hasUnlockedLvl4 = true;
         }
         
         if (CurrentUpgrade == Upgrades.IsBlindFoldCalcid)
         {
             _level4Img.enabled = true;
             _level4Img.sprite = _blindFoldCalcid;
+            _hasUnlockedLvl4 = true;
         }
     }
 
@@ -97,15 +134,17 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsStinking)
         {
             _level7Img_ClothesPeg.enabled = true;
-            _level7Img_Rambo.enabled = false;
+            // _level7Img_Rambo.enabled = false;
             _level7_StinkingMussel.SetActive(true);
+            _hasUnlockedLvl7 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsRambo)
         {
-            _level7Img_ClothesPeg.enabled = false;
+            // _level7Img_ClothesPeg.enabled = false;
             _level7Img_Rambo.enabled = true;
-            _level7_StinkingMussel.SetActive(false);
+            // _level7_StinkingMussel.SetActive(false);
+            _hasUnlockedLvl7 = true;
         }
     }
 
@@ -116,6 +155,7 @@ public class VisualModifier : MonoBehaviour
             // Change Material Water
             var waterMat = _water.GetComponent<MeshRenderer>();
             _potoKohLanta.SetActive(false);
+            _hasUnlockedLvl10 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsKohLanta)
@@ -123,6 +163,7 @@ public class VisualModifier : MonoBehaviour
             // Change Material Water
             var waterMat = _water.GetComponent<MeshRenderer>();
             _potoKohLanta.SetActive(true);
+            _hasUnlockedLvl10 = true;
         }
     }
 
@@ -133,6 +174,7 @@ public class VisualModifier : MonoBehaviour
             _level13Img_GoMuscu.enabled = true;
             _level13Img_MakeUp.enabled = true;
             _level13Img_PoorProf.enabled = false;
+            _hasUnlockedLvl13 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsPoor)
@@ -140,6 +182,7 @@ public class VisualModifier : MonoBehaviour
             _level13Img_GoMuscu.enabled = false;
             _level13Img_MakeUp.enabled = false;
             _level13Img_PoorProf.enabled = true;
+            _hasUnlockedLvl13 = true;
         }
     }
 
@@ -148,10 +191,12 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsFootball)
         {
             _level15Img_Supporter.enabled = true;
+            _hasUnlockedLvl15 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsGold)
         {
+            _hasUnlockedLvl15 = true;
             // Change Material Rocks, Water, Cursor and FX Bling Bling 
         }
     }
@@ -160,14 +205,16 @@ public class VisualModifier : MonoBehaviour
     {
         if (CurrentUpgrade == Upgrades.IsIceberg)
         {
-            _level15Img_MouthIce.enabled = true;
+            _level16Img_MouthIce.enabled = true;
             _icebergs.SetActive(false);
+            _hasUnlockedLvl16 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsIcePig)
         {
-            _level15Img_MouthIce.enabled = false;
+            _level16Img_MouthIce.enabled = false;
             _icebergs.SetActive(true);
+            _hasUnlockedLvl16 = true;
         }
     }
 }

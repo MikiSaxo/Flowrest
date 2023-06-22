@@ -394,10 +394,10 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
-        if (_currentDialogData.NextDialog != null &&
+        if (_currentDialogData.AddDialog != null &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
         {
-            SpawnNewDialogs(_currentDialogData.NextDialog, false, false);
+            SpawnNewDialogs(_currentDialogData.AddDialog, false, false);
             return;
         }
 
@@ -478,7 +478,7 @@ public class DialogManager : MonoBehaviour
             NoNextEndDialogChoice = true;
         }
 
-        SpawnNewDialogs(_choices[index].NextDialogData, false, false);
+        SpawnNewDialogs(_choices[index].AddDialog, false, false);
 
         _dialogChoiceParent.SetActive(false);
         if (_stockChoiceButtons.Count > 0)
