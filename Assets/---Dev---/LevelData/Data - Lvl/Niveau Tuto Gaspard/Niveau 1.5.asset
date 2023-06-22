@@ -24,7 +24,7 @@ MonoBehaviour:
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
-  IsTuto: 1
+  IsTuto: 0
   IsTutoRecycling: 0
   PlayerForceSwap:
   - {x: 2, y: 2}
@@ -32,12 +32,6 @@ MonoBehaviour:
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
   PopUpInfos:
-  - ImgPopUp: []
-    Title: "Pr\xE9visualisation"
-    Description: "La pr\xE9visualisation permet de voir \xE0 l'avance les changements
-      que les tuiles vont avoir, selon le m\xE9mo"
-    TitleEnglish: 
-    DescriptionEnglish: 
   - ImgPopUp:
     - {fileID: 21300000, guid: 61d8a49618f2d0548890ef1bff0320cb, type: 3}
     - {fileID: 21300000, guid: e5cd182269ff11443a0ce1ea7932c7de, type: 3}
@@ -91,10 +85,6 @@ MonoBehaviour:
     DescriptionEnglish: 
   - ImgPopUp:
     - {fileID: 21300000, guid: f99dac234db69cb4cbb912535269118d, type: 3}
-    - {fileID: 21300000, guid: f93627087acfb954eb48f6ab435d1561, type: 3}
-    - {fileID: 21300000, guid: b41abb66455bafb48966e12e6132c34b, type: 3}
-    - {fileID: 21300000, guid: e445cbc046c44f943b3ea59ffd17abc7, type: 3}
-    - {fileID: 21300000, guid: d713aa68b0c47d843925b5c1f21d533b, type: 3}
     Title: Memo
     Description: " La premiere colonne repr\xE9sente la tuile nouvellement plac\xE9e,
       la deuxi\xE8me colonne repr\xE9sente les tuiles adjacentes qui vont subir un

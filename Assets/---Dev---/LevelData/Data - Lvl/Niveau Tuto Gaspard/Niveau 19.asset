@@ -12,41 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
   m_Name: Niveau 19
   m_EditorClassIdentifier: 
-  LevelName: Niveau 6.2
+  LevelName: Niveau 19
   LevelFolder: Level Editor
-  EnergyAtStart: 2
+  EnergyAtStart: 1
   HasInventory: 1
-  StartNbState: 0
-  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  StartNbState: 9
+  StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000001000000
+  HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 0
+  NbOfRecycling: 2
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
   IsTutoRecycling: 0
-  PreviewMessage: []
-  PreviewMessageEnglish: []
   PlayerForceSwap:
   - {x: 2, y: 0}
   - {x: 6, y: 4}
   HasForcePoseBlocAfterSwap: 1
   ForcePoseBlocCoord: {x: 4, y: 2}
-  PopUpInfos:
-  - Title: "Remplacer une tuile fatigu\xE9e"
-    VideoName: Vid_PopUp6
-    Description: "Les tuiles de l'inventaire viennent remplacer les tuiles du terrain,
-      il est donc possible de remplacer une tuile fatigu\xE9e par une tuile de l'inventaire."
+  PopUpInfos: []
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 
+  QuestFlower: 00000000020000000400000009000000
   QuestNoSpecificTiles: 
-  QuestTileChain: 09000000
-  NumberTileChain: 8
+  QuestTileChain: 
+  NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
+  DialogLevelStart: {fileID: 0}
   CharacterName: Profess.io
   CharacterSpritesBeginning:
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
