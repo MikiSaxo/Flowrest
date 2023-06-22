@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv9
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Nouvelle journ\xE9e, nouveau client ! Cette fois c'est du lourd ! L'entreprise
+      EDF (\xE9lectricit\xE9 du firmament) a besoin d'une plan\xE8te hydros pour
+      construire une station hydroleak, attention \xE0 ne pas partager l'info ! "
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "C'est g\xE9nial, on participerait \xE0 donner acc\xE8s \xE0 l'\xE9nergie
+      \xE9lectrique \xE0 une grosse partie de ce syst\xE8me solaire ! T'en dis quoi
+      ?"
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: d1703db24f2c2eb44bf76f7289475654, type: 3}
+    Text: "Hola l'\xE9quipe ! Vous avez entendu la nouvelle ? Mon \xE9mission pr\xE9f\xE9r\xE9e
+      Poh-Lanta pr\xE9sent\xE9 par Denis Brownie va enfin reprendre ! Et ils ont
+      besoin de nous pour leur faire une plan\xE8te !"
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
+    Text: "Ils veulent renvoyer les participants s'\xE9triper sur une sorte d'\xEEle
+      d\xE9serte ! Vous en dites quoi ?"
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: "Eh toi l\xE0 je te reconnais de la derni\xE8re fois ! F\xE9licitation
+      j'ai l'honneur de t'annoncer que c'est toi qui pourra t'en charger ! Alors
+      t'en dis quoi ? Ne rate pas cette occasion, c'est la chance de ta vie !"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: e4bad93669f03644cac2e53de601a621, type: 3}
+    Text: "Alors, quelle commande tu veux faire ? Faire la station hydraulique ou
+      une \xEEle d\xE9serte pour l'\xE9mission Poh-Lanta ?"
+  DialogEnglish: []
+  Choices:
+  - Choice: "La station hydroleak me semble plus important dans l'imm\xE9diat."
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 211ac8dd38b041f47a9b35ece8fbf972, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 321fd04ff334a4a4f822a4c5db6d1055, type: 2}
+  - Choice: "Haha j'adore cette \xE9mission ! Je me charge de l'\xEEle d\xE9serte
+      !"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: c296ebf39653564469536232969407a1, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: aa8044d68e6280c41949b1f916ba35bf, type: 2}
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0

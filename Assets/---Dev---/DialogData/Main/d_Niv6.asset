@@ -19,7 +19,7 @@ MonoBehaviour:
       pleine de fleurs \xE0 offrir \xE0 l'alienne qu'il veut s\xE9duire."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
-    Text: "Sauf que cet idiot ne la connais m\xEAme pas et compte sur nous pour qu'on
+    Text: "Sauf que cet idiot ne la connait m\xEAme pas et compte sur nous pour qu'on
       la \"surprenne\" \xE0 sa place. "
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
@@ -32,11 +32,11 @@ MonoBehaviour:
   - CharacterName: DG
     CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
     Text: J'ai des copai... Euh enfin des enfants de riches investisseurs ont besoin
-      de viscosa pour leur projet de classe...  Et non pas du tout pour faire des
-      boules puantes et les lancer au visage de madame Michon.
+      de Viscosa pour leur projet de classe...  Et non pas du tout pour faire des
+      boules puantes et les lancer au visage de Mme Michon.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
-    Text: "F\xE9licitations ... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral
+    Text: "F\xE9licitations... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral
       ... Tu le verras souvent, il passe fr\xE9quemment nous pourrir notre travail
       avec des commandes non prioritaires comme celle-ci ..."
   - CharacterName: Profess.io
@@ -51,16 +51,16 @@ MonoBehaviour:
   Choices:
   - Choice: Aider l'amoureux transi
     ChoiceEnglish: 
-    NextDialogData: {fileID: 0}
+    AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 5b50fa50ebd7e5f4c8d0766e5e78a469, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 946a95fcca1d0ba40853c6fbfef76aa9, type: 2}
   - Choice: "Aider les enfants (\xE0 faire des boules puantes)"
     ChoiceEnglish: 
-    NextDialogData: {fileID: 0}
+    AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 22cc9fb5a9441e24aa3dd423ed3f0f68, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 45a30dd7139ad5341b336cccbb245fce, type: 2}
   DialogOfEnd: {fileID: 0}
-  NextDialog: {fileID: 0}
+  AddDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
