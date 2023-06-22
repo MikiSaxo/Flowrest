@@ -15,9 +15,53 @@ MonoBehaviour:
   DialogFrench:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
-    Text: "Le th\xE8me de cette ann\xE9e est \"20.000 gaz sous les mers\""
+    Text: "Tiens Petri, pour aujourd'hui j'ai un client qui m'a demand\xE9 une plan\xE8te
+      pleine de fleurs \xE0 offrir \xE0 l'alienne qu'il veut s\xE9duire."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: "Sauf que cet idiot ne la connais m\xEAme pas et compte sur nous pour qu'on
+      la \"surprenne\" \xE0 sa place. "
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
+    Text: "Il l'aura sa surprise, du Viscosa ! Ca lui fera les pieds d'avoir des
+      fleurs qui sentent les pieds... Et en plus on gagnera des points dans le concours
+      d'employ\xE9 du mois en l'utilisant."
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
+    Text: "Attends ! Toi l\xE0 ! Le stagiaire, faut que tu m'aides !"
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
+    Text: J'ai des copai... Euh enfin des enfants de riches investisseurs ont besoin
+      de viscosa pour leur projet de classe...  Et non pas du tout pour faire des
+      boules puantes et les lancer au visage de madame Michon.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
+    Text: "F\xE9licitations ... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral
+      ... Tu le verras souvent, il passe fr\xE9quemment nous pourrir notre travail
+      avec des commandes non prioritaires comme celle-ci ..."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Tu n'es pas oblig\xE9 de r\xE9aliser ses commandes d'ailleurs. Tu as le
+      choix de la prendre ou de faire celle que je te donne."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Du coup, tu pr\xE9f\xE8res aider l'amoureux transi \xE0 s\xE9duire ou
+      les enfants sur leur projet de classe ?"
   DialogEnglish: []
-  Choices: []
+  Choices:
+  - Choice: Aider l'amoureux transi
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 5b50fa50ebd7e5f4c8d0766e5e78a469, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 946a95fcca1d0ba40853c6fbfef76aa9, type: 2}
+  - Choice: "Aider les enfants (\xE0 faire des boules puantes)"
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 22cc9fb5a9441e24aa3dd423ed3f0f68, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 45a30dd7139ad5341b336cccbb245fce, type: 2}
+  DialogOfEnd: {fileID: 0}
   NextDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}
-  EndDialog: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0
