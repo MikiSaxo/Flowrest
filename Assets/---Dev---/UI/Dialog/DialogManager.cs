@@ -312,6 +312,21 @@ public class DialogManager : MonoBehaviour
         //_dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
 
         //GoToBottomScrollBar();
+        var charaSpriteName = String.Empty;
+        
+        if(_charaSprites[_countDialog] != null)
+            charaSpriteName = _charaSprites[_countDialog].name;
+        
+        if (charaSpriteName != String.Empty)
+        {
+            if (charaSpriteName[0] == 'D' && charaSpriteName[1] == 'G')
+                VisualModifier.Instance.UpdateCharacters(Characters.DG);
+            else
+                VisualModifier.Instance.UpdateCharacters(Characters.Profess);
+        }
+        else
+            VisualModifier.Instance.UpdateCharacters(Characters.None);
+
 
         _countDialog++;
     }

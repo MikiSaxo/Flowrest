@@ -28,6 +28,7 @@ public enum Upgrades
 
 public enum Characters
 {
-    Profess = 0,
-    DG = 1
+    None = 0,
+    Profess = 1,
+    DG = 2
 }
