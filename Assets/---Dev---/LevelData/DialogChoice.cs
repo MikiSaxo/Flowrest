@@ -10,9 +10,9 @@ public class DialogChoice
     public string Choice;
     public string ChoiceEnglish;
 
-    [Space(10f)]
+    [FormerlySerializedAs("AddDialogData")] [FormerlySerializedAs("NextDialogData")] [Space(10f)]
 
-    public DialogData NextDialogData;
+    public DialogData AddDialog;
 
     [Space(5f)]
     

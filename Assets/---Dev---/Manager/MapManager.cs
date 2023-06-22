@@ -228,7 +228,7 @@ public class MapManager : MonoBehaviour
     public void InitializeDialog()
     {
         // Activate BG
-        DialogManager.Instance.UpdateDialogBG(true);
+        // DialogManager.Instance.UpdateDialogBG(true);
 
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);

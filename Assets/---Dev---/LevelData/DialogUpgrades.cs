@@ -25,3 +25,9 @@ public enum Upgrades
     IsIceberg = 11,
     IsIcePig = 12
 }
+
+public enum Characters
+{
+    Profess = 0,
+    DG = 1
+}
