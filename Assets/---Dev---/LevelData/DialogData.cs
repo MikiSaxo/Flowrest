@@ -23,7 +23,7 @@ public class DialogData : ScriptableObject
     [FormerlySerializedAs("NextDialog")]
     [Space(20f)]
     
-    [Header("-- If no choice Next Dialog --")]
+    [Header("-- If no choice Add Dialog --")]
     public DialogData AddDialog;
     
     [Space(10f)]
