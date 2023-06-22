@@ -15,7 +15,12 @@ public class DialogData : ScriptableObject
     [Header("Choices")]
     public DialogChoice[] Choices;
     
-    [Space(10f)]
+    [Space(5f)]
+    
+    [Header("-- Dialog of End --")]
+    public DialogData DialogOfEnd;
+    
+    [Space(20f)]
     
     [Header("-- If no choice Next Dialog --")]
     public DialogData NextDialog;
@@ -25,11 +30,12 @@ public class DialogData : ScriptableObject
     [Header("-- If no choice Level To Load --")]
     public LevelData LevelToLoad;
     
+    [FormerlySerializedAs("EndDialog")]
     [Space(10f)]
     
-    [Header("-- If no choice End Dialog --")]
-    public DialogData EndDialog;
-    
+    [Header("-- If no choice Next Level Dialog --")]
+    public DialogData NextLevelDialog;
+
     [Space(20f)]
     
     [Header("---- Upgrades ----")]

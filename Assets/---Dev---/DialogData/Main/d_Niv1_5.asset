@@ -39,7 +39,15 @@ MonoBehaviour:
     Text: "N'h\xE9sites pas \xE0 les utiliser, surtout lors de tes premiers contrats.
       Cela t'aidera grandement."
   DialogEnglish: []
-  Choices: []
+  Choices:
+  - Choice: 
+    ChoiceEnglish: 
+    NextDialogData: {fileID: 0}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+  DialogOfEnd: {fileID: 0}
   NextDialog: {fileID: 0}
   LevelToLoad: {fileID: 11400000, guid: 0a50b6340ffe9a442b6d244609655fa5, type: 2}
-  EndDialog: {fileID: 11400000, guid: 74565ae878e5d064caf27279770d3c38, type: 2}
+  NextLevelDialog: {fileID: 11400000, guid: 74565ae878e5d064caf27279770d3c38, type: 2}
+  VisualUpgrades:
+    _Upgrades: 0

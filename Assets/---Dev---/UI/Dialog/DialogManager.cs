@@ -117,7 +117,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
+    public void SpawnNewDialogs(DialogData dialogData, bool isEndDialog, bool hasPopUp)
     {
         TransiManager.Instance.LaunchShrink();
 
@@ -208,9 +208,9 @@ public class DialogManager : MonoBehaviour
             _dialogsPrefabList.Clear();
 
         // set if it's victory dialog
-        _isTheEnd = isTheEnd;
+        _isTheEnd = isEndDialog;
 
-        if (dialogsText.Length == 0 && !isTheEnd)
+        if (dialogsText.Length == 0 && !isEndDialog)
         {
             dialogsText = new[] { " " };
             IsDialogTime = false;
@@ -226,7 +226,7 @@ public class DialogManager : MonoBehaviour
             _dialogsList.Add(dialog);
         }
 
-        if (!isTheEnd)
+        if (!isEndDialog)
         {
             UpdateButtonGoLevelSupp(false);
         }
@@ -320,10 +320,10 @@ public class DialogManager : MonoBehaviour
 
         MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
-        if (_currentDialogData.EndDialog != null)
+        if (_currentDialogData.NextLevelDialog != null)
         {
             NoNextEndDialog = false;
-            NextDialogToLoad = _currentDialogData.EndDialog;
+            NextDialogToLoad = _currentDialogData.NextLevelDialog;
 
             PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
         }
@@ -449,11 +449,11 @@ public class DialogManager : MonoBehaviour
             // MapManager.Instance.UpdateLevelToLoad(NextLevelToLoad);
         }
 
-        if (_choices[index].EndDialog != null)
+        if (_choices[index].NextLevelDialog != null)
         {
             print("ça update le choice");
             NoNextEndDialogChoice = false;
-            NextDialogToLoad = _choices[index].EndDialog;
+            NextDialogToLoad = _choices[index].NextLevelDialog;
             // if (LevelProgressionManager.Instance != null)
             //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
             PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
