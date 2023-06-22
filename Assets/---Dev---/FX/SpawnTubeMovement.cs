@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class SpawnTubeMovement : MonoBehaviour
@@ -17,17 +18,29 @@ public class SpawnTubeMovement : MonoBehaviour
     [SerializeField] private float _timeDestroy;
 
     [SerializeField] private Material _mat;
+
     void Start()
     {
         gameObject.transform.DOScale(1, _timeSpawnWave).OnComplete(SpawnWave);
         _waveEnd.SetActive(false);
         _foamEnd.SetActive(false);
 
+        if (VisualModifier.Instance.IsGold)
+        {
+            _mat.SetColor("_Color", VisualModifier.Instance.GetWaterTubeGold());
+        }
+        else if (VisualModifier.Instance.IsColored)
+        {
+            _mat.SetColor("_Color", VisualModifier.Instance.GetWaterTubeColored());
+        }
+        else
+            _mat.SetColor("_Color", VisualModifier.Instance.GetWaterTubeBase());
+
         // Dissolve
         _mat.DOFloat(1, "Vector1_3b0bddb6200046a9b085f11bb209c326", 0);
         // Reverse Dissolve
         _mat.DOFloat(1, "Vector1_6952a5337778416b8f3c3c0541e6afcd", _timeDisappearWaterTube);
-        
+
         // _waveStart.transform.DOScale(0, 0);
         // _foamStart.transform.DOScale(0, 0);
         //
@@ -47,7 +60,7 @@ public class SpawnTubeMovement : MonoBehaviour
         _mat.DOFloat(0, "Vector1_3b0bddb6200046a9b085f11bb209c326", _timeDissolveWaterTube);
 
         gameObject.transform.DOScale(1, _timeDissolveWaterTube).OnComplete(SpawnWaveFoamEnd);
-        
+
         // _waveStart.transform.DOScale(0, _timeDissolveWaterTube);
         // _foamStart.transform.DOScale(0, _timeDissolveWaterTube);
     }
@@ -59,9 +72,9 @@ public class SpawnTubeMovement : MonoBehaviour
 
         _waveEnd.SetActive(true);
         _foamEnd.SetActive(true);
-        
+
         _waveStart.SetActive(false);
-        
+
         gameObject.transform.DOScale(1, _timeDisappearWaterTube).OnComplete(TimeWaitDestroy);
     }
 

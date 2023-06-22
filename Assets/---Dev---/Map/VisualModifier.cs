@@ -10,8 +10,9 @@ public class VisualModifier : MonoBehaviour
 {
     public static VisualModifier Instance;
 
-    Upgrades CurrentUpgrade { get; set; }
-    Characters CurrentCharacter { get; set; }
+    public Upgrades CurrentUpgrade { get; set; }
+    public bool IsGold { get; private set; }
+    public bool IsColored { get; private set; }
 
     [Header("Level 4")] [SerializeField] private Image _level4Img;
     [SerializeField] private Sprite _blindFoldGrassias;
@@ -22,8 +23,10 @@ public class VisualModifier : MonoBehaviour
     [SerializeField] private Image _level7Img_Rambo;
 
     [Header("Level 10")] [SerializeField] private GameObject _water;
-    [SerializeField] private GameObject _potoKohLanta;
+    [SerializeField] private Color _waterBase;
+    [SerializeField] private GameObject _seaBottle;
     [SerializeField] private Material _waterColored;
+    [SerializeField] private Color _waterTubeColored;
 
     [Header("Level 13")] [SerializeField] private Image _level13Img_GoMuscu;
     [SerializeField] private Image _level13Img_MakeUp;
@@ -33,6 +36,8 @@ public class VisualModifier : MonoBehaviour
     [SerializeField] private GameObject[] _goldRocks;
     [SerializeField] private GameObject _fXBlingBling;
     [SerializeField] private Material _goldMat;
+    [SerializeField] private Material _waterGold;
+    [SerializeField] private Color _waterTubeGold;
 
     [Header("Level 16")] [SerializeField] private Image _level16Img_MouthIce;
     [SerializeField] private GameObject _icebergs;
@@ -45,6 +50,7 @@ public class VisualModifier : MonoBehaviour
     private bool _hasUnlockedLvl13GoMuscu;
     private bool _hasUnlockedLvl15;
     private bool _hasUnlockedLvl16;
+    private bool _hasUnlockedLvl18;
 
     private void Awake()
     {
@@ -53,16 +59,16 @@ public class VisualModifier : MonoBehaviour
 
     private void Start()
     {
-        _hasUnlockedLvl4 = true;
-        _hasUnlockedLvl7 = true;
-        _hasUnlockedLvl13 = true;
-        _hasUnlockedLvl15 = true;
-        _hasUnlockedLvl16 = true;
+        // _hasUnlockedLvl4 = true;
+        // _hasUnlockedLvl7 = true;
+        // _hasUnlockedLvl13 = true;
+        // _hasUnlockedLvl15 = true;
+        // _hasUnlockedLvl16 = true;
+        // _hasUnlockedLvl18 = true;
     }
 
     public void UpdateCharacters(Characters whichChara)
     {
-        print(whichChara);
         if (whichChara == Characters.Profess)
         {
             if (_hasUnlockedLvl4)
@@ -133,10 +139,11 @@ public class VisualModifier : MonoBehaviour
     {
         Level4();
         Level7();
-        // Level10();
+        Level10();
         Level13();
         Level15();
         Level16();
+        Level18();
     }
 
     public void UpdateUpgrades(Upgrades newUpgrade)
@@ -185,17 +192,16 @@ public class VisualModifier : MonoBehaviour
     {
         if (CurrentUpgrade == Upgrades.IsWaterColor)
         {
-            // Change Material Water
-            var waterMat = _water.GetComponent<MeshRenderer>();
-            _potoKohLanta.SetActive(false);
+            _seaBottle.SetActive(false);
             _hasUnlockedLvl10 = true;
+            var getWaterMesh = _water.GetComponent<MeshRenderer>();
+            getWaterMesh.material = _waterColored;
+            IsColored = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsKohLanta)
         {
-            // Change Material Water
-            var waterMat = _water.GetComponent<MeshRenderer>();
-            _potoKohLanta.SetActive(true);
+            _seaBottle.SetActive(true);
             _hasUnlockedLvl10 = true;
         }
     }
@@ -231,7 +237,19 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsGold)
         {
             _hasUnlockedLvl15 = true;
+            IsGold = true;
+
             // Change Material Rocks, Water, Cursor and FX Bling Bling 
+            _fXBlingBling.SetActive(true);
+
+            foreach (var rock in _goldRocks)
+            {
+                var getMesh = rock.GetComponent<MeshRenderer>();
+                getMesh.material = _goldMat;
+            }
+            
+            var getWaterMesh = _water.GetComponent<MeshRenderer>();
+            getWaterMesh.material = _waterGold;
         }
     }
 
@@ -250,5 +268,23 @@ public class VisualModifier : MonoBehaviour
             _icebergs.SetActive(true);
             _hasUnlockedLvl16 = true;
         }
+    }
+
+    private void Level18()
+    {
+        
+    }
+
+    public Color GetWaterTubeBase()
+    {
+        return _waterBase;
+    }
+    public Color GetWaterTubeColored()
+    {
+        return _waterTubeColored;
+    }
+    public Color GetWaterTubeGold()
+    {
+        return _waterTubeGold;
     }
 }
