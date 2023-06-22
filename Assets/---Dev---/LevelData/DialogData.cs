@@ -20,6 +20,7 @@ public class DialogData : ScriptableObject
     [Header("-- Dialog of End --")]
     public DialogData DialogOfEnd;
     
+    [FormerlySerializedAs("NextDialog")]
     [Space(20f)]
     
     [Header("-- If no choice Next Dialog --")]
