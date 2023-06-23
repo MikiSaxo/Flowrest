@@ -228,7 +228,7 @@ public class MapManager : MonoBehaviour
     public void InitializeDialog()
     {
         // Activate BG
-        DialogManager.Instance.UpdateDialogBG(true);
+        // DialogManager.Instance.UpdateDialogBG(true);
 
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
@@ -394,13 +394,13 @@ public class MapManager : MonoBehaviour
         }
 
         // Update if flower quest
+        var count = 0;
         if (currentLvl.QuestFlower.Length > 0)
         {
             QuestsManager.InitQuestFlower(currentLvl.QuestFlower);
 
             // Check Nb of different state
             AllStates lastState = AllStates.None;
-            var count = 0;
             foreach (var state in currentLvl.QuestFlower)
             {
                 if (lastState != state)
@@ -408,11 +408,6 @@ public class MapManager : MonoBehaviour
 
                 lastState = state;
             }
-
-            if (count == 2)
-                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
-            if (count >= 3)
-                ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
 
             // Update Order Description
             for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
@@ -440,6 +435,8 @@ public class MapManager : MonoBehaviour
                 // Update Order Description
                 ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain,
                     false);
+                
+                count++;
             }
         }
 
@@ -454,8 +451,16 @@ public class MapManager : MonoBehaviour
                 ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount,
                     false);
             }
+            
+            count++;
         }
-
+        
+        if (count == 2)
+            ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
+        if (count == 3)
+            ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
+        if (count >= 4)
+            ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(110, 110));
 
         // // Update Dialogs sprites
         // if (currentLvl.CharacterSpritesBeginning != null)

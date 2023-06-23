@@ -10,15 +10,15 @@ public class DialogChoice
     public string Choice;
     public string ChoiceEnglish;
 
-    [Space(10f)]
+    [FormerlySerializedAs("AddDialogData")] [FormerlySerializedAs("NextDialogData")] [Space(10f)]
 
-    public DialogData NextDialogData;
+    public DialogData AddDialog;
 
-    [FormerlySerializedAs("LevelNoDiaData")] [FormerlySerializedAs("LevelNoDialog")] [FormerlySerializedAs("NextLevelNoDialog")] [Space(5f)]
+    [Space(5f)]
     
     public LevelData LevelToLoad;
     
     [Space(10f)]
     
-    public DialogData EndDialog;
+    public DialogData NextLevelDialog;
 }

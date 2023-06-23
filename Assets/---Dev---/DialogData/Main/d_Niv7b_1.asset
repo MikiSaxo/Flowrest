@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv7b_1
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 699d89e36c0829745a94fc44777e1a16, type: 3}
+    Text: "HAHAHA C'ETAIT MORTEL ! Merci stagiaire t'as refait notr... leur journ\xE9e
+      d'hier !"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Ah Petri j'ai 1 bonne et 1 mauvaise nouvelle.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Tu veux d'abord la bonne ou la mauvaise ?
+  DialogEnglish: []
+  Choices:
+  - Choice: La bonne
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: 3703f489632de3c49badc48b979ee570, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+  - Choice: La mauvaise
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: be88cce323967bf43920ce93bbc3983a, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0

@@ -38,10 +38,13 @@ public class DialogManager : MonoBehaviour
     public bool NoNextEndDialog { get; private set; }
     public bool NoNextEndDialogChoice { get; private set; }
 
+    public DialogData DialogOfEnd { get; private set; }
+
+
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
     private int _countDialog;
-    private bool _isTheEnd;
+    private bool _isDialogOfEnd;
     private Sprite[] _charaSprites;
     private string[] _charaNames;
     private DialogChoice[] _choices;
@@ -108,7 +111,7 @@ public class DialogManager : MonoBehaviour
         {
             if (_charaSprites[_countDialog] != null)
             {
-                _characterObj.GetComponent<CharaMovement>().UpdateChara( _charaSprites[_countDialog]);
+                _characterObj.GetComponent<CharaMovement>().UpdateChara(_charaSprites[_countDialog]);
             }
             else
             {
@@ -117,9 +120,16 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void SpawnNewDialogs(DialogData dialogData, bool isTheEnd, bool hasPopUp)
+    public void SpawnNewDialogs(DialogData dialogData, bool isDialogOfEnd, bool hasPopUp)
     {
-        TransiManager.Instance.LaunchShrink();
+        // Activate BG
+        UpdateDialogBG(true);
+
+        // Set if it's victory dialog
+        _isDialogOfEnd = isDialogOfEnd;
+
+        if (!_isDialogOfEnd)
+            TransiManager.Instance.LaunchShrink();
 
         _hasMadeChoices = false;
 
@@ -173,9 +183,6 @@ public class DialogManager : MonoBehaviour
                 UpdateLevelToLoad(_currentDialogData.LevelToLoad);
         }
 
-        // Change Chara Name
-        // ChangeCharaName(_currentDialogData.CharacterName);
-
         // If has choices
         if (dialogData != null)
             _choices = dialogData.Choices;
@@ -194,7 +201,6 @@ public class DialogManager : MonoBehaviour
 
         // Open Dialog Menu
         _dialogGlobal.SetActive(true);
-        // _dialogGlobal.transform.DOPunchScale(Vector3.one * _punchPower, _punchDuration, _punchVibrato);
         _dialogGlobal.GetComponent<PointerMotion>().Bounce();
 
         // Block mouse
@@ -207,10 +213,8 @@ public class DialogManager : MonoBehaviour
         if (_dialogsPrefabList.Count != 0)
             _dialogsPrefabList.Clear();
 
-        // set if it's victory dialog
-        _isTheEnd = isTheEnd;
 
-        if (dialogsText.Length == 0 && !isTheEnd)
+        if (dialogsText.Length == 0 && !_isDialogOfEnd)
         {
             dialogsText = new[] { " " };
             IsDialogTime = false;
@@ -226,7 +230,7 @@ public class DialogManager : MonoBehaviour
             _dialogsList.Add(dialog);
         }
 
-        if (!isTheEnd)
+        if (!_isDialogOfEnd)
         {
             UpdateButtonGoLevelSupp(false);
         }
@@ -252,6 +256,9 @@ public class DialogManager : MonoBehaviour
         NoNextEndDialogChoice = true;
 
         SpawnAllDialog();
+
+        // Update if dialog of end 
+        DialogOfEnd = dialogData.DialogOfEnd;
 
         AudioManager.Instance.PlaySFX("DialogPop");
     }
@@ -305,38 +312,59 @@ public class DialogManager : MonoBehaviour
         //_dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
 
         //GoToBottomScrollBar();
+        var charaSpriteName = String.Empty;
+        
+        if(_charaSprites[_countDialog] != null)
+            charaSpriteName = _charaSprites[_countDialog].name;
+        
+        if (charaSpriteName != String.Empty)
+        {
+            if (charaSpriteName[0] == 'D' && charaSpriteName[1] == 'G')
+                VisualModifier.Instance.UpdateCharacters(Characters.DG);
+            else
+                VisualModifier.Instance.UpdateCharacters(Characters.Profess);
+        }
+        else
+            VisualModifier.Instance.UpdateCharacters(Characters.None);
+
 
         _countDialog++;
     }
 
     public void EndDialog()
     {
-        MouseHitRaycast.Instance.IsBlockMouse(false);
-
         _dialogGlobal.SetActive(false);
         UpdateDialogBG(false);
 
         CheckUpgrades();
 
-        MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
-
-        if (_currentDialogData.EndDialog != null)
+        if (!_isDialogOfEnd)
         {
-            NoNextEndDialog = false;
-            NextDialogToLoad = _currentDialogData.EndDialog;
+            MouseHitRaycast.Instance.IsBlockMouse(false);
+            MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
-            PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
+            if (_currentDialogData.NextLevelDialog != null)
+            {
+                NoNextEndDialog = false;
+                NextDialogToLoad = _currentDialogData.NextLevelDialog;
+
+                PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
+            }
+            else
+            {
+                NoNextEndDialog = true;
+            }
         }
         else
         {
-            NoNextEndDialog = true;
+            ScreensManager.Instance.VictoryScreen();
         }
     }
 
     private void CheckUpgrades()
     {
         if (_currentDialogData.VisualUpgrades._Upgrades == Upgrades.Nothing) return;
-        
+
         VisualModifier.Instance.UpdateUpgrades(_currentDialogData.VisualUpgrades._Upgrades);
     }
 
@@ -374,22 +402,24 @@ public class DialogManager : MonoBehaviour
     public void CheckIfEndDialog()
     {
         if (_choices != null && _choices.Length > 0 &&
-            (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) && !_hasMadeChoices)
+            (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0) &&
+            !_hasMadeChoices)
         {
             SpawnChoices();
             return;
         }
-        
-        if (_currentDialogData.NextDialog != null && (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
+
+        if (_currentDialogData.AddDialog != null &&
+            (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
         {
-            SpawnNewDialogs(_currentDialogData.NextDialog, false, false);
+            SpawnNewDialogs(_currentDialogData.AddDialog, false, false);
             return;
         }
 
         ScreensManager.Instance.CheckIfMemoOpen();
 
 
-        if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0)
+        if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0 && !_isDialogOfEnd)
         {
             ScreensManager.Instance.HasPopUp = true;
             PopUpManager.Instance.InitPopUp(_levelToLoad.PopUpInfos);
@@ -431,7 +461,7 @@ public class DialogManager : MonoBehaviour
                 else
                     go.GetComponent<DialogPrefab>().Init(_choices[i].ChoiceEnglish, 0);
             }
-            
+
             _dialogChoiceParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
         }
     }
@@ -439,7 +469,7 @@ public class DialogManager : MonoBehaviour
     public void MakeAChoice(int index)
     {
         _hasMadeChoices = true;
-        
+
         if (_choices[index].LevelToLoad != null)
         {
             // ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
@@ -449,11 +479,11 @@ public class DialogManager : MonoBehaviour
             // MapManager.Instance.UpdateLevelToLoad(NextLevelToLoad);
         }
 
-        if (_choices[index].EndDialog != null)
+        if (_choices[index].NextLevelDialog != null)
         {
             print("ça update le choice");
             NoNextEndDialogChoice = false;
-            NextDialogToLoad = _choices[index].EndDialog;
+            NextDialogToLoad = _choices[index].NextLevelDialog;
             // if (LevelProgressionManager.Instance != null)
             //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
             PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
@@ -463,7 +493,7 @@ public class DialogManager : MonoBehaviour
             NoNextEndDialogChoice = true;
         }
 
-        SpawnNewDialogs(_choices[index].NextDialogData, false, false);
+        SpawnNewDialogs(_choices[index].AddDialog, false, false);
 
         _dialogChoiceParent.SetActive(false);
         if (_stockChoiceButtons.Count > 0)

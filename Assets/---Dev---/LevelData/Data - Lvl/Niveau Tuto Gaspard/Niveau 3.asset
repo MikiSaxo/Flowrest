@@ -26,12 +26,24 @@ MonoBehaviour:
   BlockLastSwap: 1
   IsTuto: 0
   IsTutoRecycling: 0
-  PreviewMessage: []
-  PreviewMessageEnglish: []
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
-  PopUpInfos: []
+  PopUpInfos:
+  - ImgPopUp:
+    - {fileID: 21300000, guid: c2863a42568032f4c82d4f3be187b450, type: 3}
+    Title: Energie
+    Description: "La jauge en bas en droite correspond \xE0 votre \xE9nergie, chaque
+      actions consomme 1 \xE9nergie"
+    TitleEnglish: 
+    DescriptionEnglish: 
+  - ImgPopUp:
+    - {fileID: 21300000, guid: 6e51816cfa61e7f498a03dd0254302b7, type: 3}
+    Title: "Tuile fatigu\xE9e"
+    Description: "Lorsqu'une tuile subit un \xE9change elle devient fatigu\xE9e;
+      cette tuile fatigu\xE9e ne peut pas \xEAtre \xE9chang\xE9e le temps d'une action"
+    TitleEnglish: 
+    DescriptionEnglish: 
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 00000000
@@ -41,6 +53,7 @@ MonoBehaviour:
   NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
+  DialogLevelStart: {fileID: 0}
   CharacterName: Profess.io
   CharacterSpritesBeginning:
   - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
