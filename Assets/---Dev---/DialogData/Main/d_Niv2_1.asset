@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv2_1
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Tu progresses bien ! On va peut \xEAtre r\xE9ussir \xE0 faire quelque
+      chose de toi."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "Mais avant de continuer, j'aimerais en apprendre un peu plus sur toi,
+      qu'est ce qui t'as pouss\xE9 \xE0 rejoindre L'EKorp ?"
+  DialogEnglish: []
+  Choices:
+  - Choice: "L'amour du d\xE9veloppement durable et de la biodiversit\xE9"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: 08e2d2d5b78271f48b11ccc44e486b78, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  - Choice: "Augmenter de mani\xE8re drastique mon capital \xE9conomique !"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: 08e2d2d5b78271f48b11ccc44e486b78, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0
