@@ -45,6 +45,7 @@ public class VisualModifier : MonoBehaviour
     private GameObject _stockIceberg;
     private bool _hasUnlockedLvl4;
     private bool _hasUnlockedLvl7;
+    private bool _hasUnlockedLvl7Rambo;
     private bool _hasUnlockedLvl10;
     private bool _hasUnlockedLvl13;
     private bool _hasUnlockedLvl13GoMuscu;
@@ -75,7 +76,8 @@ public class VisualModifier : MonoBehaviour
                 _level4Img.enabled = true;
             if (_hasUnlockedLvl7)
             {
-                _level7Img_ClothesPeg.enabled = true;
+                if(!_hasUnlockedLvl7Rambo)
+                    _level7Img_ClothesPeg.enabled = true;
                 _level7Img_Rambo.enabled = false;
             }
 
@@ -107,7 +109,8 @@ public class VisualModifier : MonoBehaviour
             if (_hasUnlockedLvl7)
             {
                 _level7Img_ClothesPeg.enabled = false;
-                _level7Img_Rambo.enabled = true;
+                if(!_hasUnlockedLvl7Rambo)
+                    _level7Img_Rambo.enabled = true;
             }
 
             if (_hasUnlockedLvl13)
@@ -182,6 +185,7 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsRambo)
         {
             // _level7Img_ClothesPeg.enabled = false;
+            _hasUnlockedLvl7Rambo = true;
             _level7Img_Rambo.enabled = true;
             // _level7_StinkingMussel.SetActive(false);
             _hasUnlockedLvl7 = true;
