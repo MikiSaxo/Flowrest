@@ -196,7 +196,7 @@ public class ScreensManager : MonoBehaviour
         if (!state && MapManager.Instance.IsVictory)
         {
             _victoryParent.SetActive(true);
-            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+            _victoryParent.GetComponent<VictoryTest>().LaunchAnimVictory();
         }
 
         if (state)
@@ -258,7 +258,7 @@ public class ScreensManager : MonoBehaviour
         if (!_isPaused)
         {
             _victoryParent.SetActive(true);
-            _victoryParent.GetComponent<VictoryAnim>().VictorySpawnAnim();
+            _victoryParent.GetComponent<VictoryTest>().LaunchAnimVictory();
         }
         
 
@@ -371,7 +371,8 @@ public class ScreensManager : MonoBehaviour
  
         _bg.SetActive(false);
         
-        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
+        _victoryParent.GetComponent<VictoryTest>().UpdateMainCanvasAlpha(1);
+        _victoryParent.GetComponent<VictoryTest>().ResetAnim();
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();
