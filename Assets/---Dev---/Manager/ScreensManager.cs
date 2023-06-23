@@ -18,7 +18,7 @@ public class ScreensManager : MonoBehaviour
     private GameObject _bg;
 
     [SerializeField] private GameObject _victoryParent;
-    [SerializeField] private GameObject _gameOverParent;
+    [SerializeField] private GameObject _defeatParent;
     [SerializeField] private GameObject _nextLevel;
     [SerializeField] private GameObject _credits;
 
@@ -196,7 +196,7 @@ public class ScreensManager : MonoBehaviour
         if (!state && MapManager.Instance.IsVictory)
         {
             _victoryParent.SetActive(true);
-            _victoryParent.GetComponent<VictoryTest>().LaunchAnimVictory();
+            _victoryParent.GetComponent<VictoryAnim>().LaunchAnimVictory();
         }
 
         if (state)
@@ -258,7 +258,7 @@ public class ScreensManager : MonoBehaviour
         if (!_isPaused)
         {
             _victoryParent.SetActive(true);
-            _victoryParent.GetComponent<VictoryTest>().LaunchAnimVictory();
+            _victoryParent.GetComponent<VictoryAnim>().LaunchAnimVictory();
         }
         
 
@@ -287,7 +287,8 @@ public class ScreensManager : MonoBehaviour
         AudioManager.Instance.PlaySFX("Defeat");
 
         _bg.SetActive(true);
-        _gameOverParent.SetActive(true);
+        _defeatParent.SetActive(true);
+        _defeatParent.GetComponent<DefeatAnim>().LaunchAnimDefeat();
         MouseHitRaycast.Instance.IsBlockMouse(true);
     }
 
@@ -302,16 +303,19 @@ public class ScreensManager : MonoBehaviour
     public void RestartSceneOrLevel()
     {
         DialogManager.Instance.IsDialogTime = false;
-        DialogManager.Instance.ResetCountDialog();
-
+        // DialogManager.Instance.ResetCountDialog();
         _bg.SetActive(false);
-        _gameOverParent.SetActive(false);
         MouseHitRaycast.Instance.IsBlockMouse(false);
 
         _menuPauseParent.SetActive(false);
-  
-        _victoryParent.GetComponent<VictoryAnim>().ResetVictoryAnim();
+        
+        _victoryParent.GetComponent<VictoryAnim>().UpdateMainCanvasAlpha(1);
+
+        _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
+        
+        _defeatParent.GetComponent<DefeatAnim>().ResetAnim();
+        _defeatParent.SetActive(false);
         ResetOrder();
     }
 
@@ -371,8 +375,8 @@ public class ScreensManager : MonoBehaviour
  
         _bg.SetActive(false);
         
-        _victoryParent.GetComponent<VictoryTest>().UpdateMainCanvasAlpha(1);
-        _victoryParent.GetComponent<VictoryTest>().ResetAnim();
+        _victoryParent.GetComponent<VictoryAnim>().UpdateMainCanvasAlpha(1);
+        _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
 
         MapManager.Instance.ForceResetBig();

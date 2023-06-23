@@ -106,7 +106,7 @@ public class VisualModifier : MonoBehaviour
                 _level16Img_MouthIce.enabled = false;
             if (_hasUnlockedLvl18)
             {
-                _level18Img_SheriffHat.enabled = true;
+                _level18Img_SheriffHat.enabled = false;
                 _level18Img_SheriffStart.enabled = true;
             }
         }
@@ -135,7 +135,7 @@ public class VisualModifier : MonoBehaviour
             if (_hasUnlockedLvl18)
             {
                 _level18Img_SheriffHat.enabled = false;
-                _level18Img_SheriffStart.enabled = false;
+                _level18Img_SheriffStart.enabled = true;
             }
         }
         else

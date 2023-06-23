@@ -12,18 +12,12 @@ public class LanguageSetText : MonoBehaviour
     [SerializeField] private TMP_Text _orderTextButton;
     [SerializeField] private TMP_Text _memoTextButton;
 
-    [Header("Victory - Defeat")] 
-    [SerializeField] private TMP_Text _victoryText;
-    [SerializeField] private TMP_Text _gameOverText;
-    [SerializeField] private TMP_Text _nextTextButton;
-    
     [Header("Pop Up")]
     [SerializeField] private TMP_Text _nextTextPopUpButton;
     
     [Header("Pause Menu")]
     [SerializeField] private TMP_Text _resumeTextButton;
     [SerializeField] private TMP_Text _restartTextButton;
-    [SerializeField] private TMP_Text _restartVictoryTextButton;
     [SerializeField] private TMP_Text _quitTextButton;
 
     [Header("Option Menu")]
@@ -89,17 +83,13 @@ public class LanguageSetText : MonoBehaviour
         {
             _orderTextButton.text = _languageManager.GetOrderText();
             _memoTextButton.text = _languageManager.GetMemoText();
-            _victoryText.text = _languageManager.GetVictoryText();
-            _gameOverText.text = _languageManager.GetGameOverText();
             _resumeTextButton.text = _languageManager.GetResumeText();
             _restartTextButton.text = _languageManager.GetRestartText();
-            _restartVictoryTextButton.text = _languageManager.GetRestartText();
             _quitTextButton.text = _languageManager.GetQuitButtonText();
             RecyclingManager.Instance.UpdateDisplayRecyclingNbLeft();
             _thxForPlayinText.text = _languageManager.GetThxForPlayingText();
             _withHelpText.text = _languageManager.GetWithHelpText();
             _specialThanksText.text = _languageManager.GetSpecialThanksText();
-            _nextTextButton.text = _languageManager.GetNextText();
             _nextTextPopUpButton.text = _languageManager.GetNextText();
         }
     }
