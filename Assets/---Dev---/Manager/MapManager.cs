@@ -41,6 +41,7 @@ public class MapManager : MonoBehaviour
     public DialogData CurrentDialogData { get; set; }
     public bool IsRestart { get; set; }
     public bool WantToRecycle { get; private set; }
+    public bool IsFalseLevel { get; set; }
 
     #endregion
 
@@ -60,6 +61,7 @@ public class MapManager : MonoBehaviour
 
     [Header("Data")] [SerializeField] private bool _resetSave;
     [SerializeField] private DialogData _firstDialogData;
+    [SerializeField] private LevelData _falseLevelToLoad;
     [SerializeField] private DialogData[] _dialogDataSave;
 
     private bool _hasRecycling;
@@ -188,9 +190,13 @@ public class MapManager : MonoBehaviour
         LoadTextFileNormal(mapPath);
         yield return new WaitForSeconds(.1f);
 #endif
+       
 
-
-        InitializeMap();
+        if(!IsFalseLevel)
+            InitializeMap();
+        else
+            StartCoroutine(FalseFloorSpawn()); 
+        
         LastStateButtonSelected = AllStates.None;
     }
 
@@ -435,7 +441,7 @@ public class MapManager : MonoBehaviour
                 // Update Order Description
                 ScreensManager.Instance.InitOrderGoal(3, currentLvl.QuestTileChain[0], currentLvl.NumberTileChain,
                     false);
-                
+
                 count++;
             }
         }
@@ -451,10 +457,10 @@ public class MapManager : MonoBehaviour
                 ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount,
                     false);
             }
-            
+
             count++;
         }
-        
+
         if (count == 2)
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
         if (count == 3)
@@ -538,6 +544,44 @@ public class MapManager : MonoBehaviour
         ScreensManager.Instance.CheckIfMemoOpen();
     }
 
+    public void InitFalseFloor()
+    {
+        IsFalseLevel = true;
+        LaunchCheckFileMap(_falseLevelToLoad);
+    }
+
+    IEnumerator FalseFloorSpawn()
+    {
+        _mapInfo = _mapConstructData.Map.Split("\n");
+
+        // Get its size
+        _mapSize.x = _mapInfo[0].Length;
+        _mapSize.y = _mapInfo.Length;
+
+        // Init the grids
+        _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
+        
+        AudioManager.Instance.PlaySFX("SpawnMap");
+
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                // Get the string of the actual line
+                string line = _mapInfo[y];
+                // Get the actual char of the string of the actual line
+                char whichEnvironment = line[x];
+
+                if (dico[whichEnvironment] != AllStates.None)
+                {
+                    GameObject ground = Instantiate(_groundPrefab, _map.transform);
+                    InitObj(ground, x, y, dico[whichEnvironment]);
+                    yield return new WaitForSeconds(_timeToSpawnMap);
+                }
+            }
+        }
+    }
+
     private void InitObj(GameObject which, int x, int y, AllStates state)
     {
         if (state == AllStates.None) return;
@@ -566,7 +610,6 @@ public class MapManager : MonoBehaviour
         if (_isPlayerForceSwap)
         {
             ground.IsPlayerForceSwapBlocked = coord != _stockPlayerForceSwap[0];
-            // ground.UpdatePrevisuArrow(!(coord != _stockPlayerForceSwap[0]));
             ground.UpdatePrevisuArrow(false);
         }
         else
@@ -1134,31 +1177,11 @@ public class MapManager : MonoBehaviour
         return _hasFirstSwap;
     }
 
-    // public DialogData GetDialogAtVictory()
-    // {
-    //     return _currentLevelData.DialogLevelEnd;
-    // }
-
     public int GetCurrentLevel()
     {
         return _currentLevel;
     }
-    //
-    // public GroundStateManager[] GetTwoLastSwap()
-    // {
-    //     return _lastGroundSwapped;
-    // }
-    //
-    // public Sprite[] GetCharaSpritesEnd()
-    // {
-    //     return _charaSpritesEnd;
-    // }
-    //
-    // public Vector2Int GetTileStockForceSwap(int index)
-    // {
-    //     return _stockPlayerForceSwap[index];
-    // }
-
+    
     public void ActivateArrowIfForceSwap()
     {
         if (_stockPlayerForceSwap.Count == 0) return;
@@ -1208,6 +1231,18 @@ public class MapManager : MonoBehaviour
         ResetGroundSelected();
         //SetupUIGround.Instance.EndFb();
         MouseHitRaycast.Instance.ResetLastGroundHit();
+    }
+
+    public void ResetFalseMap()
+    {
+        for (int x = 0; x < _mapSize.x; x++)
+        {
+            for (int y = 0; y < _mapSize.y; y++)
+            {
+                Destroy(_mapGrid[x, y]);
+                _mapGrid[x, y] = null;
+            }
+        }
     }
 
     public void ResetAllMap()

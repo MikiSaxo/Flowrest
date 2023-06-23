@@ -173,13 +173,18 @@ public class DialogManager : MonoBehaviour
                 }
             }
         }
-
-
+        
         if (dialogData != null)
         {
             _currentDialogData = dialogData;
             if (_currentDialogData.LevelToLoad != null)
                 UpdateLevelToLoad(_currentDialogData.LevelToLoad);
+        }
+
+        if (dialogData != null && dialogData.name == "d_Niv1_1")
+        {
+            print("salut bogos");
+            MapManager.Instance.InitFalseFloor();
         }
 
         // If has choices
@@ -274,6 +279,7 @@ public class DialogManager : MonoBehaviour
 
     private void SpawnDialog()
     {
+        // Destroy the last Dialog
         if (_dialogsPrefabList.Count > 0)
             Destroy(_dialogsPrefabList[^1].gameObject);
 
@@ -340,6 +346,12 @@ public class DialogManager : MonoBehaviour
         if (!_isDialogOfEnd)
         {
             MouseHitRaycast.Instance.IsBlockMouse(false);
+            
+            if (MapManager.Instance.IsFalseLevel)
+            {
+                MapManager.Instance.IsFalseLevel = false;
+                MapManager.Instance.ResetFalseMap();
+            }
             MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
             if (_currentDialogData.NextLevelDialog != null)
@@ -453,7 +465,6 @@ public class DialogManager : MonoBehaviour
             _dialogChoiceParent.SetActive(true);
             _dialogChoiceParent.GetComponent<SpawnAnimButtons>().ClearButtonList();
 
-            print("oui baguette");
             for (int i = 0; i < _choices.Length; i++)
             {
                 GameObject go = Instantiate(_dialogChoicePrefab, _dialogChoiceParent.transform);
