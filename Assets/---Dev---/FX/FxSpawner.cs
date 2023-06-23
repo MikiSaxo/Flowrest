@@ -11,10 +11,19 @@ public class FxSpawner : MonoBehaviour
     [SerializeField] private float _timeToSpawn;
     [SerializeField] private float _timeToEnd;
     private float _cooldown;
+    private int _lastRandom;
 
     private void SpawnFx()
     {
         int randomStartPos = Random.Range(0, _startPos.Length);
+        if (_lastRandom == randomStartPos)
+            randomStartPos++;
+        if (randomStartPos >= _startPos.Length)
+            randomStartPos = 0;
+        
+        _lastRandom = randomStartPos;
+
+        
         int randomFx = Random.Range(0, _fxPrefab.Length);
 
         GameObject go = Instantiate(_fxPrefab[randomFx], _startPos[randomStartPos].transform);
