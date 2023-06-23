@@ -33,7 +33,6 @@ public class DialogManager : MonoBehaviour
 
     public bool IsDialogTime { get; set; }
 
-    // public LevelData NextLevelToLoad { get; private set; }
     public DialogData NextDialogToLoad { get; private set; }
     public bool NoNextEndDialog { get; private set; }
     public bool NoNextEndDialogChoice { get; private set; }
