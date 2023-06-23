@@ -39,6 +39,6 @@ public class DialogData : ScriptableObject
 
     [Space(20f)]
     
-    [Header("---- Upgrades ----")]
+    [Header("---- If no choice Upgrades ----")]
     public DialogUpgrades VisualUpgrades;
 }

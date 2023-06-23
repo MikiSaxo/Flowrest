@@ -367,6 +367,12 @@ public class DialogManager : MonoBehaviour
 
         VisualModifier.Instance.UpdateUpgrades(_currentDialogData.VisualUpgrades._Upgrades);
     }
+    private void CheckUpgradesChoice(Upgrades upgrade)
+    {
+        if (upgrade == Upgrades.Nothing) return;
+
+        VisualModifier.Instance.UpdateUpgrades(upgrade);
+    }
 
     public void OnClick()
     {
@@ -469,6 +475,8 @@ public class DialogManager : MonoBehaviour
     public void MakeAChoice(int index)
     {
         _hasMadeChoices = true;
+
+        CheckUpgradesChoice(_choices[index].VisualUpgrades._Upgrades);
 
         if (_choices[index].LevelToLoad != null)
         {
