@@ -23,7 +23,8 @@ public enum Upgrades
     IsFootball = 9,
     IsGold = 10,
     IsIceberg = 11,
-    IsIcePig = 12
+    IsIcePig = 12,
+    IsSheriff = 13
 }
 
 public enum Characters

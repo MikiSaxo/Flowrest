@@ -42,6 +42,9 @@ public class VisualModifier : MonoBehaviour
     [Header("Level 16")] [SerializeField] private Image _level16Img_MouthIce;
     [SerializeField] private GameObject _icebergs;
 
+    [Header("Level 18")] [SerializeField] private Image _level18Img_SheriffHat;
+    [SerializeField] private Image _level18Img_SheriffStart;
+
     private GameObject _stockIceberg;
     private bool _hasUnlockedLvl4;
     private bool _hasUnlockedLvl7;
@@ -76,7 +79,7 @@ public class VisualModifier : MonoBehaviour
                 _level4Img.enabled = true;
             if (_hasUnlockedLvl7)
             {
-                if(!_hasUnlockedLvl7Rambo)
+                if (!_hasUnlockedLvl7Rambo)
                     _level7Img_ClothesPeg.enabled = true;
                 _level7Img_Rambo.enabled = false;
             }
@@ -101,6 +104,11 @@ public class VisualModifier : MonoBehaviour
                 _level15Img_Supporter.enabled = true;
             if (_hasUnlockedLvl16)
                 _level16Img_MouthIce.enabled = false;
+            if (_hasUnlockedLvl18)
+            {
+                _level18Img_SheriffHat.enabled = true;
+                _level18Img_SheriffStart.enabled = true;
+            }
         }
         else if (whichChara == Characters.DG)
         {
@@ -109,7 +117,7 @@ public class VisualModifier : MonoBehaviour
             if (_hasUnlockedLvl7)
             {
                 _level7Img_ClothesPeg.enabled = false;
-                if(!_hasUnlockedLvl7Rambo)
+                if (!_hasUnlockedLvl7Rambo)
                     _level7Img_Rambo.enabled = true;
             }
 
@@ -124,6 +132,11 @@ public class VisualModifier : MonoBehaviour
                 _level15Img_Supporter.enabled = false;
             if (_hasUnlockedLvl16)
                 _level16Img_MouthIce.enabled = true;
+            if (_hasUnlockedLvl18)
+            {
+                _level18Img_SheriffHat.enabled = false;
+                _level18Img_SheriffStart.enabled = false;
+            }
         }
         else
         {
@@ -135,6 +148,8 @@ public class VisualModifier : MonoBehaviour
             _level13Img_PoorProf.enabled = false;
             _level15Img_Supporter.enabled = false;
             _level16Img_MouthIce.enabled = false;
+            _level18Img_SheriffHat.enabled = false;
+            _level18Img_SheriffStart.enabled = false;
         }
     }
 
@@ -177,17 +192,14 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsStinking)
         {
             _level7Img_ClothesPeg.enabled = true;
-            // _level7Img_Rambo.enabled = false;
             _level7_StinkingMussel.SetActive(true);
             _hasUnlockedLvl7 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsRambo)
         {
-            // _level7Img_ClothesPeg.enabled = false;
             _hasUnlockedLvl7Rambo = true;
             _level7Img_Rambo.enabled = true;
-            // _level7_StinkingMussel.SetActive(false);
             _hasUnlockedLvl7 = true;
         }
     }
@@ -251,7 +263,7 @@ public class VisualModifier : MonoBehaviour
                 var getMesh = rock.GetComponent<MeshRenderer>();
                 getMesh.material = _goldMat;
             }
-            
+
             var getWaterMesh = _water.GetComponent<MeshRenderer>();
             getWaterMesh.material = _waterGold;
         }
@@ -276,17 +288,24 @@ public class VisualModifier : MonoBehaviour
 
     private void Level18()
     {
-        
+        if (CurrentUpgrade == Upgrades.IsSheriff)
+        {
+            _level18Img_SheriffHat.enabled = true;
+            _level18Img_SheriffStart.enabled = true;
+            _hasUnlockedLvl18 = true;
+        }
     }
 
     public Color GetWaterTubeBase()
     {
         return _waterBase;
     }
+
     public Color GetWaterTubeColored()
     {
         return _waterTubeColored;
     }
+
     public Color GetWaterTubeGold()
     {
         return _waterTubeGold;
