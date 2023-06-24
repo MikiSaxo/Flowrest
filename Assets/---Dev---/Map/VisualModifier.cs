@@ -248,12 +248,14 @@ public class VisualModifier : MonoBehaviour
         {
             _level15Img_Supporter.enabled = true;
             _hasUnlockedLvl15 = true;
+            CursorManager.Instance.UpdateCursor(CursorChanges.Foot);
         }
 
         if (CurrentUpgrade == Upgrades.IsGold)
         {
             _hasUnlockedLvl15 = true;
             IsGold = true;
+            CursorManager.Instance.UpdateCursor(CursorChanges.Gold);
 
             // Change Material Rocks, Water, Cursor and FX Bling Bling 
             _fXBlingBling.SetActive(true);

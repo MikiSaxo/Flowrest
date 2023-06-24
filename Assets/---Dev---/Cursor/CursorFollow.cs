@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CursorFollow : MonoBehaviour
 {
-    void Update()
+    void FixedUpdate()
     {
         gameObject.transform.position = Input.mousePosition;
     }
