@@ -16,6 +16,7 @@ public class CameraPan : MonoBehaviour
     [Header("Anim Rotation")] [SerializeField]
     private Vector2Int _rotaXStartEnd;
 
+    [SerializeField] private float _timeLaunchAnimRota;
     [SerializeField] private float _durationAnimRota;
 
     [Header("Block Cam")] [Tooltip("It represents the min and max value for the X position")] [SerializeField]
@@ -37,11 +38,20 @@ public class CameraPan : MonoBehaviour
         _canZoom = true;
         
         _cam.transform.DORotate(new Vector3(_rotaXStartEnd.x, 0, 0), 0);
-        _cam.transform.DORotate(new Vector3(_rotaXStartEnd.y, 0, 0), _durationAnimRota);
+    }
+
+    public void RotationAnimation(float durationRota)
+    {
+        if (durationRota == 0)
+            durationRota = _durationAnimRota;
+        
+        _cam.transform.DORotate(new Vector3(_rotaXStartEnd.y, 0, 0), durationRota).SetEase(Ease.InOutSine);
     }
 
     private void Update()
     {
+        if (_panSpeed == 0) return;
+        
         PanCamera();
         if (_canZoom)
             Zoom();

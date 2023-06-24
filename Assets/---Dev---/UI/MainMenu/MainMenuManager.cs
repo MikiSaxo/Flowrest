@@ -36,7 +36,7 @@ public class MainMenuManager : MonoBehaviour
            
         TransiManager.Instance.LaunchShrink();
         
-        _mainScreen.LaunchSpawnAnimDelay();
+        //_mainScreen.LaunchSpawnAnimDelay();
     }
 
     public void PopUpIfNewGame()

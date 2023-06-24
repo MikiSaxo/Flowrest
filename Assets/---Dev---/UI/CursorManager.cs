@@ -77,6 +77,11 @@ public class CursorManager : MonoBehaviour
             Cursor.visible = false;
         }
     }
+
+    public void UpdateVisibleCursor(bool state)
+    {
+        _cursorImg.enabled = state;
+    }
 }
 
 public enum CursorChanges

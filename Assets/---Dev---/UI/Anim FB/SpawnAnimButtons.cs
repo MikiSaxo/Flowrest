@@ -13,31 +13,24 @@ public class SpawnAnimButtons : MonoBehaviour
     
     public void LaunchSpawnAnim()
     {
-        _timeWaitToSpawnAnim = 0;
-        StartCoroutine(SpawnAnim());
+        _timeWaitToSpawnAnim = 0.05f;
+        ResetScaleButtons();
+
+        StartCoroutine(SpawnAnimButton());
     }
 
     public void LaunchSpawnAnimDelay()
     {
         _timeWaitToSpawnAnim = _timeSpawnDelay;
-        foreach (var but in _buttonsList)
-        {
-            but.transform.DOScale(0, 0);
-        }
+        ResetScaleButtons();
         
-        StartCoroutine(SpawnAnim());
+        StartCoroutine(SpawnAnimButton());
     }
 
-    IEnumerator SpawnAnim()
+    IEnumerator SpawnAnimButton()
     {
-        foreach (var but in _buttonsList)
-        {
-            but.transform.DOScale(0, 0);
-        }
-        
         yield return new WaitForSeconds(_timeWaitToSpawnAnim);
         
-
         foreach (var but in _buttonsList)
         {
             yield return new WaitForSeconds(_timeBetweenEachButtons);
@@ -46,11 +39,25 @@ public class SpawnAnimButtons : MonoBehaviour
         }
     }
 
-    public void ResetScaleButtons()
+    private void SpawnButton()
     {
         foreach (var but in _buttonsList)
         {
+            // yield return new WaitForSeconds(_timeBetweenEachButtons);
+            but.transform.DOScale(1, 0);
+            but.GetComponent<PointerMotion>().Bounce();
+        }
+    }
+
+    public void ResetScaleButtons()
+    {
+        // StopCoroutine(SpawnAnim());
+
+        foreach (var but in _buttonsList)
+        {
+            but.transform.DOKill();
             but.transform.DOScale(0, 0);
+            but.transform.DOComplete();
         }
     }
 
