@@ -467,17 +467,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
         if (count >= 4)
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(110, 110));
-
-        // // Update Dialogs sprites
-        // if (currentLvl.CharacterSpritesBeginning != null)
-        //     _charaSpritesBegininng = currentLvl.CharacterSpritesBeginning;
-        // if (currentLvl.CharacterSpritesEnd != null)
-        //     _charaSpritesEnd = currentLvl.CharacterSpritesEnd;
-        //
-        // // Update Chara Name
-        // if (_currentLevelData.CharacterName != String.Empty)
-        //     DialogManager.Instance.InitCharaName(_currentLevelData.CharacterName);
-
+        
 
         // Init Level
         InitializeFloor();

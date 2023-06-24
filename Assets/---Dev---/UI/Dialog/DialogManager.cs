@@ -25,10 +25,12 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private GameObject _dialogBG;
     [SerializeField] private float _dialogSpeed = .01f;
 
-    [Header("Dialogs Answer")] [SerializeField]
-    private GameObject _dialogChoiceParent;
-
+    [Header("Dialogs Answer")] [SerializeField] private GameObject _dialogChoiceParent;
     [SerializeField] private GameObject _dialogChoicePrefab;
+    
+    [Header("Wave Effect")] 
+    [SerializeField] private WaveEffect _waveOrder;
+    [SerializeField] private WaveEffect _waveMemo;
 
 
     public bool IsDialogTime { get; set; }
@@ -334,6 +336,11 @@ public class DialogManager : MonoBehaviour
 
 
         _countDialog++;
+        
+        if(_currentDialogData.name == "d_Niv1_5" && _countDialog == 4)
+            _waveOrder.StartGrowOneTime();
+        if(_currentDialogData.name == "d_Niv1_5" && _countDialog == 5)
+            _waveMemo.StartGrowOneTime();
     }
 
     public void EndDialog()

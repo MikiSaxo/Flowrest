@@ -29,14 +29,21 @@ MonoBehaviour:
   Choices:
   - Choice: "Ca me va. On va les d\xE9truire !"
     ChoiceEnglish: 
-    NextDialogData: {fileID: 11400000, guid: 48f9ceba49fd27d43b725c166d304661, type: 2}
+    AddDialog: {fileID: 11400000, guid: 48f9ceba49fd27d43b725c166d304661, type: 2}
     LevelToLoad: {fileID: 0}
-    EndDialog: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
   - Choice: Est ce que j'ai vraiment le choix ?
     ChoiceEnglish: 
-    NextDialogData: {fileID: 11400000, guid: 16ead5a45b2d0b147b3ffb3044646147, type: 2}
+    AddDialog: {fileID: 11400000, guid: 16ead5a45b2d0b147b3ffb3044646147, type: 2}
     LevelToLoad: {fileID: 0}
-    EndDialog: {fileID: 0}
-  NextDialog: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}
-  EndDialog: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0
