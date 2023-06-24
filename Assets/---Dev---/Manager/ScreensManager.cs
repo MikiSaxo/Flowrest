@@ -264,14 +264,10 @@ public class ScreensManager : MonoBehaviour
 
         UpdateButtonGoLevelSupp(true);
 
-        if (LevelProgressionManager.Instance != null)
-        {
-            if (LevelProgressionManager.Instance.CurrentLevel >= LevelProgressionManager.Instance.LevelUnlocked)
-            {
-                LevelProgressionManager.Instance.LevelUnlocked++;
-                PlayerPrefs.SetInt("LevelUnlocked", LevelProgressionManager.Instance.LevelUnlocked);
-            }
-        }
+        // Update Save
+        PlayerPrefs.SetString("CurrentDialogData", DialogManager.Instance.NextDialogToLoad.name);
+        MapManager.Instance.CurrentLevel++;
+        PlayerPrefs.SetInt("CurrentLevel", MapManager.Instance.CurrentLevel);
     }
 
     public bool CheckIfEndGame()

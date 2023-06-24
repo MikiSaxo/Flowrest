@@ -42,6 +42,8 @@ public class MapManager : MonoBehaviour
     public bool IsRestart { get; set; }
     public bool WantToRecycle { get; private set; }
     public bool IsFalseLevel { get; set; }
+    public int CurrentLevel{ get; set; }
+
 
     #endregion
 
@@ -88,7 +90,6 @@ public class MapManager : MonoBehaviour
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
     private bool _hasPopUp;
-    private int _currentLevel;
 
     private LevelData _currentLevelData;
 
@@ -156,18 +157,13 @@ public class MapManager : MonoBehaviour
 
         // _currentLevelData = _firstLevelData;
         CurrentDialogData = _firstDialogData;
-        _currentLevel = 0;
+        CurrentLevel = 1;
 
-        InitializeDialog();
+        CheckSaveDialog();
     }
 
     public void LaunchCheckFileMap(LevelData level)
     {
-        if (level != null && level != _currentLevelData)
-        {
-            _currentLevel++;
-        }
-
         if (level != null)
             _currentLevelData = level;
 
@@ -190,13 +186,13 @@ public class MapManager : MonoBehaviour
         LoadTextFileNormal(mapPath);
         yield return new WaitForSeconds(.1f);
 #endif
-       
 
-        if(!IsFalseLevel)
+
+        if (!IsFalseLevel)
             InitializeMap();
         else
-            StartCoroutine(FalseFloorSpawn()); 
-        
+            StartCoroutine(FalseFloorSpawn());
+
         LastStateButtonSelected = AllStates.None;
     }
 
@@ -231,31 +227,39 @@ public class MapManager : MonoBehaviour
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
     }
 
-    public void InitializeDialog()
+    private void CheckSaveDialog()
     {
-        // Activate BG
-        // DialogManager.Instance.UpdateDialogBG(true);
-
-        // Block Mouse
-        MouseHitRaycast.Instance.IsBlockMouse(true);
-
-        // Update if PopUp
-        // _hasPopUp = false;
-
         var dName = PlayerPrefs.GetString("CurrentDialogData");
         if (!string.IsNullOrEmpty(dName) && !_resetSave)
         {
-            for (int i = 0; i < _dialogDataSave.Length; i++)
+            foreach (var dialog in _dialogDataSave)
             {
-                if (dName == _dialogDataSave[i].name)
+                if (dName == dialog.name)
                 {
-                    CurrentDialogData = _dialogDataSave[i];
-                    _currentLevel = ++i;
+                    CurrentDialogData = dialog;
                     break;
                 }
             }
         }
 
+        var getCurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
+        if (getCurrentLevel != null && getCurrentLevel > 1)
+        {
+            CurrentLevel = getCurrentLevel;
+        }
+
+        if (_resetSave)
+            CurrentLevel = 1;
+        
+        InitializeDialog();
+    }
+    public void InitializeDialog()
+    {
+        // Block Mouse
+        MouseHitRaycast.Instance.IsBlockMouse(true);
+
+        
+        
         // Update Dialogs
         DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, false);
     }
@@ -467,7 +471,7 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
         if (count >= 4)
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(110, 110));
-        
+
 
         // Init Level
         InitializeFloor();
@@ -550,7 +554,7 @@ public class MapManager : MonoBehaviour
 
         // Init the grids
         _mapGrid = new GameObject[_mapSize.x, _mapSize.y];
-        
+
         AudioManager.Instance.PlaySFX("SpawnMap");
 
         for (int x = 0; x < _mapSize.x; x++)
@@ -1169,9 +1173,9 @@ public class MapManager : MonoBehaviour
 
     public int GetCurrentLevel()
     {
-        return _currentLevel;
+        return CurrentLevel;
     }
-    
+
     public void ActivateArrowIfForceSwap()
     {
         if (_stockPlayerForceSwap.Count == 0) return;
@@ -1255,7 +1259,11 @@ public class MapManager : MonoBehaviour
         _isFullFloorOrder = false;
 
         if (!IsRestart)
+        {
             InitializeDialog();
+
+            
+        }
         else
         {
             if (ScreensManager.Instance.HasPopUp)

@@ -185,7 +185,6 @@ public class DialogManager : MonoBehaviour
 
         if (dialogData != null && dialogData.name == "d_Niv1_1")
         {
-            print("salut bogos");
             MapManager.Instance.InitFalseFloor();
         }
 
@@ -313,12 +312,7 @@ public class DialogManager : MonoBehaviour
         else
             goDialog.Init(newDialog, _dialogSpeed);
 
-        // Get Size of dialog prefab
-        //float textSize = goDialog.GetDialogSizeY();
-        // Increase Dialog size content
-        //_dialogContent.GetComponent<RectTransform>().sizeDelta += new Vector2(0, textSize + SPACING_BETWEEN_TWO_DIALOG);
 
-        //GoToBottomScrollBar();
         var charaSpriteName = String.Empty;
         
         if(_charaSprites[_countDialog] != null)
@@ -366,7 +360,6 @@ public class DialogManager : MonoBehaviour
                 NoNextEndDialog = false;
                 NextDialogToLoad = _currentDialogData.NextLevelDialog;
 
-                PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
             }
             else
             {

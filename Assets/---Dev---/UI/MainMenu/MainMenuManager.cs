@@ -55,6 +55,7 @@ public class MainMenuManager : MonoBehaviour
     public void LauncNewGame()
     {
         PlayerPrefs.SetString("CurrentDialogData", String.Empty);
+        PlayerPrefs.SetInt("CurrentLevel", 1);
         LaunchMainScene();
     }
     public void LaunchMainScene()
