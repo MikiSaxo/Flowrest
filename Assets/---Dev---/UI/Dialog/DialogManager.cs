@@ -376,13 +376,13 @@ public class DialogManager : MonoBehaviour
     {
         if (_currentDialogData.VisualUpgrades._Upgrades == Upgrades.Nothing) return;
 
-        VisualModifier.Instance.UpdateUpgrades(_currentDialogData.VisualUpgrades._Upgrades);
+        VisualModifier.Instance.AddUpgrades(_currentDialogData.VisualUpgrades._Upgrades);
     }
     private void CheckUpgradesChoice(Upgrades upgrade)
     {
         if (upgrade == Upgrades.Nothing) return;
 
-        VisualModifier.Instance.UpdateUpgrades(upgrade);
+        VisualModifier.Instance.AddUpgrades(upgrade);
     }
 
     public void OnClick()

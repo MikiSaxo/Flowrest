@@ -42,8 +42,7 @@ public class MapManager : MonoBehaviour
     public bool IsRestart { get; set; }
     public bool WantToRecycle { get; private set; }
     public bool IsFalseLevel { get; set; }
-    public int CurrentLevel{ get; set; }
-
+    public int CurrentLevel { get; set; }
 
     #endregion
 
@@ -159,7 +158,7 @@ public class MapManager : MonoBehaviour
         CurrentDialogData = _firstDialogData;
         CurrentLevel = 1;
 
-        CheckSaveDialog();
+        CheckSave();
     }
 
     public void LaunchCheckFileMap(LevelData level)
@@ -227,7 +226,7 @@ public class MapManager : MonoBehaviour
         _mapConstructData = JsonUtility.FromJson<MapConstructData>(lineJson);
     }
 
-    private void CheckSaveDialog()
+    private void CheckSave()
     {
         var dName = PlayerPrefs.GetString("CurrentDialogData");
         if (!string.IsNullOrEmpty(dName) && !_resetSave)
@@ -250,16 +249,31 @@ public class MapManager : MonoBehaviour
 
         if (_resetSave)
             CurrentLevel = 1;
-        
+
+        var getCurrentUpgrades = PlayerPrefs.GetString("Upgrades");
+        if (!string.IsNullOrEmpty(dName) && !_resetSave)
+        {
+            var splitUpgrade = getCurrentUpgrades.Split('.');
+            foreach (var upgrad in splitUpgrade)
+            {
+                if (!string.IsNullOrEmpty(upgrad))
+                {
+                    int getInt = Int32.Parse(upgrad);
+                    VisualModifier.Instance.AddUpgrades((Upgrades)getInt);
+                }
+            }
+        }
+
+
         InitializeDialog();
     }
+
     public void InitializeDialog()
     {
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
-        
-        
+
         // Update Dialogs
         DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, false);
     }
@@ -1261,8 +1275,6 @@ public class MapManager : MonoBehaviour
         if (!IsRestart)
         {
             InitializeDialog();
-
-            
         }
         else
         {

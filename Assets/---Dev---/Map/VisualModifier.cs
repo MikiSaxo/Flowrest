@@ -164,9 +164,16 @@ public class VisualModifier : MonoBehaviour
         Level18();
     }
 
-    public void UpdateUpgrades(Upgrades newUpgrade)
+    public void AddUpgrades(Upgrades newUpgrade)
     {
         CurrentUpgrade = newUpgrade;
+
+        if (CurrentUpgrade != Upgrades.Nothing)
+        {
+            var getCurrentUpgrades = PlayerPrefs.GetString("Upgrades");
+            PlayerPrefs.SetString("Upgrades", $"{getCurrentUpgrades}{(int)CurrentUpgrade}.");
+        }
+        
         UpdateModification();
     }
 
