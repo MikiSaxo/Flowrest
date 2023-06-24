@@ -1252,13 +1252,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _orderTextButton: {fileID: 0}
   _memoTextButton: {fileID: 0}
-  _victoryText: {fileID: 0}
-  _gameOverText: {fileID: 0}
-  _nextTextButton: {fileID: 0}
   _nextTextPopUpButton: {fileID: 0}
   _resumeTextButton: {fileID: 0}
   _restartTextButton: {fileID: 0}
-  _restartVictoryTextButton: {fileID: 0}
   _quitTextButton: {fileID: 0}
   _musicTextButton: {fileID: 1331333954}
   _sfxTextButton: {fileID: 1185810695}
@@ -1467,7 +1463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4579655476804762355, guid: 5adcd8724a4d8b645aaecb46174e7905, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LaunchMainScene
+      value: LauncNewGame
       objectReference: {fileID: 0}
     - target: {fileID: 4579655476804762355, guid: 5adcd8724a4d8b645aaecb46174e7905, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
