@@ -242,7 +242,7 @@ public class MapManager : MonoBehaviour
         }
 
         var getCurrentLevel = PlayerPrefs.GetInt("CurrentLevel");
-        if (getCurrentLevel != null && getCurrentLevel > 1)
+        if (getCurrentLevel > 1)
         {
             CurrentLevel = getCurrentLevel;
         }
