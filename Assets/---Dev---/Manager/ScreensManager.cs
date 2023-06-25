@@ -18,6 +18,7 @@ public class ScreensManager : MonoBehaviour
     private GameObject _bg;
 
     [SerializeField] private GameObject _victoryParent;
+    [SerializeField] private GameObject _victoryConfettis;
     [SerializeField] private GameObject _defeatParent;
     [SerializeField] private GameObject _nextLevel;
     [SerializeField] private GameObject _credits;
@@ -196,6 +197,7 @@ public class ScreensManager : MonoBehaviour
         if (!state && MapManager.Instance.IsVictory)
         {
             _victoryParent.SetActive(true);
+            _victoryConfettis.SetActive(true);
             _victoryParent.GetComponent<VictoryAnim>().LaunchAnimVictory();
         }
 
@@ -258,6 +260,7 @@ public class ScreensManager : MonoBehaviour
         if (!_isPaused)
         {
             _victoryParent.SetActive(true);
+            _victoryConfettis.SetActive(true);
             _victoryParent.GetComponent<VictoryAnim>().LaunchAnimVictory();
         }
         
@@ -268,6 +271,7 @@ public class ScreensManager : MonoBehaviour
         PlayerPrefs.SetString("CurrentDialogData", DialogManager.Instance.NextDialogToLoad.name);
         MapManager.Instance.CurrentLevel++;
         PlayerPrefs.SetInt("CurrentLevel", MapManager.Instance.CurrentLevel);
+        PlayerPrefs.Save();
     }
 
     public bool CheckIfEndGame()
@@ -309,6 +313,7 @@ public class ScreensManager : MonoBehaviour
 
         _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
+        _victoryConfettis.SetActive(false);
         
         _defeatParent.GetComponent<DefeatAnim>().ResetAnim();
         _defeatParent.SetActive(false);
@@ -374,6 +379,7 @@ public class ScreensManager : MonoBehaviour
         _victoryParent.GetComponent<VictoryAnim>().UpdateMainCanvasAlpha(1);
         _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
+        _victoryConfettis.SetActive(false);
 
         MapManager.Instance.ForceResetBig();
         MapManager.Instance.ResetAllMap();

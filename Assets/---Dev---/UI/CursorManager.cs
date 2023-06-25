@@ -24,6 +24,7 @@ public class CursorManager : MonoBehaviour
     private List<Sprite> _idleSprite = new List<Sprite>();
     private List<Sprite> _clickSprite = new List<Sprite>();
 
+    private bool _isAndroid;
     
     private void Awake()
     {
@@ -45,6 +46,13 @@ public class CursorManager : MonoBehaviour
         if (MapManager.Instance != null && MapManager.Instance.IsAndroid)
         {
             _cursorImg.enabled = false;
+            _isAndroid = true;
+            return;
+        }
+        else if (MainMenuManager.Instance != null && MainMenuManager.Instance.IsAndroid)
+        {
+            _cursorImg.enabled = false;
+            _isAndroid = true;
             return;
         }
         
@@ -61,6 +69,8 @@ public class CursorManager : MonoBehaviour
 
     public void UpdateCursor(CursorChanges cursorChanges)
     {
+        if (_isAndroid) return;
+        
         _currentCursor = cursorChanges;
 
         _cursorImg.sprite = _idleSprite[(int)_currentCursor];
@@ -68,6 +78,8 @@ public class CursorManager : MonoBehaviour
 
     private void Update()
     {
+        if (_isAndroid) return;
+
         if(Input.GetMouseButton(0))
             _cursorImg.sprite = _clickSprite[(int)_currentCursor];
 
@@ -80,6 +92,8 @@ public class CursorManager : MonoBehaviour
 
     public void UpdateVisibleCursor(bool state)
     {
+        if (_isAndroid) return;
+
         _cursorImg.enabled = state;
     }
 }

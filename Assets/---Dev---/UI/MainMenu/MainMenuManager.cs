@@ -15,6 +15,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private SpawnAnimButtons _mainScreen;
     [SerializeField] private GameObject _continueButton;
     [SerializeField] private GameObject _popUpNewGame;
+    
+    [Header("Android")] public bool IsAndroid;
 
     private void Awake()
     {
