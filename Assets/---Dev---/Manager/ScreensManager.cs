@@ -44,6 +44,8 @@ public class ScreensManager : MonoBehaviour
     public bool IsMemoOpened { get; set; }
 
     private bool _isPaused;
+    private bool _hasUnlockedMemo;
+    private bool _hasMemoWaveEffect;
 
     private bool _stopCorou;
     private bool _isCorouRunning;
@@ -54,7 +56,7 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
-    
+
 
     private void Awake()
     {
@@ -66,6 +68,7 @@ public class ScreensManager : MonoBehaviour
     {
         //FirstScreenOfLevel();
     }
+
     public void InitOrderDescription(string text)
     {
         text ??= String.Empty;
@@ -163,7 +166,7 @@ public class ScreensManager : MonoBehaviour
             UpdatePause(!_isPaused);
         }
     }
-    
+
     public void UpdateOrder(int newNb, int whichOrder)
     {
         _stockOrderText[whichOrder].UpdateCurrentNbOrder(newNb);
@@ -178,9 +181,9 @@ public class ScreensManager : MonoBehaviour
 
         if (!state)
         {
-            if(!MapManager.Instance.IsRestart)
+            if (!MapManager.Instance.IsRestart)
                 DialogManager.Instance.EndDialog();
-            
+
             MapManager.Instance.IsRestart = false;
         }
     }
@@ -239,17 +242,17 @@ public class ScreensManager : MonoBehaviour
 
         MapManager.Instance.IsOnUI = true;
         MouseHitRaycast.Instance.IsBlockMouse(true);
-        
-        
+
+
         var dialogOfEnd = DialogManager.Instance.DialogOfEnd;
-        
+
         if (dialogOfEnd != null)
         {
             DialogManager.Instance.SpawnNewDialogs(dialogOfEnd, true, false);
             return;
         }
-        
-        
+
+
         if (CheckIfEndGame())
         {
             print("it's end game");
@@ -263,7 +266,7 @@ public class ScreensManager : MonoBehaviour
             _victoryConfettis.SetActive(true);
             _victoryParent.GetComponent<VictoryAnim>().LaunchAnimVictory();
         }
-        
+
 
         UpdateButtonGoLevelSupp(true);
 
@@ -278,7 +281,7 @@ public class ScreensManager : MonoBehaviour
     {
         if (DialogManager.Instance.NoNextEndDialogChoice && DialogManager.Instance.NoNextEndDialog)
             return true;
-        
+
         return false;
     }
 
@@ -308,13 +311,13 @@ public class ScreensManager : MonoBehaviour
         MouseHitRaycast.Instance.IsBlockMouse(false);
 
         _menuPauseParent.SetActive(false);
-        
+
         _victoryParent.GetComponent<VictoryAnim>().UpdateMainCanvasAlpha(1);
 
         _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
         _victoryConfettis.SetActive(false);
-        
+
         _defeatParent.GetComponent<DefeatAnim>().ResetAnim();
         _defeatParent.SetActive(false);
         ResetOrder();
@@ -365,17 +368,19 @@ public class ScreensManager : MonoBehaviour
     IEnumerator WaitToGoLevelSupp()
     {
         MapManager.Instance.CurrentDialogData = DialogManager.Instance.NextDialogToLoad;
-        
+
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+
+        CloseMemo();
 
         DialogManager.Instance.IsDialogTime = false;
         DialogManager.Instance.ResetCountDialog();
 
         ResetOrder();
- 
+
         _bg.SetActive(false);
-        
+
         _victoryParent.GetComponent<VictoryAnim>().UpdateMainCanvasAlpha(1);
         _victoryParent.GetComponent<VictoryAnim>().ResetAnim();
         _victoryParent.SetActive(false);
@@ -389,6 +394,7 @@ public class ScreensManager : MonoBehaviour
     {
         StartCoroutine(WaitToOpenOrder());
     }
+
     IEnumerator WaitToOpenOrder()
     {
         yield return new WaitForSeconds(1f);
@@ -412,15 +418,6 @@ public class ScreensManager : MonoBehaviour
         _orderMenu.GetComponent<ButtonManager>().UpdateButton(0, false);
     }
 
-    IEnumerator WaitToLaunchMemoOpening()
-    {
-        if (IsMemoOpened) yield break;
-
-        IsMemoOpened = true;
-        yield return new WaitForSeconds(.5f);
-
-        _memoWaveEffect.StartGrowOneTime();
-    }
 
     public void LaunchCredits()
     {
@@ -430,20 +427,49 @@ public class ScreensManager : MonoBehaviour
     IEnumerator WaitToLaunchCredit()
     {
         TransiManager.Instance.LaunchGrownOn();
-        
+
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
-        
+
         _credits.SetActive(true);
         _credits.GetComponent<CreditsMovement>().Init();
     }
 
     public void CheckIfMemoOpen()
     {
-        if (MapManager.Instance.OpenMemo && !IsMemoOpened)
+        if (MapManager.Instance.OpenMemo)
+            _hasUnlockedMemo = true;
+
+        if (_hasUnlockedMemo && !IsMemoOpened)
         {
-            _memoMenu.OpenAnim();
-            _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
+            // _memoMenu.OpenAnim();
+            // _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
             StartCoroutine(WaitToLaunchMemoOpening());
         }
+    }
+
+    IEnumerator WaitToLaunchMemoOpening()
+    {
+        if (IsMemoOpened) yield break;
+
+        IsMemoOpened = true;
+        
+        yield return new WaitForSeconds(1f);
+        
+        _memoMenu.OpenAnim();
+        _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
+        
+        yield return new WaitForSeconds(.5f);
+        
+        if (!_hasMemoWaveEffect)
+        {
+            _memoWaveEffect.StartGrowOneTime();
+            _hasMemoWaveEffect = true;
+        }
+    }
+
+    public void CloseMemo()
+    {
+        _memoMenu.CloseQuick();
+        _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, false);
     }
 }

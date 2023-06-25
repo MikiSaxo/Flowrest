@@ -1316,6 +1316,7 @@ public class MapManager : MonoBehaviour
         SetupUIGround.Instance.ResetAllButtons();
         ScreensManager.Instance.RestartSceneOrLevel();
         IsRestart = true;
+        ScreensManager.Instance.CloseMemo();
         ResetAllMap();
     }
 
