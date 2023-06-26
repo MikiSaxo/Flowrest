@@ -23,8 +23,8 @@ MonoBehaviour:
       la \"surprenne\" \xE0 sa place. "
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
-    Text: "Il l'aura sa surprise, du Viscosa ! Ca lui fera les pieds d'avoir des
-      fleurs qui sentent les pieds... Et en plus on gagnera des points dans le concours
+    Text: "Il l'aura sa surprise, du Viscosa !$Ca lui fera les pieds d'avoir des
+      fleurs qui sentent les pieds...$Et en plus on gagnera des points dans le concours
       d'employ\xE9 du mois en l'utilisant."
   - CharacterName: DG
     CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
@@ -39,12 +39,12 @@ MonoBehaviour:
       de Mme Michon.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
-    Text: "F\xE9licitations... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral
-      ... Tu le verras souvent, il passe fr\xE9quemment nous pourrir notre travail
-      avec des commandes comme celle-ci ..."
+    Text: "F\xE9licitations... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral...$Tu
+      le verras souvent, il passe fr\xE9quemment nous pourrir notre travail avec
+      des commandes comme celle-ci..."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
-    Text: "Tu n'es pas oblig\xE9 de r\xE9aliser ses commandes d'ailleurs. Tu as le
+    Text: "Tu n'es pas oblig\xE9 de r\xE9aliser ses commandes d'ailleurs.$Tu as le
       choix de la prendre ou de faire celle que je te donne."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
@@ -61,8 +61,8 @@ MonoBehaviour:
       in his place.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
-    Text: Well he'll get his surprise! Viscosa! That'll teach him, rotten flowers
-      for a rotten intention. And by using it, we'll win points in the employee of
+    Text: Well he'll get his surprise! Viscosa!$That'll teach him, rotten flowers
+      for a rotten intention.$And by using it, we'll win points in the employee of
       the month competition.
   - CharacterName: GM
     CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
@@ -76,12 +76,12 @@ MonoBehaviour:
     Text: And no, it's not to make stink bombs to throw at Mrs. Stapleneck.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
-    Text: Congratulations ... you've just met the General Manager. You'll see him
+    Text: Congratulations... you've just met the General Manager.$You'll see him
       often, he frequently comes by to ruin everyone's day with non urgent orders
       like this one....
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
-    Text: You're not obligated to listen to him by the way. You can choose to do
+    Text: You're not obligated to listen to him by the way.$You can choose to do
       it, or complete the task I've given you.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
@@ -93,6 +93,7 @@ MonoBehaviour:
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 5b50fa50ebd7e5f4c8d0766e5e78a469, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 946a95fcca1d0ba40853c6fbfef76aa9, type: 2}
+    DialogOfEnd: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   - Choice: "Aider les enfants (\xE0 faire des boules puantes)"
@@ -100,6 +101,7 @@ MonoBehaviour:
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 22cc9fb5a9441e24aa3dd423ed3f0f68, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 45a30dd7139ad5341b336cccbb245fce, type: 2}
+    DialogOfEnd: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   DialogOfEnd: {fileID: 0}
