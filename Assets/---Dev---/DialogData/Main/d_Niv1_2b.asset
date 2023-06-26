@@ -19,18 +19,28 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "Tu es s\xFBr de vouloir que je te r\xE9explique ?"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: I'm not a fan of repeating myself...
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: Are you sure that I need to explain everything again?
   Choices:
   - Choice: "Finalement \xE7a ira, je suis pr\xEAt \xE0 essayer"
-    ChoiceEnglish: 
+    ChoiceEnglish: Actually I'm all good
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 5e9ea6ff03dffab4f926c4b52b84b709, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: a2bf3bf48c4027346911be581dbe4995, type: 2}
+    VisualUpgrades:
+      _Upgrades: 0
   - Choice: "Oui j'ai besoin qu'on me r\xE9p\xE8te..."
-    ChoiceEnglish: 
+    ChoiceEnglish: Yeah, I need clarification
     AddDialog: {fileID: 11400000, guid: ceb9830adcfac1148abc4aae9f3a7613, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
   DialogOfEnd: {fileID: 0}
   AddDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}

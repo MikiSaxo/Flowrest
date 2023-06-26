@@ -10,44 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
-  m_Name: d_Niv5_1
+  m_Name: d_Niv4_end
   m_EditorClassIdentifier: 
   DialogFrench:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-    Text: "Comme tous les ans, l'entreprise organise un concours interne pour \xE9lire
-      l'employ\xE9 du mois ! C'est un super moment pour attiser les rivalit\xE9s
-      et \xE9craser les coll\xE8gues ! "
+    Text: "Parfait ! Gr\xE2ce \xE0 ton excellent travail ce sport est devenu connu
+      \xE0 travers les galaxies ! D'autres comp\xE9titions de ce style ont commenc\xE9s
+      \xE0 \xE9merger et on a enregistr\xE9 une augmentation des commandes !"
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 53afc548191b32b4693f09d25aea991e, type: 3}
-    Text: "Celui qui obtiendra les meilleurs r\xE9sultats remportera une <b>SUUUUUUUPER</b>
-      r\xE9compense d'apr\xE8s le comit\xE9 de direction."
+    Text: "Je suis pass\xE9 voir un de leur match et j'en ai profit\xE9 pour acheter
+      ce bandana !"
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-    Text: "Comme tu es mon stagiaire, on participera \xE0 2 ! T'en penses quoi ?"
+    Text: "C'est un tr\xE8s bon d\xE9but continue comme \xE7a et tu deviendras l'un
+      des meilleurs pr\xE9parateur de cette bo\xEEte, j'en suis s\xFBr !"
   DialogEnglish:
   - CharacterName: Profess.io
-    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-    Text: 'Every year, we organize an internal competition to choose the employee
-      of the month! It''s a great opportunity to stir up rivalries and show your
-      colleagues what you''re made of. '
+    CharacterSprite: {fileID: 0}
+    Text: 'Perfect! Thanks to your excellent work, the sport now has fans across
+      all galaxies! Other similar competitions have cropped up and we''ve received
+      an avalanche of orders. '
   - CharacterName: Profess.io
-    CharacterSprite: {fileID: 21300000, guid: 53afc548191b32b4693f09d25aea991e, type: 3}
-    Text: 'The individual with the best scores will receive a <b>HUUUUUUUGGGEEE</b>
-      reward, according to management. '
+    CharacterSprite: {fileID: 0}
+    Text: I went to see a match and I took the opportunity to buy this banadana!
   - CharacterName: Profess.io
-    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-    Text: Since you're an intern, we can enter together! What do you think?
+    CharacterSprite: {fileID: 0}
+    Text: You;re off to a great start, keep it up and I'm sure you'll become one
+      of the best preppers in this org for sure!
   Choices:
   - Choice: "Ca me va. On va les d\xE9truire !"
-    ChoiceEnglish: 'Works for me! We got it in the bag. '
+    ChoiceEnglish: 
     AddDialog: {fileID: 11400000, guid: 48f9ceba49fd27d43b725c166d304661, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   - Choice: Est ce que j'ai vraiment le choix ?
-    ChoiceEnglish: Do I ever have a choice?
+    ChoiceEnglish: 
     AddDialog: {fileID: 11400000, guid: 16ead5a45b2d0b147b3ffb3044646147, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}

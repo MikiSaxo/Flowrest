@@ -41,19 +41,48 @@ MonoBehaviour:
     CharacterSprite: {fileID: 21300000, guid: e4bad93669f03644cac2e53de601a621, type: 3}
     Text: "Alors, quelle commande tu veux faire ? Faire la station hydraulique ou
       une \xEEle d\xE9serte pour l'\xE9mission Poh-Lanta ?"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: 'Another day, another dollar! This time it''s a big client. EE (ethereal
+      electricity) needs a hydros planet to build a hydropower station. '
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: It's great, we would be part of a mission to grant electricity to a huge
+      section of the solar system. What do you think?
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: d1703db24f2c2eb44bf76f7289475654, type: 3}
+    Text: Hey team! Have you heard the news? My favorite show Koh-Planeta is finally
+      starting again! And they need use to make a new planet!
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
+    Text: They want to send participants rip each other's guts out on a desert island.
+      What do you say?
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: Hey you there, I recognize you from last time! Congratulations, I'm honored
+      to let you know that you can be in charge of it! So, what will it be? Don't
+      miss this occasion, it's a once in a lifetime opportunity!
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: e4bad93669f03644cac2e53de601a621, type: 3}
+    Text: So, what order are you going to complete? The hydropower station or a desert
+      island for Kok-Planeta?
   Choices:
   - Choice: "La station hydroleak me semble plus important dans l'imm\xE9diat."
-    ChoiceEnglish: 
+    ChoiceEnglish: The hydropower station feels more important in this moment.
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 211ac8dd38b041f47a9b35ece8fbf972, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 321fd04ff334a4a4f822a4c5db6d1055, type: 2}
+    VisualUpgrades:
+      _Upgrades: 0
   - Choice: "Haha j'adore cette \xE9mission ! Je me charge de l'\xEEle d\xE9serte
       !"
-    ChoiceEnglish: 
+    ChoiceEnglish: 'Haha I love that show! Leave the desert island to me! '
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: c296ebf39653564469536232969407a1, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: aa8044d68e6280c41949b1f916ba35bf, type: 2}
+    VisualUpgrades:
+      _Upgrades: 0
   DialogOfEnd: {fileID: 0}
   AddDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}

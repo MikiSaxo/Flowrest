@@ -16,8 +16,14 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "Non t'as pas le choix et c'est tr\xE8s bien comme \xE7a !"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: 'No you don''t and it''s better that way. '
   Choices: []
-  NextDialog: {fileID: 11400000, guid: 008386c7fc29f174e82907f1a02d7975, type: 2}
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 11400000, guid: 008386c7fc29f174e82907f1a02d7975, type: 2}
   LevelToLoad: {fileID: 0}
-  EndDialog: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0
