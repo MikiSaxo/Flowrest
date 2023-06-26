@@ -141,6 +141,7 @@ public class DialogManager : MonoBehaviour
 
         if (dialogData != null)
         {
+            print(LanguageManager.Instance.Tongue);
             if (LanguageManager.Instance.Tongue == Language.Francais)
             {
                 if (dialogData.DialogFrench != null && dialogData.DialogFrench.Length > 0)
@@ -152,7 +153,7 @@ public class DialogManager : MonoBehaviour
 
                     for (int i = 0; i < dialogFrench.Length; i++)
                     {
-                        charaNames[i] = dialogData.DialogFrench[i].CharacterName;
+                        charaNames[i] = dialogFrench[i].CharacterName;
                         charaSprites[i] = dialogFrench[i].CharacterSprite;
                         dialogsText[i] = dialogFrench[i].Text;
                     }
@@ -162,15 +163,16 @@ public class DialogManager : MonoBehaviour
             {
                 if (dialogData.DialogEnglish != null && dialogData.DialogEnglish.Length > 0)
                 {
-                    charaNames = new string[dialogData.DialogEnglish.Length];
-                    charaSprites = new Sprite[dialogData.DialogEnglish.Length];
-                    dialogsText = new string[dialogData.DialogEnglish.Length];
+                    DialogCore[] dialogEnglish = dialogData.DialogEnglish;
+                    charaNames = new string[dialogEnglish.Length];
+                    charaSprites = new Sprite[dialogEnglish.Length];
+                    dialogsText = new string[dialogEnglish.Length];
 
-                    for (int i = 0; i < dialogData.DialogEnglish.Length; i++)
+                    for (int i = 0; i < dialogEnglish.Length; i++)
                     {
-                        charaNames[i] = dialogData.DialogEnglish[i].CharacterName;
-                        charaSprites[i] = dialogData.DialogEnglish[i].CharacterSprite;
-                        dialogsText[i] = dialogData.DialogEnglish[i].Text;
+                        charaNames[i] = dialogEnglish[i].CharacterName;
+                        charaSprites[i] = dialogEnglish[i].CharacterSprite;
+                        dialogsText[i] = dialogEnglish[i].Text;
                     }
                 }
             }
@@ -263,7 +265,8 @@ public class DialogManager : MonoBehaviour
         SpawnAllDialog();
 
         // Update if dialog of end 
-        DialogOfEnd = dialogData.DialogOfEnd;
+        if(dialogData.DialogOfEnd != null)
+            DialogOfEnd = dialogData.DialogOfEnd;
 
         AudioManager.Instance.PlaySFX("DialogPop");
     }
@@ -523,6 +526,10 @@ public class DialogManager : MonoBehaviour
 
             _stockChoiceButtons.Clear();
         }
+        
+        // Update if dialog of end 
+        if(_choices[index].DialogOfEnd != null)
+            DialogOfEnd = _choices[index].DialogOfEnd;
     }
 
     public void SkipDialog()

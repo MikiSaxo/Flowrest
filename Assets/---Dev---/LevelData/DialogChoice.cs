@@ -24,5 +24,9 @@ public class DialogChoice
     
     [Space(10f)]
     
+    public DialogData DialogOfEnd;
+    
+    [Space(10f)]
+    
     public DialogUpgrades VisualUpgrades;
 }
