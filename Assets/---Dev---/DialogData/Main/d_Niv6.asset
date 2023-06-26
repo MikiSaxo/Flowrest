@@ -31,9 +31,12 @@ MonoBehaviour:
     Text: "Attends ! Toi l\xE0 ! Le stagiaire, faut que tu m'aides !"
   - CharacterName: DG
     CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
-    Text: J'ai des copai... Euh enfin des enfants de riches investisseurs ont besoin
-      de Viscosa pour leur projet de classe...  Et non pas du tout pour faire des
-      boules puantes et les lancer au visage de Mme Michon.
+    Text: 'J''ai des copai... Euh enfin des enfants de riches investisseurs ont besoin
+      de Viscosa pour leur projet de classe...  '
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: cd08833cfc7669744963a60843e4fd6d, type: 3}
+    Text: Et non pas du tout pour faire des boules puantes et les lancer au visage
+      de Mme Michon.
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
     Text: "F\xE9licitations... Tu viens juste de rencontrer le Directeur G\xE9n\xE9ral
@@ -47,17 +50,53 @@ MonoBehaviour:
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "Du coup, tu pr\xE9f\xE8res aider l'amoureux transi \xE0 s\xE9duire ou
       les enfants sur leur projet de classe ?"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: Here Petri, for today I have a client who's asked me for a planet covered
+      in flowers that he wants to get for this alien he's trying to get with.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: Except this idiot doesn't even know her and expects us to "surprise her"
+      in his place.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
+    Text: Well he'll get his surprise! Viscosa! That'll teach him, rotten flowers
+      for a rotten intention. And by using it, we'll win points in the employee of
+      the month competition.
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
+    Text: Wait! You there! The intern, you've got to help me!
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
+    Text: I have some frien... I mean kids of rich investors who need viscosa for
+      their class project...
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: cd08833cfc7669744963a60843e4fd6d, type: 3}
+    Text: And no, it's not to make stink bombs to throw at Mrs. Stapleneck.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: fd3e384b0f43c634e8934bf8b42c756e, type: 3}
+    Text: Congratulations ... you've just met the General Manager. You'll see him
+      often, he frequently comes by to ruin everyone's day with non urgent orders
+      like this one....
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: You're not obligated to listen to him by the way. You can choose to do
+      it, or complete the task I've given you.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: So, would you rather help the seductive lover or the kids with their class
+      project?
   Choices:
   - Choice: Aider l'amoureux transi
-    ChoiceEnglish: 
+    ChoiceEnglish: Help the lover
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 5b50fa50ebd7e5f4c8d0766e5e78a469, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 946a95fcca1d0ba40853c6fbfef76aa9, type: 2}
     VisualUpgrades:
       _Upgrades: 0
   - Choice: "Aider les enfants (\xE0 faire des boules puantes)"
-    ChoiceEnglish: 
+    ChoiceEnglish: Help the kids (to make stink bombs)
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 22cc9fb5a9441e24aa3dd423ed3f0f68, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 45a30dd7139ad5341b336cccbb245fce, type: 2}

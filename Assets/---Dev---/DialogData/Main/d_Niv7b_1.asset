@@ -23,18 +23,32 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
     Text: Tu veux d'abord la bonne ou la mauvaise ?
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 699d89e36c0829745a94fc44777e1a16, type: 3}
+    Text: HAHAHA THAT WAS INSANE! Thanks intern, you really exceeded our - I mean
+      their expectations!
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Ah Petri, I have good news and bad news.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Do you want the good or the bad news first?
   Choices:
   - Choice: La bonne
-    ChoiceEnglish: 
+    ChoiceEnglish: The good news
     AddDialog: {fileID: 11400000, guid: 3703f489632de3c49badc48b979ee570, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
   - Choice: La mauvaise
-    ChoiceEnglish: 
+    ChoiceEnglish: The bad news
     AddDialog: {fileID: 11400000, guid: be88cce323967bf43920ce93bbc3983a, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
   DialogOfEnd: {fileID: 0}
   AddDialog: {fileID: 0}
   LevelToLoad: {fileID: 0}

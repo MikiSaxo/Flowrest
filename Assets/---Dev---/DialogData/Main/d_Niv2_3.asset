@@ -16,17 +16,20 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "Th\xE9 ou caf\xE9 ?"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: Tea or coffee?
   Choices:
   - Choice: "Th\xE9"
-    ChoiceEnglish: 
+    ChoiceEnglish: Tea
     AddDialog: {fileID: 11400000, guid: ba565c9ec5f51d24dbfb43ed98d482fb, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   - Choice: "Caf\xE9"
-    ChoiceEnglish: 
+    ChoiceEnglish: Coffee
     AddDialog: {fileID: 11400000, guid: ba565c9ec5f51d24dbfb43ed98d482fb, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
