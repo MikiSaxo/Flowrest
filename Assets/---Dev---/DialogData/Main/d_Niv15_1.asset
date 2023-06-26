@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv15_1
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Grande nouvelle ! La f\xE9d\xE9ration Galactique de football nous a choisi
+      pour nous occuper de la cr\xE9ation de la prochaine plan\xE8te qui accueillera
+      la galacticup !"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "C'est super j'ai h\xE2te de me mettre au trava..."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: Oh attends une seconde j'ai un appel...
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: ...
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: .........
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: ..............
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: ....................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: .........................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: ...............................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: Uhm, alors, comment dire...
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: ....
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: ...........
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: ................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: ....................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: ....................
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Un type un peu louche viens de m'appeler et il... nous propose de l'argent.
+      Beaucoup d'argent.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: "Il veut en contrepartie qu'on sabote la cr\xE9ation de la plan\xE8te pour
+      la f\xE9d\xE9ration. "
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Je ... Je ne sais pas ? Ce n'est pas tr\xE8s l\xE9gal mais il m'a garanti
+      que l'argent arriverait sans soucis"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: Qu'est ce que tu en penses ? On sabote la commande pour de l'argent ?
+  DialogEnglish: []
+  Choices:
+  - Choice: Accepter le pot de vin
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: fce79e2d6951a8c4899897c83ffee8fe, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  - Choice: Refuser le pot de vin
+    ChoiceEnglish: 
+    AddDialog: {fileID: 11400000, guid: 8e5095d9313fac241a105097c499d8ac, type: 2}
+    LevelToLoad: {fileID: 0}
+    NextLevelDialog: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0

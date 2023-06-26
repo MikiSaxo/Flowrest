@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv12
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: "Il faut croire que cette campagne a amen\xE9 toutes les rapaces opportunistes
+      de l'influence."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "On a aujourd'hui un certain D'Whey Johnson, un influenceur fitness qui
+      cherche \xE0 booster sa carri\xE8re sur les r\xE9seaux."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Il aimerait fabriquer sa cr\xE9atine \xE0 base de calcid. Ne me pose pas
+      de question je ne sais pas comment il compte s'y prendre."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Il aimerait fabriquer sa cr\xE9atine \xE0 base de calcid. Ne me pose pas
+      de question je ne sais pas comment il compte s'y prendre."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Ses produits vont partir comme des croissants de lune comme on dit.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Ses produits vont partir comme des croissants de lune comme on dit.
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: Une minute jeune entrepreneur !
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: cd08833cfc7669744963a60843e4fd6d, type: 3}
+    Text: "Un ami business man lance sa masterclass gratuite pour r\xE9v\xE9ler tous
+      les secrets et pi\xE8ges de l'investissement dans l'immobilier plan\xE9taire."
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: "Il aurait besoin d'une plan\xE8te en grassias pour booster son business
+      en ligne car il veut surfer sur le #touch some grassias."
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: "Et mes f\xE9licitations ! j'ai l'honneur de t'annoncer que c'est toi qui
+      pourra t'en charger ! Alors t'en dis quoi ? Ne rate pas cette occasion, c'est
+      la chance de ta vie !"
+  - CharacterName: DG
+    CharacterSprite: {fileID: 21300000, guid: d1703db24f2c2eb44bf76f7289475654, type: 3}
+    Text: "Alors, une commande pour un influenceur fitness gonfl\xE9 aux st\xE9ro\xEFdes
+      qui a besoin de calcid ou un entrepreneur qui inspire confiance en lui fournissant
+      du grassias ? Moi je pense la question elle est vite r\xE9pondue."
+  DialogEnglish: []
+  Choices:
+  - Choice: "Le sport c'est la sant\xE9 ! Je choisis le fitness"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 3362aa76096bf054e9c8aa4aa57410c2, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 648eb2c22f3059d4686fb3e676761466, type: 2}
+    VisualUpgrades:
+      _Upgrades: 0
+  - Choice: "J'adore l'argent, j'investis toutes mes \xE9conomies ! Je choisis l'entrepreneur
+      !"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 36d0332c2c9e9534dbef07eff867871d, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 69f6aee55e76166499be3259ecec5bf5, type: 2}
+    VisualUpgrades:
+      _Upgrades: 0
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0
