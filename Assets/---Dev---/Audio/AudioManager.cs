@@ -1,6 +1,7 @@
 using UnityEngine.Audio;
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,14 +20,17 @@ public class AudioManager : MonoBehaviour
     [Header("----- Audio Options -----")] [SerializeField]
     private AudioMixer _audioMixer;
 
-    [Header("----- Musics -----")] public Sounds[] Musics;
+    [Header("----- Other Musics -----")] public Sounds[] Musics;
+    [Header("----- Main Musics -----")] public Sounds[] MainMusics;
     [Header("----- SFX -----")] public Sounds[] SFX;
 
     private float _waveCooldown;
     private float _waveTime;
     private string _currentMusic;
+    private int _currentClipIndex;
     private List<int> _randomMusics;
-    
+    private bool _mainMusic;
+
 
     private void Awake()
     {
@@ -49,7 +53,16 @@ public class AudioManager : MonoBehaviour
             music.Source.pitch = music.Pitch;
             music.Source.loop = music.Loop;
             music.Source.outputAudioMixerGroup = _musicSource.outputAudioMixerGroup;
+        }
 
+        foreach (Sounds music in MainMusics)
+        {
+            music.Source = gameObject.AddComponent<AudioSource>();
+            music.Source.clip = music.Clip;
+            music.Source.volume = music.Volume;
+            music.Source.pitch = music.Pitch;
+            music.Source.loop = music.Loop;
+            music.Source.outputAudioMixerGroup = _musicSource.outputAudioMixerGroup;
         }
 
         foreach (Sounds sfx in SFX)
@@ -65,23 +78,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.buildIndex == 0)
-        {
-            StopMusic("MainMusic");
-            StopMusic("MenuMusic");
-            StopMusic("Wave1");
-            PlayMusicLong("MenuMusic");
-        }
-        else
-        {
-            StopMusic("MainMusic");
-            StopMusic("MenuMusic");
-            StopMusic("Wave1");
-            PlayMusicLong("MainMusic");
-            PlayMusicLong("Wave1");
-        }
+        LaunchPlayLoop();
 
         if (PlayerPrefs.HasKey("musicVolume") || PlayerPrefs.HasKey("sfxVolume"))
         {
@@ -94,10 +91,35 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void LaunchPlayLoop()
+    {
+        ChooseRandomMusic();
+        StartCoroutine(PlayMusicLoop());
+        PlayMusicLong("Wave1");
+    }
+
+    private IEnumerator PlayMusicLoop()
+    {
+        while (true)
+        {
+            _musicSource.clip = MainMusics[_randomMusics[_currentClipIndex]].Clip;
+            _musicSource.Play();
+
+            yield return new WaitForSeconds(_musicSource.clip.length);
+
+            _currentClipIndex++;
+            if (_currentClipIndex >= _randomMusics.Count)
+            {
+                _currentClipIndex = 0;
+            }
+        }
+    }
+
     private void ChooseRandomMusic()
     {
-        _randomMusics = GenerateRandomIndices(Musics.Length);
+        _randomMusics = GenerateRandomIndices(MainMusics.Length);
     }
+
     private List<int> GenerateRandomIndices(int count)
     {
         List<int> indices = new List<int>();
@@ -108,15 +130,13 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < count - 1; i++)
         {
-            
             int randomIndex = Random.Range(i, count);
-            int temp = indices[i];
-            indices[i] = indices[randomIndex];
-            indices[randomIndex] = temp;
+            (indices[i], indices[randomIndex]) = (indices[randomIndex], indices[i]);
         }
 
         return indices;
     }
+
     public void PlayMusic(string name)
     {
         // print($"Launch {name} music");
@@ -129,6 +149,7 @@ public class AudioManager : MonoBehaviour
 
         s.Source.PlayOneShot(s.Clip);
     }
+
     public void PlayMusicLong(string name)
     {
         print($"Launch {name} music");
@@ -145,7 +166,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(string name)
     {
         // print($"Launch {name} sfx");
-        
+
         Sounds s = Array.Find(SFX, sound => sound.Name == name);
         if (s == null)
         {
@@ -155,10 +176,11 @@ public class AudioManager : MonoBehaviour
 
         s.Source.PlayOneShot(s.Clip);
     }
+
     public void PlaySFXLong(string name)
     {
         // print($"Launch {name} sfx");
-        
+
         Sounds s = Array.Find(SFX, sound => sound.Name == name);
         if (s == null)
         {

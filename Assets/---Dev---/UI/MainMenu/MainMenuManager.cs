@@ -51,10 +51,17 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
-            LauncNewGame();
+            LaunchNewGame();
         }
     }
-    public void LauncNewGame()
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+            LaunchNewGame();
+    }
+
+    public void LaunchNewGame()
     {
         PlayerPrefs.SetString("CurrentDialogData", String.Empty);
         PlayerPrefs.SetInt("CurrentLevel", 1);
@@ -66,6 +73,9 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.StopMusic("MainMusic");
         AudioManager.Instance.StopMusic("MenuMusic");
         AudioManager.Instance.PlayMusicLong("MainMusic");
+        
+        // AudioManager.Instance.LaunchPlayLoop();
+        
         StartCoroutine(WaitToLaunchMainScene());
     }
 
