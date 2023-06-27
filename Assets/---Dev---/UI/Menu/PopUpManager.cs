@@ -55,23 +55,7 @@ public class PopUpManager : MonoBehaviour
             _imgPopUp.sprite = null;
         }
 
-        // var mapPath = $"PopUpVideo/{videoName}.mp4";
-        //
-        // // Initialize
-        // BetterStreamingAssets.Initialize();
-        //
-        // // Get the video path
-        // string videoPath = Path.Combine(BetterStreamingAssets.Root, mapPath);
-        // // print(videoPath);
-        // if (!BetterStreamingAssets.FileExists(mapPath))
-        // {
-        //     ScreensManager.Instance.UpdatePopUpState(false);
-        //     Debug.LogErrorFormat("Streaming asset not found: {0}", mapPath);
-        // }
-        //
         _canOpenPopUp = true;
-        // _videoPlayer.url = videoPath;
-        // _videoPlayer.Play();
     }
 
     private void Update()

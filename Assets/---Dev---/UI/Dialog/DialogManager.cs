@@ -224,7 +224,6 @@ public class DialogManager : MonoBehaviour
         if (dialogsText.Length == 0 && !_isDialogOfEnd)
         {
             dialogsText = new[] { " " };
-            IsDialogTime = false;
             ScreensManager.Instance.IsMemoOpened = true;
             CheckIfEndDialog();
 
@@ -244,7 +243,6 @@ public class DialogManager : MonoBehaviour
 
         if (_dialogsList.Count == 0)
         {
-            IsDialogTime = false;
             ScreensManager.Instance.IsMemoOpened = true;
             CheckIfEndDialog();
             return;
@@ -368,6 +366,8 @@ public class DialogManager : MonoBehaviour
             {
                 NoNextEndDialog = true;
             }
+            
+            IsDialogTime = false;
         }
         else
         {
@@ -411,7 +411,6 @@ public class DialogManager : MonoBehaviour
     {
         if (_dialogsPrefabList.Count == _dialogsList.Count && _dialogsPrefabList[^1].IsFinishDialoging)
         {
-            IsDialogTime = false;
             CheckIfEndDialog();
 
             return true;
@@ -437,12 +436,15 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
+        IsDialogTime = false;
+
         ScreensManager.Instance.CheckIfMemoOpen();
 
 
         if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0 && !_isDialogOfEnd)
         {
             ScreensManager.Instance.HasPopUp = true;
+            IsDialogTime = true;
             PopUpManager.Instance.InitPopUp(_levelToLoad.PopUpInfos);
         }
 
@@ -462,7 +464,7 @@ public class DialogManager : MonoBehaviour
     private void SpawnChoices()
     {
         if (_stockChoiceButtons.Count > 0) return;
-
+        
         if (_choices != null && _choices.Length > 0 &&
             (_currentDialogData.DialogEnglish.Length > 0 || _currentDialogData.DialogFrench.Length > 0))
         {
@@ -481,6 +483,7 @@ public class DialogManager : MonoBehaviour
                 else
                     go.GetComponent<DialogPrefab>().Init(_choices[i].ChoiceEnglish, 0);
             }
+            IsDialogTime = true;
 
             _dialogChoiceParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
         }
@@ -515,6 +518,7 @@ public class DialogManager : MonoBehaviour
         if(_choices[index].DialogOfEnd != null)
             DialogOfEnd = _choices[index].DialogOfEnd;
         
+        IsDialogTime = false;
         
         SpawnNewDialogs(_choices[index].AddDialog, false, false);
         
@@ -533,7 +537,6 @@ public class DialogManager : MonoBehaviour
     public void SkipDialog()
     {
         _dialogsPrefabList[^1].EndAnimationText();
-        IsDialogTime = false;
 
         CheckIfEndDialog();
     }

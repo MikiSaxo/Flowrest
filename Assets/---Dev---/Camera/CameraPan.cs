@@ -61,6 +61,8 @@ public class CameraPan : MonoBehaviour
     {
         if (MapManager.Instance != null && MapManager.Instance.IsVictory)
             return;
+        if (DialogManager.Instance != null && DialogManager.Instance.GetIsDialogTime())
+            return;
         
         // Change to the good click depending of if is Android
         var mouseIndex = 2;

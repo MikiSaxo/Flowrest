@@ -89,6 +89,7 @@ public class MapManager : MonoBehaviour
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
     private bool _hasPopUp;
+    private bool _hasSpawnFalseFloor;
 
     private LevelData _currentLevelData;
 
@@ -560,6 +561,9 @@ public class MapManager : MonoBehaviour
 
     IEnumerator FalseFloorSpawn()
     {
+        if (_hasSpawnFalseFloor) 
+            yield break;
+        
         _mapInfo = _mapConstructData.Map.Split("\n");
 
         // Get its size
@@ -588,6 +592,8 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+
+        _hasSpawnFalseFloor = true;
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
