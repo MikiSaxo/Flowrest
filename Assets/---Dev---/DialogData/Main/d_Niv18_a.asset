@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5869377a788f26b4db7f8f9f9c43d26d, type: 3}
+  m_Name: d_Niv18_a
+  m_EditorClassIdentifier: 
+  DialogFrench:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: "Ok aujourd'hui on est sur une situation plut\xF4t particuli\xE8re."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Un Cow-Boy de l'espace a provoqu\xE9 en duel  le sh\xE9riff du syst\xE8me
+      uki-uk."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
+    Text: 'Il est venu vers lui en lui criant : "Il n''y a pas assez d''espace pour
+      nous-deux dans cet univers."'
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: "Cependant, il y a une rumeur qui dis que ce sh\xE9riff aurait braqu\xE9
+      une diligence de dessert sur la planete bufanom brill."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "Pr\xE8feres tu soutenir le sh\xE9rif actuel ou le cow-boy ?"
+  DialogEnglish: []
+  Choices:
+  - Choice: "Le sh\xE9rif calamard-E.T Jane"
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 2b46b05aa3989dd43a4cb0a6a442b0b0, type: 2}
+    NextLevelDialog: {fileID: 11400000}
+    DialogOfEnd: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  - Choice: Le cow-boy Billy the king
+    ChoiceEnglish: 
+    AddDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: 2b46b05aa3989dd43a4cb0a6a442b0b0, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: d365912943ea958428a8d2219ea8a381, type: 2}
+    DialogOfEnd: {fileID: 0}
+    VisualUpgrades:
+      _Upgrades: 0
+  DialogOfEnd: {fileID: 0}
+  AddDialog: {fileID: 0}
+  LevelToLoad: {fileID: 0}
+  NextLevelDialog: {fileID: 0}
+  VisualUpgrades:
+    _Upgrades: 0

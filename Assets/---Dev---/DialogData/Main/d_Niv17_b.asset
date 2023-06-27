@@ -15,50 +15,50 @@ MonoBehaviour:
   DialogFrench:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-    Text: "Dans le cadre de la protection des populations aliens, le G30623 nous
-      envoi un r\xE9fugi\xE9 In Huit. C'est une population des glaces qui a besoin
-      d'une nouvelle plan\xE8te pour vivre."
+    Text: "Un mouvement religieux commence \xE0 prendre de l'ampleur en ce moment,
+      les \"moines n\xE9s lumi\xE8res\"."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-    Text: "Il lui faudrait de l'hydros. Nos ing\xE9nieurs s'occuperont ensuite de
-      cryog\xE9niser la plan\xE8te pour la lui rendre vivable. Un bel environnement
-      de glace le ravira certainement c'est g\xE9nial !"
-  - CharacterName: DG
-    CharacterSprite: {fileID: 21300000, guid: 699d89e36c0829745a94fc44777e1a16, type: 3}
-    Text: "Glace ? Qui a dit glace ? Quel parfum vous pr\xE9voyez de faire ? Si il
-      y a chocolat vous m'en laissez de c\xF4t\xE9 !"
+    Text: "Ils font toute sorte de procession \xE0 travers la galaxie et ils commencent
+      \xE0 s'infliger des ch\xE2timents au nom de leurs divinit\xE9s."
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: "L'un d'entre eux consiste \xE0 rester dans une pi\xE8ce le plus longtemps
+      possible avec de l'encens \xE0 base de viscosa, je te laisse imaginer l'odeur..."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-    Text: "Non nous ne parlions pas de glaces au chocolat mais de glace tout court.
-      On doit faire une plan\xE8te pour un r\xE9fugi\xE9 qui vit dans le froid."
-  - CharacterName: DG
-    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
-    Text: "Pfff, nul, moi je voulais des glaces ! Dit Petri, tu fais la commande
-      et tu me la laisses de c\xF4t\xE9 hein ? On va se r\xE9galer crois moi !"
+    Text: Quoi qu'il en soit, une commande est une commande non ? On va donc la faire
+      je suppose ?
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
-    Text: Veux-tu faire un habitat vivable pour cet In Huit ou faire plaisir au DG
-      avec des glaces ?
+    Text: "C'est que... c'est quand m\xEAme dur de s'infliger ce genre de choses
+      non ? Tu es s\xFBr de vouloir faire \xE7a ?"
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: On leur fait de l'encens en viscosa ou on leur facilite la vie en mettant
+      un peu de grassias ?
   DialogEnglish: []
   Choices:
-  - Choice: "Quel gamin ce DG ! Bien s\xFBr que je vais m'occuper des In Huit."
+  - Choice: "Une commande doit \xEAtre honor\xE9e comme demand\xE9e, on fait uniquement
+      du viscosa"
     ChoiceEnglish: 
     AddDialog: {fileID: 0}
-    LevelToLoad: {fileID: 11400000, guid: 0731ec8abc1e0d14d8b6926a1a29d6fc, type: 2}
-    NextLevelDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: e87002a68e5c7e44e91c15da4a9f0886, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: 7cc377ceccfdb92458cc6d98b749cd83, type: 2}
+    DialogOfEnd: {fileID: 11400000, guid: 874c6c68b34eb2141b3a9834a65fdf93, type: 2}
     VisualUpgrades:
       _Upgrades: 0
-  - Choice: Hmm une bonne glace ne serait pas de refus, ca fait longtemps une bonne
-      glace aux cailloux spatiaux !
+  - Choice: "Ajouter un peu de grassias leur sauvera peut-\xEAtre la vie"
     ChoiceEnglish: 
     AddDialog: {fileID: 0}
-    LevelToLoad: {fileID: 11400000, guid: 0731ec8abc1e0d14d8b6926a1a29d6fc, type: 2}
-    NextLevelDialog: {fileID: 0}
+    LevelToLoad: {fileID: 11400000, guid: e87002a68e5c7e44e91c15da4a9f0886, type: 2}
+    NextLevelDialog: {fileID: 11400000, guid: b151b2e06c9e41a4588f9611dcdbb588, type: 2}
+    DialogOfEnd: {fileID: 11400000, guid: ee941c63614ebf541abf125292186e78, type: 2}
     VisualUpgrades:
       _Upgrades: 0
   DialogOfEnd: {fileID: 0}
   AddDialog: {fileID: 0}
-  LevelToLoad: {fileID: 11400000, guid: 8d450e137d6ce2e4bae0ee6670b8cb78, type: 2}
+  LevelToLoad: {fileID: 0}
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
     _Upgrades: 0
