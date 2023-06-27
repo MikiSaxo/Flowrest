@@ -17,6 +17,7 @@ public class RecyclingManager : MonoBehaviour
     [SerializeField] private GameObject _recyclingParent;
     [SerializeField] private FB_Arrow _arrowTuto;
     [SerializeField] private TextMeshProUGUI _recyclingNbText;
+    [SerializeField] private Image _recyclingNbTextBG;
 
     [Header("Anim Rotation")] [SerializeField]
     private GameObject _recyclingImg;
@@ -45,6 +46,7 @@ public class RecyclingManager : MonoBehaviour
     {
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(false);
         _recyclingNbText.DOFade(0, 0);
+        _recyclingNbTextBG.DOFade(0, 0);
     }
 
     public void UpdateRecycling(bool activateOrNot)
@@ -53,6 +55,7 @@ public class RecyclingManager : MonoBehaviour
         gameObject.GetComponent<PointerMotion>().UpdateCanEnter(activateOrNot);
 
         _recyclingNbText.DOFade(activateOrNot ? 1 : 0, 0.25f);
+        _recyclingNbTextBG.DOFade(activateOrNot ? 1 : 0, 0.25f);
     }
 
     public void InitNbRecycling(bool hasInfinit)
@@ -62,6 +65,7 @@ public class RecyclingManager : MonoBehaviour
         // _maxRecycling = number;
         // _currentLeftRecycling = _maxRecycling;
         _recyclingNbText.gameObject.SetActive(!_hasInfinitRecycling);
+        _recyclingNbTextBG.gameObject.SetActive(!_hasInfinitRecycling);
         UpdateDisplayRecyclingNbLeft();
     }
 
@@ -88,7 +92,6 @@ public class RecyclingManager : MonoBehaviour
             _recyclingNbText.text = $"{MapManager.Instance.NbOfRecycling} {LanguageManager.Instance.GetRecycleText()}";
 
         UpdateVisualState();
-        // _recyclingNbText.text = $"{_currentLeftRecycling}/{_maxRecycling}";
     }
 
     private void Update()

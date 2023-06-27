@@ -1806,7 +1806,9 @@ MonoBehaviour:
     Chloe Hecquefeuille - Chara Artist
 
     DryExpression
-    - Sound Designer'
+    - Sound Designer
+
+    Alexandra Ubalijoro - Translation'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03ea64762ffcdc04e88f34801809912d, type: 2}
   m_sharedMaterial: {fileID: -8562110869747516441, guid: 03ea64762ffcdc04e88f34801809912d, type: 2}
@@ -10358,6 +10360,7 @@ MonoBehaviour:
   _backTextButton: {fileID: 894076852}
   _playButtonTextButton: {fileID: 0}
   _continueButtonTextButton: {fileID: 0}
+  _clickContinueButtonTextButton: {fileID: 0}
   _newGameButtonTextButton: {fileID: 0}
   _quitButton: {fileID: 0}
   _popUpNewGameText: {fileID: 0}
@@ -15119,6 +15122,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480315729}
     m_Modifications:
+    - target: {fileID: 6252484759902905003, guid: e7023709c89eae948a343f5d9311f110, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 027cfbc28f344e04ea3deded3523cee3, type: 3}
     - target: {fileID: 8084888582913593002, guid: e7023709c89eae948a343f5d9311f110, type: 3}
       propertyPath: m_Name
       value: --EnergyManager--
@@ -15289,84 +15296,64 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[22].Clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b0cd829034a1ecb46953820e43d206c7, type: 3}
+      propertyPath: Musics.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[0].Loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[1].Clip
       value: 
-      objectReference: {fileID: 8300000, guid: d7347261470e63a44a09a8a1b8752fa9, type: 3}
+      objectReference: {fileID: 8300000, guid: 11fd20e114949c2448358878f6108a05, type: 3}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[1].Loop
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[1].Name
-      value: Wave1
+      value: MainMusic
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[2].Clip
       value: 
-      objectReference: {fileID: 8300000, guid: eacfdb7b105d0784cb91920bcfbd930d, type: 3}
+      objectReference: {fileID: 8300000, guid: d7347261470e63a44a09a8a1b8752fa9, type: 3}
+    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
+      propertyPath: Musics.Array.data[2].Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[2].Name
-      value: Wave2
+      value: Wave1
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[3].Clip
       value: 
-      objectReference: {fileID: 8300000, guid: 7f98ed686115e8f44ad0006b3ddc20f7, type: 3}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[3].Name
-      value: Wave3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[4].Clip
-      value: 
       objectReference: {fileID: 8300000, guid: 11fd20e114949c2448358878f6108a05, type: 3}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[4].Loop
+      propertyPath: Musics.Array.data[3].Loop
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[4].Name
+      propertyPath: Musics.Array.data[3].Name
       value: MainMusic
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[14].Volume
-      value: 0.346
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: SFX.Array.data[30].Volume
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[1].Volume
-      value: 0.177
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[2].Volume
-      value: 0.143
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: Musics.Array.data[3].Volume
-      value: 0.143
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004632857643, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: Musics.Array.data[4].Volume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8350016004632857644, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
       propertyPath: m_Name
       value: ---AudioManager---
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8350016004720785191, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbfc3de28ef8bd248b926043a9a52629, type: 3}

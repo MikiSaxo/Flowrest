@@ -12,6 +12,7 @@ public class MainMenuAnim : MonoBehaviour
     [SerializeField] private CameraPan _mainCam;
     [SerializeField] private Image _p3dLogoImg;
     [SerializeField] private Image _filterBlueImg;
+    [SerializeField] private Image _bgFilterHexaImg;
     [SerializeField] private GameObject _BGTitle;
     [SerializeField] private GameObject _title;
     [SerializeField] private TMP_Text _continueText;
@@ -39,6 +40,8 @@ public class MainMenuAnim : MonoBehaviour
     private bool _isIntroEnd;
     private void Start()
     {
+        _filterBlueImg.DOFade(0, 0);
+        _bgFilterHexaImg.DOFade(0, 0);
         LaunchFadeLogoP3D();
         // LaunchTitleSpawn();
         CursorManager.Instance.UpdateVisibleCursor(false);
@@ -73,6 +76,7 @@ public class MainMenuAnim : MonoBehaviour
     IEnumerator TitleSpawn()
     {
         _filterBlueImg.DOFade(.26f, _timeSpawnFilter);
+        _bgFilterHexaImg.DOFade(1, _timeSpawnFilter);
         _BGTitle.transform.DOScale(1, _timeSpawnBGTitle).SetEase(Ease.InSine).OnComplete(LaunchBounceExagone);
         yield return new WaitForSeconds(_timeSpawnBetween);
         _title.transform.DOScale(1, _timeSpawnTitle).SetEase(Ease.OutBounce);

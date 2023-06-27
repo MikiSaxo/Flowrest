@@ -59,6 +59,9 @@ public class CameraPan : MonoBehaviour
 
     private void PanCamera()
     {
+        if (MapManager.Instance != null && MapManager.Instance.IsVictory)
+            return;
+        
         // Change to the good click depending of if is Android
         var mouseIndex = 2;
         if(MapManager.Instance != null)

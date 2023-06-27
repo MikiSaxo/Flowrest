@@ -105,6 +105,11 @@ public class LanguageManager : MonoBehaviour
     private string _newGameButtonTextFrench;
 
     [SerializeField] private string _newGameButtonTextEnglish;
+    
+    [Header("Click to continue Button")] [SerializeField]
+    private string _clickContinueButtonTextFrench;
+
+    [SerializeField] private string _clickContinueButtonTextEnglish;
 
     [Header("Warning PopUp Button")] [SerializeField]
     private string _popUpNewGameTextFrench;
@@ -342,6 +347,14 @@ public class LanguageManager : MonoBehaviour
             return _continueButtonTextFrench;
 
         return _continueButtonTextEnglish;
+    }
+    
+    public string GetClickContinueButtonText()
+    {
+        if (Tongue == Language.Francais)
+            return _clickContinueButtonTextFrench;
+
+        return _clickContinueButtonTextEnglish;
     }
 
     public string GetNewGameButtonText()
