@@ -1,8 +1,10 @@
 using UnityEngine.Audio;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
@@ -22,6 +24,9 @@ public class AudioManager : MonoBehaviour
 
     private float _waveCooldown;
     private float _waveTime;
+    private string _currentMusic;
+    private List<int> _randomMusics;
+    
 
     private void Awake()
     {
@@ -60,21 +65,23 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.buildIndex == 0)
         {
             StopMusic("MainMusic");
             StopMusic("MenuMusic");
+            StopMusic("Wave1");
             PlayMusicLong("MenuMusic");
         }
         else
         {
             StopMusic("MainMusic");
             StopMusic("MenuMusic");
+            StopMusic("Wave1");
             PlayMusicLong("MainMusic");
-            PlayMusic("Wave1");
+            PlayMusicLong("Wave1");
         }
-
 
         if (PlayerPrefs.HasKey("musicVolume") || PlayerPrefs.HasKey("sfxVolume"))
         {
@@ -87,10 +94,29 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    // }
+    private void ChooseRandomMusic()
+    {
+        _randomMusics = GenerateRandomIndices(Musics.Length);
+    }
+    private List<int> GenerateRandomIndices(int count)
+    {
+        List<int> indices = new List<int>();
+        for (int i = 0; i < count; i++)
+        {
+            indices.Add(i);
+        }
 
+        for (int i = 0; i < count - 1; i++)
+        {
+            
+            int randomIndex = Random.Range(i, count);
+            int temp = indices[i];
+            indices[i] = indices[randomIndex];
+            indices[randomIndex] = temp;
+        }
+
+        return indices;
+    }
     public void PlayMusic(string name)
     {
         // print($"Launch {name} music");

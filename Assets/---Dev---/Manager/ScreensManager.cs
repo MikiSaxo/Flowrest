@@ -232,7 +232,7 @@ public class ScreensManager : MonoBehaviour
 
     public void VictoryScreen()
     {
-        AudioManager.Instance.PlaySFX("Victory");
+        // AudioManager.Instance.PlaySFX("Victory");
 
         MapManager.Instance.IsVictory = true;
         MapManager.Instance.ResetTwoLastSwapped();
@@ -251,6 +251,8 @@ public class ScreensManager : MonoBehaviour
             DialogManager.Instance.SpawnNewDialogs(dialogOfEnd, true, false);
             return;
         }
+
+        AudioManager.Instance.PlaySFX("Victory");
 
 
         if (CheckIfEndGame())
