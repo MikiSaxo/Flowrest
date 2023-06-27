@@ -15,7 +15,7 @@ MonoBehaviour:
   DialogFrench:
   - CharacterName: DG
     CharacterSprite: {fileID: 21300000, guid: 699d89e36c0829745a94fc44777e1a16, type: 3}
-    Text: "HAHAHA C'ETAIT MORTEL ! Merci stagiaire t'as refait notr... leur journ\xE9e
+    Text: "HAHAHA C'ETAIT MORTEL !$Merci stagiaire t'as refait notr... leur journ\xE9e
       d'hier !"
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
@@ -40,6 +40,7 @@ MonoBehaviour:
     AddDialog: {fileID: 11400000, guid: 3703f489632de3c49badc48b979ee570, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
+    DialogOfEnd: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   - Choice: La mauvaise
@@ -47,6 +48,7 @@ MonoBehaviour:
     AddDialog: {fileID: 11400000, guid: be88cce323967bf43920ce93bbc3983a, type: 2}
     LevelToLoad: {fileID: 0}
     NextLevelDialog: {fileID: 0}
+    DialogOfEnd: {fileID: 0}
     VisualUpgrades:
       _Upgrades: 0
   DialogOfEnd: {fileID: 0}

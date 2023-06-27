@@ -31,6 +31,7 @@ public class LanguageSetText : MonoBehaviour
     [Header("Main Menu")]
     [SerializeField] private TMP_Text _playButtonTextButton;
     [SerializeField] private TMP_Text _continueButtonTextButton;
+    [SerializeField] private TMP_Text _clickContinueButtonTextButton;
     [SerializeField] private TMP_Text _newGameButtonTextButton;
     [SerializeField] private TMP_Text _quitButton;
     [SerializeField] private TMP_Text _popUpNewGameText;
@@ -72,6 +73,7 @@ public class LanguageSetText : MonoBehaviour
         {
             _playButtonTextButton.text = _languageManager.GetPlayButtonText();
             _continueButtonTextButton.text = _languageManager.GetContinueButtonText();
+            _clickContinueButtonTextButton.text = _languageManager.GetClickContinueButtonText();
             _newGameButtonTextButton.text = _languageManager.GetNewGameButtonText();
             _quitButton.text = _languageManager.GetQuitButtonText();   
             _popUpNewGameText.text = _languageManager.GetPopUpNewGameButtonText();   

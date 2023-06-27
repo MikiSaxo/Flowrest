@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -141,7 +142,6 @@ public class DialogManager : MonoBehaviour
 
         if (dialogData != null)
         {
-            print(LanguageManager.Instance.Tongue);
             if (LanguageManager.Instance.Tongue == Language.Francais)
             {
                 if (dialogData.DialogFrench != null && dialogData.DialogFrench.Length > 0)
@@ -371,6 +371,7 @@ public class DialogManager : MonoBehaviour
         }
         else
         {
+            DialogOfEnd = null;
             ScreensManager.Instance.VictoryScreen();
         }
     }
@@ -493,11 +494,8 @@ public class DialogManager : MonoBehaviour
 
         if (_choices[index].LevelToLoad != null)
         {
-            // ScreensManager.Instance.NewLevelData = _choices[index].NextLevelNoDialog;
-            // UpdateLevelToLoad(_choices[index].NextLevelNoDialog);
             print("update le niveau to load");
             _levelToLoad = _choices[index].LevelToLoad;
-            // MapManager.Instance.UpdateLevelToLoad(NextLevelToLoad);
         }
 
         if (_choices[index].NextLevelDialog != null)
@@ -505,8 +503,6 @@ public class DialogManager : MonoBehaviour
             print("ça update le choice");
             NoNextEndDialogChoice = false;
             NextDialogToLoad = _choices[index].NextLevelDialog;
-            // if (LevelProgressionManager.Instance != null)
-            //     LevelProgressionManager.Instance.CurrentDialogData = NextDialogToLoad;
             PlayerPrefs.SetString("CurrentDialogData", NextDialogToLoad.name);
         }
         else
@@ -514,8 +510,14 @@ public class DialogManager : MonoBehaviour
             NoNextEndDialogChoice = true;
         }
 
-        SpawnNewDialogs(_choices[index].AddDialog, false, false);
 
+        // Update if dialog of end 
+        if(_choices[index].DialogOfEnd != null)
+            DialogOfEnd = _choices[index].DialogOfEnd;
+        
+        
+        SpawnNewDialogs(_choices[index].AddDialog, false, false);
+        
         _dialogChoiceParent.SetActive(false);
         if (_stockChoiceButtons.Count > 0)
         {
@@ -526,10 +528,6 @@ public class DialogManager : MonoBehaviour
 
             _stockChoiceButtons.Clear();
         }
-        
-        // Update if dialog of end 
-        if(_choices[index].DialogOfEnd != null)
-            DialogOfEnd = _choices[index].DialogOfEnd;
     }
 
     public void SkipDialog()

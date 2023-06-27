@@ -23,7 +23,10 @@ public class PointerMotion : MonoBehaviour
     {
         if (!_canEnter || _isBouncing) return;
 
-        AudioManager.Instance.PlaySFX("MouseOverButton");
+        if(MapManager.Instance != null && !MapManager.Instance.IsAndroid)
+            AudioManager.Instance.PlaySFX("MouseOverButton");
+        if(MainMenuManager.Instance != null && !MainMenuManager.Instance.IsAndroid)
+            AudioManager.Instance.PlaySFX("MouseOverButton");
 
         _isEnter = true;
 
