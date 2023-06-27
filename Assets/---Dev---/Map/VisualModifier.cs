@@ -53,6 +53,7 @@ public class VisualModifier : MonoBehaviour
     private bool _hasUnlockedLvl13;
     private bool _hasUnlockedLvl13GoMuscu;
     private bool _hasUnlockedLvl15;
+    private bool _hasUnlockedLvl15Gold;
     private bool _hasUnlockedLvl16;
     private bool _hasUnlockedLvl18;
 
@@ -101,7 +102,10 @@ public class VisualModifier : MonoBehaviour
             }
 
             if (_hasUnlockedLvl15)
-                _level15Img_Supporter.enabled = true;
+            {
+                if(!_hasUnlockedLvl15Gold)
+                    _level15Img_Supporter.enabled = true;
+            }
             if (_hasUnlockedLvl16)
                 _level16Img_MouthIce.enabled = false;
             if (_hasUnlockedLvl18)
@@ -261,6 +265,7 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsGold)
         {
             _hasUnlockedLvl15 = true;
+            _hasUnlockedLvl15Gold = true;
             IsGold = true;
             CursorManager.Instance.UpdateCursor(CursorChanges.Gold);
 

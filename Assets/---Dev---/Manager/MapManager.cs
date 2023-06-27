@@ -89,6 +89,7 @@ public class MapManager : MonoBehaviour
     private bool _forceSwapHasFirstTile;
     private bool _forceSwapHasSecondTile;
     private bool _hasPopUp;
+    private bool _hasSpawnFalseFloor;
 
     private LevelData _currentLevelData;
 
@@ -273,6 +274,7 @@ public class MapManager : MonoBehaviour
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
+        SetupUIGround.Instance.UpdateOpacityInventory(0);
 
         // Update Dialogs
         DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, false);
@@ -360,12 +362,6 @@ public class MapManager : MonoBehaviour
 
         if (IsTuto)
         {
-            // // Set Preview message
-            // _previewMessageTuto = LanguageManager.Instance.Tongue == Language.Francais
-            //     ? currentLvl.PreviewMessage
-            //     : currentLvl.PreviewMessageEnglish;
-
-
             // Update if force 2 first bloc swap
             if (currentLvl.PlayerForceSwap != null)
             {
@@ -434,9 +430,9 @@ public class MapManager : MonoBehaviour
             }
 
             // Update Order Description
-            for (int i = 0; i < currentLvl.QuestFlower.Length; i++)
+            foreach (var quest in currentLvl.QuestFlower)
             {
-                ScreensManager.Instance.InitOrderGoal(1, currentLvl.QuestFlower[i], 1, true);
+                ScreensManager.Instance.InitOrderGoal(1, quest, 1, true);
             }
         }
 
@@ -474,9 +470,9 @@ public class MapManager : MonoBehaviour
                 // Update Order Description
                 ScreensManager.Instance.InitOrderGoal(4, currentLvl.QuestTileCount[0], currentLvl.NumberTileCount,
                     false);
-            }
 
-            count++;
+                count++;
+            }
         }
 
         if (count == 2)
@@ -485,7 +481,6 @@ public class MapManager : MonoBehaviour
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(125, 125));
         if (count >= 4)
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(110, 110));
-
 
         // Init Level
         InitializeFloor();
@@ -560,6 +555,9 @@ public class MapManager : MonoBehaviour
 
     IEnumerator FalseFloorSpawn()
     {
+        if (_hasSpawnFalseFloor)
+            yield break;
+
         _mapInfo = _mapConstructData.Map.Split("\n");
 
         // Get its size
@@ -588,6 +586,8 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+
+        _hasSpawnFalseFloor = true;
     }
 
     private void InitObj(GameObject which, int x, int y, AllStates state)
