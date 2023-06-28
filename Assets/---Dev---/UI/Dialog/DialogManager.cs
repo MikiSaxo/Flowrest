@@ -43,12 +43,12 @@ public class DialogManager : MonoBehaviour
 
     public DialogData DialogOfEnd { get; private set; }
     public int WhichEnd { get; private set; }
+    public bool IsDialogOfEnd { get; private set; }
 
 
     private List<string> _dialogsList = new List<string>();
     private List<DialogPrefab> _dialogsPrefabList = new List<DialogPrefab>();
     private int _countDialog;
-    private bool _isDialogOfEnd;
     private Sprite[] _charaSprites;
     private string[] _charaNames;
     private DialogChoice[] _choices;
@@ -133,9 +133,9 @@ public class DialogManager : MonoBehaviour
         UpdateDialogBG(true);
 
         // Set if it's victory dialog
-        _isDialogOfEnd = isDialogOfEnd;
+        IsDialogOfEnd = isDialogOfEnd;
 
-        if (!_isDialogOfEnd)
+        if (!IsDialogOfEnd)
             TransiManager.Instance.LaunchShrink();
 
         _hasMadeChoices = false;
@@ -229,7 +229,7 @@ public class DialogManager : MonoBehaviour
             _dialogsPrefabList.Clear();
 
 
-        if (dialogsText.Length == 0 && !_isDialogOfEnd)
+        if (dialogsText.Length == 0 && !IsDialogOfEnd)
         {
             dialogsText = new[] { " " };
             ScreensManager.Instance.IsMemoOpened = true;
@@ -244,7 +244,7 @@ public class DialogManager : MonoBehaviour
             _dialogsList.Add(dialog);
         }
 
-        if (!_isDialogOfEnd)
+        if (!IsDialogOfEnd)
         {
             UpdateButtonGoLevelSupp(false);
         }
@@ -355,7 +355,20 @@ public class DialogManager : MonoBehaviour
 
         CheckUpgrades();
 
-        if (!_isDialogOfEnd)
+        
+        if (_currentDialogData.NextLevelDialog != null)
+        {
+            NoNextEndDialog = false;
+            NextDialogToLoad = _currentDialogData.NextLevelDialog;
+
+        }
+        else
+        {
+            NoNextEndDialog = true;
+        }
+        
+        
+        if (!IsDialogOfEnd)
         {
             MouseHitRaycast.Instance.IsBlockMouse(false);
             
@@ -366,16 +379,7 @@ public class DialogManager : MonoBehaviour
             }
             MapManager.Instance.LaunchCheckFileMap(_levelToLoad);
 
-            if (_currentDialogData.NextLevelDialog != null)
-            {
-                NoNextEndDialog = false;
-                NextDialogToLoad = _currentDialogData.NextLevelDialog;
-
-            }
-            else
-            {
-                NoNextEndDialog = true;
-            }
+            
             
             IsDialogTime = false;
         }
@@ -451,7 +455,7 @@ public class DialogManager : MonoBehaviour
         ScreensManager.Instance.CheckIfMemoOpen();
 
 
-        if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0 && !_isDialogOfEnd)
+        if (_levelToLoad.PopUpInfos != null && _levelToLoad.PopUpInfos.Length > 0 && !IsDialogOfEnd)
         {
             ScreensManager.Instance.HasPopUp = true;
             IsDialogTime = true;
