@@ -6,6 +6,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 // ReSharper disable All
@@ -21,7 +22,6 @@ public class ScreensManager : MonoBehaviour
     [SerializeField] private GameObject _victoryConfettis;
     [SerializeField] private GameObject _defeatParent;
     [SerializeField] private GameObject _nextLevel;
-    [SerializeField] private GameObject _credits;
 
     [Header("Pause")] [SerializeField] private GameObject _menuPauseParent;
     [SerializeField] private GameObject _menuOption;
@@ -37,6 +37,10 @@ public class ScreensManager : MonoBehaviour
 
     [Header("Memo")] [SerializeField] private OpenCloseMenu _memoMenu;
     [SerializeField] private WaveEffect _memoWaveEffect;
+    
+    [Header("Credit - Outro")] 
+    [SerializeField] private GameObject _credits;
+    [SerializeField] private GameObject _outro;
 
     private bool _isTheEnd;
     private bool _isFirstScreen;
@@ -56,6 +60,7 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
+    
 
 
     private void Awake()
@@ -212,7 +217,8 @@ public class ScreensManager : MonoBehaviour
         if (DialogManager.Instance.IsDialogTime) return;
 
         StartCoroutine(WaitToUnlockMouse(state));
-        _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
+        if(state)
+            _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
     }
 
     public void UpdateMultipleOrder(AllStates whichOrder, int newNb)
@@ -254,7 +260,6 @@ public class ScreensManager : MonoBehaviour
 
         AudioManager.Instance.PlaySFX("Victory");
 
-
         if (CheckIfEndGame())
         {
             print("it's end game");
@@ -281,8 +286,12 @@ public class ScreensManager : MonoBehaviour
 
     public bool CheckIfEndGame()
     {
+        if (DialogManager.Instance.WhichEnd != 0)
+            return true;
+        
         if (DialogManager.Instance.NoNextEndDialogChoice && DialogManager.Instance.NoNextEndDialog)
             return true;
+        
 
         return false;
     }
@@ -432,7 +441,17 @@ public class ScreensManager : MonoBehaviour
 
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
 
+        TransiManager.Instance.LaunchShrink();
+
         _credits.SetActive(true);
+        
+        if (DialogManager.Instance.WhichEnd == 1)
+            _outro.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndOneText());
+        else if (DialogManager.Instance.WhichEnd == 2)
+            _outro.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
+        else
+            _outro.gameObject.SetActive(false);
+        
         _credits.GetComponent<CreditsMovement>().Init();
     }
 
