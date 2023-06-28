@@ -260,8 +260,6 @@ public class ScreensManager : MonoBehaviour
 
         AudioManager.Instance.PlaySFX("Victory");
 
-        print("CheckIfEndGame : " + CheckIfEndGame());
-        print("WhichEnd : " + DialogManager.Instance.WhichEnd);
         if (CheckIfEndGame())
         {
             print("it's end game");

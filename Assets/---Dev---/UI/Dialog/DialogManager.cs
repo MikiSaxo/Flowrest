@@ -140,8 +140,8 @@ public class DialogManager : MonoBehaviour
 
         _hasMadeChoices = false;
         
-        WhichEnd = dialogData.EndIndex;
-        print("WhichEnd : " + WhichEnd);
+        if(dialogData.EndIndex != null)
+            WhichEnd = dialogData.EndIndex;
 
         // Init dialogs
         string[] charaNames = Array.Empty<string>();
