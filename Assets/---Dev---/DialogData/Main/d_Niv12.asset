@@ -25,7 +25,7 @@ MonoBehaviour:
     Text: "Il aimerait fabriquer sa cr\xE9atine \xE0 base de viscosa. Ne me pose
       pas de question je ne sais pas comment il compte s'y prendre."
   - CharacterName: Profess.io
-    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
     Text: "Et il voudrait une cha\xEEne de viscosa, la popularit\xE9 des chaines
       sur les r\xE9saux, boosterait les ventes de ses produits."
   - CharacterName: Profess.io
@@ -43,7 +43,7 @@ MonoBehaviour:
     Text: Il aurait besoin d'une chaine de grassias pour booster son business en
       ligne car il veut surfer sur le #touch some grassias.
   - CharacterName: DG
-    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
     Text: "Et mes f\xE9licitations ! j'ai l'honneur de t'annoncer que c'est toi qui
       pourra t'en charger ! Alors t'en dis quoi ? Ne rate pas cette occasion, c'est
       la chance de ta vie !"
@@ -52,10 +52,45 @@ MonoBehaviour:
     Text: "Alors, une commande pour un influenceur fitness gonfl\xE9 aux st\xE9ro\xEFdes
       qui a besoin de calcid ou un entrepreneur qui inspire confiance en lui fournissant
       du grassias ? Moi je pense la question elle est vite r\xE9pondue."
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 95b62f1a947e20f47b4436e55287db5f, type: 3}
+    Text: Looks like the campaign dragged in a bunch of wannabe influencers.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Today we're working with someone called Djiant Mussel, a fitness influencer
+      who wants to boost his career on social media.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: He wants to build his creatine with calcid. Don't ask me how or why because
+      I do not know.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: And he wants a Viscosa chain, he says its popular on the socials so it'll
+      sell quickly.
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: d1703db24f2c2eb44bf76f7289475654, type: 3}
+    Text: Not so fast!
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: cd08833cfc7669744963a60843e4fd6d, type: 3}
+    Text: A business friend of mine is launch his free masterclass to help people
+      learn about the traps and secrets of interplanetary real estate investing.
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 22439ece0619d6e47a3b950c7a947838, type: 3}
+    Text: He'll need a Grassias planet to boost his online numbers.
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 279ca84716e29924885df1b19c81f18e, type: 3}
+    Text: And congratulations, I'm excited to let you know that you'll be the one
+      to take charge on the project! So what do you say? Don't miss out on this opportunity
+      of a lifetime!
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: d1703db24f2c2eb44bf76f7289475654, type: 3}
+    Text: 'So, what will it be, an order for a stereoid-laden fitness influence who''s
+      asking for some calcid or a business man who inspires the masses in need of
+      grassias? I think that the choice is obvious. '
   Choices:
   - Choice: "Le sport c'est la sant\xE9 ! Je choisis le fitness"
-    ChoiceEnglish: 
+    ChoiceEnglish: 'Health is wealth! I''m choosing fitness. '
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 3362aa76096bf054e9c8aa4aa57410c2, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 648eb2c22f3059d4686fb3e676761466, type: 2}
@@ -64,7 +99,8 @@ MonoBehaviour:
       _Upgrades: 0
   - Choice: "J'adore l'argent, j'investis toutes mes \xE9conomies ! Je choisis l'entrepreneur
       !"
-    ChoiceEnglish: 
+    ChoiceEnglish: 'I love money, I invest all of my savings! I''ve got to choose
+      the business man. '
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 36d0332c2c9e9534dbef07eff867871d, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 69f6aee55e76166499be3259ecec5bf5, type: 2}
