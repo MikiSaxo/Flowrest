@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218ea029094cc41449cb6654c9c06122, type: 3}
-  m_Name: Niveau 9a
+  m_Name: Niveau 17.1
   m_EditorClassIdentifier: 
-  LevelName: Tuto 11.1
+  LevelName: Niveau 17.1
   LevelFolder: Level Editor
-  EnergyAtStart: 4
-  HasInventory: 0
+  EnergyAtStart: 3
+  HasInventory: 1
   StartNbState: 0
   StartNbAllState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  HasRecycling: 0
+  HasRecycling: 1
   HasInfinitRecycling: 0
-  NbOfRecycling: 0
+  NbOfRecycling: 1
   OpenMemo: 0
   HasPrevisu: 1
   BlockLastSwap: 1
   IsTuto: 0
-  IsTutoRecycling: 0
+  IsTutoRecycling: 1
   PlayerForceSwap: []
   HasForcePoseBlocAfterSwap: 0
   ForcePoseBlocCoord: {x: 0, y: 0}
@@ -33,23 +33,24 @@ MonoBehaviour:
   QuestDescription: "Commande \xB5 :"
   QuestDescriptionEnglish: 
   QuestFloor: 
-  QuestFlower: 0200000009000000
+  QuestFlower: 090000000900000009000000
   QuestNoSpecificTiles: 
   QuestTileChain: 
   NumberTileChain: 0
   QuestTileCount: 
   NumberTileCount: 0
   DialogLevelStart: {fileID: 0}
-  CharacterName: Profess.io
+  CharacterName: Profess.Io
   CharacterSpritesBeginning:
-  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
   - {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
-  CharacterSpritesEnd: []
+  - {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+  CharacterSpritesEnd:
+  - {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
   DialogBeginning:
-  - "Les fleurs de Viscosa sont tr\xE8s pris\xE9es ces derniers temps suite \xE0
-    un post viral d'un influenceur."
-  - "J'h\xE9site moi aussi \xE0 refaire mon jardin pour le remplir de Viscosa, qu'est-ce
-    que tu en penses ?"
-  DialogEnd: []
+  - "Aujourd'hui, c'est ta derni\xE8re mission avant que l'on te donne un peu plus
+    de libert\xE9."
+  - "J'esp\xE8re que tu es pr\xEAt."
+  DialogEnd:
+  - Bravo, je te retrouve demain pour ton premier jour en autonomie.
   DialogBeginningEnglish: []
   DialogEndEnglish: []
