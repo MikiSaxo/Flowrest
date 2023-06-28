@@ -45,6 +45,6 @@ public class DialogData : ScriptableObject
     [FormerlySerializedAs("_endIndex")]
     [Space(30f)]
     
-    [Header("---- End ----")][Range(0,2)]
-    public int EndIndex;
+    [Header("---- End ----")]
+    public DialogData OutroNextLevelDialog;
 }
