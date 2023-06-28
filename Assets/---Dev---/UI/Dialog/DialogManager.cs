@@ -140,8 +140,6 @@ public class DialogManager : MonoBehaviour
 
         _hasMadeChoices = false;
         
-        if(dialogData.EndIndex != null)
-            WhichEnd = dialogData.EndIndex;
 
         // Init dialogs
         string[] charaNames = Array.Empty<string>();
@@ -191,6 +189,8 @@ public class DialogManager : MonoBehaviour
             _currentDialogData = dialogData;
             if (_currentDialogData.LevelToLoad != null)
                 UpdateLevelToLoad(_currentDialogData.LevelToLoad);
+            
+            WhichEnd = dialogData.EndIndex;
         }
 
         if (dialogData != null && dialogData.name == "d_Niv1_1")
