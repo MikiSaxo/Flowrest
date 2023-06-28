@@ -38,9 +38,11 @@ public class ScreensManager : MonoBehaviour
     [Header("Memo")] [SerializeField] private OpenCloseMenu _memoMenu;
     [SerializeField] private WaveEffect _memoWaveEffect;
     
+    [FormerlySerializedAs("_credits")]
     [Header("Credit - Outro")] 
-    [SerializeField] private GameObject _credits;
-    [SerializeField] private GameObject _outro;
+    [SerializeField] private GameObject _creditScene;
+    [SerializeField] private GameObject _outroScene;
+    [FormerlySerializedAs("_outro")] [SerializeField] private GameObject _outroText;
 
     private bool _isTheEnd;
     private bool _isFirstScreen;
@@ -166,7 +168,7 @@ public class ScreensManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !DialogManager.Instance.GetIsDialogTime())
         {
             UpdatePause(!_isPaused);
         }
@@ -446,16 +448,16 @@ public class ScreensManager : MonoBehaviour
 
         TransiManager.Instance.LaunchShrink();
 
-        _credits.SetActive(true);
+        _creditScene.SetActive(true);
         
-        if (DialogManager.Instance.WhichEnd == 1)
-            _outro.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndOneText());
-        else if (DialogManager.Instance.WhichEnd == 2)
-            _outro.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
-        else
-            _outro.gameObject.SetActive(false);
+        // if (DialogManager.Instance.WhichEnd == 1)
+        //     _outroText.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndOneText());
+        // else if (DialogManager.Instance.WhichEnd == 2)
+        //     _outroText.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
+        // else
+        //     _outroText.gameObject.SetActive(false);
         
-        _credits.GetComponent<CreditsMovement>().Init();
+        _creditScene.GetComponent<CreditsMovement>().Init(true);
     }
 
     public void CheckIfMemoOpen()
