@@ -110,8 +110,8 @@ public class VisualModifier : MonoBehaviour
                 _level16Img_MouthIce.enabled = false;
             if (_hasUnlockedLvl18)
             {
-                _level18Img_SheriffHat.enabled = false;
-                _level18Img_SheriffStart.enabled = true;
+                _level18Img_SheriffHat.enabled = true;
+                _level18Img_SheriffStart.enabled = false;
             }
         }
         else if (whichChara == Characters.DG)
@@ -288,15 +288,15 @@ public class VisualModifier : MonoBehaviour
     {
         if (CurrentUpgrade == Upgrades.IsIceberg)
         {
-            _level16Img_MouthIce.enabled = true;
-            _icebergs.SetActive(false);
+            _level16Img_MouthIce.enabled = false;
+            _icebergs.SetActive(true);
             _hasUnlockedLvl16 = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsIcePig)
         {
-            _level16Img_MouthIce.enabled = false;
-            _icebergs.SetActive(true);
+            _level16Img_MouthIce.enabled = true;
+            _icebergs.SetActive(false);
             _hasUnlockedLvl16 = true;
         }
     }
