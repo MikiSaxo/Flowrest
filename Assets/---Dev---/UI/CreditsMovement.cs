@@ -8,12 +8,15 @@ using UnityEngine;
 public class CreditsMovement : MonoBehaviour
 {
     [SerializeField] private ScenesManager _scenesManager;
+
     [SerializeField] private GameObject _elementsToMove;
+
     //[SerializeField] private float _timeToEnd;
     [SerializeField] private float _endPos;
     [SerializeField] private float _speed;
-    
+
     private bool _canGo;
+    private bool _isEnd;
     private bool _hasReachEndPos;
     private float _moreSpeed;
 
@@ -22,12 +25,12 @@ public class CreditsMovement : MonoBehaviour
         _moreSpeed = 1;
         _canGo = false;
         _hasReachEndPos = false;
-        Init();
     }
 
-    public void Init()
+    public void Init(bool isEnd)
     {
         _canGo = true;
+        _isEnd = isEnd;
     }
 
     private void Update()
@@ -35,13 +38,20 @@ public class CreditsMovement : MonoBehaviour
         if (!_canGo) return;
 
         _moreSpeed = Input.GetMouseButton(0) ? 5 : 1;
-        
+
         _elementsToMove.transform.position += Vector3.up * _speed * _moreSpeed;
 
         if (_elementsToMove.transform.position.y > _endPos && !_hasReachEndPos)
         {
-            _hasReachEndPos = true;
-            _scenesManager.GoToMainMenu();
+            if (!_isEnd)
+            {
+                _hasReachEndPos = true;
+                _scenesManager.GoToMainMenu();
+            }
+            else
+            {
+                ScreensManager.Instance.GoLevelSupp();
+            }
         }
     }
 }
