@@ -198,6 +198,11 @@ public class ScreensManager : MonoBehaviour
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
+        if (state)
+        {
+            _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
+            _menuPauseParent.GetComponent<PauseSpawn>().LaunchSpawnAnim();
+        }
 
         if (!state)
             _menuOption.SetActive(false);
@@ -217,8 +222,6 @@ public class ScreensManager : MonoBehaviour
         if (DialogManager.Instance.IsDialogTime) return;
 
         StartCoroutine(WaitToUnlockMouse(state));
-        if(state)
-            _menuPauseParent.GetComponent<SpawnAnimButtons>().LaunchSpawnAnim();
     }
 
     public void UpdateMultipleOrder(AllStates whichOrder, int newNb)
