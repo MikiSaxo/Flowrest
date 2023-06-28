@@ -174,6 +174,7 @@ public class VisualModifier : MonoBehaviour
 
         if (CurrentUpgrade != Upgrades.Nothing)
         {
+            print("add upgrade : " + CurrentUpgrade);
             var getCurrentUpgrades = PlayerPrefs.GetString("Upgrades");
             PlayerPrefs.SetString("Upgrades", $"{getCurrentUpgrades}{(int)CurrentUpgrade}.");
         }
