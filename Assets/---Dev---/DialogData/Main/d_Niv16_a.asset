@@ -39,10 +39,36 @@ MonoBehaviour:
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: Veux-tu faire un habitat vivable pour cet In Huit ou faire plaisir au DG
       avec des glaces ?
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: 'With the aim of protecting alien populations, the G30623 is sending us
+      an In Huit refugee. They''ve an ice population in need of a new planet to live
+      on. '
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: He'll need hydros. Our engineers will then take care of cryogenizing the
+      planet to make it liveable. An ideal icy environment will certainly delight
+      him - it'll be great!
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 699d89e36c0829745a94fc44777e1a16, type: 3}
+    Text: Ice? Who said ice? What flavor are you planning on making? If there's chocolate
+      leave some for me.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: We're not talking about ice cream, just regular ice. We have to build a
+      planet for a refugee who lives in the cold.
+  - CharacterName: GM
+    CharacterSprite: {fileID: 21300000, guid: 3f09535d7dcdfc34dbb38dc59f9bd826, type: 3}
+    Text: 'Pff, that sucks, I wanted ice-cream! Tell you what Petri, make the order
+      and leave some for me. We''re in for a treat, believe me! '
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 003393e852808c941b62f2bb7b8d657d, type: 3}
+    Text: 'Do I make a liveable environment for this refugee or partake in an icecream
+      social with my GM? '
   Choices:
   - Choice: "Quel gamin ce DG ! Bien s\xFBr que je vais m'occuper des In Huit."
-    ChoiceEnglish: 
+    ChoiceEnglish: The GM is so irresponsible! Of course I'm making the planet.
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 0731ec8abc1e0d14d8b6926a1a29d6fc, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: fa4f9195b5e9ce24ca8e2acaeefff8e1, type: 2}
@@ -51,7 +77,8 @@ MonoBehaviour:
       _Upgrades: 0
   - Choice: Hmm une bonne glace ne serait pas de refus, ca fait longtemps une bonne
       glace aux cailloux spatiaux !
-    ChoiceEnglish: 
+    ChoiceEnglish: 'Hmm, I''m not going to say no to ice cream. But only if it''s
+      vanilla. '
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 0731ec8abc1e0d14d8b6926a1a29d6fc, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: 5eeb444578febdb49919285aaed0137c, type: 2}
@@ -64,4 +91,4 @@ MonoBehaviour:
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
     _Upgrades: 0
-  EndIndex: 0
+  OutroNextLevelDialog: {fileID: 0}
