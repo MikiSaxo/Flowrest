@@ -31,10 +31,27 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
     Text: "Pr\xE8feres tu soutenir le sh\xE9rif actuel ou le cow-boy ?"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Okay, today we're in a unique situation.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: A space cow-boy had dueled the uki-uk system's sheriff.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f502cde03652c324faeb03bd0124d190, type: 3}
+    Text: 'He went to him shouting: "There is not enough space for both of us in
+      this universe cow-boy !"'
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: Nevertheless, a rumor was that the sheriff had robbed a dessert's diligence
+      on the Rude-dy's planet.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Would you rather support the actual sheriff or the duelist cow-boy
   Choices:
   - Choice: "Le sh\xE9rif calamard-E.T Jane"
-    ChoiceEnglish: 
+    ChoiceEnglish: The sheriff calam-E.T. Jane
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 2b46b05aa3989dd43a4cb0a6a442b0b0, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: d9df0b53c0ca5be41ac1084787136510, type: 2}
@@ -42,7 +59,7 @@ MonoBehaviour:
     VisualUpgrades:
       _Upgrades: 0
   - Choice: Le cow-boy Billy the king
-    ChoiceEnglish: 
+    ChoiceEnglish: The duelist cow-boy Billy the King
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 2b46b05aa3989dd43a4cb0a6a442b0b0, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: d365912943ea958428a8d2219ea8a381, type: 2}
@@ -55,4 +72,4 @@ MonoBehaviour:
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
     _Upgrades: 0
-  EndIndex: 0
+  OutroNextLevelDialog: {fileID: 0}

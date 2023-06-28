@@ -31,22 +31,41 @@ MonoBehaviour:
     Text: "L'un d'entre eux consiste \xE0 rester dans une pi\xE8ce le plus longtemps
       possible avec de l'encens \xE0 base de viscosa, je te laisse imaginer l'odeur..."
   - CharacterName: Profess.io
-    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
     Text: Quoi qu'il en soit, une commande est une commande non ? On va donc la faire
       je suppose ?
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "C'est que... c'est quand m\xEAme dur de s'infliger ce genre de choses
       non ? Tu es s\xFBr de vouloir faire \xE7a ?"
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: A budding religious movement is making all the waves recently, they call
+      themselves the "Geo Nova's witnesses".
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: They make all sorts of processions across the galaxy and inflict punishments
+      on each other in the name of their deities.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 44b45a2266135054e917033b3126ac73, type: 3}
+    Text: One of them insists on staying in a room as long as possible with viscosa-based
+      incense, I'll let you imagine the smell...
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: Regardless, an order is an order right? So I guess we'll do it?
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: It's just that... it's still gotta be awful to subject yourself to that
+      no? Are you sure that you wanna do this?
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
-    Text: "C'est que... c'est quand m\xEAme dur de s'infliger ce genre de choses
-      non ? Tu es s\xFBr de vouloir faire \xE7a ?"
-  DialogEnglish: []
+    Text: Shall we make them pure viscossa incense or make their lives a little easier
+      by adding a grassias?
   Choices:
   - Choice: "Une commande doit \xEAtre honor\xE9e comme demand\xE9e, on fait uniquement
       du viscosa"
-    ChoiceEnglish: 
+    ChoiceEnglish: An order must be fulfilled as requested, we'll only add viscosa
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: 12682d42e72c17f4ea323ee510a659f8, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: b151b2e06c9e41a4588f9611dcdbb588, type: 2}
@@ -54,7 +73,7 @@ MonoBehaviour:
     VisualUpgrades:
       _Upgrades: 0
   - Choice: "Ajouter un peu de grassias leur sauvera peut-\xEAtre la vie"
-    ChoiceEnglish: 
+    ChoiceEnglish: Adding a little grassia in there won't hurt them
     AddDialog: {fileID: 0}
     LevelToLoad: {fileID: 11400000, guid: e87002a68e5c7e44e91c15da4a9f0886, type: 2}
     NextLevelDialog: {fileID: 11400000, guid: b151b2e06c9e41a4588f9611dcdbb588, type: 2}
@@ -67,4 +86,4 @@ MonoBehaviour:
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
     _Upgrades: 0
-  EndIndex: 0
+  OutroNextLevelDialog: {fileID: 0}
