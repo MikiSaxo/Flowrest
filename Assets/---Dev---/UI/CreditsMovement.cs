@@ -34,7 +34,7 @@ public class CreditsMovement : MonoBehaviour
     {
         if (!_canGo) return;
 
-        _moreSpeed = Input.GetMouseButton(0) ? 2 : 1;
+        _moreSpeed = Input.GetMouseButton(0) ? 5 : 1;
         
         _elementsToMove.transform.position += Vector3.up * _speed * _moreSpeed;
 
