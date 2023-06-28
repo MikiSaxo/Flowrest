@@ -9,7 +9,6 @@ using TMPro;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-// ReSharper disable All
 
 public class ScreensManager : MonoBehaviour
 {
@@ -37,17 +36,20 @@ public class ScreensManager : MonoBehaviour
 
     [Header("Memo")] [SerializeField] private OpenCloseMenu _memoMenu;
     [SerializeField] private WaveEffect _memoWaveEffect;
-    
-    [FormerlySerializedAs("_credits")]
-    [Header("Credit - Outro")] 
-    [SerializeField] private GameObject _creditScene;
+
+    [FormerlySerializedAs("_credits")] [Header("Credit - Outro")] [SerializeField]
+    private GameObject _creditScene;
+
     [SerializeField] private GameObject _outroScene;
-    [FormerlySerializedAs("_outro")] [SerializeField] private GameObject _outroText;
+
+    [FormerlySerializedAs("_outro")] [SerializeField]
+    private GameObject _outroText;
 
     private bool _isTheEnd;
     private bool _isFirstScreen;
     public bool HasPopUp { get; set; }
     public bool IsMemoOpened { get; set; }
+    public bool HasOutro { get; set; }
 
     private bool _isPaused;
     private bool _hasUnlockedMemo;
@@ -62,7 +64,6 @@ public class ScreensManager : MonoBehaviour
     private List<GameObject> _stockOrderImg = new List<GameObject>();
     private AllStates _saveLastState;
     private int _saveLastNbToReach;
-    
 
 
     private void Awake()
@@ -291,12 +292,9 @@ public class ScreensManager : MonoBehaviour
 
     public bool CheckIfEndGame()
     {
-        if (DialogManager.Instance.WhichEnd != 0)
-            return true;
-        
         if (DialogManager.Instance.NoNextEndDialogChoice && DialogManager.Instance.NoNextEndDialog)
             return true;
-        
+
 
         return false;
     }
@@ -363,7 +361,7 @@ public class ScreensManager : MonoBehaviour
         _saveLastState = AllStates.None;
     }
 
-    public void ResetMultiplestock()
+    public void ResetMultipleStock()
     {
         foreach (var text in _stockOrderMultipleText)
         {
@@ -384,9 +382,15 @@ public class ScreensManager : MonoBehaviour
     IEnumerator WaitToGoLevelSupp()
     {
         MapManager.Instance.CurrentDialogData = DialogManager.Instance.NextDialogToLoad;
-
+        
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
+       
+        if (HasOutro)
+        {
+            HasOutro = false;
+            _outroScene.SetActive(false);
+        }
 
         CloseMemo();
 
@@ -448,16 +452,39 @@ public class ScreensManager : MonoBehaviour
 
         TransiManager.Instance.LaunchShrink();
 
-        _creditScene.SetActive(true);
-        
+
         // if (DialogManager.Instance.WhichEnd == 1)
         //     _outroText.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndOneText());
         // else if (DialogManager.Instance.WhichEnd == 2)
         //     _outroText.gameObject.GetComponent<DialogPrefab>().InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
         // else
         //     _outroText.gameObject.SetActive(false);
-        
-        _creditScene.GetComponent<CreditsMovement>().Init(true);
+
+        if (DialogManager.Instance.OutroNextDialog == null)
+        {
+            _creditScene.SetActive(true);
+            _creditScene.GetComponent<CreditsMovement>().Init(true);
+            _outroScene.SetActive(false);
+        }
+        else
+        {
+            _outroScene.SetActive(true);
+            _outroScene.GetComponent<CreditsMovement>().Init(false);
+
+            if (DialogManager.Instance.OutroNextDialog.name == "d_Niv20_a")
+            {
+                _outroText.gameObject.GetComponent<DialogPrefab>()
+                    .InitWithoutAnim(LanguageManager.Instance.GetEndOneText());
+                print("outro 1");
+            }
+            else if (DialogManager.Instance.OutroNextDialog.name == "d_Niv20_b_1")
+            {
+                print("outro 2");
+                _outroText.gameObject.GetComponent<DialogPrefab>()
+                    .InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
+            }
+
+        }
     }
 
     public void CheckIfMemoOpen()
@@ -478,14 +505,14 @@ public class ScreensManager : MonoBehaviour
         if (IsMemoOpened) yield break;
 
         IsMemoOpened = true;
-        
+
         yield return new WaitForSeconds(1f);
-        
+
         _memoMenu.OpenAnim();
         _orderMenu.gameObject.GetComponent<ButtonManager>().UpdateButton(1, true);
-        
+
         yield return new WaitForSeconds(.5f);
-        
+
         if (!_hasMemoWaveEffect)
         {
             _memoWaveEffect.StartGrowOneTime();

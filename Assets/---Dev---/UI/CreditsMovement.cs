@@ -23,7 +23,6 @@ public class CreditsMovement : MonoBehaviour
     private void Start()
     {
         _moreSpeed = 1;
-        _canGo = false;
         _hasReachEndPos = false;
     }
 
@@ -43,13 +42,15 @@ public class CreditsMovement : MonoBehaviour
 
         if (_elementsToMove.transform.position.y > _endPos && !_hasReachEndPos)
         {
-            if (!_isEnd)
+            if (_isEnd)
             {
                 _hasReachEndPos = true;
                 _scenesManager.GoToMainMenu();
             }
             else
             {
+                ScreensManager.Instance.HasOutro = true;
+                DialogManager.Instance.LaunchAfterOutro();
                 ScreensManager.Instance.GoLevelSupp();
             }
         }
