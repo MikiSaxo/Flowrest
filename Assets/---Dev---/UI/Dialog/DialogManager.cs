@@ -34,6 +34,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] private WaveEffect _waveMemo;
 
 
+
     public bool IsDialogTime { get; set; }
 
     public DialogData NextDialogToLoad { get; private set; }
@@ -41,6 +42,7 @@ public class DialogManager : MonoBehaviour
     public bool NoNextEndDialogChoice { get; private set; }
 
     public DialogData DialogOfEnd { get; private set; }
+    public int WhichEnd { get; private set; }
 
 
     private List<string> _dialogsList = new List<string>();
@@ -124,6 +126,9 @@ public class DialogManager : MonoBehaviour
 
     public void SpawnNewDialogs(DialogData dialogData, bool isDialogOfEnd, bool hasPopUp)
     {
+        // Inventory alpha 0
+        SetupUIGround.Instance.UpdateOpacityInventory(0);
+
         // Activate BG
         UpdateDialogBG(true);
 
@@ -134,6 +139,9 @@ public class DialogManager : MonoBehaviour
             TransiManager.Instance.LaunchShrink();
 
         _hasMadeChoices = false;
+        
+        if(dialogData.EndIndex != null)
+            WhichEnd = dialogData.EndIndex;
 
         // Init dialogs
         string[] charaNames = Array.Empty<string>();
@@ -259,6 +267,8 @@ public class DialogManager : MonoBehaviour
         }
 
         NoNextEndDialogChoice = true;
+
+        
 
         SpawnAllDialog();
 

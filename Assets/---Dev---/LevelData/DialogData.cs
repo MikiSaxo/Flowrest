@@ -41,4 +41,10 @@ public class DialogData : ScriptableObject
     
     [Header("---- If no choice Upgrades ----")]
     public DialogUpgrades VisualUpgrades;
+    
+    [FormerlySerializedAs("_endIndex")]
+    [Space(30f)]
+    
+    [Header("---- End ----")][Range(0,2)]
+    public int EndIndex;
 }

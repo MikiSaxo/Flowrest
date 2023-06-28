@@ -136,6 +136,14 @@ public class LanguageManager : MonoBehaviour
     private string _specialThanksTextFrench;
 
     [SerializeField] private string _specialThanksTextEnglish;
+    
+    [Header("End 1")] [SerializeField]
+    private string _endOneTextFrench;
+    [SerializeField] private string _endOneTextEnglish;
+    
+    [Header("End 2")] [SerializeField]
+    private string _endTwoTextFrench;
+    [SerializeField] private string _endTwoTextEnglish;
 
 
     private void Awake()
@@ -419,5 +427,20 @@ public class LanguageManager : MonoBehaviour
             return _nextTextFrench;
 
         return _nextTextEnglish;
+    }
+    
+    public string GetEndOneText()
+    {
+        if (Tongue == Language.Francais)
+            return _endOneTextFrench;
+
+        return _endOneTextEnglish;
+    }
+    public string GetEndTwoText()
+    {
+        if (Tongue == Language.Francais)
+            return _endTwoTextFrench;
+
+        return _endTwoTextEnglish;
     }
 }

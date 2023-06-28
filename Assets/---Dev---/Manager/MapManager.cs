@@ -274,7 +274,6 @@ public class MapManager : MonoBehaviour
         // Block Mouse
         MouseHitRaycast.Instance.IsBlockMouse(true);
 
-        SetupUIGround.Instance.UpdateOpacityInventory(0);
 
         // Update Dialogs
         DialogManager.Instance.SpawnNewDialogs(CurrentDialogData, false, false);

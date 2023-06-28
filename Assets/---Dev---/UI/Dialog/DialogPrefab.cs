@@ -55,6 +55,26 @@ public class DialogPrefab : MonoBehaviour
         StartCoroutine(AnimationText());
     }
 
+    public void InitWithoutAnim(string dialog)
+    {
+        if (string.IsNullOrEmpty(dialog))
+            dialog = DialogText.text;
+            
+        IsFinishDialoging = false;
+        if (dialog.Contains('$'))
+        {
+            var replace = dialog.Replace('$', '\n');
+            dialog = replace;
+        }
+
+        dialog = UpdateModifierText(dialog);
+
+        dialog += "  ";
+
+        DialogText.text = dialog;
+        DialogText.ForceMeshUpdate();
+    }
+
     public void InitDescOrder(string text, bool hasToResize)
     {
         text = UpdateModifierText(text);
