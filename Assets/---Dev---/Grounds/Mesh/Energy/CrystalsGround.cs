@@ -41,6 +41,8 @@ public class CrystalsGround : MonoBehaviour
     public void ChangeCrystal(GameObject newCrystal)
     {
         if (newCrystal == null) return;
+
+        if (_crystal == null) return;
         
         _crystal.SetActive(false);
         _crystal = newCrystal;
