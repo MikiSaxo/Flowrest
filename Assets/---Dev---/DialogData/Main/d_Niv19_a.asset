@@ -25,12 +25,28 @@ MonoBehaviour:
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
     Text: "Le probl\xE8me c'est que ces champignons sont tr\xE8s toxiques et il faut
-      les cusiner d'une certaine mani\xE8re pour les rendre comestible."
+      les cuisiner d'une certaine mani\xE8re pour les rendre comestibles."
   - CharacterName: Profess.io
     CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
     Text: "Il a entendu parler de tes prouesses et il est persuad\xE9 que tu lui
       fourniras des produits de qualit\xE9 !"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: 'Well, well, your internship is almost at its end. You are a very good
+      planet prepper Petri and I hope that you''ll nab a full-time job here! '
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: It's not completely over yet, we have a famous chef who would like to add
+      a dish made out of hydros mushrooms to his menu.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: f351f0a4a71c1f740bff95b5dc52c5d4, type: 3}
+    Text: The issue is that these mushrooms are very toxic and they need to be cooked
+      in a very specific manner in order to be edible.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: He's heard of your talents and is convinced that you'll provide him with
+      quality products.
   Choices: []
   DialogOfEnd: {fileID: 11400000, guid: b263604713068674bab48c1ce5397eb0, type: 2}
   AddDialog: {fileID: 0}
@@ -38,3 +54,4 @@ MonoBehaviour:
   NextLevelDialog: {fileID: 0}
   VisualUpgrades:
     _Upgrades: 0
+  OutroNextLevelDialog: {fileID: 11400000, guid: 24eb705b6090fd44d874cdf34ad5526a, type: 2}

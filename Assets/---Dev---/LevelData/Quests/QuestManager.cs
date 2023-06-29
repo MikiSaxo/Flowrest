@@ -152,7 +152,7 @@ public class QuestManager : MonoBehaviour
     {
         GameObject[,] map = MapManager.Instance.GetMapGrid();
         _flowerStateDone.Clear();
-        ScreensManager.Instance.ResetMultiplestock();
+        ScreensManager.Instance.ResetMultipleStock();
 
         for (int x = 0; x < map.GetLength(0); x++)
         {

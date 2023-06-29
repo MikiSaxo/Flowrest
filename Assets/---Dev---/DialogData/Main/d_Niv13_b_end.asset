@@ -18,7 +18,15 @@ MonoBehaviour:
     Text: "Hmm \xE7a a l'air s\xE9rieux son affaire. J'ai regard\xE9 les courbes
       et en effet le FlowCoin ne fait que prendre de la valeur, je vais peut \xEAtre
       commencer \xE0 investir dedans et devenir riche !"
-  DialogEnglish: []
+  DialogEnglish:
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: b15482967e37b3b439f55181403f367f, type: 3}
+    Text: Hmm this looks like serious business. I've taken a look at our project
+      models and FlowCoin really just keeps growing, maybe I'll invest in it and
+      become rich.
+  - CharacterName: Profess.io
+    CharacterSprite: {fileID: 21300000, guid: 5256a13783c9139448fee8fdfb11027f, type: 3}
+    Text: 'Wish me good luck Petri, have a good weekend! '
   Choices: []
   DialogOfEnd: {fileID: 0}
   AddDialog: {fileID: 0}
@@ -26,4 +34,4 @@ MonoBehaviour:
   NextLevelDialog: {fileID: 11400000, guid: 2b201df37cd606743be2c29c06747dae, type: 2}
   VisualUpgrades:
     _Upgrades: 8
-  EndIndex: 0
+  OutroNextLevelDialog: {fileID: 0}

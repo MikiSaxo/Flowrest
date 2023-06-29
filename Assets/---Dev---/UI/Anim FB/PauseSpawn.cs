@@ -16,6 +16,7 @@ public class PauseSpawn : MonoBehaviour
     
     public void LaunchSpawnAnim()
     {
+        ResetPause();
         StartCoroutine(SpawnAnim());
     }
 

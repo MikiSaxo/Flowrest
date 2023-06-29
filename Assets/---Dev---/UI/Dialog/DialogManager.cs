@@ -42,7 +42,7 @@ public class DialogManager : MonoBehaviour
     public bool NoNextEndDialogChoice { get; private set; }
 
     public DialogData DialogOfEnd { get; private set; }
-    public int WhichEnd { get; private set; }
+    public DialogData OutroNextDialog { get; set; }
     public bool IsDialogOfEnd { get; private set; }
 
 
@@ -190,7 +190,8 @@ public class DialogManager : MonoBehaviour
             if (_currentDialogData.LevelToLoad != null)
                 UpdateLevelToLoad(_currentDialogData.LevelToLoad);
             
-            WhichEnd = dialogData.EndIndex;
+            if (dialogData.OutroNextLevelDialog != null)
+                OutroNextDialog = dialogData.OutroNextLevelDialog;
         }
 
         if (dialogData != null && dialogData.name == "d_Niv1_1")
@@ -565,6 +566,12 @@ public class DialogManager : MonoBehaviour
             if (txt.gameObject != null)
                 Destroy(txt.gameObject);
         }
+    }
+
+    public void LaunchAfterOutro()
+    {
+        NextDialogToLoad = OutroNextDialog;
+        OutroNextDialog = null;
     }
 
     public bool GetIsDialogTime()

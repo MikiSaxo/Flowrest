@@ -55,6 +55,7 @@ public class VisualModifier : MonoBehaviour
     private bool _hasUnlockedLvl15;
     private bool _hasUnlockedLvl15Gold;
     private bool _hasUnlockedLvl16;
+    private bool _hasUnlockedLvl16Iceberg;
     private bool _hasUnlockedLvl18;
 
     private void Awake()
@@ -134,7 +135,7 @@ public class VisualModifier : MonoBehaviour
 
             if (_hasUnlockedLvl15)
                 _level15Img_Supporter.enabled = false;
-            if (_hasUnlockedLvl16)
+            if (_hasUnlockedLvl16 && !_hasUnlockedLvl16Iceberg)
                 _level16Img_MouthIce.enabled = true;
             if (_hasUnlockedLvl18)
             {
@@ -291,6 +292,7 @@ public class VisualModifier : MonoBehaviour
             _level16Img_MouthIce.enabled = false;
             _icebergs.SetActive(true);
             _hasUnlockedLvl16 = true;
+            _hasUnlockedLvl16Iceberg = true;
         }
 
         if (CurrentUpgrade == Upgrades.IsIcePig)
