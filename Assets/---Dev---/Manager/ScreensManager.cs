@@ -169,7 +169,9 @@ public class ScreensManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !DialogManager.Instance.GetIsDialogTime())
+        if (Input.GetKeyDown(KeyCode.Escape) && !DialogManager.Instance.GetIsDialogTime() &&
+            MapManager.Instance.IsLoading && MapManager.Instance.IsPosing && MapManager.Instance.IsSwapping &&
+            MapManager.Instance.IsVictory)
         {
             UpdatePause(!_isPaused);
         }
@@ -382,10 +384,10 @@ public class ScreensManager : MonoBehaviour
     IEnumerator WaitToGoLevelSupp()
     {
         MapManager.Instance.CurrentDialogData = DialogManager.Instance.NextDialogToLoad;
-        
+
         TransiManager.Instance.LaunchGrownOn();
         yield return new WaitForSeconds(TransiManager.Instance.GetTimeForGrowOn());
-       
+
         if (HasOutro)
         {
             HasOutro = false;
@@ -483,7 +485,6 @@ public class ScreensManager : MonoBehaviour
                 _outroText.gameObject.GetComponent<DialogPrefab>()
                     .InitWithoutAnim(LanguageManager.Instance.GetEndTwoText());
             }
-
         }
     }
 
