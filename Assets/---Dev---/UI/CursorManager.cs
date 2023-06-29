@@ -37,6 +37,14 @@ public class CursorManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        _idleSprite.Add(_idle);
+        _idleSprite.Add(_idleFoot);
+        _idleSprite.Add(_idleGold);
+
+        _clickSprite.Add(_click);
+        _clickSprite.Add(_clickFoot);
+        _clickSprite.Add(_clickGold);
     }
 
     private void Start()
@@ -60,13 +68,7 @@ public class CursorManager : MonoBehaviour
             return;
         }
 
-        _idleSprite.Add(_idle);
-        _idleSprite.Add(_idleFoot);
-        _idleSprite.Add(_idleGold);
-
-        _clickSprite.Add(_click);
-        _clickSprite.Add(_clickFoot);
-        _clickSprite.Add(_clickGold);
+       
 
         UpdateCursor(CursorChanges.Normal);
     }

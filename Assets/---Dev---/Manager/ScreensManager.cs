@@ -169,9 +169,7 @@ public class ScreensManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !DialogManager.Instance.GetIsDialogTime() &&
-            MapManager.Instance.IsLoading && MapManager.Instance.IsPosing && MapManager.Instance.IsSwapping &&
-            MapManager.Instance.IsVictory)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             UpdatePause(!_isPaused);
         }
@@ -200,6 +198,12 @@ public class ScreensManager : MonoBehaviour
 
     public void UpdatePause(bool state)
     {
+        if(DialogManager.Instance.GetIsDialogTime() 
+           || MapManager.Instance.IsLoading
+           || MapManager.Instance.IsPosing
+           || MapManager.Instance.IsSwapping 
+           || MapManager.Instance.IsVictory) return;
+        
         _isPaused = state;
         _bg.SetActive(state);
         _menuPauseParent.SetActive(state);
