@@ -25,7 +25,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        if (string.IsNullOrEmpty(PlayerPrefs.GetString("CurrentDialogData")))
+        if (string.IsNullOrEmpty(PlayerPrefs.GetString("CurrentDialogData")) || PlayerPrefs.GetInt("HasFinished") == 1)
         {
             _continueButton.GetComponent<Button>().interactable = false;
             _continueButton.GetComponent<PointerMotion>().UpdateCanEnter(false);
@@ -74,6 +74,7 @@ public class MainMenuManager : MonoBehaviour
         AudioManager.Instance.StopMusic("MenuMusic");
         AudioManager.Instance.PlayMusicLong("MainMusic");
         
+        PlayerPrefs.SetInt("HasFinished", 0);
         // AudioManager.Instance.LaunchPlayLoop();
         
         StartCoroutine(WaitToLaunchMainScene());

@@ -444,7 +444,6 @@ public class ScreensManager : MonoBehaviour
         _orderMenu.GetComponent<ButtonManager>().UpdateButton(0, false);
     }
 
-
     public void LaunchCredits()
     {
         StartCoroutine(WaitToLaunchCredit());
@@ -470,6 +469,7 @@ public class ScreensManager : MonoBehaviour
         {
             _creditScene.SetActive(true);
             _creditScene.GetComponent<CreditsMovement>().Init(true);
+            PlayerPrefs.SetInt("HasFinished", 1);
             _outroScene.SetActive(false);
         }
         else
