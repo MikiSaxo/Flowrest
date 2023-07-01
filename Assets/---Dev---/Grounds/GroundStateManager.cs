@@ -324,13 +324,11 @@ public class GroundStateManager : MonoBehaviour
 
     public void LaunchDropFX()
     {
-        AudioManager.Instance.PlaySFX("Fountain");
+        if(_saveGrndToUpdate.Count > 0)
+            AudioManager.Instance.PlaySFX("Fountain");
 
         _colorOtherSwap = SetupUIGround.Instance.GetGroundUIData((int)GetCurrentStateEnum()).ColorIcon;
         _colorOtherSwap = Color.white;
-        // _colorOtherSwap.r -= .1f;
-        // _colorOtherSwap.g -= .1f;
-        // _colorOtherSwap.b -= .1f;
 
         foreach (var grnd in _saveGrndToUpdate)
         {

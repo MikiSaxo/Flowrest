@@ -474,6 +474,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        if (count <= 1)
+            ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(230, 230));
         if (count == 2)
             ScreensManager.Instance.ChangeSizeGridOrder(new Vector2(150, 150));
         if (count == 3)

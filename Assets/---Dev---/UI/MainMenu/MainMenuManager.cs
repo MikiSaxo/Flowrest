@@ -66,6 +66,8 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetString("CurrentDialogData", String.Empty);
         PlayerPrefs.SetInt("CurrentLevel", 1);
         PlayerPrefs.SetString("Upgrades", String.Empty);
+        CursorManager.Instance.UpdateCursor(CursorChanges.Normal);
+
         LaunchMainScene();
     }
     public void LaunchMainScene()

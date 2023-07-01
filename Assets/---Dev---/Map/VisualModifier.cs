@@ -49,7 +49,6 @@ public class VisualModifier : MonoBehaviour
     private bool _hasUnlockedLvl4;
     private bool _hasUnlockedLvl7;
     private bool _hasUnlockedLvl7Rambo;
-    private bool _hasUnlockedLvl10;
     private bool _hasUnlockedLvl13;
     private bool _hasUnlockedLvl13GoMuscu;
     private bool _hasUnlockedLvl15;
@@ -62,17 +61,7 @@ public class VisualModifier : MonoBehaviour
     {
         Instance = this;
     }
-
-    private void Start()
-    {
-        // _hasUnlockedLvl4 = true;
-        // _hasUnlockedLvl7 = true;
-        // _hasUnlockedLvl13 = true;
-        // _hasUnlockedLvl15 = true;
-        // _hasUnlockedLvl16 = true;
-        // _hasUnlockedLvl18 = true;
-    }
-
+    
     public void UpdateCharacters(Characters whichChara)
     {
         if (whichChara == Characters.Profess)
@@ -222,7 +211,6 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsWaterColor)
         {
             _seaBottle.SetActive(false);
-            _hasUnlockedLvl10 = true;
             var getWaterMesh = _water.GetComponent<MeshRenderer>();
             getWaterMesh.material = _waterColored;
             IsColored = true;
@@ -231,7 +219,6 @@ public class VisualModifier : MonoBehaviour
         if (CurrentUpgrade == Upgrades.IsKohLanta)
         {
             _seaBottle.SetActive(true);
-            _hasUnlockedLvl10 = true;
         }
     }
 
