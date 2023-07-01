@@ -148,10 +148,7 @@ public class LanguageManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(transform.gameObject);
         // ChangeToEnglish();
-    }
-
-    private void Start()
-    {
+        
         if (PlayerPrefs.HasKey("Tongue"))
         {
             if (PlayerPrefs.GetInt("Tongue") == (int)Language.English)
@@ -161,6 +158,10 @@ public class LanguageManager : MonoBehaviour
         }
         else
             StartCoroutine(TempWaitToChangeLanguage(Language.Francais));
+    }
+
+    private void Start()
+    {
     }
 
     IEnumerator TempWaitToChangeLanguage(Language tongue)

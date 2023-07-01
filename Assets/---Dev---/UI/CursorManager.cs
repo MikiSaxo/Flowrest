@@ -45,6 +45,8 @@ public class CursorManager : MonoBehaviour
         _clickSprite.Add(_click);
         _clickSprite.Add(_clickFoot);
         _clickSprite.Add(_clickGold);
+        
+        UpdateCursor(CursorChanges.Normal);
     }
 
     private void Start()
@@ -59,18 +61,12 @@ public class CursorManager : MonoBehaviour
         {
             _cursorImg.enabled = false;
             _isAndroid = true;
-            return;
         }
         else if (MainMenuManager.Instance != null && MainMenuManager.Instance.IsAndroid)
         {
             _cursorImg.enabled = false;
             _isAndroid = true;
-            return;
         }
-
-       
-
-        UpdateCursor(CursorChanges.Normal);
     }
 
     public void UpdateCursor(CursorChanges cursorChanges)
